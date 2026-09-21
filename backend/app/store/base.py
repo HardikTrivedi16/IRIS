@@ -74,6 +74,12 @@ class Store(ABC):
     def list_activity_events(self, project_id: str) -> list[dict]:
         return []
 
+    def list_document_metadata(self, project_id: str) -> list[dict]:
+        """Descriptive document metadata (migration 0005 ``document_metadata``)
+        for this project's company — used for dated renewals. Empty by default
+        (demo/in-memory has no metadata table)."""
+        return []
+
     # --- Decisions / snapshots / audit (append-only) ----------------------
     @abstractmethod
     def save_decision(self, decision: dict, project_facts: dict[str, Any]) -> dict:

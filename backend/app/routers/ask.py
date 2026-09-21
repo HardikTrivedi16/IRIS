@@ -49,7 +49,7 @@ def post_ask(
 ) -> dict:
     # Same tenant-isolation/demo-mode/role logic as every other
     # /projects/{id}/* endpoint — raises 401/404 as appropriate.
-    get_project(project_id, user=user)
+    project = get_project(project_id, user=user)
 
     facts = _merged_facts(project_id, body.facts)
     try:
@@ -61,6 +61,7 @@ def post_ask(
             evaluation_mode=body.evaluation_mode,
             top_k=body.top_k,
             hypothetical_facts=body.facts,
+            project_name=project.get("name"),
         )
     except AIUnavailable as exc:
         logger.warning("AI unavailable for Ask IRIS on %s: %s", project_id, exc)

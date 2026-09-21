@@ -104,3 +104,21 @@ def get_processing_trends(
         days=days,
         department_id=user.department_id,
     )
+
+
+@router.get("/explanation")
+def get_bottleneck_explanation(user: CurrentUser = Depends(require_government)) -> dict:
+    """Component-by-component view of the existing bottleneck report, with
+    the applications currently in each stage. The composite score is labelled
+    a prototype heuristic; no causation or prediction is claimed.
+    Department-scoped."""
+    from ..bottleneck_explain import explain_bottlenecks
+
+    ds = get_department_store()
+    try:
+        report = ds.get_bottleneck_report(department_id=user.department_id)
+        apps = ds.list_applications(department_id=user.department_id, limit=1000)["items"]
+    except StoreError as exc:
+        logger.error("Bottleneck explanation store error: %s", exc)
+        raise HTTPException(status_code=502, detail="Persistence backend unavailable") from exc
+    return explain_bottlenecks(report, apps)

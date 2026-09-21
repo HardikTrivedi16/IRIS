@@ -94,6 +94,8 @@ function responseToMessage(id: string, question: string, res: AskIrisResponse): 
     content: res.answer,
     insufficientInformation: res.insufficient_information,
     requiresHumanReview: res.requires_human_review,
+    answerWithheld: res.engine_consistency?.answer_withheld ?? false,
+    outOfScope: res.scope?.out_of_scope ?? false,
     warnings: res.warnings,
     citations: res.citations.map((c) => ({
       chunkId: c.chunk_id,
@@ -208,9 +210,18 @@ function AssistantPage() {
                   )}
                   <p className={cn(m.pending && "animate-pulse")}>{m.content}</p>
 
-                  {!m.pending && (m.insufficientInformation || m.requiresHumanReview) && (
+                  {!m.pending &&
+                    (m.insufficientInformation || m.requiresHumanReview || m.answerWithheld || m.outOfScope) && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      {m.insufficientInformation && (
+                      {m.answerWithheld && (
+                        <Tag tone="danger">
+                          AI explanation withheld — contradicted the Rule Engine
+                        </Tag>
+                      )}
+                      {m.outOfScope && (
+                        <Tag tone="info">Outside this project's scope</Tag>
+                      )}
+                      {m.insufficientInformation && !m.outOfScope && (
                         <Tag tone="warning">Insufficient evidence in dataset</Tag>
                       )}
                       {m.requiresHumanReview && (

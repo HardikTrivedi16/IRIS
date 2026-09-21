@@ -9,6 +9,8 @@ from fastapi.responses import JSONResponse
 from .config import get_settings
 from .routers import health, engine_info, requirements, projects, evaluate, decisions, department
 from .routers import auth, sla, bottlenecks, dependency_graph, ai_documents, ask, ocr
+from .routers import facts, change_impact, decision_proof, consistency, renewals, grievances
+from .routers import schemes
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("iris.api")
@@ -75,6 +77,25 @@ app.include_router(ask.router)
 # text only. Feeds the SAME unchanged text -> LLM extraction pipeline above;
 # never writes Project Facts or Document records itself.
 app.include_router(ocr.router)
+# Project Fact schema (/api/v1/facts/registry, /api/v1/requirements/{id}/required-facts)
+# — derived read-only from the regulatory dataset; no project data.
+app.include_router(facts.router)
+# Deterministic change impact (/api/v1/projects/{id}/change-impact) — evaluates
+# the SAME frozen engine twice (current facts vs a non-persisted copy with the
+# proposed change applied) and returns the diff.
+app.include_router(change_impact.router)
+# Decision Proof (/api/v1/projects/{id}/decision-proof/{req}) — the engine's own
+# evidence for one requirement, from stored facts; nothing persisted.
+app.include_router(decision_proof.router)
+# Pre-submission consistency check (/api/v1/projects/{id}/consistency-check) —
+# deterministic objective-data comparison; read-only, no LLM decides a match.
+app.include_router(consistency.router)
+# Upcoming compliance & renewals (/api/v1/projects/{id}/renewals) — dates on record only.
+app.include_router(renewals.router)
+# Grievance preparation/tracking/hand-off — NOT a statutory grievance mechanism.
+app.include_router(grievances.router)
+# Scheme framework — deterministic matcher over a verified catalogue (ships empty).
+app.include_router(schemes.router)
 
 
 @app.get("/")

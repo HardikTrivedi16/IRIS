@@ -20,6 +20,7 @@ import {
   Settings,
   Shield,
   Users,
+  MessageSquareWarning,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth-context";
@@ -46,7 +47,8 @@ const deptNavSections = [
         to: "/department/applications",
         icon: ClipboardList,
       },
-      { label: "SLA Intelligence", to: "/department/sla", icon: Clock },
+      { label: "SLA Monitoring", to: "/department/sla", icon: Clock },
+      { label: "Grievances", to: "/department/grievances", icon: MessageSquareWarning },
     ],
   },
   {

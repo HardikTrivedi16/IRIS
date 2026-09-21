@@ -13,8 +13,84 @@ const API_BASE =
   (import.meta.env["VITE_API_URL"] as string) || "http://localhost:8000";
 
 // Shared token store (set by AuthProvider via setAuthToken in api-client.ts)
-import { setAuthToken } from "@/lib/iris/api-client";
+import { setAuthToken, type Grievance } from "@/lib/iris/api-client";
 export { setAuthToken };
+
+// ---------------------------------------------------------------------------
+// Types — SLA explanation (backend app/sla_explain.py)
+// ---------------------------------------------------------------------------
+
+export interface SlaExplanation {
+  application: { id: string; application_id: string; title: string | null; requirement_id: string };
+  state: string;
+  reason: string;
+  clock: {
+    started_at: string | null;
+    evaluated_at: string;
+    completed_at: string | null;
+    elapsed_hours: number | null;
+    due_at: string | null;
+    warning_at: string | null;
+    remaining_hours: number | null;
+    overdue_hours: number | null;
+    elapsed_pct: number | null;
+  };
+  policy: {
+    id: string;
+    name: string;
+    duration_hours: number;
+    warning_pct: number;
+    description: string | null;
+    is_verified_statutory_sla: false;
+  } | null;
+  stage: {
+    current_stage: string | null;
+    entered_at: string | null;
+    hours_in_stage: number | null;
+    target_hours: number | null;
+    warning_hours: number | null;
+    status: string | null;
+    target_description: string | null;
+  };
+  data_classification: string | null;
+  is_synthetic: boolean;
+  notes: string[];
+}
+
+// ---------------------------------------------------------------------------
+// Types — Bottleneck explanation (backend app/bottleneck_explain.py)
+// ---------------------------------------------------------------------------
+
+export interface BottleneckExplanation {
+  generated_at: string;
+  score_classification: "PROTOTYPE_OPERATIONAL_HEURISTIC";
+  weights: { duration_per_hour: number; backlog_per_application: number; breach_per_percent: number };
+  data: { applications_in_scope: number; synthetic_demo: number; unclassified: number };
+  stages: {
+    stage: string;
+    rank_by_heuristic: number;
+    components: {
+      avg_duration_hours: number | null;
+      median_duration_hours: number | null;
+      completed_passages: number | null;
+      backlog: number;
+      sla_breach_pct: number;
+      breached_count: number | null;
+      at_risk_count: number | null;
+    };
+    heuristic_score: number;
+    heuristic_contributions: { duration: number; backlog: number; breach: number };
+    affected_applications: {
+      id: string;
+      application_id: string | null;
+      title: string | null;
+      sla_state: string | null;
+      age_hours: number | null;
+      data_classification: string | null;
+    }[];
+  }[];
+  notes: string[];
+}
 
 // ---------------------------------------------------------------------------
 // Types — Applications
@@ -534,6 +610,9 @@ export const departmentApi = {
     );
   },
 
+  getSlaExplanation: (appId: string) =>
+    deptRequest<SlaExplanation>(`/api/v1/department/sla/applications/${appId}/explanation`),
+
   getSlaStagePerformance: () =>
     deptRequest<SlaStagePerformance[]>(
       "/api/v1/department/sla/stage-performance",
@@ -550,6 +629,9 @@ export const departmentApi = {
   getBottleneckReport: () =>
     deptRequest<BottleneckReport>("/api/v1/department/bottlenecks/report"),
 
+  getBottleneckExplanation: () =>
+    deptRequest<BottleneckExplanation>("/api/v1/department/bottlenecks/explanation"),
+
   getBottleneckStages: () =>
     deptRequest<StageBottleneck[]>("/api/v1/department/bottlenecks/stages"),
 
@@ -560,6 +642,31 @@ export const departmentApi = {
     deptRequest<ProcessingTrend[]>(
       `/api/v1/department/bottlenecks/trends?days=${days}`,
     ),
+
+  // Grievances (department-scoped by the backend)
+  listGrievances: (status?: string) =>
+    deptRequest<Grievance[]>(
+      `/api/v1/department/grievances${status ? `?status=${status}` : ""}`,
+    ),
+
+  getGrievance: (id: string) =>
+    deptRequest<Grievance>(`/api/v1/department/grievances/${id}`),
+
+  assignGrievance: (id: string, officerId: string, note?: string) =>
+    deptRequest<Grievance>(`/api/v1/department/grievances/${id}/assign`, {
+      method: "POST",
+      body: JSON.stringify({ officer_id: officerId, ...(note ? { note } : {}) }),
+    }),
+
+  transitionGrievance: (
+    id: string,
+    toStatus: "UNDER_REVIEW" | "RESOLVED" | "CLOSED",
+    note?: string,
+  ) =>
+    deptRequest<Grievance>(`/api/v1/department/grievances/${id}/transition`, {
+      method: "POST",
+      body: JSON.stringify({ to_status: toStatus, ...(note ? { note } : {}) }),
+    }),
 
   // User Management (Government Admin-only)
   listDepartmentUsers: (departmentId?: string) => {

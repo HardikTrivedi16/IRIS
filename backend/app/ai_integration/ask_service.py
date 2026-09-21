@@ -36,6 +36,12 @@ from app.modules.ai.schemas import RegulatorySourceChunk, RetrievalResult
 
 from .. import engine_service
 from ..graph.service import get_project_dependency_graph
+from .engine_guard import (
+    engine_result_answer,
+    find_engine_contradictions,
+    question_targets_other_facility,
+    scope_answer,
+)
 
 logger = logging.getLogger("iris.ai_integration.ask")
 
@@ -263,6 +269,7 @@ def ask_iris(
     evaluation_mode: str = "PRODUCTION",
     top_k: int = 5,
     hypothetical_facts: dict[str, Any] | None = None,
+    project_name: str | None = None,
 ) -> dict:
     """Answer a read-only regulatory question about ``project_id``.
 
@@ -334,6 +341,62 @@ def ask_iris(
         logger.exception("Ask IRIS: dependency graph build failed for %s", project_id)
         warnings.append("Dependency graph information could not be computed for this request.")
 
+    titles = {rid: _requirement_title(ds, rid) for rid in ds.requirements}
+    authoritative_context = {
+        "evaluation_mode": evaluation_mode,
+        "decisions": [
+            {
+                "requirement_id": d.get("requirement_id"),
+                "final_state": d.get("final_state"),
+                "reason_text": d.get("reason_text"),
+            }
+            for d in decisions
+        ],
+        "dependency_status": [
+            {
+                "requirement_id": n.get("requirement_id"),
+                "status": n.get("status"),
+                "unmet_prerequisite_ids": n.get("unmet_prerequisite_ids", []),
+            }
+            for n in dependency_nodes
+        ],
+    }
+    fact_context = {
+        "uses_hypothetical_facts": bool(hypothetical_facts),
+        "hypothetical_fact_keys": sorted(hypothetical_facts.keys()),
+        "hypothetical_facts": hypothetical_facts,
+        "note": (
+            "hypothetical_facts were supplied for this question only and were "
+            "NOT written to this project's stored Project Facts."
+            if hypothetical_facts
+            else "This answer used only this project's stored Project Facts — no "
+            "hypothetical overrides were supplied."
+        ),
+    }
+
+    # --- Scope guard (deterministic, before any LLM call) ------------------
+    # The engine results above describe THIS project only. A question about a
+    # different or generic facility must not be answered by transferring them.
+    if question_targets_other_facility(question):
+        return {
+            "question": question,
+            "answer": scope_answer(project_name or f"project {project_id}"),
+            "insufficient_information": True,
+            "requires_human_review": False,
+            "citations_valid": True,
+            "citations": [],
+            "warnings": [
+                *warnings,
+                "Question appears to concern a facility other than the active "
+                "project; no AI answer was generated.",
+            ],
+            "fact_context": fact_context,
+            "authoritative_context": authoritative_context,
+            "engine_consistency": {"checked": False, "contradictions": [], "answer_withheld": False},
+            "scope": {"out_of_scope": True, "reason": "OTHER_FACILITY"},
+            "ai_enabled": ai.config.ai_enabled,
+        }
+
     engine_sources = [
         RetrievalResult(
             chunk=_decision_chunk(
@@ -380,44 +443,53 @@ def ask_iris(
         d["source_label"] = source_label
         labeled_citations.append(d)
 
+    # --- Engine-consistency guard (deterministic, after generation) --------
+    # Citation validation proves the answer cites real sources, not that it
+    # agrees with them. Any applicability claim that contradicts the engine's
+    # own result withholds the prose; the engine's result is returned instead.
+    answer_text = result.answer.answer
+    requires_review = result.requires_human_review
+    contradictions = find_engine_contradictions(answer_text, decisions, titles)
+    withheld = bool(contradictions)
+    if withheld:
+        answer_text = engine_result_answer(
+            decisions, titles, only={c["requirement_id"] for c in contradictions}
+        )
+        requires_review = True
+        # The model's own warning text is LLM prose too and can restate the
+        # withheld claim; keep only system-generated warnings (engine/graph,
+        # citation and verification issues).
+        model_warnings = set(result.answer.warnings or [])
+        all_warnings = [*warnings, *(w for w in result.warnings if w not in model_warnings)]
+        labeled_citations = [
+            c for c in labeled_citations if c["chunk_id"].startswith("engine-decision:")
+        ]
+        all_warnings.append(
+            "The AI explanation contradicted the Rule Engine ("
+            + "; ".join(
+                f"{c['requirement_id']}: claimed {c['claimed']}, engine {c['engine_state']}"
+                for c in contradictions
+            )
+            + ") and was withheld."
+        )
+
     return {
         "question": question,
-        "answer": result.answer.answer,
+        "answer": answer_text,
         "insufficient_information": result.answer.insufficient_information,
-        "requires_human_review": result.requires_human_review,
+        "requires_human_review": requires_review,
         "citations_valid": result.citations_valid,
         "citations": labeled_citations,
         "warnings": all_warnings,
-        "fact_context": {
-            "uses_hypothetical_facts": bool(hypothetical_facts),
-            "hypothetical_fact_keys": sorted(hypothetical_facts.keys()),
-            "hypothetical_facts": hypothetical_facts,
-            "note": (
-                "hypothetical_facts were supplied for this question only and were "
-                "NOT written to this project's stored Project Facts."
-                if hypothetical_facts
-                else "This answer used only this project's stored Project Facts — no "
-                "hypothetical overrides were supplied."
-            ),
+        "fact_context": fact_context,
+        "authoritative_context": authoritative_context,
+        "engine_consistency": {
+            "checked": True,
+            "contradictions": contradictions,
+            "answer_withheld": withheld,
+            # Kept for audit only; never shown as the answer.
+            "withheld_answer": result.answer.answer if withheld else None,
         },
-        "authoritative_context": {
-            "evaluation_mode": evaluation_mode,
-            "decisions": [
-                {
-                    "requirement_id": d.get("requirement_id"),
-                    "final_state": d.get("final_state"),
-                    "reason_text": d.get("reason_text"),
-                }
-                for d in decisions
-            ],
-            "dependency_status": [
-                {
-                    "requirement_id": n.get("requirement_id"),
-                    "status": n.get("status"),
-                    "unmet_prerequisite_ids": n.get("unmet_prerequisite_ids", []),
-                }
-                for n in dependency_nodes
-            ],
-        },
+        "scope": {"out_of_scope": False, "reason": None},
         "ai_enabled": ai.config.ai_enabled,
     }

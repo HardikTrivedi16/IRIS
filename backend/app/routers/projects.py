@@ -7,6 +7,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 
 from ..config import get_settings
+from ..fact_registry import FactValidationError, fact_registry_index, validate_facts
 from ..schemas import ProjectIn, ProjectFactsIn, DocumentIn
 from ..security import CurrentUser, get_optional_user
 from ..store import get_store
@@ -63,6 +64,17 @@ def create_project(
     payload = project.model_dump(exclude_none=True)
     if not payload.get("id"):
         payload["id"] = str(uuid.uuid4())
+    elif _store_call(get_store().get_project, payload["id"]) is not None:
+        # Both stores upsert on the primary key (SupabaseStore uses
+        # resolution=merge-duplicates), so without this check a caller could
+        # overwrite any existing project — including another user's — and
+        # re-stamp its owner_id to themselves. Creation must never modify an
+        # existing record. The detail deliberately says nothing about the
+        # existing project's owner or contents.
+        raise HTTPException(
+            status_code=409,
+            detail="A project with this id already exists. Omit id to auto-generate one.",
+        )
     if user and user.user_id:
         payload["owner_id"] = user.user_id
 
@@ -109,6 +121,21 @@ def set_project_facts(
     user: Optional[CurrentUser] = Depends(get_optional_user),
 ) -> dict:
     get_project(project_id, user=user)
+    # Type-check only the keys the regulatory engine actually reads (the
+    # dataset-derived registry). A wrong-typed value there would otherwise be
+    # stored and later evaluate to UNKNOWN with an opaque engine error; better
+    # to refuse it at the door. Other keys — e.g. the `document.*` facts the
+    # Documents page stores after human confirmation — pass through
+    # unchanged, exactly as before. Values are never coerced.
+    registry = fact_registry_index()
+    engine_keyed = {k: v for k, v in body.facts.items() if k in registry}
+    try:
+        validate_facts(engine_keyed)
+    except FactValidationError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail={"error": "invalid_project_facts", "errors": exc.errors},
+        )
     facts = _store_call(get_store().merge_project_facts, project_id, body.facts)
     return {"project_id": project_id, "facts": facts}
 

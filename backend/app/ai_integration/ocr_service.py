@@ -18,10 +18,10 @@ That's all. This module:
     still runs the existing extraction step and confirms fields themselves;
     OCR output is never auto-fed into Project Facts.
 
-PDF is intentionally not supported in this pass: turning a PDF into
-page images requires poppler (a system dependency beyond "Tesseract is
-installed"), which is unverified on arbitrary hosts. Convert a PDF to an
-image first, or paste text directly into the existing extraction panel.
+PDFs are handled separately by ``pdf_service`` (PyMuPDF embedded text,
+with this module's Tesseract only for pages lacking usable text) — the
+router dispatches on content type / magic bytes. This module stays
+image-only.
 """
 from __future__ import annotations
 
@@ -99,8 +99,7 @@ def extract_text_from_image(image_bytes: bytes, content_type: str | None) -> dic
         raise OCRInvalidInput(
             f"Unsupported content type '{content_type}'. Supported: "
             f"{', '.join(sorted(_SUPPORTED_CONTENT_TYPES))}. "
-            "PDF is not supported in this build — convert to an image first, "
-            "or paste text directly into the extraction panel."
+            "PDFs are accepted by the same endpoint (application/pdf)."
         )
     if len(image_bytes) > MAX_IMAGE_BYTES:
         raise OCRInvalidInput(

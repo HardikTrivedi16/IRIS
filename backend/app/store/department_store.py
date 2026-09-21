@@ -385,12 +385,15 @@ class DepartmentStore:
         date_to: Optional[str] = None,
         limit: int = 50,
         offset: int = 0,
+        project_id: Optional[str] = None,
     ) -> dict:
         apps = list(self._applications.values())
 
         # Department isolation check
         if department_id:
             apps = [a for a in apps if a.get("department_id") == department_id]
+        if project_id:
+            apps = [a for a in apps if a.get("project_id") == project_id]
 
         if search:
             q = search.lower()

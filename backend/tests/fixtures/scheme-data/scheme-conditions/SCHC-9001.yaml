@@ -1,0 +1,10 @@
+scheme_condition_id: SCHC-9001
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.industry
+operator: "=="
+comparison_value: FOOD
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference: {document_title: "SYNTHETIC", clause: "S-1", page_number: 1, quoted_text: "SYNTHETIC"}
+description: "SYNTHETIC — industry is FOOD"

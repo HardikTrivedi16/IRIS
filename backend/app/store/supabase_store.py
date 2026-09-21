@@ -174,6 +174,25 @@ class SupabaseStore(Store):
             {"select": "*", "project_id": f"eq.{project_id}", "order": "created_at.desc"},
         )
 
+    def list_document_metadata(self, project_id: str) -> list[dict]:
+        companies = self._get(
+            "/companies", {"select": "company_id", "project_id": f"eq.{project_id}"}
+        )
+        ids = [c["company_id"] for c in companies if c.get("company_id")]
+        if not ids:
+            return []
+        # PostgREST in.() list; ids are our own seed keys, quoted defensively.
+        quoted = ",".join('"' + i.replace('"', "") + '"' for i in ids)
+        return self._get(
+            "/document_metadata",
+            {
+                "select": "document_id,document_type,pharma_subtype,document_number,"
+                          "issue_date,expiry_date,issuing_authority,manifest_source,manifest_status",
+                "company_id": f"in.({quoted})",
+                "order": "expiry_date.asc.nullslast",
+            },
+        )
+
     # --- Decisions / snapshots / audit (append-only) ----------------------
     def save_decision(self, decision: dict, project_facts: dict) -> dict:
         decision_id = decision["decision_id"]

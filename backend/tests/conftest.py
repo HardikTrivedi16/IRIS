@@ -38,6 +38,8 @@ def client():
 
     # Reset the department store singleton for test isolation
     dept_store_module._dept_store = None
+    import app.store.grievance_store as grievance_store_module
+    grievance_store_module._memory_store = None
 
     # Reset JWKS cache so tests don't share stale state
     security_module._jwks_cache["keys"] = None

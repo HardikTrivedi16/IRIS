@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
@@ -54,6 +54,11 @@ function BottlenecksPage() {
   const { data: trends } = useQuery({
     queryKey: ["department", "bottlenecks-trends"],
     queryFn: () => departmentApi.getBottleneckTrends(14),
+  });
+
+  const explanation = useQuery({
+    queryKey: ["department", "bottlenecks-explanation"],
+    queryFn: departmentApi.getBottleneckExplanation,
   });
 
   const stages = report?.stages ?? [];
@@ -116,24 +121,28 @@ function BottlenecksPage() {
         description="Deterministic workflow bottleneck diagnostics derived directly from operational timestamps and SLA instances."
       />
 
-      {/* Methodology Banner */}
-      <div className="mt-6 rounded-lg border border-info/30 bg-info-surface/30 p-4">
+      {/* Methodology — what these figures are, and are not */}
+      <div className="mt-6 rounded-lg border border-border bg-card p-4">
         <div className="flex items-start gap-3">
-          <Info className="h-4 w-4 shrink-0 text-info mt-0.5" />
-          <div className="text-[12.5px] leading-relaxed">
-            <span className="font-semibold text-foreground">
-              Deterministic Operational Methodology:{" "}
-            </span>
-            <span className="text-muted-foreground">
-              Scores are computed dynamically from real operational history.
-              Formula:{" "}
-              <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11.5px]">
-                Score = (Avg Duration Hours × 0.40) + (Backlog × 0.35) + (SLA
-                Breach % × 100 × 0.25)
-              </code>
-              . No fabricated numbers. Architecture prepared for Graph/NetworkX
-              extension in Phase 11.
-            </span>
+          <Info className="h-4 w-4 shrink-0 text-muted-foreground mt-0.5" />
+          <div className="text-[12.5px] leading-relaxed text-muted-foreground">
+            Stage figures come from recorded stage transitions and SLA
+            instances. Stages are ordered by a{" "}
+            <span className="font-medium text-foreground">
+              prototype operational heuristic
+            </span>{" "}
+            (avg hours × 0.40 + backlog × 0.35 + breach % × 0.25). Its weights
+            are prototype choices, not calibrated, and it adds hours, counts
+            and percentages — read the components, not the score. These show
+            where time and backlog currently sit, not why; no prediction or
+            process mining is used.
+            {explanation.data && explanation.data.data.synthetic_demo > 0 && (
+              <span className="ml-1 font-medium text-warning">
+                {explanation.data.data.synthetic_demo} of{" "}
+                {explanation.data.data.applications_in_scope} applications are
+                synthetic demo data.
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -158,7 +167,7 @@ function BottlenecksPage() {
         <div className="rounded-lg border border-warning/30 bg-warning-surface/30 p-4">
           <div className="flex items-center justify-between">
             <span className="text-[11.5px] font-medium uppercase tracking-wider text-warning">
-              Primary Bottleneck
+              Highest heuristic rank
             </span>
             <AlertTriangle className="h-4 w-4 text-warning" />
           </div>
@@ -169,8 +178,8 @@ function BottlenecksPage() {
                 ] ?? report.top_bottleneck_stage)
               : "None detected"}
           </div>
-          <div className="mt-1 text-[11.5px] text-warning/80">
-            Score: {report?.top_bottleneck_score?.toFixed(1) ?? "0.0"}
+          <div className="mt-1 text-[11.5px] text-muted-foreground">
+            Heuristic score {report?.top_bottleneck_score?.toFixed(1) ?? "0.0"} — see components below
           </div>
         </div>
 
@@ -250,7 +259,7 @@ function BottlenecksPage() {
               <table className="w-full text-left text-[13px]">
                 <thead className="border-b border-border bg-muted/40 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                   <tr>
-                    <th className="px-4 py-3">Rank</th>
+                    <th className="px-4 py-3">Heuristic rank</th>
                     <th className="px-4 py-3">Workflow Stage</th>
                     <th className="px-4 py-3">Current Backlog</th>
                     <th className="px-4 py-3">Avg Duration</th>
@@ -258,7 +267,7 @@ function BottlenecksPage() {
                     <th className="px-4 py-3">SLA Breach Rate</th>
                     <th className="px-4 py-3">Stuck &gt; 14d</th>
                     <th className="px-4 py-3">7d Throughput</th>
-                    <th className="px-4 py-3 text-right">Score</th>
+                    <th className="px-4 py-3 text-right font-normal normal-case tracking-normal">Heuristic score</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -332,7 +341,7 @@ function BottlenecksPage() {
                       <td className="px-4 py-3 text-muted-foreground">
                         {st.throughput_7d} completed
                       </td>
-                      <td className="px-4 py-3 text-right font-mono font-semibold text-[13px]">
+                      <td className="px-4 py-3 text-right font-mono text-[12px] text-muted-foreground">
                         {st.bottleneck_score.toFixed(1)}
                       </td>
                     </tr>
@@ -351,6 +360,56 @@ function BottlenecksPage() {
               </table>
             </div>
           </div>
+
+          {/* Applications currently in each stage */}
+          {explanation.data && (
+            <section className="mt-6">
+              <h3 className="text-[13.5px] font-semibold">Applications currently in each stage</h3>
+              <p className="mt-0.5 text-[12px] text-muted-foreground">
+                The applications behind each backlog figure, oldest first.
+              </p>
+              <div className="mt-3 divide-y divide-border rounded-lg border border-border bg-card">
+                {explanation.data.stages
+                  .filter((s) => s.affected_applications.length > 0)
+                  .map((s) => (
+                    <div key={s.stage} className="px-4 py-3">
+                      <p className="text-[12.5px] font-medium">
+                        {STAGE_LABELS[s.stage as ApplicationStage] ?? s.stage}
+                        <span className="ml-2 text-[11.5px] font-normal text-muted-foreground">
+                          {s.affected_applications.length} active
+                        </span>
+                      </p>
+                      <ul className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
+                        {s.affected_applications.map((a) => (
+                          <li key={a.id}>
+                            <Link
+                              to="/department/application/$appId"
+                              params={{ appId: a.id }}
+                              className="font-mono text-primary hover:underline"
+                            >
+                              {a.application_id ?? a.id.slice(0, 8)}
+                            </Link>
+                            <span className="ml-1 text-muted-foreground">
+                              {a.age_hours !== null ? formatHours(a.age_hours) : "—"}
+                              {a.sla_state ? ` · ${a.sla_state.replace(/_/g, " ").toLowerCase()}` : ""}
+                              {a.data_classification === "SYNTHETIC_DEMO" ? " · synthetic" : ""}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                {explanation.data.stages.every((s) => s.affected_applications.length === 0) && (
+                  <p className="px-4 py-3 text-[12.5px] text-muted-foreground">
+                    No applications are currently active.
+                  </p>
+                )}
+              </div>
+              <ul className="mt-3 space-y-0.5 text-[11px] text-muted-foreground">
+                {explanation.data.notes.map((n, i) => <li key={i}>{n}</li>)}
+              </ul>
+            </section>
+          )}
         </div>
       )}
 

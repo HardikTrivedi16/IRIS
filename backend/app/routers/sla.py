@@ -139,3 +139,27 @@ def get_sla_stage_performance(user: CurrentUser = Depends(require_government)) -
         get_department_store().get_sla_stage_performance,
         department_id=user.department_id,
     )
+
+
+@router.get("/applications/{app_id}/explanation")
+def get_sla_explanation(
+    app_id: str,
+    user: CurrentUser = Depends(require_government),
+) -> dict:
+    """WHY an application has its SLA status — derived from its recorded
+    timestamps, policy and stage target via the single authoritative SLA
+    calculation. Department-scoped. No prediction."""
+    from ..sla_explain import explain_sla
+
+    ds = get_department_store()
+    app = _store_err(ds.get_application, app_id, department_id=user.department_id)
+    if not app:
+        raise HTTPException(status_code=404, detail=f"Application {app_id} not found")
+    # Same policy each store's list view uses: the application's own
+    # sla_policy_id (Supabase) or its SLA instance's policy (in-memory).
+    policy_id = app.get("sla_policy_id") or (app.get("sla_instance") or {}).get("policy_id")
+    policy = _store_err(ds.get_sla_policy, policy_id) if policy_id else None
+    stage_target = (
+        _store_err(ds._get_stage_target, policy_id, app.get("current_stage")) if policy_id else None
+    )
+    return explain_sla(app, policy, stage_target)

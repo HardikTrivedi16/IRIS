@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
   Bell,
   Building2,
@@ -14,6 +14,10 @@ import {
   Search,
   ShieldCheck,
   FolderClosed,
+  Scale,
+  Plus,
+  MessageSquareWarning,
+  Landmark,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProjectProvider, useProject } from "@/lib/iris/project-context";
@@ -41,6 +45,7 @@ const navSections: {
   {
     label: "Regulatory intelligence",
     items: [
+      { label: "Evaluation", to: "/evaluation", icon: Scale },
       { label: "Regulatory Map", to: "/regulatory-map", icon: Network },
       { label: "Requirements", to: "/requirements", icon: ListChecks },
       { label: "Documents", to: "/documents", icon: FileText },
@@ -51,6 +56,8 @@ const navSections: {
     label: "Oversight",
     items: [
       { label: "Compliance", to: "/compliance", icon: ShieldCheck },
+      { label: "Grievances", to: "/grievances", icon: MessageSquareWarning },
+      { label: "Schemes", to: "/schemes", icon: Landmark },
       { label: "Sources", to: "/sources", icon: Library },
       { label: "Ask IRIS", to: "/assistant", icon: MessagesSquare },
     ],
@@ -146,6 +153,7 @@ function Sidebar() {
 
 function ProjectSwitcher() {
   const { activeProject, projects, setActiveProjectId } = useProject();
+  const navigate = useNavigate();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-ring flex items-center gap-2.5 rounded-md border border-border bg-surface px-2.5 py-[7px] text-left transition-colors duration-150 hover:border-border-strong hover:bg-secondary">
@@ -172,6 +180,14 @@ function ProjectSwitcher() {
             </span>
           </DropdownMenuItem>
         ))}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onSelect={() => void navigate({ to: "/projects", search: { new: true } })}
+          className="flex items-center gap-2 rounded-sm py-2 text-[13px]"
+        >
+          <Plus className="h-3.5 w-3.5 text-muted-foreground" />
+          New project…
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -16,3 +16,8 @@ python-dotenv>=1.0   # loads backend/.env — see app/config.py
 pytesseract>=0.3.10
 Pillow>=10.0
 python-multipart>=0.0.9   # required by FastAPI to accept multipart/form-data file uploads
+
+# PDF text extraction (embedded text per page; Tesseract only for pages
+# without usable text) — app/ai_integration/pdf_service.py.
+# LICENSE: AGPL-3.0 (or commercial) — review before production deployment.
+pymupdf>=1.24

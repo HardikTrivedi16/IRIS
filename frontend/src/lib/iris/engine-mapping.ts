@@ -37,32 +37,50 @@ export function isEngineBacked(frontendRequirementId: string): boolean {
  * Best-effort derivation of engine project_facts from the frontend's
  * existing Project.characteristics booleans.
  *
- * This is a HEURISTIC bridge, not a statutory fact-capture form: the
- * engine's Rule Versions ask precise regulatory questions
- * ("project.likely_to_discharge_sewage_or_trade_effluent",
- * "project.plant_located_in_air_pollution_control_area") that the
- * existing prototype's characteristics model was never designed to
- * capture exactly. Two facts the engine needs
- * (project.drug_schedule_classification for REQ-0003, and the two dairy
- * capacity facts for REQ-0004's classification sub-rules) have NO
- * corresponding field in Project at all and are deliberately left
- * unset — the engine will correctly report REQUIRES_INFORMATION for
- * those rather than the UI guessing a value. A production deployment
- * should replace this with a real fact-capture form per Rule Version's
- * declared `required_project_facts`.
+ * This is a NARROW bridge, not a statutory fact-capture form. A mapping is
+ * only made where the source field and the engine fact ask the same
+ * question. Where they don't, the fact is left UNSET — the engine then
+ * reports REQUIRES_INFORMATION, which is the correct outcome, rather than
+ * the UI inferring a regulatory fact nobody supplied.
+ *
+ * Deliberately NOT mapped
+ * -----------------------
+ * * `project.plant_located_in_air_pollution_control_area` — the obvious
+ *   candidate source, `characteristics.airEmissions`, means "this project
+ *   emits to air". The engine fact (COND-0002, Air Act 1981 s.21) asks
+ *   whether the plant SITS INSIDE an air pollution control area formally
+ *   declared by the State Government. Those are different questions: a
+ *   plant can emit without being in a declared area, and can be in a
+ *   declared area while emitting nothing. Mapping one to the other would
+ *   manufacture a jurisdictional fact from an operational one. It is a
+ *   location fact that must be supplied explicitly (see the fact-capture
+ *   surface driven by GET /api/v1/facts/registry).
+ * * `project.drug_schedule_classification` (REQ-0003) and the two dairy
+ *   capacity facts (REQ-0004's classification sub-rules) — no
+ *   corresponding field exists on Project at all.
+ *
+ * `characteristics.wastewater` IS mapped: the prototype's own field means
+ * "this project generates wastewater/effluent", which is the same question
+ * COND-0001 asks (Water Act 1974 s.25(1)(a) — likely to discharge sewage
+ * or trade effluent). It stays a user-asserted operational claim, not a
+ * derived legal conclusion.
+ *
+ * Any fact set here is an ad-hoc request-body fact, never a persisted
+ * Project Fact — see the `hypothetical_facts` labelling in ask_service.
  */
 export function deriveEngineProjectFacts(project: {
   industry: string;
-  characteristics: { wastewater: boolean; airEmissions: boolean };
+  characteristics: { wastewater: boolean };
 }): Record<string, unknown> {
   return {
     "project.industry":
       project.industry === "food" ? "FOOD" : project.industry.toUpperCase(),
     "project.likely_to_discharge_sewage_or_trade_effluent":
       project.characteristics.wastewater,
-    "project.plant_located_in_air_pollution_control_area":
-      project.characteristics.airEmissions,
-    // Intentionally NOT set (see docstring): project.drug_schedule_classification,
-    // project.dairy_liquid_milk_capacity, project.dairy_milk_solids_capacity.
+    // Intentionally NOT set — see docstring:
+    //   project.plant_located_in_air_pollution_control_area
+    //   project.drug_schedule_classification
+    //   project.dairy_liquid_milk_capacity
+    //   project.dairy_milk_solids_capacity
   };
 }

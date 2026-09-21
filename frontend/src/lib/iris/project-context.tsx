@@ -5,7 +5,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import {
   irisApi,
   ApiError,
@@ -18,11 +19,18 @@ import type {
   ProjectScale,
   ProjectCharacteristics,
 } from "@/lib/iris/types";
+import {
+  NewProjectForm,
+  type CreatedProject,
+} from "@/components/iris/new-project-form";
 
 interface ProjectContextValue {
   activeProject: Project;
   setActiveProjectId: (id: string) => void;
   projects: Project[];
+  /** Adds a just-created project to the list and makes it active, without
+   * waiting for the projects query to refetch. */
+  registerCreatedProject: (project: CreatedProject) => void;
 }
 
 const ProjectContext = createContext<ProjectContextValue | null>(null);
@@ -151,6 +159,22 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const registerCreatedProject = useCallback(
+    (project: CreatedProject) => {
+      queryClient.setQueryData<unknown[]>(["projects"], (old) => [
+        ...(old ?? []).filter(
+          (p) => (p as { id?: string }).id !== project.id,
+        ),
+        project,
+      ]);
+      setActiveProjectIdState(project.id);
+      void queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+    [queryClient],
+  );
+
   const projects = useMemo<Project[]>(
     () =>
       (query.data ?? []).map((p) =>
@@ -163,8 +187,8 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     if (projects.length === 0) return null;
     const activeProject =
       projects.find((p) => p.id === activeProjectId) ?? projects[0]!;
-    return { activeProject, setActiveProjectId, projects };
-  }, [projects, activeProjectId, setActiveProjectId]);
+    return { activeProject, setActiveProjectId, projects, registerCreatedProject };
+  }, [projects, activeProjectId, setActiveProjectId, registerCreatedProject]);
 
   if (query.isLoading) {
     return (
@@ -219,11 +243,27 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   }
 
   if (!value) {
+    // First-run state: no projects for this account yet. Offer intake here
+    // (the rest of the app needs an active project), then continue the same
+    // setup flow on /projects at the Project Facts step.
     return (
-      <FullPageMessage
-        title="No projects found"
-        description="This account has no projects yet. Projects are created via the IRIS backend (POST /api/v1/projects) — there is no project-intake form in this prototype."
-      />
+      <div className="mx-auto max-w-[760px] px-6 py-12">
+        <p className="text-[15px] font-semibold text-foreground">
+          Create your first project
+        </p>
+        <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">
+          This account has no projects yet. Start with the basic project
+          profile; the next step asks the questions the regulatory rules need.
+        </p>
+        <div className="mt-5 border border-border bg-surface">
+          <NewProjectForm
+            onCreated={(project) => {
+              registerCreatedProject(project);
+              void navigate({ to: "/projects", search: { setup: project.id } });
+            }}
+          />
+        </div>
+      </div>
     );
   }
 

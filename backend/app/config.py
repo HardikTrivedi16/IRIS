@@ -50,6 +50,9 @@ def _split_csv(value: str | None, default: list[str]) -> list[str]:
 class Settings:
     def __init__(self) -> None:
         self.regulatory_data_root: str = os.environ.get("REGULATORY_DATA_ROOT", "regulatory-data")
+        # Verified scheme catalogue (docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md).
+        # Ships EMPTY: no scheme content exists until research delivers it.
+        self.scheme_data_root: str = os.environ.get("SCHEME_DATA_ROOT", "scheme-data")
         self.supabase_url: str | None = os.environ.get("SUPABASE_URL") or None
         self.supabase_service_role_key: str | None = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or None
         self.supabase_schema: str = os.environ.get("SUPABASE_SCHEMA", "public")

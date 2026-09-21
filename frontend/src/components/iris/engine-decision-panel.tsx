@@ -4,32 +4,7 @@ import { DataField } from "@/components/iris/page";
 import { useEngineDecision } from "@/lib/iris/use-engine-decision";
 import { BackendUnavailableError } from "@/lib/iris/api-client";
 import type { Project } from "@/lib/iris/types";
-
-type Tone = "success" | "warning" | "danger" | "info" | "neutral";
-
-const FINAL_STATE_META: Record<string, { label: string; tone: Tone }> = {
-  APPLICABLE: { label: "Applicable", tone: "success" },
-  NOT_APPLICABLE: { label: "Not applicable", tone: "neutral" },
-  REQUIRES_INFORMATION: { label: "Requires information", tone: "warning" },
-  REQUIRES_REVIEW: { label: "Requires review", tone: "warning" },
-  BLOCKED_DRAFT_NOT_PRODUCTION: {
-    label: "Blocked — draft rule",
-    tone: "danger",
-  },
-  BLOCKED_NO_RULE: { label: "Blocked — no rule defined", tone: "danger" },
-  BLOCKED_UNKNOWN_REQUIREMENT: {
-    label: "Blocked — unknown requirement",
-    tone: "danger",
-  },
-  BLOCKED_UNKNOWN_RULE_VERSION_STATUS: {
-    label: "Blocked — unrecognised rule version status",
-    tone: "danger",
-  },
-};
-
-function finalStateMeta(state: string) {
-  return FINAL_STATE_META[state] ?? { label: state, tone: "neutral" as Tone };
-}
+import { finalStateMeta } from "@/lib/iris/decision-states";
 
 /**
  * Renders the real Phase 9 engine Decision for a requirement that is

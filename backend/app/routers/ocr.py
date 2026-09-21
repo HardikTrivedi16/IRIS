@@ -1,5 +1,6 @@
 """
-Local Tesseract OCR endpoint — image bytes -> raw text only.
+Local document-text endpoint — image (Tesseract OCR) or PDF (PyMuPDF
+embedded text, with Tesseract only for pages lacking it) -> raw text only.
 
     POST /api/v1/projects/{project_id}/documents/ocr
 
@@ -26,6 +27,7 @@ from ..ai_integration.ocr_service import (
     OCRUnavailable,
     extract_text_from_image,
 )
+from ..ai_integration.pdf_service import extract_text_from_pdf, looks_like_pdf
 from ..security import CurrentUser, get_optional_user
 from .projects import get_project
 
@@ -41,8 +43,11 @@ async def post_ocr(
 ) -> dict:
     get_project(project_id, user=user)
     try:
-        image_bytes = await file.read()
-        return extract_text_from_image(image_bytes, file.content_type)
+        data = await file.read()
+        if looks_like_pdf(data, file.content_type):
+            # Embedded text first; Tesseract only for pages without it.
+            return extract_text_from_pdf(data)
+        return extract_text_from_image(data, file.content_type)
     except OCRInvalidInput as exc:
         raise HTTPException(status_code=422, detail=str(exc))
     except OCRUnavailable as exc:

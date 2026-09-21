@@ -70,16 +70,6 @@ export interface UpcomingAction {
   priority: "high" | "medium" | "low";
 }
 
-export interface ComplianceItem {
-  id: string;
-  name: string;
-  authority: string;
-  status: "active" | "renewal-due" | "attention";
-  label: string;
-  detail: string;
-  daysRemaining?: number;
-}
-
 export interface RegulatorySource {
   id: string;
   name: string;
@@ -137,6 +127,11 @@ export interface ChatMessage {
   /** True when the backend flagged this answer for human review (e.g. a
    * citation could not be validated, or verification disagreed). */
   requiresHumanReview?: boolean;
+  /** The model's prose contradicted the Rule Engine and was replaced by
+   * the engine's own result (backend engine_guard). */
+  answerWithheld?: boolean;
+  /** The question concerned a facility other than the active project. */
+  outOfScope?: boolean;
   /** Ad-hoc/hypothetical facts used for THIS answer only (never persisted
    * as this project's stored Project Facts) — empty when the answer used
    * only stored facts. Kept distinct from any authoritative project data
@@ -148,18 +143,9 @@ export interface ChatMessage {
   isError?: boolean;
 }
 
-export interface ChangeImpactResult {
-  requirementsAffected: number;
-  newPathways: number;
-  dependencyChanges: number;
-  affectedRequirements: {
-    id: string;
-    name: string;
-    authority: string;
-    status: "new" | "affected";
-    label: string;
-  }[];
-  beforePath: string[];
-  afterPath: string[];
-  explanation: string;
-}
+// ChangeImpactResult (a hand-authored "requirements affected / new pathways /
+// before-path / after-path / explanation" shape) was removed: it only ever
+// described a hardcoded illustrative scenario on the Change Impact page.
+// Change Impact is now a real, deterministic diff of two engine evaluations —
+// see ChangeImpactResponse in lib/iris/api-client.ts, which mirrors the
+// backend's POST /api/v1/projects/{id}/change-impact response.

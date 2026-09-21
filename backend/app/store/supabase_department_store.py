@@ -174,6 +174,7 @@ class SupabaseDepartmentStore:
         date_to: Optional[str] = None,
         limit: int = 50,
         offset: int = 0,
+        project_id: Optional[str] = None,
     ) -> dict:
         params: dict[str, str] = {
             "select": "*,sla_instances(*),sla_policies(*)",
@@ -181,6 +182,8 @@ class SupabaseDepartmentStore:
         }
         if department_id:
             params["department_id"] = f"eq.{department_id}"
+        if project_id:
+            params["project_id"] = f"eq.{project_id}"
         if status:
             params["current_stage"] = f"eq.{status}"
         if requirement_id:

@@ -204,6 +204,7 @@ export function Drawer({
   subtitle,
   children,
   footer,
+  wide = false,
 }: {
   open: boolean;
   onClose: () => void;
@@ -212,6 +213,8 @@ export function Drawer({
   subtitle?: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
+  /** Wider panel for dense content (e.g. a Decision Proof). */
+  wide?: boolean;
 }) {
   if (!open) return null;
   return (
@@ -221,7 +224,12 @@ export function Drawer({
         onClick={onClose}
         aria-hidden
       />
-      <aside className="animate-drawer-in fixed right-0 top-0 z-50 flex h-screen w-full max-w-[420px] flex-col border-l border-border bg-surface shadow-drawer">
+      <aside
+        className={cn(
+          "animate-drawer-in fixed right-0 top-0 z-50 flex h-screen w-full flex-col border-l border-border bg-surface shadow-drawer",
+          wide ? "max-w-[600px]" : "max-w-[420px]",
+        )}
+      >
         <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-4">
           <div className="min-w-0">
             <div className="label-meta">{eyebrow}</div>

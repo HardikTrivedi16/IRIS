@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import logging
+from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
 from .. import engine_service
 from ..schemas import EvaluateRequest, EvaluateAllRequest
+from ..security import CurrentUser, get_optional_user
 from ..store import get_store
 from ..store.base import StoreError, DecisionConflictError
 
@@ -15,10 +17,12 @@ router = APIRouter(prefix="/api/v1", tags=["evaluate"])
 
 def _merged_facts(project_id: str, override: dict) -> dict:
     """Stored project facts (if the project exists in the store) merged
-    with request-body facts, which win on key collision. A project_id that
-    doesn't exist in the store is not an error here — evaluation is a pure
-    function of (requirement_id, facts); it degrades to using only the
-    facts supplied in the request body."""
+    with request-body facts, which win on key collision.
+
+    Callers MUST authorize ``project_id`` first (``_authorize_project`` here,
+    ``get_project`` in ask.py): this reads stored facts with no access check
+    of its own. The "project not in store" branch below is therefore only
+    reachable for an authorized caller racing a deletion."""
     stored = {}
     try:
         if get_store().get_project(project_id) is not None:
@@ -61,8 +65,31 @@ def _persist(decision: dict, project_facts: dict) -> dict:
         return {"stored": False, "error": "persistence backend unavailable"}
 
 
+def _authorize_project(project_id: str, user: Optional[CurrentUser]) -> None:
+    """Same authorization as every ``/projects/{id}/*`` sub-resource and Ask
+    IRIS: delegates to ``projects.get_project``, which fails closed (401)
+    for an unauthenticated caller outside demo mode, returns 404 for a
+    nonexistent project, and returns 404 (not 403, to avoid enumeration) when
+    an industry user asks for a project they do not own.
+
+    This must run BEFORE ``_merged_facts``: that helper loads the stored
+    Project Facts for ``project_id``, and those values are echoed back in the
+    Decision's condition tree (``actual_project_value``). Without this check
+    any caller could read any project's stored facts.
+    """
+    # Local import: projects imports nothing from here, but keeping the
+    # import local mirrors how routers avoid import-order coupling.
+    from .projects import get_project
+
+    get_project(project_id, user=user)
+
+
 @router.post("/evaluate")
-def evaluate(body: EvaluateRequest) -> dict:
+def evaluate(
+    body: EvaluateRequest,
+    user: Optional[CurrentUser] = Depends(get_optional_user),
+) -> dict:
+    _authorize_project(body.project_id, user)
     facts = _merged_facts(body.project_id, body.facts)
     try:
         decision = engine_service.evaluate_requirement(
@@ -82,7 +109,11 @@ def evaluate(body: EvaluateRequest) -> dict:
 
 
 @router.post("/evaluate/all")
-def evaluate_all(body: EvaluateAllRequest) -> dict:
+def evaluate_all(
+    body: EvaluateAllRequest,
+    user: Optional[CurrentUser] = Depends(get_optional_user),
+) -> dict:
+    _authorize_project(body.project_id, user)
     facts = _merged_facts(body.project_id, body.facts)
     try:
         decisions = engine_service.evaluate_all(

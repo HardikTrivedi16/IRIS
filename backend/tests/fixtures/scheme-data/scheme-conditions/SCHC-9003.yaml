@@ -1,0 +1,9 @@
+scheme_condition_id: SCHC-9003
+predicate_type: COMPOSITE
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+child_scheme_condition_ids: [SCHC-9001, SCHC-9002]
+unresolved_behavior: UNKNOWN
+description: "SYNTHETIC — both"

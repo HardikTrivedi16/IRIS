@@ -1,5 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import {
+  PreSubmissionCheck,
+  observationsFromExtraction,
+  type CheckSource,
+} from "@/components/iris/pre-submission-check";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FileText, Sparkles, Upload } from "lucide-react";
 import { useProject } from "@/lib/iris/project-context";
@@ -80,9 +85,17 @@ export const Route = createFileRoute("/documents")({
   component: DocumentsPage,
 });
 
-function LiveExtractionPanel({ projectId }: { projectId: string }) {
+function LiveExtractionPanel({
+  projectId,
+  onAddToCheck,
+}: {
+  projectId: string;
+  onAddToCheck: (source: CheckSource) => void;
+}) {
   const queryClient = useQueryClient();
   const [text, setText] = useState("");
+  const [checkDocName, setCheckDocName] = useState("");
+  const [addedToCheck, setAddedToCheck] = useState<string | null>(null);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [confirmedCount, setConfirmedCount] = useState<number | null>(null);
   const [ocrNotice, setOcrNotice] = useState<string | null>(null);
@@ -104,7 +117,11 @@ function LiveExtractionPanel({ projectId }: { projectId: string }) {
       setOcrNotice(
         result.warnings.length > 0
           ? result.warnings.join(" ")
-          : `Recognized ${result.char_count} characters with ${result.engine}. Review/edit below, then Extract.`,
+          : result.pages
+            ? `Read ${result.page_count} page(s): ${result.pages
+                .map((pg) => `p.${pg.page} ${pg.method === "EMBEDDED_TEXT" ? "embedded text" : pg.method === "OCR" ? "OCR" : pg.method.replace(/_/g, " ").toLowerCase()}`)
+                .join(", ")}. Review/edit below, then Extract.`
+            : `Recognized ${result.char_count} characters with ${result.engine}. Review/edit below, then Extract.`,
       );
     },
   });
@@ -114,6 +131,7 @@ function LiveExtractionPanel({ projectId }: { projectId: string }) {
     onSuccess: () => {
       setSelected({});
       setConfirmedCount(null);
+      setAddedToCheck(null);
     },
   });
 
@@ -218,8 +236,9 @@ function LiveExtractionPanel({ projectId }: { projectId: string }) {
           Project Facts under the <code className="font-mono">document.*</code>{" "}
           namespace — confirming does not assert that a value satisfies any
           specific Phase 9 regulatory requirement. This is local OCR, not a
-          cloud document pipeline; scanned PDFs aren't supported yet —
-          convert a PDF page to an image first, or paste its text.
+          cloud document pipeline. PDFs are read from their embedded
+          text; only pages without usable text are OCR'd, and each page's
+          method is shown.
         </p>
 
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -231,10 +250,10 @@ function LiveExtractionPanel({ projectId }: { projectId: string }) {
             )}
           >
             <Upload className="h-[13px] w-[13px]" />
-            {ocrMutation.isPending ? "Running OCR…" : "Upload image for OCR"}
+            {ocrMutation.isPending ? "Reading document…" : "Upload image or PDF"}
             <input
               type="file"
-              accept="image/png,image/jpeg,image/webp,image/bmp,image/tiff"
+              accept="image/png,image/jpeg,image/webp,image/bmp,image/tiff,application/pdf"
               className="hidden"
               disabled={!ocrAvailable || ocrMutation.isPending}
               onChange={(e) => {
@@ -349,6 +368,38 @@ function LiveExtractionPanel({ projectId }: { projectId: string }) {
               </ul>
             )}
 
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border pt-3">
+              <input
+                value={checkDocName}
+                onChange={(e) => setCheckDocName(e.target.value)}
+                placeholder="Document name (e.g. GST certificate)"
+                className="focus-ring w-[260px] rounded-sm border border-border bg-surface px-2 py-[6px] text-[12.5px]"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const name = checkDocName.trim() || `Extracted document ${new Date().toLocaleTimeString()}`;
+                  const id = `doc-${Date.now()}`;
+                  onAddToCheck({
+                    id,
+                    name,
+                    kind: "DOCUMENT",
+                    observations: observationsFromExtraction(data, name, id),
+                  });
+                  setAddedToCheck(name);
+                  setCheckDocName("");
+                }}
+                className="focus-ring inline-flex items-center gap-1.5 rounded-sm border border-border px-3 py-[7px] text-[12.5px] font-medium hover:bg-secondary"
+              >
+                Add to pre-submission check
+              </button>
+              {addedToCheck && (
+                <span className="text-[11.5px] text-muted-foreground">
+                  Added “{addedToCheck}” — values were not saved.
+                </span>
+              )}
+            </div>
+
             <button
               type="button"
               onClick={confirmSelected}
@@ -413,6 +464,11 @@ const docStatusMeta: Record<
 
 function DocumentsPage() {
   const { activeProject } = useProject();
+  // Session-only sources for the pre-submission check, per project.
+  const [checkSources, setCheckSources] = useState<Record<string, CheckSource[]>>({});
+  const projectCheckSources = checkSources[activeProject.id] ?? [];
+  const setProjectCheckSources = (fn: (prev: CheckSource[]) => CheckSource[]) =>
+    setCheckSources((all) => ({ ...all, [activeProject.id]: fn(all[activeProject.id] ?? []) }));
   const { data: docs = [] } = useProjectDocuments(activeProject.id);
   const { data: reqs = [] } = useProjectRequirements(activeProject.id);
   const [filter, setFilter] = useState<"all" | DocumentItem["status"]>("all");
@@ -567,7 +623,26 @@ function DocumentsPage() {
         )}
       </div>
 
-      <LiveExtractionPanel projectId={activeProject.id} />
+      <section id="pre-submission-check" className="mt-8">
+        <SectionHeading
+          title="Pre-submission check"
+          hint="What does not match before you file? Deterministic comparison — no AI decides a match."
+        />
+        <div className="mt-3">
+          <PreSubmissionCheck
+            key={activeProject.id}
+            projectId={activeProject.id}
+            sources={projectCheckSources}
+            onAddSource={(src) => setProjectCheckSources((p) => [...p, src])}
+            onRemoveSource={(id) => setProjectCheckSources((p) => p.filter((x) => x.id !== id))}
+          />
+        </div>
+      </section>
+
+      <LiveExtractionPanel
+        projectId={activeProject.id}
+        onAddToCheck={(src) => setProjectCheckSources((p) => [...p, src])}
+      />
 
       <section className="mt-8">
         <SectionHeading

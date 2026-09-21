@@ -15,16 +15,20 @@ import { Route as ChangeImpactRouteImport } from './routes/change-impact'
 import { Route as ComplianceRouteImport } from './routes/compliance'
 import { Route as DepartmentRouteImport } from './routes/department'
 import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as EvaluationRouteImport } from './routes/evaluation'
+import { Route as GrievancesRouteImport } from './routes/grievances'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as RegulatoryMapRouteImport } from './routes/regulatory-map'
 import { Route as RequirementsRouteImport } from './routes/requirements'
+import { Route as SchemesRouteImport } from './routes/schemes'
 import { Route as SourcesRouteImport } from './routes/sources'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as DepartmentIndexRouteImport } from './routes/department/index'
 import { Route as DepartmentApplicationsRouteImport } from './routes/department/applications'
 import { Route as DepartmentAuditRouteImport } from './routes/department/audit'
 import { Route as DepartmentBottlenecksRouteImport } from './routes/department/bottlenecks'
+import { Route as DepartmentGrievancesRouteImport } from './routes/department/grievances'
 import { Route as DepartmentOfficersRouteImport } from './routes/department/officers'
 import { Route as DepartmentSettingsRouteImport } from './routes/department/settings'
 import { Route as DepartmentSlaRouteImport } from './routes/department/sla'
@@ -60,6 +64,16 @@ const DocumentsRoute = DocumentsRouteImport.update({
   path: '/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EvaluationRoute = EvaluationRouteImport.update({
+  id: '/evaluation',
+  path: '/evaluation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GrievancesRoute = GrievancesRouteImport.update({
+  id: '/grievances',
+  path: '/grievances',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -78,6 +92,11 @@ const RegulatoryMapRoute = RegulatoryMapRouteImport.update({
 const RequirementsRoute = RequirementsRouteImport.update({
   id: '/requirements',
   path: '/requirements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SchemesRoute = SchemesRouteImport.update({
+  id: '/schemes',
+  path: '/schemes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SourcesRoute = SourcesRouteImport.update({
@@ -110,6 +129,11 @@ const DepartmentBottlenecksRoute = DepartmentBottlenecksRouteImport.update({
   path: '/bottlenecks',
   getParentRoute: () => DepartmentRoute,
 } as any)
+const DepartmentGrievancesRoute = DepartmentGrievancesRouteImport.update({
+  id: '/grievances',
+  path: '/grievances',
+  getParentRoute: () => DepartmentRoute,
+} as any)
 const DepartmentOfficersRoute = DepartmentOfficersRouteImport.update({
   id: '/officers',
   path: '/officers',
@@ -139,15 +163,19 @@ export interface FileRoutesByFullPath {
   '/compliance': typeof ComplianceRoute
   '/department': typeof DepartmentRouteWithChildren
   '/documents': typeof DocumentsRoute
+  '/evaluation': typeof EvaluationRoute
+  '/grievances': typeof GrievancesRoute
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
   '/regulatory-map': typeof RegulatoryMapRoute
   '/requirements': typeof RequirementsRoute
+  '/schemes': typeof SchemesRoute
   '/sources': typeof SourcesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/department/applications': typeof DepartmentApplicationsRoute
   '/department/audit': typeof DepartmentAuditRoute
   '/department/bottlenecks': typeof DepartmentBottlenecksRoute
+  '/department/grievances': typeof DepartmentGrievancesRoute
   '/department/officers': typeof DepartmentOfficersRoute
   '/department/settings': typeof DepartmentSettingsRoute
   '/department/sla': typeof DepartmentSlaRoute
@@ -160,15 +188,19 @@ export interface FileRoutesByTo {
   '/change-impact': typeof ChangeImpactRoute
   '/compliance': typeof ComplianceRoute
   '/documents': typeof DocumentsRoute
+  '/evaluation': typeof EvaluationRoute
+  '/grievances': typeof GrievancesRoute
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
   '/regulatory-map': typeof RegulatoryMapRoute
   '/requirements': typeof RequirementsRoute
+  '/schemes': typeof SchemesRoute
   '/sources': typeof SourcesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/department/applications': typeof DepartmentApplicationsRoute
   '/department/audit': typeof DepartmentAuditRoute
   '/department/bottlenecks': typeof DepartmentBottlenecksRoute
+  '/department/grievances': typeof DepartmentGrievancesRoute
   '/department/officers': typeof DepartmentOfficersRoute
   '/department/settings': typeof DepartmentSettingsRoute
   '/department/sla': typeof DepartmentSlaRoute
@@ -183,15 +215,19 @@ export interface FileRoutesById {
   '/compliance': typeof ComplianceRoute
   '/department': typeof DepartmentRouteWithChildren
   '/documents': typeof DocumentsRoute
+  '/evaluation': typeof EvaluationRoute
+  '/grievances': typeof GrievancesRoute
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
   '/regulatory-map': typeof RegulatoryMapRoute
   '/requirements': typeof RequirementsRoute
+  '/schemes': typeof SchemesRoute
   '/sources': typeof SourcesRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/department/applications': typeof DepartmentApplicationsRoute
   '/department/audit': typeof DepartmentAuditRoute
   '/department/bottlenecks': typeof DepartmentBottlenecksRoute
+  '/department/grievances': typeof DepartmentGrievancesRoute
   '/department/officers': typeof DepartmentOfficersRoute
   '/department/settings': typeof DepartmentSettingsRoute
   '/department/sla': typeof DepartmentSlaRoute
@@ -207,15 +243,19 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/department'
     | '/documents'
+    | '/evaluation'
+    | '/grievances'
     | '/login'
     | '/projects'
     | '/regulatory-map'
     | '/requirements'
+    | '/schemes'
     | '/sources'
     | '/auth/callback'
     | '/department/applications'
     | '/department/audit'
     | '/department/bottlenecks'
+    | '/department/grievances'
     | '/department/officers'
     | '/department/settings'
     | '/department/sla'
@@ -228,15 +268,19 @@ export interface FileRouteTypes {
     | '/change-impact'
     | '/compliance'
     | '/documents'
+    | '/evaluation'
+    | '/grievances'
     | '/login'
     | '/projects'
     | '/regulatory-map'
     | '/requirements'
+    | '/schemes'
     | '/sources'
     | '/auth/callback'
     | '/department/applications'
     | '/department/audit'
     | '/department/bottlenecks'
+    | '/department/grievances'
     | '/department/officers'
     | '/department/settings'
     | '/department/sla'
@@ -250,15 +294,19 @@ export interface FileRouteTypes {
     | '/compliance'
     | '/department'
     | '/documents'
+    | '/evaluation'
+    | '/grievances'
     | '/login'
     | '/projects'
     | '/regulatory-map'
     | '/requirements'
+    | '/schemes'
     | '/sources'
     | '/auth/callback'
     | '/department/applications'
     | '/department/audit'
     | '/department/bottlenecks'
+    | '/department/grievances'
     | '/department/officers'
     | '/department/settings'
     | '/department/sla'
@@ -273,10 +321,13 @@ export interface RootRouteChildren {
   ComplianceRoute: typeof ComplianceRoute
   DepartmentRoute: typeof DepartmentRouteWithChildren
   DocumentsRoute: typeof DocumentsRoute
+  EvaluationRoute: typeof EvaluationRoute
+  GrievancesRoute: typeof GrievancesRoute
   LoginRoute: typeof LoginRoute
   ProjectsRoute: typeof ProjectsRoute
   RegulatoryMapRoute: typeof RegulatoryMapRoute
   RequirementsRoute: typeof RequirementsRoute
+  SchemesRoute: typeof SchemesRoute
   SourcesRoute: typeof SourcesRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
 }
@@ -325,6 +376,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/evaluation': {
+      id: '/evaluation'
+      path: '/evaluation'
+      fullPath: '/evaluation'
+      preLoaderRoute: typeof EvaluationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grievances': {
+      id: '/grievances'
+      path: '/grievances'
+      fullPath: '/grievances'
+      preLoaderRoute: typeof GrievancesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -351,6 +416,13 @@ declare module '@tanstack/react-router' {
       path: '/requirements'
       fullPath: '/requirements'
       preLoaderRoute: typeof RequirementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schemes': {
+      id: '/schemes'
+      path: '/schemes'
+      fullPath: '/schemes'
+      preLoaderRoute: typeof SchemesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sources': {
@@ -395,6 +467,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DepartmentBottlenecksRouteImport
       parentRoute: typeof DepartmentRoute
     }
+    '/department/grievances': {
+      id: '/department/grievances'
+      path: '/grievances'
+      fullPath: '/department/grievances'
+      preLoaderRoute: typeof DepartmentGrievancesRouteImport
+      parentRoute: typeof DepartmentRoute
+    }
     '/department/officers': {
       id: '/department/officers'
       path: '/officers'
@@ -430,6 +509,7 @@ interface DepartmentRouteChildren {
   DepartmentApplicationsRoute: typeof DepartmentApplicationsRoute
   DepartmentAuditRoute: typeof DepartmentAuditRoute
   DepartmentBottlenecksRoute: typeof DepartmentBottlenecksRoute
+  DepartmentGrievancesRoute: typeof DepartmentGrievancesRoute
   DepartmentOfficersRoute: typeof DepartmentOfficersRoute
   DepartmentSettingsRoute: typeof DepartmentSettingsRoute
   DepartmentSlaRoute: typeof DepartmentSlaRoute
@@ -441,6 +521,7 @@ const DepartmentRouteChildren: DepartmentRouteChildren = {
   DepartmentApplicationsRoute: DepartmentApplicationsRoute,
   DepartmentAuditRoute: DepartmentAuditRoute,
   DepartmentBottlenecksRoute: DepartmentBottlenecksRoute,
+  DepartmentGrievancesRoute: DepartmentGrievancesRoute,
   DepartmentOfficersRoute: DepartmentOfficersRoute,
   DepartmentSettingsRoute: DepartmentSettingsRoute,
   DepartmentSlaRoute: DepartmentSlaRoute,
@@ -459,10 +540,13 @@ const rootRouteChildren: RootRouteChildren = {
   ComplianceRoute: ComplianceRoute,
   DepartmentRoute: DepartmentRouteWithChildren,
   DocumentsRoute: DocumentsRoute,
+  EvaluationRoute: EvaluationRoute,
+  GrievancesRoute: GrievancesRoute,
   LoginRoute: LoginRoute,
   ProjectsRoute: ProjectsRoute,
   RegulatoryMapRoute: RegulatoryMapRoute,
   RequirementsRoute: RequirementsRoute,
+  SchemesRoute: SchemesRoute,
   SourcesRoute: SourcesRoute,
   AuthCallbackRoute: AuthCallbackRoute,
 }

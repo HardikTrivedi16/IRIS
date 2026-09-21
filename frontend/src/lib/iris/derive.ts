@@ -3,7 +3,6 @@ import type {
   Status,
   GraphNode,
   GraphEdge,
-  ComplianceItem,
 } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -138,28 +137,9 @@ export function deriveDeadlines(reqs: Requirement[]): Deadline[] {
     }));
 }
 
-/** Standing licences/consents derived from completed & in-progress approvals. */
-export function deriveCompliance(reqs: Requirement[]): ComplianceItem[] {
-  return reqs
-    .filter(
-      (r) =>
-        r.applicability === "applicable" &&
-        r.authority !== "—" &&
-        (r.status === "ready" || r.status === "attention"),
-    )
-    .map((r) => ({
-      id: r.id,
-      name: r.name,
-      authority: r.authority,
-      status: r.status === "ready" ? "active" : "renewal-due",
-      label: r.status === "ready" ? "Active" : "In progress",
-      detail:
-        r.status === "ready"
-          ? "Granted — retain approval evidence for downstream applications."
-          : (r.reason ?? "Application in review."),
-      ...(r.status === "ready" ? {} : { daysRemaining: 30 }),
-    }));
-}
+// deriveCompliance() was removed: it labelled every in-progress approval with
+// an invented `daysRemaining: 30`. Renewals now come from the backend
+// (GET /projects/{id}/renewals), computed only from expiry dates on record.
 
 /** Build the regulatory dependency graph from requirement rows. Applicable
  * requirements become approval/milestone nodes; a synthetic "project" root

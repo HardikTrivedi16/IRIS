@@ -448,7 +448,7 @@ function RequirementsPage() {
             <DrawerSection label="Source reference">
               <p className="text-[12.5px]">{selected.source}</p>
               <p className="mt-1 text-[11.5px] text-muted-foreground">
-                Verified September 2026 · prototype source record
+                Tracking-register reference — not independently verified
               </p>
             </DrawerSection>
           </div>

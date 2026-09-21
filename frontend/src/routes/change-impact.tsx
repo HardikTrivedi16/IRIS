@@ -1,50 +1,35 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
-import { useMemo } from "react";
 import { useProject } from "@/lib/iris/project-context";
-import { useProjectRequirements } from "@/lib/iris/use-project-data";
-import { buildRegulatoryGraph } from "@/lib/iris/derive";
 import {
-  PageHeader,
-  PageShell,
-  SectionHeading,
-  DataField,
-} from "@/components/iris/page";
-import { StatusBadge, Tag, StatusDot } from "@/components/iris/status";
-import { DependencyGraph } from "@/components/iris/dependency-graph";
-import type { GraphNode, ChangeImpactResult } from "@/lib/iris/types";
+  ApiError,
+  BackendUnavailableError,
+  irisApi,
+  type ChangeImpactCategory,
+  type ChangeImpactRequirement,
+  type ChangeImpactResponse,
+  type ChangeImpactSide,
+  type FactRegistryEntry,
+} from "@/lib/iris/api-client";
+import { PageHeader, PageShell, SectionHeading } from "@/components/iris/page";
+import { Tag } from "@/components/iris/status";
+import { finalStateMeta } from "@/lib/iris/decision-states";
+import {
+  FACT_UNKNOWN,
+  factLabel,
+  fieldErrorsFromDetail,
+  formatFactValue,
+  parseFactInput,
+  useFactRegistry,
+  useProjectFacts,
+} from "@/lib/iris/facts";
+import {
+  DecisionProofDrawer,
+  type ProofTarget,
+} from "@/components/iris/decision-proof-drawer";
 import { cn } from "@/lib/utils";
-
-// A worked change-impact scenario shown for demonstration. This is an
-// illustrative "what if" narrative (not a live engine computation — the Phase 9
-// dataset has no verified dependency edges yet), so it is kept here as a local
-// constant rather than per-project data.
-const changeImpactResult: ChangeImpactResult = {
-  requirementsAffected: 2,
-  newPathways: 1,
-  dependencyChanges: 2,
-  affectedRequirements: [
-    {
-      id: "env-clearance",
-      name: "Environmental Clearance",
-      authority: "SEIAA",
-      status: "new",
-      label: "NEW / REVIEW REQUIRED",
-    },
-    {
-      id: "hazardous-waste",
-      name: "Additional Hazardous Waste Requirements",
-      authority: "MPCB",
-      status: "affected",
-      label: "AFFECTED",
-    },
-  ],
-  beforePath: ["Project", "CTE", "Construction", "CTO"],
-  afterPath: ["Project", "Environmental Review", "CTE", "Construction", "CTO"],
-  explanation:
-    "Adding API manufacturing introduces active pharmaceutical ingredient processes, which trigger Environmental Clearance requirements under the EIA Notification. This creates a new regulatory pathway before CTE and modifies hazardous waste handling obligations under MPCB rules.",
-};
 
 export const Route = createFileRoute("/change-impact")({
   head: () => ({
@@ -53,149 +38,332 @@ export const Route = createFileRoute("/change-impact")({
       {
         name: "description",
         content:
-          "See how a proposed project change affects regulatory requirements, approvals, dependencies, documentation and timeline.",
+          "Re-evaluate the deterministic rule engine against a proposed change to this project's facts, and compare the result with the current one.",
       },
       { property: "og:title", content: "Change Impact Analysis — IRIS" },
       {
         property: "og:description",
         content:
-          "Structured before/after impact assessment for proposed industrial project changes.",
+          "Deterministic before/after regulatory comparison for a proposed project change.",
       },
     ],
   }),
   component: ChangeImpact,
 });
 
-const changeOptions = [
-  {
-    id: "api",
-    label: "Add API manufacturing",
-    detail:
-      "Introduce active pharmaceutical ingredient synthesis alongside formulation",
-  },
-  {
-    id: "capacity",
-    label: "Increase production capacity by 40%",
-    detail: "Higher effluent load and expanded solvent storage",
-  },
-  {
-    id: "solvent",
-    label: "Add solvent recovery unit",
-    detail: "New hazardous process with additional safety obligations",
-  },
-];
+// ---------------------------------------------------------------------------
+// Presentation metadata. These describe ENGINE STATE TRANSITIONS reported by
+// the backend — not legal consequences. No requirement, threshold, pathway or
+// narrative is authored here; everything rendered below comes from the
+// /change-impact response.
+// ---------------------------------------------------------------------------
 
-const impactAreas = [
-  {
-    area: "Regulatory requirements",
-    severity: "blocked" as const,
-    level: "High impact",
-    findings: [
-      "MPCB category may require re-evaluation under revised process classification",
-      "Drug Manufacturing Licence scope requires amendment for API processes",
-    ],
-  },
-  {
-    area: "Environmental approvals",
-    severity: "blocked" as const,
-    level: "High impact",
-    findings: [
-      "Environmental Clearance applicability requires review before Consent to Establish",
-      "Consent to Establish conditions likely to be re-issued with revised effluent limits",
-    ],
-  },
-  {
-    area: "Documents",
-    severity: "attention" as const,
-    level: "Medium impact",
-    findings: [
-      "Additional hazardous-process documentation may apply",
-      "Chemical inventory and process flow require revision and re-verification",
-    ],
-  },
-  {
-    area: "Dependencies",
-    severity: "attention" as const,
-    level: "Medium impact",
-    findings: [
-      "Existing dependency path changes — an environmental review step precedes CTE",
-      "Factory Plan Approval gains a prerequisite on the revised process layout",
-    ],
-  },
-  {
-    area: "Inspection requirements",
-    severity: "attention" as const,
-    level: "Medium impact",
-    findings: [
-      "Additional safety inspection expected before Factory Licence issuance",
-    ],
-  },
-  {
-    area: "Project timeline",
-    severity: "not-ready" as const,
-    level: "Low impact",
-    findings: ["Estimated 8–12 weeks added to the pre-establishment stage"],
-  },
-];
+const CATEGORY_META: Record<
+  ChangeImpactCategory,
+  { label: string; tone: "success" | "warning" | "danger" | "info" | "neutral" }
+> = {
+  NEWLY_APPLICABLE: { label: "Newly applicable", tone: "info" },
+  NO_LONGER_APPLICABLE: { label: "No longer applicable", tone: "success" },
+  REQUIRES_REVIEW: { label: "Requires review", tone: "warning" },
+  REQUIRES_INFORMATION: { label: "Requires information", tone: "warning" },
+  CHANGED: { label: "Changed", tone: "warning" },
+  UNCHANGED: { label: "Unchanged", tone: "neutral" },
+};
 
-function PathRow({
+function stateLabel(state: string): string {
+  return finalStateMeta(state).label;
+}
+
+const formatValue = formatFactValue;
+
+// ---------------------------------------------------------------------------
+
+/** One editable proposed value per supported fact. Empty string means "leave
+ * this fact untouched" — it is not sent to the backend at all. */
+type DraftValues = Record<string, string>;
+
+function parseDraft(entry: FactRegistryEntry, raw: string) {
+  // "Clear" in this editor means "set back to unknown" — same as the shared
+  // FACT_UNKNOWN sentinel the intake form uses.
+  return parseFactInput(entry, raw === "__CLEAR__" ? FACT_UNKNOWN : raw);
+}
+
+function FactInput({
+  entry,
+  currentValue,
+  value,
+  onChange,
+}: {
+  entry: FactRegistryEntry;
+  currentValue: unknown;
+  value: string;
+  onChange: (next: string) => void;
+}) {
+  const unit = entry.units[0];
+  const referenced = entry.values_referenced_by_rules;
+
+  return (
+    <div className="grid gap-x-6 gap-y-2 border-b border-border px-5 py-4 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_200px]">
+      <div>
+        <p className="text-[13px] font-medium capitalize">
+          {factLabel(entry.key)}
+        </p>
+        <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
+          {entry.key}
+          {unit ? ` · ${unit}` : ""}
+        </p>
+        <p className="mt-1 text-[11.5px] text-muted-foreground">
+          Current: <span className="tabular">{formatValue(currentValue)}</span>
+          {referenced.length > 0 && (
+            <>
+              {" · "}
+              Values referenced by rules:{" "}
+              <span className="tabular">
+                {referenced.map((v) => formatValue(v)).join(", ")}
+              </span>
+            </>
+          )}
+        </p>
+      </div>
+
+      <div className="flex items-start">
+        {entry.value_type === "boolean" ? (
+          <select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
+          >
+            <option value="">No change</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+            <option value="__CLEAR__">Clear (unknown)</option>
+          </select>
+        ) : entry.value_type === "number" ? (
+          <input
+            type="number"
+            value={value === "__CLEAR__" ? "" : value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="No change"
+            className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px] tabular"
+          />
+        ) : (
+          <input
+            type="text"
+            value={value === "__CLEAR__" ? "" : value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="No change"
+            className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function SideColumn({
   label,
-  path,
+  side,
   tone,
 }: {
   label: string;
-  path: string[];
+  side: ChangeImpactSide;
   tone: "muted" | "active";
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
-      <span className="label-meta w-[52px] shrink-0">{label}</span>
-      {path.map((step, i) => (
-        <span key={`${step}-${i}`} className="flex items-center gap-2">
-          {i > 0 && <ArrowRight className="h-3 w-3 text-muted-foreground/60" />}
-          <span
-            className={cn(
-              "rounded-sm border px-2 py-[4px] text-[12px]",
-              tone === "active" &&
-                !["Project", "CTE", "Construction", "CTO"].includes(step)
-                ? "border-info bg-info-surface font-medium text-info"
-                : tone === "active"
-                  ? "border-border bg-surface"
-                  : "border-border bg-surface-sunken text-muted-foreground",
+    <div
+      className={cn(
+        "px-4 py-3",
+        tone === "muted" ? "bg-surface-sunken" : "bg-surface",
+      )}
+    >
+      <div className="label-meta">{label}</div>
+      <p className="mt-1 text-[13px] font-medium">
+        {stateLabel(side.final_state)}
+      </p>
+      {side.reason_text && (
+        <p className="mt-1.5 text-[11.5px] leading-relaxed text-muted-foreground">
+          {side.reason_text}
+        </p>
+      )}
+      {side.missing_project_fact_keys.length > 0 && (
+        <ul className="mt-1.5 space-y-0.5">
+          {side.missing_project_fact_keys.map((k) => (
+            <li key={k} className="font-mono text-[11px] text-warning">
+              missing: {k}
+            </li>
+          ))}
+        </ul>
+      )}
+      {side.classification && (
+        <div className="mt-2 border-t border-border/60 pt-2">
+          <span className="label-meta">Classification sub-rules</span>
+          <p className="mt-0.5 text-[11.5px]">
+            {side.classification.combined_state ?? "—"}
+          </p>
+          <ul className="mt-0.5 space-y-0.5">
+            {Object.entries(side.classification.rule_results).map(
+              ([ruleId, state]) => (
+                <li
+                  key={ruleId}
+                  className="font-mono text-[10.5px] text-muted-foreground"
+                >
+                  {ruleId}: {state}
+                </li>
+              ),
             )}
-          >
-            {step}
-          </span>
-        </span>
-      ))}
+          </ul>
+        </div>
+      )}
+
+      <p className="mt-2 font-mono text-[10.5px] text-muted-foreground/80">
+        {side.rule_version_id ?? "no rule version"}
+        {side.rule_version_status ? ` · ${side.rule_version_status}` : ""}
+      </p>
+    </div>
+  );
+}
+
+function RequirementDiff({
+  req,
+  onProof,
+}: {
+  req: ChangeImpactRequirement;
+  onProof: (requirementId: string, side: "current" | "proposed") => void;
+}) {
+  const meta = CATEGORY_META[req.category];
+  return (
+    <div className="border border-border bg-surface">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-border px-4 py-3">
+        <div>
+          <h3 className="text-[13.5px] font-medium">{req.requirement_title}</h3>
+          <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
+            {req.requirement_id}
+            {req.authority_id ? ` · ${req.authority_id}` : ""}
+          </p>
+        </div>
+        <Tag tone={meta.tone}>{meta.label}</Tag>
+      </div>
+
+      <div className="grid sm:grid-cols-[minmax(0,1fr)_28px_minmax(0,1fr)]">
+        <SideColumn label="Current" side={req.before} tone="muted" />
+        <div className="hidden items-center justify-center sm:flex">
+          <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/60" />
+        </div>
+        <SideColumn label="Proposed" side={req.after} tone="active" />
+      </div>
+
+      <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-border px-4 py-2">
+        <button
+          type="button"
+          onClick={() => onProof(req.requirement_id, "current")}
+          className="text-[12px] font-medium text-info hover:opacity-80"
+        >
+          Decision proof — current →
+        </button>
+        <button
+          type="button"
+          onClick={() => onProof(req.requirement_id, "proposed")}
+          className="text-[12px] font-medium text-info hover:opacity-80"
+        >
+          Decision proof — proposed →
+        </button>
+      </div>
+
+      {req.changed_facts_used_by_this_requirement.length > 0 && (
+        <div className="border-t border-border px-4 py-2.5">
+          <span className="label-meta">Changed facts this rule reads</span>
+          <ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+            {req.changed_facts_used_by_this_requirement.map((k) => (
+              <li key={k} className="font-mono text-[11px] text-info">
+                {k}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
 
 function ChangeImpact() {
   const { activeProject } = useProject();
-  const [change, setChange] = useState(changeOptions[0]!.id);
-  const [analysed, setAnalysed] = useState(true);
-  const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const [draft, setDraft] = useState<DraftValues>({});
+  const [showUnchanged, setShowUnchanged] = useState(false);
+  const [diagnostic, setDiagnostic] = useState(false);
+  const [result, setResult] = useState<ChangeImpactResponse | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [proof, setProof] = useState<ProofTarget | null>(null);
 
-  const { data: reqs = [] } = useProjectRequirements(activeProject.id);
-  const { nodes, edges } = useMemo(
-    () => buildRegulatoryGraph(reqs, activeProject.name),
-    [reqs, activeProject.name],
+  function openProof(requirementId: string, side: "current" | "proposed") {
+    if (!result) return;
+    const target: ProofTarget = {
+      requirementId,
+      evaluationMode: result.evaluation_mode,
+    };
+    if (side === "proposed") {
+      // Exactly the effective changes the diff used — proven as hypothetical,
+      // never saved.
+      target.hypotheticalFacts = Object.fromEntries(
+        result.proposed_changes.map((c) => [c.key, c.proposed_value]),
+      );
+    }
+    setProof(target);
+  }
+
+  const registryQuery = useFactRegistry();
+  const factsQuery = useProjectFacts(activeProject.id);
+
+  const currentFacts = factsQuery.data?.facts ?? {};
+
+  const supported = useMemo(
+    () => (registryQuery.data?.facts ?? []).filter((f) => f.typed_input_supported),
+    [registryQuery.data],
   );
-  const result = changeImpactResult;
-  const selectedChange = changeOptions.find((c) => c.id === change)!;
 
-  const impactPath = new Set([
-    "project",
-    "midc-site",
-    "mpcb-cte",
-    "building-plan",
-    "factory-plan",
-    "factory-licence",
-    "mpcb-cto",
-    "operation-ready",
-  ]);
+  const mutation = useMutation({
+    mutationFn: (proposedFacts: Record<string, unknown>) =>
+      irisApi.analyseChangeImpact(activeProject.id, {
+        proposedFacts,
+        evaluationMode: diagnostic ? "NON_PRODUCTION" : "PRODUCTION",
+      }),
+    onSuccess: (data) => {
+      setResult(data);
+      setFieldErrors({});
+    },
+    onError: (error) => {
+      setResult(null);
+      if (error instanceof ApiError && error.status === 422) {
+        // The backend reports every bad field at once.
+        setFieldErrors(fieldErrorsFromDetail(error.detail));
+      }
+    },
+  });
+
+  function analyse() {
+    const proposed: Record<string, unknown> = {};
+    const errors: Record<string, string> = {};
+    for (const entry of supported) {
+      const raw = draft[entry.key];
+      if (raw === undefined || raw === "") continue;
+      const parsed = parseDraft(entry, raw);
+      if (parsed.ok) proposed[entry.key] = parsed.value;
+      else errors[entry.key] = parsed.message;
+    }
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setResult(null);
+      return;
+    }
+    setFieldErrors({});
+    mutation.mutate(proposed);
+  }
+
+  const changed = (result?.requirements ?? []).filter(
+    (r) => r.category !== "UNCHANGED",
+  );
+  const unchanged = (result?.requirements ?? []).filter(
+    (r) => r.category === "UNCHANGED",
+  );
 
   return (
     <PageShell wide>
@@ -205,285 +373,226 @@ function ChangeImpact() {
           { label: "Change Impact" },
         ]}
         title="Change Impact Analysis"
-        description="Preview how a proposed change affects approvals before you file"
-        actions={
-          <Link
-            to="/regulatory-map"
-            className="rounded-sm border border-border px-3 py-[7px] text-[12.5px] font-medium transition-colors hover:bg-secondary"
-          >
-            Open regulatory map
-          </Link>
-        }
+        description={`Re-evaluate ${activeProject.name} against a proposed change to its project facts`}
       />
 
-      {/* Change definition */}
-      <section className="mt-6 grid border border-border bg-surface lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <div className="border-b border-border px-5 py-5 lg:border-b-0 lg:border-r">
-          <div className="label-meta">Current project scope</div>
-          <h2 className="mt-1.5 text-[15px] font-semibold">
-            {activeProject.name}
-          </h2>
-          <p className="mt-1 text-[12.5px] text-muted-foreground">
-            {activeProject.activity}
-          </p>
-          <div className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
-            <DataField
-              label="Stage"
-              value={
-                <span className="capitalize">
-                  {activeProject.stage.replace("-", " ")}
-                </span>
-              }
-            />
-            <DataField
-              label="Location"
-              value={`${activeProject.location}, IN`}
-            />
-            <DataField
-              label="Workers"
-              value={<span className="tabular">{activeProject.workers}</span>}
-            />
-            <DataField
-              label="Scale"
-              value={<span className="capitalize">{activeProject.scale}</span>}
-            />
+      <section className="mt-6 border border-border bg-surface">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-border px-5 py-3">
+          <div>
+            <h2 className="text-[13.5px] font-semibold">Proposed change</h2>
+            <p className="mt-0.5 text-[12px] text-muted-foreground">
+              Only facts the current regulatory dataset's rules actually read
+              are listed. Leave a field blank to keep its current value.
+            </p>
           </div>
+          <label className="flex items-center gap-2 text-[12px] text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={diagnostic}
+              onChange={(e) => setDiagnostic(e.target.checked)}
+              className="accent-[var(--info)]"
+            />
+            Diagnostic (non-production) mode
+          </label>
         </div>
 
-        <div className="px-5 py-5">
-          <div className="label-meta">Proposed change</div>
-          <div className="mt-2.5 space-y-1.5">
-            {changeOptions.map((opt) => (
-              <label
-                key={opt.id}
-                className={cn(
-                  "row-hover flex cursor-pointer items-start gap-3 rounded-sm border px-3 py-2.5",
-                  change === opt.id
-                    ? "border-info bg-info-surface"
-                    : "border-border hover:bg-surface-sunken",
-                )}
-              >
-                <input
-                  type="radio"
-                  name="change"
-                  className="mt-[3px] accent-[var(--info)]"
-                  checked={change === opt.id}
-                  onChange={() => {
-                    setChange(opt.id);
-                    setAnalysed(false);
-                  }}
+        {registryQuery.isLoading || factsQuery.isLoading ? (
+          <p className="px-5 py-6 text-[12.5px] text-muted-foreground">
+            Loading the supported project facts…
+          </p>
+        ) : registryQuery.isError || factsQuery.isError ? (
+          <p className="px-5 py-6 text-[12.5px] text-muted-foreground">
+            {registryQuery.error instanceof BackendUnavailableError ||
+            factsQuery.error instanceof BackendUnavailableError
+              ? "The IRIS backend isn't reachable, so a change cannot be analysed right now."
+              : "The supported project facts could not be loaded."}
+          </p>
+        ) : supported.length === 0 ? (
+          <p className="px-5 py-6 text-[12.5px] text-muted-foreground">
+            The regulatory dataset declares no typed project facts, so there is
+            nothing to vary.
+          </p>
+        ) : (
+          <>
+            {supported.map((entry) => (
+              <div key={entry.key}>
+                <FactInput
+                  entry={entry}
+                  currentValue={currentFacts[entry.key]}
+                  value={draft[entry.key] ?? ""}
+                  onChange={(next) =>
+                    setDraft((prev) => ({ ...prev, [entry.key]: next }))
+                  }
                 />
-                <span>
-                  <span className="block text-[13px] font-medium">
-                    {opt.label}
-                  </span>
-                  <span className="mt-0.5 block text-[11.5px] text-muted-foreground">
-                    {opt.detail}
-                  </span>
-                </span>
-              </label>
+                {fieldErrors[entry.key] && (
+                  <p className="px-5 pb-2 text-[11.5px] text-destructive">
+                    {fieldErrors[entry.key]}
+                  </p>
+                )}
+              </div>
             ))}
-          </div>
-          <button
-            type="button"
-            onClick={() => setAnalysed(true)}
-            className="mt-4 rounded-sm bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
-          >
-            {analysed ? "Re-run analysis" : "Analyse impact"}
-          </button>
-        </div>
+
+            <div className="flex flex-wrap items-center gap-3 border-t border-border px-5 py-3">
+              <button
+                type="button"
+                onClick={analyse}
+                disabled={mutation.isPending}
+                className="focus-ring rounded-sm bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
+              >
+                {mutation.isPending ? "Analysing…" : "Analyse impact"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDraft({});
+                  setResult(null);
+                  setFieldErrors({});
+                }}
+                className="focus-ring rounded-sm border border-border px-3 py-[7px] text-[12.5px] font-medium transition-colors hover:bg-secondary"
+              >
+                Reset
+              </button>
+              <span className="text-[11.5px] text-muted-foreground">
+                Preview only — proposed values are never saved to this project.
+              </span>
+            </div>
+          </>
+        )}
       </section>
 
-      {!analysed ? (
-        <div className="mt-6 border border-dashed border-border bg-surface px-6 py-10">
-          <p className="text-[13.5px] font-medium">
-            No analysis for the selected change
-          </p>
-          <p className="mt-1.5 max-w-[54ch] text-[12.5px] leading-relaxed text-muted-foreground">
-            Run the analysis to compare the current approval path against the
-            path implied by the proposed change.
-          </p>
-        </div>
-      ) : (
+      {mutation.isError && Object.keys(fieldErrors).length === 0 && (
+        <p className="mt-4 border border-destructive/30 bg-danger-surface px-5 py-3 text-[12.5px]">
+          {mutation.error instanceof BackendUnavailableError
+            ? "The IRIS backend isn't reachable right now."
+            : "The change could not be analysed. Check the proposed values and try again."}
+        </p>
+      )}
+
+      {result && (
         <>
-          {/* Change detected banner */}
-          <section className="mt-6 border border-warning/30 bg-warning-surface px-5 py-4">
+          <section className="mt-6 border border-border bg-surface px-5 py-4">
             <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
               <div>
-                <div className="flex items-center gap-2.5">
-                  <Tag tone="warning">Change detected</Tag>
-                  <span className="text-[13.5px] font-semibold">
-                    {selectedChange.label}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Tag tone={result.authoritative ? "success" : "warning"}>
+                    {result.authoritative
+                      ? "Authoritative result"
+                      : "Not an authoritative determination"}
+                  </Tag>
+                  <span className="font-mono text-[11px] text-muted-foreground">
+                    {result.evaluation_mode} · {result.engine_version}
                   </span>
                 </div>
-                <p className="mt-1.5 max-w-[70ch] text-[12.5px] leading-relaxed text-foreground/80">
-                  {result.explanation}
-                </p>
+                {result.proposed_changes.length > 0 ? (
+                  <ul className="mt-2 space-y-1">
+                    {result.proposed_changes.map((c) => (
+                      <li key={c.key} className="text-[12.5px]">
+                        <span className="capitalize">{factLabel(c.key)}</span>:{" "}
+                        <span className="tabular text-muted-foreground">
+                          {formatValue(c.previous_value)}
+                        </span>{" "}
+                        <ArrowRight className="inline h-3 w-3 text-muted-foreground/60" />{" "}
+                        <span className="tabular font-medium">
+                          {formatValue(c.proposed_value)}
+                        </span>
+                        {c.units[0] ? ` ${c.units[0]}` : ""}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2 text-[12.5px] text-muted-foreground">
+                    No effective fact change was supplied.
+                  </p>
+                )}
               </div>
-              <dl className="flex gap-x-8">
-                {[
-                  {
-                    label: "Requirements affected",
-                    value: result.requirementsAffected,
-                  },
-                  { label: "New pathways", value: result.newPathways },
-                  {
-                    label: "Dependency changes",
-                    value: result.dependencyChanges,
-                  },
-                ].map((s) => (
-                  <div key={s.label}>
-                    <dt className="label-meta">{s.label}</dt>
+              <dl className="flex flex-wrap gap-x-8 gap-y-3">
+                {(
+                  [
+                    ["Newly applicable", result.summary.NEWLY_APPLICABLE],
+                    ["No longer applicable", result.summary.NO_LONGER_APPLICABLE],
+                    ["Changed", result.summary.CHANGED],
+                    ["Unchanged", result.summary.UNCHANGED],
+                  ] as const
+                ).map(([label, value]) => (
+                  <div key={label}>
+                    <dt className="label-meta">{label}</dt>
                     <dd className="tabular mt-1 text-[20px] font-semibold leading-none">
-                      {s.value}
+                      {value}
                     </dd>
                   </div>
                 ))}
               </dl>
             </div>
+
+            {result.notes.length > 0 && (
+              <ul className="mt-4 space-y-1.5 border-t border-border pt-3">
+                {result.notes.map((n, i) => (
+                  <li
+                    key={i}
+                    className="text-[11.5px] leading-relaxed text-muted-foreground"
+                  >
+                    {n}
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-            <div className="space-y-8">
-              {/* Impact areas */}
-              <section>
-                <SectionHeading
-                  title="Affected areas"
-                  hint="Structured assessment across the regulatory surfaces IRIS tracks."
-                />
-                <div className="mt-3 divide-y divide-border border border-border bg-surface">
-                  {impactAreas.map((a) => (
-                    <div
-                      key={a.area}
-                      className="row-hover px-5 py-4 hover:bg-surface-sunken"
-                    >
-                      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-                        <h3 className="text-[13.5px] font-medium">{a.area}</h3>
-                        <StatusBadge status={a.severity} label={a.level} />
-                      </div>
-                      <ul className="mt-2 space-y-1.5">
-                        {a.findings.map((f) => (
-                          <li
-                            key={f}
-                            className="flex gap-2.5 text-[12.5px] leading-relaxed text-muted-foreground"
-                          >
-                            <StatusDot
-                              status={a.severity}
-                              className="mt-[7px]"
-                            />
-                            <span>{f}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+          <section className="mt-6">
+            <SectionHeading
+              title={
+                changed.length > 0
+                  ? "Requirements whose engine result changed"
+                  : "No requirement changed result"
+              }
+              hint="Each side is a separate evaluation of the same deterministic rule engine."
+            />
+            <div className="mt-3 space-y-3">
+              {changed.length > 0 ? (
+                changed.map((r) => (
+                  <RequirementDiff key={r.requirement_id} req={r} onProof={openProof} />
+                ))
+              ) : (
+                <div className="border border-dashed border-border bg-surface px-5 py-6">
+                  <p className="text-[12.5px] leading-relaxed text-muted-foreground">
+                    Both evaluations returned the same result for every
+                    requirement in the dataset.
+                  </p>
                 </div>
-              </section>
-
-              {/* Path comparison */}
-              <section>
-                <SectionHeading
-                  title="Approval path comparison"
-                  hint="Sequence before and after the proposed change."
-                />
-                <div className="mt-3 space-y-4 border border-border bg-surface px-5 py-4">
-                  <PathRow
-                    label="Before"
-                    path={result.beforePath}
-                    tone="muted"
-                  />
-                  <div className="border-t border-border" />
-                  <PathRow
-                    label="After"
-                    path={result.afterPath}
-                    tone="active"
-                  />
-                </div>
-              </section>
-
-              {/* Affected regulatory path graph */}
-              <section>
-                <SectionHeading
-                  title="Affected regulatory path"
-                  hint="Highlighted nodes sit on the path revised by this change."
-                  actions={
-                    <Link
-                      to="/regulatory-map"
-                      className="text-[12px] font-medium text-info hover:opacity-80"
-                    >
-                      Open full map
-                    </Link>
-                  }
-                />
-                <div className="mt-3 border border-border">
-                  <DependencyGraph
-                    nodes={nodes}
-                    edges={edges}
-                    selectedId={selectedNode?.id ?? null}
-                    onSelect={setSelectedNode}
-                    highlightPath={impactPath}
-                    className="h-[360px]"
-                  />
-                </div>
-              </section>
+              )}
             </div>
+          </section>
 
-            <div className="space-y-8">
-              <section>
-                <SectionHeading title="Affected requirements" />
-                <ul className="mt-3 divide-y divide-border border border-border bg-surface">
-                  {result.affectedRequirements.map((r) => (
-                    <li key={r.id} className="px-4 py-3.5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="text-[13px] font-medium leading-snug">
-                            {r.name}
-                          </p>
-                          <p className="mt-1 text-[11.5px] text-muted-foreground">
-                            {r.authority}
-                          </p>
-                        </div>
-                        <Tag tone={r.status === "new" ? "info" : "warning"}>
-                          {r.status === "new" ? "New / review" : "Affected"}
-                        </Tag>
-                      </div>
-                    </li>
+          {unchanged.length > 0 && (
+            <section className="mt-6">
+              <button
+                type="button"
+                onClick={() => setShowUnchanged((v) => !v)}
+                className="text-[12px] font-medium text-info hover:opacity-80"
+              >
+                {showUnchanged ? "Hide" : "Show"} {unchanged.length} unchanged
+                requirement{unchanged.length === 1 ? "" : "s"}
+              </button>
+              {showUnchanged && (
+                <div className="mt-3 space-y-3">
+                  {unchanged.map((r) => (
+                    <RequirementDiff key={r.requirement_id} req={r} onProof={openProof} />
                   ))}
-                </ul>
-              </section>
+                </div>
+              )}
+            </section>
+          )}
 
-              <section>
-                <SectionHeading title="Recommended sequence" />
-                <ol className="mt-3 space-y-3 border border-border bg-surface px-4 py-4">
-                  {[
-                    "Confirm revised process description and chemical inventory with the project team.",
-                    "Request MPCB category re-evaluation before submitting the amended CTE application.",
-                    "Review Environmental Clearance applicability against the revised process scope.",
-                    "Amend the Drug Manufacturing Licence application to cover API operations.",
-                  ].map((step, i) => (
-                    <li
-                      key={step}
-                      className="flex gap-3 text-[12.5px] leading-relaxed"
-                    >
-                      <span className="tabular text-muted-foreground">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-
-              <section className="border-t border-border pt-4">
-                <Tag>Prototype analysis</Tag>
-                <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
-                  Flags areas for review — not a final regulatory determination.
-                </p>
-              </section>
-            </div>
-          </div>
+          <p className="mt-6 border-t border-border pt-4 text-[11px] leading-relaxed text-muted-foreground">
+            {result.persistence_note}
+          </p>
         </>
       )}
+      <DecisionProofDrawer
+        projectId={activeProject.id}
+        target={proof}
+        onClose={() => setProof(null)}
+      />
     </PageShell>
   );
 }

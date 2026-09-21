@@ -131,7 +131,7 @@ function RegulatoryMap() {
           { label: "Regulatory Map" },
         ]}
         title="Regulatory Map"
-        description="Dependency path across approvals · select a node for detail"
+        description="Planning sequence from project tracking data · select a node for detail"
         actions={
           <>
             <Link
@@ -152,13 +152,10 @@ function RegulatoryMap() {
           <dl className="flex flex-wrap items-center gap-x-8 gap-y-2">
             {[
               { label: "Nodes", value: `${nodes.length}` },
-              { label: "Dependencies", value: `${edges.length}` },
+              { label: "Tracking links", value: `${edges.length}` },
               { label: "Blocked", value: `${blockedCount}` },
               { label: "Action required", value: `${attentionCount}` },
-              {
-                label: "Critical path",
-                value: "Site → Building → Factory plan → Licence",
-              },
+              { label: "Verified regulatory dependencies", value: "0" },
             ].map((s) => (
               <div key={s.label} className="flex items-baseline gap-2">
                 <dt className="label-meta">{s.label}</dt>
@@ -240,7 +237,7 @@ function RegulatoryMap() {
         )}
 
         <p className="ml-auto text-[11.5px] text-muted-foreground">
-          Drag to pan · dependencies flow left to right
+          Drag to pan · links show the planned sequence recorded for this project
         </p>
       </div>
 
@@ -258,8 +255,9 @@ function RegulatoryMap() {
           <div className="border-b border-border px-4 py-3">
             <div className="label-meta">Sequence</div>
             <p className="mt-1.5 text-[11.5px] leading-relaxed text-muted-foreground">
-              Approvals must clear in dependency order. Items below are listed
-              by depth in the path.
+              The order recorded in this project's tracking data. It is a
+              planning sequence, not a verified legal prerequisite order, and
+              unlinked items are not thereby shown to be parallel.
             </p>
           </div>
           <ol className="max-h-[492px] overflow-y-auto divide-y divide-border">
@@ -291,8 +289,10 @@ function RegulatoryMap() {
       </div>
 
       <p className="mt-3 pb-8 text-[11.5px] text-muted-foreground">
-        Regulatory information is represented using verified source references
-        in this prototype.
+        Links on this map come from the project's tracking register
+        (project_requirements), not from the regulatory dataset. The dataset
+        currently has zero verified dependency edges, so IRIS shows no legal
+        sequencing, critical path or parallel-approval claim.
       </p>
 
       <Drawer
@@ -430,7 +430,7 @@ function RegulatoryMap() {
                 {selected.source ?? req?.source ?? "—"}
               </p>
               <p className="mt-1 text-[11.5px] text-muted-foreground">
-                Verified September 2026 · prototype source record
+                Tracking-register reference — not independently verified
               </p>
             </DrawerSection>
 

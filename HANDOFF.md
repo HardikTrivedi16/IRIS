@@ -3,6 +3,9 @@
 Paste/upload this whole file at the start of the new chat. It contains the
 context needed to continue development without re-deriving anything.
 **Last verified:** 2026-09-20 (Windows 11, PowerShell/Git Bash, VS Code).
+**Updated 2026-09-21** for the SIH hardening pass (branch
+`feature/sih-final-hardening`): see §6a for what was added, and §7/§8 for the
+current test state and limitations. Sections not mentioned there are unchanged.
 
 > Secrets are NOT in this file. Real values live in `backend/.env` and
 > `frontend/.env` (both already filled in). Never paste the Supabase
@@ -79,7 +82,8 @@ Stale backend = old code (symptom: new endpoints 404).
 
 `backend/.env`: `SUPABASE_URL` (base URL, **no** `/rest/v1`, no leading space
 after `=`), `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_JWT_SECRET`,
-`SUPABASE_SCHEMA=public`, `REGULATORY_DATA_ROOT`, `CORS_ORIGINS`,
+`SUPABASE_SCHEMA=public`, `REGULATORY_DATA_ROOT`, `SCHEME_DATA_ROOT` (optional;
+default `scheme-data`, resolved against `backend/`; ships empty), `CORS_ORIGINS`,
 `IRIS_OLLAMA_URL`, `IRIS_GENERATION_MODEL=qwen3:4b`, `IRIS_FALLBACK_MODEL=qwen3:4b`,
 `IRIS_EMBEDDING_MODEL=qwen3-embedding:0.6b`. `IRIS_DEMO_MODE` defaults false
 (fail-closed; when true and Supabase unset, auth is bypassed with a demo user).
@@ -129,10 +133,10 @@ IRIS prompts). Everything per-project comes from Supabase via the backend:
 | UI area | Source |
 |---|---|
 | Projects list | `GET /api/v1/projects` (owner-scoped for industry users) |
-| Requirements checklist, readiness, next actions, deadlines, compliance, dependency map, change-impact graph | `GET /api/v1/projects/{id}/requirements` → table `project_requirements` (migration 0006). Next actions/deadlines/compliance/graph are **derived client-side** in `frontend/src/lib/iris/derive.ts` (`deriveNextActions`, `deriveDeadlines`, `deriveCompliance`, `buildRegulatoryGraph`). |
+| Requirements checklist, readiness, next actions, deadlines, dependency map | `GET /api/v1/projects/{id}/requirements` → table `project_requirements` (migration 0006). Next actions/deadlines/graph are **derived client-side** in `frontend/src/lib/iris/derive.ts` (`deriveNextActions`, `deriveDeadlines`, `buildRegulatoryGraph`). The graph's links are *tracking-register* links, not verified regulatory dependencies. (`deriveCompliance` was removed — see Renewals in §6a.) |
 | Documents register | `GET /api/v1/projects/{id}/documents` → `documents` (+ `issues`, `extracted_information` jsonb cols added in 0006) |
 | Overview activity timeline | `GET /api/v1/projects/{id}/activity` → `activity_events` |
-| Engine decisions (4 real requirements) | `POST /api/v1/evaluate` + Project Facts (`project_facts`) |
+| Engine decisions (4 real requirements) | `POST /api/v1/evaluate` (+ `/evaluate/all`) + Project Facts (`project_facts`). Both now require the same project ownership/authentication as `/projects/{id}/*`. |
 | Ask IRIS | `POST /api/v1/projects/{id}/ask` (RAG: engine + NetworkX + dataset text → Ollama) |
 | Gov dashboard/apps/SLA/bottlenecks | `/api/v1/department/*`, `/sla*`, `/bottlenecks*` (tables `applications`, `application_stage_history`, `sla_*`, `operational_events`, …) |
 
@@ -144,7 +148,8 @@ engine id) in `frontend/src/lib/iris/engine-mapping.ts`: only `mpcb-cte→REQ-00
 engine-backed; all other requirement rows are *tracking data*, labelled
 "Prototype content" in the drawer — do not fabricate engine rules for them.
 
-**Supabase state (verified 2026-09-20):** migrations 0001–0006 applied;
+**Supabase state (verified 2026-09-20; migration 0007 was written afterwards
+and is NOT yet applied — see §6a):** migrations 0001–0006 applied;
 `seed_demo_users.sql` applied; `seed_aarav_demo.sql` applied
 (project_requirements=12, documents=7, activity_events=5 for
 `aarav-lifesciences`). Government apps `APP-AARAV-REQ-0001` (Water Act) →
@@ -158,16 +163,67 @@ real), and routes in `routers/projects.py` that map DB rows → frontend
 `Requirement` shape and return `[]` (not an error) if a table is missing.
 `MemoryStore` returns empty for these (demo mode has no requirements register).
 
+## 6a. Added in the SIH hardening pass (2026-09-21)
+
+Concise map only; each item has tests under `backend/tests/`. Nothing here
+touches the frozen Rule Engine, regulatory dataset, NetworkX core, AI core,
+auth architecture or migrations 0001–0006. Every rule version is still DRAFT.
+
+**Industry portal**
+
+| Feature | Route / endpoint | Notes |
+|---|---|---|
+| New Project + Project Facts + evaluation | `/projects` (3-step flow), `/evaluation`; `POST /projects` (rejects an existing id with 409), `GET /facts/registry`, `GET /requirements/{id}/required-facts` | Fact form is generated from the dataset (`backend/app/fact_registry.py`); nothing hardcoded. |
+| Change Impact (real) | `/change-impact`; `POST /projects/{id}/change-impact` | Replaced the old illustrative constant. Evaluates the same engine twice (stored vs hypothetical facts); previews never persist. |
+| Decision Proof | drawer on Evaluation / Change Impact; `GET`+`POST /projects/{id}/decision-proof/{req}` | Reshapes the engine's own Decision; provenance stays UNRESOLVED (source records are not in the repo). |
+| Pre-submission check | `/documents`; `POST /projects/{id}/consistency-check` | Deterministic data-consistency only (not compliance); read-only. |
+| Ask IRIS guards | `/assistant`; `backend/app/ai_integration/engine_guard.py` | Withholds prose that contradicts the engine; other-facility questions get a scope answer with no LLM call. |
+| Renewals | `/compliance`; `GET /projects/{id}/renewals` | Days remaining only from an expiry date on record; 90-day action window is a labelled demo policy; synthetic rows labelled. |
+| Grievances | `/grievances`; `/projects/{id}/grievances*` | Preparation/tracking/hand-off, **not** a statutory filing; explicit acknowledgement required. |
+| Schemes | `/schemes`; `GET /schemes/catalogue`, `GET /projects/{id}/schemes` | Framework only. `backend/scheme-data/` (or `SCHEME_DATA_ROOT`) ships EMPTY → "awaiting verified data". See `docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md`. |
+| PDF text | `/documents` upload; `POST /projects/{id}/documents/ocr` | PyMuPDF embedded text per page; Tesseract only for pages without usable text. **PyMuPDF is AGPL-3.0 — review before production.** |
+
+**Government portal:** `/department/grievances` (assign is manager/admin only);
+SLA "Why?" panel (`GET /department/sla/applications/{id}/explanation`; page
+renamed "SLA Monitoring"); bottleneck components + affected applications
+(`GET /department/bottlenecks/explanation`; the composite score is labelled a
+prototype heuristic).
+
+**Security fix:** `POST /evaluate` and `/evaluate/all` previously had no
+authorization and echoed stored facts for any project id; they now use the
+existing project ownership check (unauthenticated → 401, other user → 404).
+
+**Migration 0007 — `supabase/migrations/0007_grievances_and_data_classification.sql`
+— is written but NOT applied.** Run it in the Supabase SQL Editor. Until then
+grievances return a clear "apply migration 0007" error on Supabase, and
+applications carry no `data_classification` (SYNTHETIC_DEMO labelling on the
+SLA/bottleneck screens depends on it). It also marks `APP-AARAV-*` /
+`APP-SWAAD-*` applications as `SYNTHETIC_DEMO`.
+
+**Still true:** zero verified dependency edges (so no sequencing / critical
+path / parallelism claims — the Regulatory Map wording was corrected to say
+so); the regulatory pack and scheme catalogue must come from research
+(`docs/REGULATORY_PACK_INPUT_REQUIREMENTS.md`,
+`docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md`).
+
 ## 7. Testing state
 
-- Backend: `cd backend && .venv\Scripts\python.exe -m pytest tests/ -q` →
-  ~191 pass, **4 known environment-dependent failures**:
-  `test_ai_status_reports_unreachable_without_live_ollama`,
-  `test_extract_document_degrades_safely_without_live_ollama`,
-  `test_classify_document_degrades_safely_without_live_ollama`,
-  `test_ask_degrades_safely_without_live_ollama`. They assume Ollama is
-  *absent* (CI); they fail whenever Ollama is running locally. Stop Ollama to
-  make them pass. Full run takes ~2 min when Ollama is on.
+- Backend (as of 2026-09-21): `cd backend && .venv\Scripts\python.exe -m pytest
+  tests/ tests_engine_baseline/ app/modules/ai/tests -q` → **826 passed,
+  6 failed, 2 skipped** (~7 min with Ollama on). The 6 failures are
+  environment-dependent, not regressions:
+  - 4 assume Ollama is *absent* and fail whenever it is running locally:
+    `test_ai_status_reports_unreachable_without_live_ollama`,
+    `test_extract_document_degrades_safely_without_live_ollama`,
+    `test_classify_document_degrades_safely_without_live_ollama`,
+    `test_ask_degrades_safely_without_live_ollama`. They pass with
+    `IRIS_OLLAMA_URL=http://127.0.0.1:1` set (or Ollama stopped).
+  - 2 are live-model wording checks in the frozen AI module
+    (`test_explanations.py::test_live_phase5_case1_dependency`, `…case4_conditional`);
+    they also failed at the original baseline.
+  The engine baseline alone is 281 passed. The P1/P2 round (renewals,
+  grievances, SLA and bottleneck explanations, schemes, PDF) added 73 tests
+  across 6 files.
 - `tests/conftest.py` sets `SUPABASE_*` env vars to `""` (not deleting them) so
   `load_dotenv` in `config.py` can't re-enable Supabase during tests.
 - Engine baseline: `pytest tests_engine_baseline/` (frozen; don't edit).
@@ -178,20 +234,24 @@ real), and routes in `routers/projects.py` that map DB rows → frontend
 
 ## 8. Known limitations / sensible next steps
 
-- Change Impact page shows an **illustrative scenario** (local constant in
-  `routes/change-impact.tsx`); engine has zero verified dependency edges.
-- `deriveDeadlines`/`deriveCompliance` use requirement `timeline` text and a
-  fixed `daysRemaining: 30` for in-progress items — placeholder logic; a real
-  date model (issue/renewal dates columns) would be better.
+- Change Impact is a **real** engine diff (see §6a), but with every rule
+  version DRAFT it can only be authoritative once verified rules are ACTIVE;
+  in PRODUCTION mode it honestly reports everything as blocked. The engine
+  still has zero verified dependency edges.
+- `deriveDeadlines` (Overview) still uses requirement `timeline` text — that is
+  free-text tracking data, not a computed date. Renewals on `/compliance` are
+  the date-based view (from recorded expiry dates only).
 - `lastEvaluated` in `derive.ts` is a static string.
 - Requirement writes: there's no UI/API to edit `project_requirements`
   (read-only; change via SQL). Adding create/update endpoints + RLS-safe
   ownership checks would be the natural next feature.
 - Only Aarav has seeded requirements; other projects show an empty register.
-- Fact capture: `deriveEngineProjectFacts` is a heuristic bridge; a proper
-  form driven by each Rule Version's `required_project_facts` is the right fix.
-  Document-confirmed facts are stored under `document.*` and are not mapped
-  to engine `project.*` facts.
+- Fact capture: a form driven by the dataset's `required_project_facts` now
+  exists (`ProjectFactsForm`, §6a). `deriveEngineProjectFacts` remains a narrow
+  heuristic bridge for the legacy requirement panel and Ask IRIS only (it no
+  longer maps `airEmissions` to the air-control-area fact). Document-confirmed
+  facts are stored under `document.*` and are not mapped to engine
+  `project.*` facts.
 - Promoting rule versions from DRAFT→ACTIVE (in `regulatory-data/`) would make
   production evaluations return real APPLICABLE/NOT_APPLICABLE results, but
   the dataset is hash-verified/frozen — changing it is a deliberate versioned

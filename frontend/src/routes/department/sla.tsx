@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -22,12 +22,13 @@ import {
 } from "@/lib/iris/department-api";
 import { PageShell, PageHeader } from "@/components/iris/page";
 import { cn } from "@/lib/utils";
+import { SlaExplanationPanel } from "@/components/iris/sla-explanation";
 import { BackendUnavailableError } from "@/lib/iris/api-client";
 
 export const Route = createFileRoute("/department/sla")({
   head: () => ({
     meta: [
-      { title: "SLA Intelligence — IRIS Gov" },
+      { title: "SLA Monitoring — IRIS Gov" },
       {
         name: "description",
         content:
@@ -53,6 +54,7 @@ const VS_TARGET_CLASSES = {
 };
 
 function SlaDashboardPage() {
+  const [explainId, setExplainId] = useState<string | null>(null);
   const [selectedState, setSelectedState] = useState<SlaState | "ALL">("ALL");
   const [activeTab, setActiveTab] = useState<
     "applications" | "stages" | "policies"
@@ -89,9 +91,9 @@ function SlaDashboardPage() {
         <PageHeader
           trail={[
             { label: "Department", to: "/department" },
-            { label: "SLA Intelligence" },
+            { label: "SLA Monitoring" },
           ]}
-          title="SLA Intelligence"
+          title="SLA Monitoring"
         />
         <div className="mt-6 grid animate-pulse grid-cols-2 gap-3 sm:grid-cols-5">
           {Array.from({ length: 5 }).map((_, i) => (
@@ -109,9 +111,9 @@ function SlaDashboardPage() {
         <PageHeader
           trail={[
             { label: "Department", to: "/department" },
-            { label: "SLA Intelligence" },
+            { label: "SLA Monitoring" },
           ]}
-          title="SLA Intelligence"
+          title="SLA Monitoring"
         />
         <div className="mt-6 border border-destructive/25 bg-danger-surface p-6">
           <p className="text-[13px] font-medium text-destructive">
@@ -134,9 +136,9 @@ function SlaDashboardPage() {
       <PageHeader
         trail={[
           { label: "Department", to: "/department" },
-          { label: "SLA Intelligence" },
+          { label: "SLA Monitoring" },
         ]}
-        title="SLA Intelligence"
+        title="SLA Monitoring"
         description="Authoritative operational tracking of application timelines, breach risk detection, and stage duration compliance."
       />
 
@@ -353,8 +355,8 @@ function SlaDashboardPage() {
                 </thead>
                 <tbody className="divide-y divide-border font-normal">
                   {filteredApps.map((app) => (
+                    <Fragment key={app.id}>
                     <tr
-                      key={app.id}
                       className="hover:bg-muted/30 transition-colors"
                     >
                       <td className="px-4 py-3">
@@ -421,6 +423,13 @@ function SlaDashboardPage() {
                         {formatHours(app.age_hours)}
                       </td>
                       <td className="px-4 py-3 text-right">
+                        <button
+                          type="button"
+                          onClick={() => setExplainId(explainId === app.id ? null : app.id)}
+                          className="mr-3 text-[12px] text-primary hover:underline"
+                        >
+                          {explainId === app.id ? "Hide" : "Why?"}
+                        </button>
                         <Link
                           to="/department/application/$appId"
                           params={{ appId: app.id }}
@@ -430,6 +439,14 @@ function SlaDashboardPage() {
                         </Link>
                       </td>
                     </tr>
+                    {explainId === app.id && (
+                      <tr className="bg-muted/20">
+                        <td colSpan={8} className="px-4 py-4">
+                          <SlaExplanationPanel appId={app.id} />
+                        </td>
+                      </tr>
+                    )}
+                    </Fragment>
                   ))}
                   {filteredApps.length === 0 && (
                     <tr>

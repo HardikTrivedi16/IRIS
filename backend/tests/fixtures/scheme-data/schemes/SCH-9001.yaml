@@ -1,0 +1,19 @@
+# SYNTHETIC TEST FIXTURE — NOT A REAL SCHEME
+scheme_id: SCH-9001
+name: "SYNTHETIC TEST SCHEME A — NOT A REAL SCHEME"
+administering_authority_name: "SYNTHETIC AUTHORITY"
+official_source:
+  url: "https://example.invalid/synthetic-a"
+  document_title: "SYNTHETIC FIXTURE — NO REAL SOURCE"
+  published_date: "2026-01-01"
+  retrieved_date: "2026-01-01"
+  retrieved_by: "engineering fixture"
+effective_start_date: "2026-01-01"
+effective_end_date: null
+jurisdiction: "SYNTHETIC"
+eligibility_condition_root_id: SCHC-9003
+required_project_facts: [project.industry, project.dairy_liquid_milk_capacity]
+benefits_summary: "SYNTHETIC — no real benefit is described here."
+status: ACTIVE
+confidence: VERIFIED
+last_verified: {date: "2026-01-02", verified_by: "fixture", method: "synthetic"}

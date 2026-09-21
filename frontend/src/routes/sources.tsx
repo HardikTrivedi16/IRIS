@@ -93,13 +93,15 @@ function SourcesPage() {
         <Library className="mt-[2px] h-4 w-4 shrink-0 text-muted-foreground" />
         <div>
           <p className="text-[13px] font-medium">
-            How source verification works
+            Source verification status
           </p>
           <p className="mt-1.5 max-w-[80ch] text-[12.5px] leading-relaxed text-muted-foreground">
-            Each requirement in IRIS is linked to the official source register
-            of the issuing authority. Sources are periodically re-verified to
-            catch regulatory changes; the Change Impact tool flags requirements
-            affected by an update.
+            This is a directory of the authorities IRIS's project data refers
+            to. The underlying source records (instruments, sections, clauses)
+            are not yet loaded — regulatory research is in progress — so every
+            engine decision currently shows its source as unresolved rather
+            than an unverified citation. IRIS does not monitor these sources
+            for changes.
           </p>
           <div className="mt-3">
             <Tag>Prototype dataset</Tag>

@@ -1,0 +1,9 @@
+scheme_condition_id: SCHC-9002
+predicate_type: THRESHOLD_COMPARISON
+target_variable_key: project.dairy_liquid_milk_capacity
+operator: ">="
+comparison_value: 1000
+unit: "L/day"
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+description: "SYNTHETIC — capacity at least 1000 L/day"

@@ -1,0 +1,12 @@
+# SYNTHETIC TEST FIXTURE — NOT A REAL SCHEME (DRAFT: must never appear in normal mode)
+scheme_id: SCH-9002
+name: "SYNTHETIC TEST SCHEME B — DRAFT"
+administering_authority_name: "SYNTHETIC AUTHORITY"
+official_source:
+  url: "https://example.invalid/synthetic-b"
+  document_title: "SYNTHETIC FIXTURE — NO REAL SOURCE"
+  published_date: "2026-01-01"
+  retrieved_date: "2026-01-01"
+eligibility_condition_root_id: SCHC-9001
+status: DRAFT
+confidence: UNVERIFIED
