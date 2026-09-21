@@ -1,0 +1,95 @@
+# IRIS — Phase 5 Condition Index
+# Machine-readable index of all authored Conditions. No new applicability logic is present here
+# beyond what's in the individual COND-*.yaml files — this is a lookup aid.
+
+conditions:
+  - condition_id: COND-0001
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.likely_to_discharge_sewage_or_trade_effluent
+    used_by_rule_versions: [RULE-0001-V1]
+
+  - condition_id: COND-0002
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.plant_located_in_air_pollution_control_area
+    used_by_rule_versions: [RULE-0002-V1]
+
+  - condition_id: COND-0003
+    predicate_type: SET_MEMBERSHIP
+    target_variable_key: project.drug_schedule_classification
+    used_by_rule_versions: [RULE-0003-V1]
+
+  - condition_id: COND-0004
+    predicate_type: SET_MEMBERSHIP
+    target_variable_key: project.industry
+    used_by_rule_versions: [RULE-0004-V1]
+
+  - condition_id: COND-0005
+    predicate_type: THRESHOLD_COMPARISON
+    target_variable_key: project.dairy_liquid_milk_capacity
+    used_by_rule_versions: [RULE-0005-V1]
+    parent_composite: COND-0007
+
+  - condition_id: COND-0006
+    predicate_type: THRESHOLD_COMPARISON
+    target_variable_key: project.dairy_milk_solids_capacity
+    used_by_rule_versions: [RULE-0005-V1]
+    parent_composite: COND-0007
+
+  - condition_id: COND-0007
+    predicate_type: COMPOSITE
+    operator: OR
+    target_variable_key: null
+    used_by_rule_versions: [RULE-0005-V1]
+    child_condition_ids: [COND-0005, COND-0006]
+
+  - condition_id: COND-0008
+    predicate_type: THRESHOLD_COMPARISON
+    target_variable_key: project.dairy_liquid_milk_capacity
+    used_by_rule_versions: [RULE-0006-V1]
+    parent_composite: COND-0010
+
+  - condition_id: COND-0009
+    predicate_type: THRESHOLD_COMPARISON
+    target_variable_key: project.dairy_liquid_milk_capacity
+    used_by_rule_versions: [RULE-0006-V1]
+    parent_composite: COND-0010
+
+  - condition_id: COND-0010
+    predicate_type: COMPOSITE
+    operator: AND
+    target_variable_key: null
+    used_by_rule_versions: [RULE-0006-V1]
+    child_condition_ids: [COND-0008, COND-0009]
+    parent_composite: COND-0014
+
+  - condition_id: COND-0011
+    predicate_type: THRESHOLD_COMPARISON
+    target_variable_key: project.dairy_milk_solids_capacity
+    used_by_rule_versions: [RULE-0006-V1]
+    parent_composite: COND-0013
+
+  - condition_id: COND-0012
+    predicate_type: THRESHOLD_COMPARISON
+    target_variable_key: project.dairy_milk_solids_capacity
+    used_by_rule_versions: [RULE-0006-V1]
+    parent_composite: COND-0013
+
+  - condition_id: COND-0013
+    predicate_type: COMPOSITE
+    operator: AND
+    target_variable_key: null
+    used_by_rule_versions: [RULE-0006-V1]
+    child_condition_ids: [COND-0011, COND-0012]
+    parent_composite: COND-0014
+
+  - condition_id: COND-0014
+    predicate_type: COMPOSITE
+    operator: OR
+    target_variable_key: null
+    used_by_rule_versions: [RULE-0006-V1]
+    child_condition_ids: [COND-0010, COND-0013]
+
+counts:
+  total_conditions: 14
+  leaf_conditions: 10
+  composite_conditions: 4

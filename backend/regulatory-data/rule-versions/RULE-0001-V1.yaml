@@ -1,0 +1,69 @@
+rule_version_id: RULE-0001-V1
+rule_id: RULE-0001
+version_number: 1
+
+condition_expression_root_id: COND-0001
+logic: "single condition — no composite expression required"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — prior consent of the State Board under Water Act, 1974, Section 25(1)(a) is
+  required before establishing (or taking steps to establish) the industry/operation/process,
+  treatment/disposal system, or extension/addition to one.
+false_outcome: >
+  NOT_APPLICABLE — the project's activity as described is not, on current information, likely to
+  discharge sewage or trade effluent into a stream, well, sewer, or on land, so the Section 25(1)(a)
+  consent-to-establish trigger evidenced in RF-0001 is not met. This does not evaluate any other
+  provision that might independently require MPCB consent.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine applicability until the project's effluent/discharge
+  characteristics are known.
+
+required_project_facts:
+  - project.likely_to_discharge_sewage_or_trade_effluent
+
+regulatory_fact_ids:
+  - RF-0001
+evidence_ids:
+  - EVID-MPCB-01
+source_ids:
+  - SRC-001
+authority_id: AUTH-MoEFCC
+instrument_id: INST-WATER-74
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_ESTABLISHMENT
+
+effective_start_date: null   # not yet in force — DRAFT, not ACTIVE (see status below)
+effective_end_date: null
+
+status: DRAFT        # per Phase 2 §10/§19: never ACTIVE without a VERIFIED VER record, which has
+                      # not been created in this phase
+confidence: VERIFIED  # the condition is a direct, non-interpretive restatement of the evidenced
+                      # statutory trigger; no invented category or threshold
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0001-V1
+  regulatory_fact_ids: [RF-0001]
+  evidence_ids: [EVID-MPCB-01]
+  source_ids: [SRC-001]
+  authority_id: AUTH-MoEFCC
+  instrument_id: INST-WATER-74
+
+validation_notes: >
+  This Rule Version answers only the Section 25(1)(a) discharge-likelihood question the evidence
+  actually poses. It does not assert that all pharmaceutical or food factories require MPCB Consent
+  to Establish, and it does not enumerate what "likely to discharge sewage or trade effluent" means
+  beyond the statute's own words. The FALSE branch is a direct negation of the evidenced trigger
+  condition, not an invented exemption. Cannot be promoted to ACTIVE without a `VER` record
+  (Phase 2 §19 V-7) — no such human-verification step has occurred in Phase 5.

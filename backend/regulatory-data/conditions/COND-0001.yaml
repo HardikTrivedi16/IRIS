@@ -1,0 +1,29 @@
+condition_id: COND-0001
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.likely_to_discharge_sewage_or_trade_effluent
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN   # if the PFACT is UNKNOWN or absent, this condition resolves UNKNOWN, never FALSE
+
+evidence_ids:
+  - EVID-MPCB-01
+
+grounding_regulatory_fact_ids:
+  - RF-0001
+
+description: >
+  True if the project's proposed industry, operation, process, treatment/disposal system, or any
+  extension/addition to one, is likely to discharge sewage or trade effluent into a stream, well,
+  sewer, or on land — the exact statutory trigger phrase in Water Act, 1974, Section 25(1)(a).
+
+normalization_notes: >
+  target_variable_key is a direct, non-interpretive restatement of the evidenced statutory trigger
+  phrase in RF-0001/EVID-MPCB-01 ("likely to discharge sewage or trade effluent into a stream, well,
+  sewer, or on land"). No additional classification scheme, threshold, or category was invented.
+  This condition does not itself resolve whether the project meets the trigger — that is a Project
+  Fact (`project.likely_to_discharge_sewage_or_trade_effluent`) to be supplied at runtime by a later
+  phase; Phase 5 only defines the evaluable predicate.

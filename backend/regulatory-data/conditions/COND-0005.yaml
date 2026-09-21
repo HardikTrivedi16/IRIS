@@ -1,0 +1,27 @@
+condition_id: COND-0005
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.dairy_liquid_milk_capacity
+operator: ">"
+comparison_value: 50000
+unit: "L/day"
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-02
+
+grounding_regulatory_fact_ids:
+  - RF-0009
+
+description: >
+  True if the project's dairy unit (including milk chilling units) is equipped to handle/process
+  more than 50,000 litres of liquid milk per day — one of the two alternative Central Licensing
+  Authority criteria under FSSAI Schedule 1.
+
+normalization_notes: >
+  Boundary operator (">") and unit (L/day) preserved exactly as evidenced in RF-0009; no rounding
+  or unit conversion applied. `unit` is carried as an explicit field on the Condition (a Phase 5
+  extension to the Phase 2 Condition schema, consistent with Phase 2 Open Design Question 6 on
+  where threshold-unit normalization should live) rather than folded into `comparison_value`.

@@ -1,0 +1,28 @@
+condition_id: COND-0008
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.dairy_liquid_milk_capacity
+operator: ">="
+comparison_value: 501
+unit: "L/day"
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0010
+
+description: >
+  Lower bound of the State Licensing Authority liquid-milk range: capacity is at least 501 litres
+  of liquid milk per day.
+
+normalization_notes: >
+  RF-0010's evidenced range is expressed as "from 501 to 50,000 litres of liquid milk/day." This
+  condition and COND-0009 jointly implement that range as an inclusive-bounds AND (see COND-0010).
+  The inclusive reading of "from X to Y" (>= X AND <= Y) is a natural-language interpretation of the
+  evidence, not a value stated as a separate boundary-operator token in the source excerpt itself
+  (unlike RF-0009's explicit ">" operator) — flagged as a minor interpretive step in RULE-0006's
+  validation_notes rather than silently treated as equally certain as RF-0009's explicit operator.

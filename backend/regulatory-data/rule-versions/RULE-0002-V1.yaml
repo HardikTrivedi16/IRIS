@@ -1,0 +1,64 @@
+rule_version_id: RULE-0002-V1
+rule_id: RULE-0002
+version_number: 1
+
+condition_expression_root_id: COND-0002
+logic: "single condition — no composite expression required"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — prior consent of the State Board under Air Act, 1981, Section 21(1) is required
+  before establishing or operating the industrial plant.
+false_outcome: >
+  NOT_APPLICABLE — the plant is not, on current information, located within a declared air
+  pollution control area, so the Section 21(1) trigger evidenced in RF-0002 is not met. This does
+  not evaluate any other provision that might independently require MPCB consent.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine applicability until the plant's location relative to a
+  declared air pollution control area is known.
+
+required_project_facts:
+  - project.plant_located_in_air_pollution_control_area
+
+regulatory_fact_ids:
+  - RF-0002
+evidence_ids:
+  - EVID-MPCB-02
+source_ids:
+  - SRC-002
+authority_id: AUTH-MoEFCC
+instrument_id: INST-AIR-81
+
+jurisdiction: INDIA
+lifecycle_stage: [PRE_ESTABLISHMENT, OPERATION]
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0002-V1
+  regulatory_fact_ids: [RF-0002]
+  evidence_ids: [EVID-MPCB-02]
+  source_ids: [SRC-002]
+  authority_id: AUTH-MoEFCC
+  instrument_id: INST-AIR-81
+
+validation_notes: >
+  Answers only the Section 21(1) location question the evidence poses. Does not assert that all
+  factories require MPCB Consent to Establish/Operate under the Air Act, and does not define what
+  makes an area a "declared air pollution control area" beyond the statute's own words — that
+  classification is a separate evidenced fact for a future phase if needed. Cannot be promoted to
+  ACTIVE without a `VER` record (Phase 2 §19 V-7).

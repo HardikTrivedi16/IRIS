@@ -1,0 +1,27 @@
+condition_id: COND-0006
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.dairy_milk_solids_capacity
+operator: ">"
+comparison_value: 2500
+unit: "MT/annum"
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-02
+
+grounding_regulatory_fact_ids:
+  - RF-0009
+
+description: >
+  True if the project's dairy unit is equipped to handle/process more than 2,500 MT of milk solids
+  per annum — the second of the two alternative ("OR") Central Licensing Authority criteria under
+  FSSAI Schedule 1.
+
+normalization_notes: >
+  Boundary operator and unit preserved exactly as evidenced in RF-0009. Kept as a separate Condition
+  from COND-0005 (rather than merged into one generic capacity threshold) per Phase 4 Section 15's
+  explicit instruction to preserve the two criteria as alternative, independently-sufficient
+  conditions.

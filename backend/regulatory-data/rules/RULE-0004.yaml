@@ -1,0 +1,19 @@
+rule_id: RULE-0004
+code: FSSAI_FOOD_BUSINESS_LICENCE_APPLICABILITY
+requirement_id: REQ-0004   # linked in Phase 6 — see requirement_id_note
+
+title: "FSSAI Act, 2006 — mandatory food business licence applicability (Section 31(1))"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the Section 31(1) mandatory-licence requirement (no person shall commence or
+  carry on any food business except under a licence) applies, using the project's declared industry
+  classification as the trigger for "food business."
+
+rule_type: APPLICABILITY_RULE
+
+requirement_id_note: >
+  Same Phase-6 linkage rationale as RULE-0001. This Rule now grounds REQ-0004, "FSSAI Food Business
+  Licence."
+
+current_active_rule_version_id: null

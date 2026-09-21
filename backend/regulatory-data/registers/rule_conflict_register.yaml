@@ -1,0 +1,89 @@
+# IRIS — Phase 5/6 Rule Conflict Register
+# PATCHED (Phase 6 Final Patch): this register previously stated "no conflict was identified,"
+# which was WRONG for one specific case (OVERLAP-0001, below) and is corrected here. Per the Phase
+# 5 brief §21: if two facts produce apparently conflicting rules, the conflict must be recorded
+# rather than silently resolved, with the relevant facts/evidence identified and the affected Rule
+# Version(s) flagged — never resolved by inventing precedence.
+
+conflicts:
+
+  - conflict_id: OVERLAP-0001
+    conflict_type: THRESHOLD_CROSS_DIMENSION_OVERLAP
+    status: REQUIRES_EVIDENCE
+    involved_rules: [RULE-0005, RULE-0006]
+    involved_rule_versions: [RULE-0005-V1, RULE-0006-V1]
+    involved_regulatory_facts: [RF-0009, RF-0010]
+    involved_conditions: [COND-0007, COND-0014]
+
+    description: >
+      RULE-0005 (FSSAI Central Licensing Authority dairy category, RF-0009) and RULE-0006 (FSSAI
+      State Licensing Authority dairy category, RF-0010) each use an OR across two independent
+      dimensions — liquid milk volume/day and milk solids/annum. Because each rule can be satisfied
+      by EITHER dimension independently, the two rules are NOT mutually exclusive: a project can
+      cross the Central threshold on one dimension while simultaneously falling inside the State
+      range on the OTHER dimension, making both RULE-0005 and RULE-0006 evaluate TRUE at the same
+      time for the same project. This was not caught in the original Phase 5 pass, which only
+      checked same-dimension boundary consistency (see "what was actually checked, and what wasn't"
+      below) and incorrectly generalized that check into a "no conflict" claim covering the whole
+      threshold structure.
+
+    worked_examples:
+      - liquid_milk_lpd: 60000
+        milk_solids_mt_annum: 1000
+        central_result: "TRUE (liquid 60,000 > 50,000)"
+        state_result: "TRUE (solids 1,000 is within 2.5–2,500)"
+        outcome: "Both rules TRUE simultaneously — cross-dimension overlap"
+      - liquid_milk_lpd: 40000
+        milk_solids_mt_annum: 3000
+        central_result: "TRUE (solids 3,000 > 2,500)"
+        state_result: "TRUE (liquid 40,000 is within 501–50,000)"
+        outcome: "Both rules TRUE simultaneously — cross-dimension overlap"
+
+    what_was_actually_checked_and_what_wasnt: >
+      The original Phase 5 validation_notes (RULE-0006-V1) and normalization_notes (COND-0009,
+      COND-0012) checked only whether the SAME-dimension boundary values overlap — i.e., whether a
+      project at exactly 50,000 L/day or exactly 2,500 MT/annum could satisfy both Central's ">"
+      operator and State's "<=" operator on that SAME dimension. That specific, narrower claim
+      remains correct and is NOT retracted: Central's ">50,000 L/day" and State's "<=50,000 L/day"
+      do not overlap at that single boundary point, and likewise for the 2,500 MT/annum figure.
+      What was wrong was generalizing that narrow same-dimension boundary check into a broader "no
+      conflict" claim for the rule pair as a whole — the cross-dimension case above was never
+      checked in the original pass and does produce overlap.
+
+    resolution: >
+      NOT resolved. No Central-over-State or State-over-Central precedence is invented — RF-0009
+      and RF-0010 are independent Regulatory Facts with no evidenced precedence relationship between
+      them, and Phase 4/5/6 have consistently declined to manufacture legal conclusions the evidence
+      doesn't support. RULE-0005-V1 and RULE-0006-V1's individual logic is UNCHANGED — each remains
+      a correct, VERIFIED-confidence encoding of its own Regulatory Fact considered in isolation.
+      The unresolved item is what happens when a real project satisfies both simultaneously: per
+      this patch's instruction, the correct combined outcome in that specific situation is
+      `REQUIRES_REVIEW` / `UNDETERMINED_OVERLAP`, not a fabricated statutory tiebreaker. This is
+      documented here as guidance for a future engine implementation (Phase 7); it is not encoded as
+      new rule logic in this pass, per the "no new rules" instruction under which this patch was
+      made.
+
+    what_is_needed: >
+      Verified primary-source evidence (FSSAI Schedule 1 text, an FSSAI clarification/circular, or
+      equivalent) establishing whether Central licensing takes precedence when a project meets both
+      categories' criteria via different dimensions simultaneously, or whether some other resolution
+      applies. Until such evidence exists, this must remain REQUIRES_EVIDENCE.
+
+    not_modeled_as_dependency: >
+      This overlap is a same-Requirement (REQ-0004) cross-rule classification conflict, not a
+      precedence or sequencing relationship between two different Requirements. It is therefore NOT
+      represented as a `DEP-###` Dependency edge — see Phase6.md and
+      `regulatory-data/registers/dependency_review_register.yaml`, which explicitly confirm no
+      Dependency was created for this issue.
+
+status_note: >
+  This register previously read "no conflict was identified," which was incorrect for the reason
+  detailed in OVERLAP-0001 above. That claim has been withdrawn and replaced with the entry above.
+  No other conflict exists among the 6 Rules / Rule Versions in this catalogue. This register
+  remains a live, populated register (not a placeholder) going forward and must be extended, not
+  reset to empty, if further conflicts are found.
+
+counts:
+  total_conflicts: 1
+  REQUIRES_EVIDENCE: 1
+  RESOLVED: 0

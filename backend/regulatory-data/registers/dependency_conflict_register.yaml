@@ -1,0 +1,13 @@
+# IRIS — Phase 6 Dependency Conflict Register
+# Structural placeholder, parallel to the Phase 5 Rule Conflict Register and Phase 4/3 Conflict
+# Registers. No conflicts were possible to identify in this pass because zero DEP-### edges were
+# authored (see dependency_review_register.yaml) — there is nothing yet for two edges to conflict
+# over. Retained as a structural placeholder for future dependency-modeling passes.
+
+conflicts: []
+
+status_note: >
+  Not applicable in this pass: 0 DEP-### edges exist, so 0 conflicts are possible. This register
+  must be populated, not skipped, once a future pass authors real dependency edges and any two of
+  them turn out to disagree (e.g. one asserting a LEGAL_PREREQUISITE and another an
+  ADMINISTRATIVE_ALTERNATIVE between the same two Requirements).

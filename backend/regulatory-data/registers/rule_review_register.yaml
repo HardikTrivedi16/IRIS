@@ -1,0 +1,90 @@
+# IRIS — Phase 5 Rule Review Register
+# Mirrors the intent of Phase 4's Review Register (Phase4.md §10): anything that cannot safely
+# become an executable Rule/Rule Version is recorded here instead of being forced into one, or
+# instead of silently converting a Regulatory Fact's known gap into a fabricated rule outcome.
+
+review_items:
+
+  - review_id: RULE-REV-0001
+    subject: "Factories Act §6(1)(a) central enabling provision — Maharashtra factory-plan-submission requirement"
+    related_regulatory_fact_ids: [RF-0003]
+    related_phase4_review_id: REV-0001
+    reason: >
+      RF-0003 establishes only that the central Factories Act, 1948 gives the State Government a
+      rule-making power to require factory-plan submission — it does not itself establish that
+      Maharashtra exercised that power in a way that creates a mandatory, evidenced obligation.
+      Phase 3 could not verify the current text of Maharashtra Factories Rules, 1963, Rule 3
+      (EVID-DISH-02, REQUIRES_REVIEW), so Phase 4 did not normalize it into a fact, and per the
+      Phase 5 brief §14, no executable Rule may be authored asserting "Maharashtra factory → factory
+      plan approval required" from RF-0003 alone.
+    decision: >
+      No RULE / RULE_VERSION was created for RF-0003. This is Option 1 from the Phase 5 brief §14
+      (create no executable applicability rule yet, and place it in the review register), which the
+      brief explicitly prefers over authoring a non-final framework/review rule.
+    current_status: REQUIRES_REVIEW
+    what_is_needed: "An authoritative, current Maharashtra Factories Rules 1963 Rule 3 (or applicable current provision) text, collected in a further Phase 3 pass."
+    next_phase: "Phase 3 (further evidence collection), then Phase 4 (normalization), before Phase 5 can safely author a rule against this gap."
+    blocks: "Any future Rule asserting a Maharashtra-specific factory-plan-approval obligation."
+
+  - review_id: RULE-REV-0002
+    subject: "Drugs Rules — licence-application provision governing Schedule C / Schedule C(1) / Schedule X"
+    related_regulatory_fact_ids: [RF-0007]
+    related_phase4_review_id: REV-0005
+    reason: >
+      RF-0007 confirms the Rule 69(1)/Form 24 pathway (RULE-0003) explicitly excludes Schedule C,
+      Schedule C(1), and Schedule X drugs, but no evidence was collected for what provision instead
+      governs manufacturing-licence applications for those schedules.
+    decision: >
+      RULE-0003-V1's FALSE branch is mapped to REQUIRES_REVIEW rather than NOT_APPLICABLE or a
+      guessed alternate pathway, precisely to surface this gap rather than mask it. Schedule X is
+      already outside the IRIS MVP (Phase 0 §3); Schedule C/Schedule C(1) are not separately excluded
+      by Phase 0, so this gap is potentially reachable within current MVP scope and is not purely
+      academic.
+    current_status: UNKNOWN
+    what_is_needed: "Primary-source evidence for the Schedule C / Schedule C(1) / Schedule X manufacturing-licence provisions."
+    next_phase: "Phase 3 (further evidence collection)."
+    blocks: "Any Rule asserting a specific licence pathway (form, authority, or fee) for Schedule C, Schedule C(1), or Schedule X drug manufacturing."
+
+  - review_id: RULE-REV-0003
+    subject: "FSSAI dairy registration-tier threshold (below 501 L/day and/or below 2.5 MT/annum)"
+    related_regulatory_fact_ids: []
+    related_phase4_review_id: REV-0002
+    reason: >
+      Phase 3/4 identified this tier only by exclusion from the two cited licensing thresholds
+      (RF-0009 Central, RF-0010 State); no primary source excerpt exists for the actual FSSAI
+      "Registration" (as opposed to "Licensing") threshold provision for this range.
+    decision: >
+      No Rule was authored for this tier — there is no Regulatory Fact to ground one. RULE-0005 and
+      RULE-0006's validation_notes/false_outcome text explicitly warn that a FALSE result on both
+      does not mean "no FSSAI obligation."
+    current_status: UNKNOWN
+    what_is_needed: "A primary-source excerpt for the FSSAI registration-tier threshold provision applicable below 501 L/day (or the equivalent milk-solids range)."
+    next_phase: "Phase 3 (additional evidence collection)."
+    blocks: "Any Rule asserting a specific registration-tier obligation (or its absence) for dairy units below the State Licensing floor."
+
+  - review_id: RULE-REV-0004
+    subject: "MIDC Building Plan Approval — no Regulatory Fact exists"
+    related_regulatory_fact_ids: []
+    related_phase4_review_id: REV-0003
+    reason: "Phase 3 collected no verbatim evidence for the current MIDC building-plan-approval provision (Phase 4 gap GAP-01); consequently Phase 4 produced zero normalizable facts for this domain."
+    decision: "No Rule can be authored — there is nothing in the Regulatory Fact layer to ground one. Recorded here so Phase 6 does not assume this domain has any rule coverage."
+    current_status: REQUIRES_REVIEW
+    what_is_needed: "Verbatim current MIDC DCR/checklist provision, collected in Phase 3."
+    next_phase: "Phase 3, then Phase 4, then a future Phase 5 pass."
+    blocks: "Any Rule concerning MIDC building-plan approval."
+
+  - review_id: RULE-REV-0005
+    subject: "Local Fire NOC — no Regulatory Fact exists"
+    related_regulatory_fact_ids: []
+    related_phase4_review_id: REV-0004
+    reason: "Phase 3 found no primary source for local/MIDC Fire NOC applicability thresholds or procedure (Phase 4 gap GAP-02); zero normalizable facts exist for this domain."
+    decision: "No Rule can be authored. Recorded here for the same reason as RULE-REV-0004."
+    current_status: UNKNOWN
+    what_is_needed: "A primary official source (Fire Authority / MIDC) establishing Fire NOC applicability thresholds and procedure."
+    next_phase: "Phase 3, then Phase 4, then a future Phase 5 pass."
+    blocks: "Any Rule concerning Fire NOC applicability."
+
+counts:
+  total_review_items: 5
+  REQUIRES_REVIEW: 2
+  UNKNOWN: 3

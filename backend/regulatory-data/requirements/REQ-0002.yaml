@@ -1,0 +1,41 @@
+requirement_id: REQ-0002
+code: MPCB_CONSENT_AIR
+title: "MPCB Consent to Establish/Operate — Air Act, 1981"
+catalog_status: PROVISIONAL_BRIDGING   # NOT a complete or final Requirement catalog — populated
+                                        # only as a minimal prerequisite for Phase 6 dependency
+                                        # modeling to have real REQ-### identities to reference.
+                                        # See requirement_notes below and Phase6.md §2-3.
+authority_id: AUTH-MPCB   # practical enforcing authority — see REQ-0001's authority_attribution_note
+                           # for the general rationale; same applies here
+category: CORE_APPROVAL   # combines Task 2's separate R05-equivalent (CTE) and R06 "MPCB CTO"
+                           # (🟢 Approval + lifecycle) concepts into one Requirement — see
+                           # requirement_notes below
+lifecycle_stage_ids:
+  - PRE_ESTABLISHMENT
+  - OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0002
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0002
+evidence_ids:
+  - EVID-MPCB-02
+
+requirement_notes: >
+  Same bridging-population rationale as REQ-0001. Note this Requirement's scope: RF-0002's evidence
+  (Air Act, 1981, Section 21(1)) covers "establish or operate" in one sentence, so RULE-0002 (and
+  therefore this Requirement) determines a single combined establish/operate applicability question
+  for the Air Act. This differs structurally from Task 2's preliminary conceptual model, which
+  treats "MPCB CTE" (R05) and "MPCB CTO" (R06/R13) as two separate sequential nodes with an evidenced
+  "strongest lifecycle dependency" between them (Task 2 §8). That two-step structure is NOT
+  reproduced here for the Air Act, because the actual Phase 3 evidence collected (EVID-MPCB-02) does
+  not separately establish a distinct "establish" fact and a distinct "operate" fact the way the
+  Water Act evidence (RF-0001, establish-only) does — see the Dependency Review Register
+  (`RULE-DEP-REV-0001`) for why no CTE→CTO dependency edge could be authored between REQ-0001 and
+  REQ-0002, or within REQ-0002 alone.

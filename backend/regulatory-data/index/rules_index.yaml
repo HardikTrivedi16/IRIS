@@ -1,0 +1,78 @@
+# IRIS — Phase 5 Rule Index
+# Machine-readable index of all authored Rules and their active/latest Rule Versions.
+
+rules:
+  - rule_id: RULE-0001
+    code: WATER_ACT_CTE_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0001]
+    latest_rule_version_id: RULE-0001-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0002
+    code: AIR_ACT_CONSENT_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0002]
+    latest_rule_version_id: RULE-0002-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0003
+    code: DRUGS_RULE_69_FORM_24_PATHWAY_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0004, RF-0005, RF-0006, RF-0007]
+    latest_rule_version_id: RULE-0003-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+
+  - rule_id: RULE-0004
+    code: FSSAI_FOOD_BUSINESS_LICENCE_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0008]
+    latest_rule_version_id: RULE-0004-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+
+  - rule_id: RULE-0005
+    code: FSSAI_DAIRY_CENTRAL_LICENSING_CATEGORY
+    rule_type: THRESHOLD_RULE
+    output_type: CLASSIFICATION
+    regulatory_fact_ids: [RF-0009]
+    latest_rule_version_id: RULE-0005-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0006
+    code: FSSAI_DAIRY_STATE_LICENSING_CATEGORY
+    rule_type: THRESHOLD_RULE
+    output_type: CLASSIFICATION
+    regulatory_fact_ids: [RF-0010]
+    latest_rule_version_id: RULE-0006-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+known_conflicts:
+  - conflict_id: OVERLAP-0001
+    involved_rules: [RULE-0005, RULE-0006]
+    status: REQUIRES_EVIDENCE
+    see: regulatory-data/registers/rule_conflict_register.yaml
+
+facts_with_no_rule:
+  - fact_id: RF-0003
+    reason: "See RULE-REV-0001 in the Rule Review Register."
+
+counts:
+  total_rules: 6
+  total_rule_versions: 6
+  status_DRAFT: 6
+  status_ACTIVE: 0
+  confidence_VERIFIED: 4
+  confidence_REQUIRES_REVIEW: 2
+  regulatory_facts_converted: 9    # RF-0001, RF-0002, RF-0004, RF-0005, RF-0006, RF-0007, RF-0008, RF-0009, RF-0010
+  regulatory_facts_not_converted: 1   # RF-0003
+  known_conflicts: 1   # OVERLAP-0001 — see rule_conflict_register.yaml

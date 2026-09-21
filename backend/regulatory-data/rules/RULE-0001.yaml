@@ -1,0 +1,26 @@
+rule_id: RULE-0001
+code: WATER_ACT_CTE_APPLICABILITY
+requirement_id: REQ-0001   # linked in Phase 6, once a minimal evidence-grounded Requirement
+                            # catalog was populated as a bridging step for dependency modeling —
+                            # see requirement_id_note below
+title: "Water Act, 1974 — Consent to Establish applicability (Section 25(1)(a) discharge trigger)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the Water Act, 1974, Section 25(1)(a) prior-consent-to-establish requirement
+  is triggered for the project, based on the single evidenced scope condition: whether the
+  project's industry/operation/process (or treatment/disposal system, or extension/addition to
+  one) is likely to discharge sewage or trade effluent into a stream, well, sewer, or on land.
+
+rule_type: APPLICABILITY_RULE
+
+requirement_id_note: >
+  At authoring time (Phase 5) this field was null because no verified Requirement catalog existed —
+  Phase 4 explicitly left `requirement_id` null on every Regulatory Fact for the same reason. Phase 6
+  populated a minimal, evidence-grounded Requirement catalog (see `regulatory-data/requirements/`)
+  as a necessary prerequisite for dependency modeling, and this field was updated to point at
+  REQ-0001 accordingly — this is an administrative linkage only; RULE-0001's logic and evidence are
+  unchanged from Phase 5. Task 2's `MPCB_CTE` node name remains referenced only as human-readable
+  context via the `code` field above.
+
+current_active_rule_version_id: null   # no RULEV has been promoted to ACTIVE — see RULE-0001-V1

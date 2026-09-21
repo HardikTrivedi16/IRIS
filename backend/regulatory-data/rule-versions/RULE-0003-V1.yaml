@@ -1,0 +1,75 @@
+rule_version_id: RULE-0003-V1
+rule_id: RULE-0003
+version_number: 1
+
+condition_expression_root_id: COND-0003
+logic: "single condition — no composite expression required"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: REQUIRES_REVIEW
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — the Rule 69(1) licence-application framework applies: an application for grant or
+  renewal of a licence to manufacture the drug(s) for sale/distribution is made to the licensing
+  authority appointed by the State Government in this behalf (RF-0005), in Form 24 (RF-0006).
+false_outcome: >
+  REQUIRES_REVIEW, not NOT_APPLICABLE — the drug schedule classification IS Schedule C, Schedule
+  C(1), or Schedule X, which RF-0007 confirms is excluded from the Rule 69(1)/Form 24 pathway. The
+  evidence collected in Phase 3/4 does not establish what provision instead governs manufacturing-
+  licence applications for these schedules (Phase 4 REV-0005). Mapping this branch to NOT_APPLICABLE
+  would incorrectly suggest no drug manufacturing licence is needed at all; REQUIRES_REVIEW is used
+  instead to force human/Phase-3 attention rather than a silent negative conclusion.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine which pathway applies until the drug schedule
+  classification of the project's product(s) is known.
+
+required_project_facts:
+  - project.drug_schedule_classification
+
+regulatory_fact_ids:
+  - RF-0004
+  - RF-0005
+  - RF-0006
+  - RF-0007
+evidence_ids:
+  - EVID-FDA-01
+source_ids:
+  - SRC-005
+authority_id: AUTH-CDSCO
+instrument_id: INST-DRUG-45
+
+jurisdiction: INDIA
+lifecycle_stage: UNKNOWN   # RF-0004's excerpt covers both "grant" and "renewal" without stating
+                           # exact lifecycle timing (Phase 4 §8); not guessed beyond the evidence
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW   # the FALSE-branch cannot reach a clean applicability conclusion —
+                               # see false_outcome above and RULE-REV-0002
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0003-V1
+  regulatory_fact_ids: [RF-0004, RF-0005, RF-0006, RF-0007]
+  evidence_ids: [EVID-FDA-01]
+  source_ids: [SRC-005]
+  authority_id: AUTH-CDSCO
+  instrument_id: INST-DRUG-45
+
+validation_notes: >
+  Per the Phase 5 brief §15, this Rule Version does not treat "pharmaceutical project" as
+  synonymous with "must file Form 24" — the schedule-classification condition is preserved exactly
+  as evidenced, and the excluded-schedule branch is deliberately not converted into a legal
+  conclusion. Schedule X is already outside the IRIS MVP (Phase 0 §3); Schedule C/Schedule C(1) are
+  not separately excluded from IRIS's pharma MVP scope by Phase 0, so a project could in principle
+  hit the REQUIRES_REVIEW branch within current MVP boundaries — flagged explicitly, not glossed
+  over. See RULE-REV-0002 in the Rule Review Register.

@@ -1,0 +1,85 @@
+rule_version_id: RULE-0005-V1
+rule_id: RULE-0005
+version_number: 1
+
+condition_expression_root_id: COND-0007
+logic: "COND-0007 = OR(COND-0005: liquid_milk > 50000 L/day, COND-0006: milk_solids > 2500 MT/annum)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — the dairy unit falls within the FSSAI Schedule 1 Central Licensing Authority
+  category (liquid milk > 50,000 L/day and/or milk solids > 2,500 MT/annum). NOTE: this can be
+  TRUE at the same time as RULE-0006 (State category) evaluating TRUE via a different dimension —
+  see `known_conflicts` (OVERLAP-0001) below. In that simultaneous-TRUE situation, the combined
+  result is REQUIRES_REVIEW / UNDETERMINED_OVERLAP, not a resolved Central-vs-State determination.
+false_outcome: >
+  NOT_APPLICABLE — the dairy unit does not meet either Central Licensing Authority capacity
+  criterion. This does not by itself mean no FSSAI licence/registration is needed — see RULE-0006
+  (State category) and RULE-REV-0003 (sub-501-L/day registration-tier gap).
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine Central-category classification until the dairy unit's
+  liquid milk and/or milk solids capacity is known (per Kleene OR, only the criteria still needed to
+  resolve the result should be requested — see engine implementation note below).
+
+required_project_facts:
+  - project.dairy_liquid_milk_capacity
+  - project.dairy_milk_solids_capacity
+
+engine_note: >
+  Because COND-0007 is a three-valued OR, a future engine implementation (Phase 7) should only
+  report REQUIRES_INFORMATION for whichever of the two Project Facts remains unresolved and could
+  still flip the result to TRUE — if one criterion is already known TRUE, the other need not be
+  collected to reach APPLICABLE for this Rule. This is an implementation note, not new rule logic.
+
+regulatory_fact_ids:
+  - RF-0009
+evidence_ids:
+  - EVID-FSS-02
+source_ids:
+  - SRC-004
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: INDIA
+lifecycle_stage: UNKNOWN
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED   # mechanical threshold comparison with boundary operator/units preserved
+                        # exactly as evidenced; no invented interpretation
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0005-V1
+  regulatory_fact_ids: [RF-0009]
+  evidence_ids: [EVID-FSS-02]
+  source_ids: [SRC-004]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  Preserves the two threshold criteria as alternative ("OR") conditions per Phase 4 §15, rather than
+  merging into a single numeric threshold. Boundary operator (">") and units preserved exactly.
+
+known_conflicts:
+  - conflict_id: OVERLAP-0001
+    summary: >
+      Because RULE-0005 (this rule) and RULE-0006 each use OR across two independent dimensions
+      (liquid milk volume, milk solids mass), a project can satisfy RULE-0005 on one dimension while
+      simultaneously satisfying RULE-0006 on the OTHER dimension — the two rules are NOT mutually
+      exclusive. This rule's own logic is unaffected and remains VERIFIED; the conflict concerns
+      what a downstream engine should do when both this rule and RULE-0006 evaluate TRUE for the
+      same project. See `regulatory-data/registers/rule_conflict_register.yaml` (OVERLAP-0001) for
+      worked examples and the REQUIRES_EVIDENCE resolution status. No precedence between Central and
+      State categories is asserted here or anywhere else in this pass.

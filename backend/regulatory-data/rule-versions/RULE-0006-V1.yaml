@@ -1,0 +1,93 @@
+rule_version_id: RULE-0006-V1
+rule_id: RULE-0006
+version_number: 1
+
+condition_expression_root_id: COND-0014
+logic: >
+  COND-0014 = OR(
+    COND-0010: AND(liquid_milk >= 501 L/day, liquid_milk <= 50000 L/day),
+    COND-0013: AND(milk_solids >= 2.5 MT/annum, milk_solids <= 2500 MT/annum)
+  )
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — the dairy unit falls within the FSSAI Schedule 1 State Licensing Authority category
+  (liquid milk 501–50,000 L/day and/or milk solids 2.5–2,500 MT/annum). NOTE: this can be TRUE at
+  the same time as RULE-0005 (Central category) evaluating TRUE via a different dimension — see
+  `known_conflicts` (OVERLAP-0001) below. In that simultaneous-TRUE situation, the combined result
+  is REQUIRES_REVIEW / UNDETERMINED_OVERLAP, not a resolved Central-vs-State determination.
+false_outcome: >
+  NOT_APPLICABLE to the State Licensing category specifically. Two distinct real-world situations
+  produce this result and must not be conflated: (a) capacity above the State range (which should
+  instead resolve APPLICABLE on RULE-0005/Central), or (b) capacity below the State range floor
+  (501 L/day and 2.5 MT/annum) — for which the evidence is silent on what registration obligation,
+  if any, applies. See RULE-REV-0003. This Rule's FALSE outcome must not be read as "no FSSAI
+  obligation" without also checking RULE-0005 and RULE-REV-0003.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine State-category classification until the dairy unit's
+  liquid milk and/or milk solids capacity is known.
+
+required_project_facts:
+  - project.dairy_liquid_milk_capacity
+  - project.dairy_milk_solids_capacity
+
+regulatory_fact_ids:
+  - RF-0010
+evidence_ids:
+  - EVID-FSS-03
+source_ids:
+  - SRC-004
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: INDIA
+lifecycle_stage: UNKNOWN
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED   # boundary values and units preserved exactly as evidenced; the only
+                        # interpretive step is the inclusive-range reading noted in COND-0008,
+                        # which is a natural-language reading of "from X to Y," not an invented
+                        # threshold
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0006-V1
+  regulatory_fact_ids: [RF-0010]
+  evidence_ids: [EVID-FSS-03]
+  source_ids: [SRC-004]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  Preserves the two threshold ranges as alternative ("OR") conditions per Phase 4 §15. Range
+  boundaries and units preserved exactly as evidenced. Does NOT fabricate the below-501-L/day
+  registration tier that Phase 3/4 explicitly identified as an evidence gap (Phase 4 REV-0002) — see
+  RULE-REV-0003 in the Rule Review Register.
+
+  CORRECTION (Phase 6 Final Patch): this field previously claimed the Central (RULE-0005) and State
+  (this rule) categories do not overlap. That claim was correct ONLY for same-dimension boundary
+  values (e.g. exactly 50,000 L/day: Central's ">" and State's inclusive "<=" do not both fire on
+  that single dimension) — it was WRONG as a general "no conflict" statement, because the two rules
+  can both evaluate TRUE via DIFFERENT dimensions simultaneously (e.g. liquid milk > 50,000 L/day
+  alone triggers Central, while milk solids within 2.5–2,500 MT/annum alone triggers State — both
+  can be true on the same project). That general claim is withdrawn; see
+  `regulatory-data/registers/rule_conflict_register.yaml` (OVERLAP-0001) for the corrected analysis,
+  worked examples, and REQUIRES_EVIDENCE status. This rule's own logic is unchanged and remains
+  VERIFIED — the issue is a cross-rule interaction, not a defect in this rule considered alone. No
+  Central-over-State or State-over-Central precedence is invented anywhere in this pass.
+
+known_conflicts:
+  - conflict_id: OVERLAP-0001
+    summary: "See RULE-0005-V1's known_conflicts entry and rule_conflict_register.yaml for full detail."

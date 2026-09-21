@@ -1,0 +1,66 @@
+rule_version_id: RULE-0004-V1
+rule_id: RULE-0004
+version_number: 1
+
+condition_expression_root_id: COND-0004
+logic: "single condition — no composite expression required"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — under FSSAI Act, 2006, Section 31(1), the project may not commence or carry on the
+  food business except under a licence. (Which licence tier/category applies — Central, State, or
+  the unresolved registration tier — is determined by RULE-0005/RULE-0006, not this Rule.)
+false_outcome: >
+  NOT_APPLICABLE — the project is not classified as a FOOD-industry project, so this FSSAI
+  licensing framework, as scoped by RULE-0004, is not triggered.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine applicability until the project's industry classification
+  is known.
+
+required_project_facts:
+  - project.industry
+
+regulatory_fact_ids:
+  - RF-0008
+evidence_ids:
+  - EVID-FSS-01
+source_ids:
+  - SRC-003
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSSA-06
+
+jurisdiction: INDIA
+lifecycle_stage: [PRE_OPERATION, OPERATION]
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW   # project.industry == FOOD as a proxy for "food business" is a Phase 5
+                               # interpretive step, not a direct restatement of the evidence text —
+                               # see COND-0004's normalization_notes
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0004-V1
+  regulatory_fact_ids: [RF-0008]
+  evidence_ids: [EVID-FSS-01]
+  source_ids: [SRC-003]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSSA-06
+
+validation_notes: >
+  RF-0008/EVID-FSS-01 does not itself define "food business" or map it to IRIS's
+  `project.industry` classification variable; that mapping is a Phase 5 modeling choice grounded in
+  Phase 0 §2/§4's industry scope, not a literal restatement of the evidence. Flagged with
+  `confidence: REQUIRES_REVIEW` rather than VERIFIED for this reason, distinct from RULE-0001/0002
+  whose conditions are near-verbatim restatements of their evidence.

@@ -1,0 +1,27 @@
+condition_id: COND-0012
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.dairy_milk_solids_capacity
+operator: "<="
+comparison_value: 2500
+unit: "MT/annum"
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0010
+
+description: >
+  Upper bound of the State Licensing Authority milk-solids range: capacity is at most 2,500 MT of
+  milk solids per annum.
+
+normalization_notes: >
+  Mirrors COND-0009's boundary-consistency note, with the same correction: the 2,500 MT/annum upper
+  bound here (State, inclusive) and RF-0009's 2,500 MT/annum lower bound (Central, exclusive ">")
+  are evidenced to not overlap on THIS SAME DIMENSION (milk solids) only. RULE-0005 and RULE-0006
+  can still both evaluate TRUE simultaneously via different dimensions — see
+  `regulatory-data/registers/rule_conflict_register.yaml` (OVERLAP-0001).

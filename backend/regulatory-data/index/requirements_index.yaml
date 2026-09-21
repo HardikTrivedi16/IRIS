@@ -1,0 +1,68 @@
+# IRIS — Phase 6 Requirement Index
+#
+# STATUS: PROVISIONAL / BRIDGING — this is NOT a complete Requirement catalog for the IRIS MVP.
+# It contains only the 4 Requirements that Phase 5 already produced an evidence-backed Rule for,
+# populated solely as a prerequisite for Phase 6 dependency modeling to have real REQ-### identities
+# to reference (see Phase6.md §2). At least 5 real-world regulatory domains needed for the MVP
+# scenario have NO Requirement here at all — see `requirements_not_catalogued` below. Do not treat
+# `total_requirements: 4` as "the MVP has 4 requirements" — it means "4 requirements have survived
+# evidence collection through to a Rule so far."
+
+requirements:
+  - requirement_id: REQ-0001
+    code: MPCB_CTE_WATER
+    authority_id: AUTH-MPCB
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0001
+    lifecycle_stage_ids: [PRE_ESTABLISHMENT]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0002
+    code: MPCB_CONSENT_AIR
+    authority_id: AUTH-MPCB
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0002
+    lifecycle_stage_ids: [PRE_ESTABLISHMENT, OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0003
+    code: DRUG_MANUFACTURING_LICENCE_RULE69
+    authority_id: AUTH-CDSCO
+    category: CONDITIONAL_PATHWAY
+    evaluated_by_rule_id: RULE-0003
+    lifecycle_stage_ids: [UNKNOWN]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0004
+    code: FSSAI_FOOD_BUSINESS_LICENCE
+    authority_id: AUTH-FSSAI
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0004
+    classification_rule_ids: [RULE-0005, RULE-0006]   # NON-CANONICAL, non-Phase-2-schema field —
+                                                        # OPEN DESIGN QUESTION, not an adopted schema
+                                                        # extension. See REQ-0004's
+                                                        # classification_rule_note and Phase6.md §3.1.
+    known_conflicts: [OVERLAP-0001]   # RULE-0005/RULE-0006 cross-dimension overlap — see
+                                       # rule_conflict_register.yaml
+    lifecycle_stage_ids: [PRE_OPERATION, OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+requirements_not_catalogued:
+  - subject: "Maharashtra factory-plan approval / DISH factory licence"
+    reason: "See RULE-REV-0001 / DEP-REV-0002 — no verified Rule exists to ground it."
+  - subject: "MPCB Hazardous Waste Authorization"
+    reason: "See DEP-REV-0003 — no Regulatory Fact was ever collected."
+  - subject: "MIDC Building Plan Approval"
+    reason: "See Phase 4 REV-0003 / Phase 5 RULE-REV-0004 — no Regulatory Fact was ever collected."
+  - subject: "Fire NOC (provisional and final)"
+    reason: "See Phase 4 REV-0004 / Phase 5 RULE-REV-0005 / DEP-REV-0004 — no Regulatory Fact was ever collected."
+  - subject: "FSSAI below-501-L/day dairy registration tier"
+    reason: "See Phase 4 REV-0002 / Phase 5 RULE-REV-0003 — no primary evidence exists; not a distinct Requirement in any case, but flagged here for completeness."
+
+counts:
+  total_requirements: 4
+  by_category:
+    CORE_APPROVAL: 3
+    CONDITIONAL_PATHWAY: 1
+  by_default_applicability:
+    REQUIRES_REVIEW: 4

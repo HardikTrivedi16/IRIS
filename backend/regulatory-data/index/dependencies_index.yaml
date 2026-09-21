@@ -1,0 +1,10 @@
+# IRIS — Phase 6 Dependency Index
+# Empty: zero DEP-### edges were authored in this pass. See
+# regulatory-data/registers/dependency_review_register.yaml for the 5 candidate relationships that
+# were considered and why none could be verified.
+
+dependencies: []
+
+counts:
+  total_dependencies: 0
+  by_type: {}

@@ -1,0 +1,46 @@
+# ── Python ──────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# ── Node ────────────────────────────────────────────────────
+node_modules/
+.output/
+.vinxi/
+.nitro/
+
+# ── Environment / secrets ──────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ── Supabase (NEVER commit service-role key) ───────────────
+# .env files above cover this, but be explicit:
+# backend/.env contains SUPABASE_SERVICE_ROLE_KEY
+# frontend/.env contains only VITE_API_URL (safe)
+
+# ── IDE ─────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Test / coverage ────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+
+# ── Build artifacts ────────────────────────────────────────
+*.zip

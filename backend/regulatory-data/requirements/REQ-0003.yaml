@@ -1,0 +1,55 @@
+requirement_id: REQ-0003
+code: DRUG_MANUFACTURING_LICENCE_RULE69
+title: "Drug Manufacturing Licence — Drugs Rules, 1945, Rule 69(1) / Form 24 pathway"
+catalog_status: PROVISIONAL_BRIDGING   # NOT a complete or final Requirement catalog — populated
+                                        # only as a minimal prerequisite for Phase 6 dependency
+                                        # modeling to have real REQ-### identities to reference.
+                                        # See requirement_notes below and Phase6.md §2-3.
+authority_id: AUTH-CDSCO   # NOTE: this is a known limitation, not a deliberate practical-authority
+                            # choice — see authority_attribution_note below
+category: CONDITIONAL_PATHWAY   # Task 2 R10 "Drug Manufacturing Licensing Pathway" — 🟡 Conditional
+                                 # pathway
+lifecycle_stage_ids:
+  - UNKNOWN   # per RF-0004–RF-0007's own lifecycle mapping (Phase 4 §8): the evidence covers both
+              # "grant" and "renewal" without stating exact timing; not guessed beyond the evidence
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0003
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0004
+  - RF-0005
+  - RF-0006
+  - RF-0007
+evidence_ids:
+  - EVID-FDA-01
+
+requirement_notes: >
+  Same bridging-population rationale as REQ-0001. Task 2 §12 (R10) references a different provision
+  — "Rule 70... Form 25 for relevant manufacturing licences and a separate Form 25F pathway for
+  Schedule X" — while the actual VERIFIED Phase 3 evidence (EVID-FDA-01) cites Rule 69(1) and Form
+  24. This is a genuine, documented discrepancy between Task 2's preliminary/unverified framing and
+  the independently verified evidence collected afterward; it is not resolved here (resolving it
+  would require new evidence collection, out of scope for this pass) and should not be read as an
+  error in either RF-0004 or RULE-0003 — Task 2 was explicitly preliminary and directed the
+  discovery, not the final regulatory determination (Phase 3/4's own evidence supersedes it per the
+  project's evidence hierarchy). Flagged here so a future phase does not silently assume Task 2's
+  Rule 70/Form 25 framing was independently confirmed.
+
+authority_attribution_note: >
+  Per Phase 2 §9's convention (see REQ-0001's authority_attribution_note), a Requirement's
+  `authority_id` should ideally be the practical issuing authority. RF-0005 establishes only that
+  the Rule 69(1) licensing authority is "appointed by the State Government" without naming that body
+  — in Maharashtra this would practically be the Maharashtra Food and Drug Administration, but no
+  such state-level authority (e.g. an "AUTH-FDA-MH") is catalogued in Phase 3's Authority Index
+  (which lists only AUTH-MPCB, AUTH-FSSAI, AUTH-CDSCO, AUTH-DGFASLI, AUTH-DISH-MH, AUTH-MoEFCC,
+  AUTH-MIDC). Populating a new Authority record was out of scope for this Requirement-bridging pass
+  (it would require new evidence, not just identity population), so `authority_id` falls back to
+  `AUTH-CDSCO` (the central instrument's issuing authority, matching RF-0004's attribution) rather
+  than inventing an unverified state authority record. This is a known gap, not a considered choice
+  — flagged for whichever future pass expands the Authority Index.

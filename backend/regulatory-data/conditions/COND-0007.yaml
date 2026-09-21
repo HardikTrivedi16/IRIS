@@ -1,0 +1,30 @@
+condition_id: COND-0007
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0005
+  - COND-0006
+unresolved_behavior: UNKNOWN   # three-valued OR (Kleene): T∨U=T, F∨U=U, U∨U=U — never collapses to FALSE/NOT_APPLICABLE
+
+evidence_ids:
+  - EVID-FSS-02
+
+grounding_regulatory_fact_ids:
+  - RF-0009
+
+description: >
+  Composite root: TRUE if either the liquid-milk-volume criterion (COND-0005) OR the milk-solids
+  criterion (COND-0006) is met — the FSSAI Schedule 1 "OR" combination logic for the Central
+  Licensing Authority dairy category, evaluated with standard three-valued (Kleene) OR so that a
+  single known-TRUE criterion is sufficient even if the other criterion's Project Fact is UNKNOWN.
+
+normalization_notes: >
+  Implements RF-0009's `combination_logic: "OR"` exactly as recorded in Phase 4 — this composite
+  condition is the machine-evaluable encoding of that descriptive metadata; it was not present as
+  boolean logic in Phase 4 (which explicitly scoped that out), and is authored here for the first
+  time as Phase 5's job.

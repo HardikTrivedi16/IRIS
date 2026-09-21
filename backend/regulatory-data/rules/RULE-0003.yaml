@@ -1,0 +1,33 @@
+rule_id: RULE-0003
+code: DRUGS_RULE_69_FORM_24_PATHWAY_APPLICABILITY
+requirement_id: REQ-0003   # linked in Phase 6 — see requirement_id_note
+
+title: "Drugs Rules, 1945 — Rule 69(1) licence-application pathway (Form 24) applicability"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the Rule 69(1) licence-application pathway — application to the
+  State-Government-appointed licensing authority, in Form 24 — applies to the project's drug
+  product(s), based on the single evidenced scope condition: the product's drug schedule
+  classification is outside Schedule C, Schedule C(1), and Schedule X.
+
+rule_type: APPLICABILITY_RULE
+
+requirement_id_note: >
+  Same Phase-6 linkage rationale as RULE-0001. This Rule now grounds REQ-0003, "Drug Manufacturing
+  Licence (Rule 69/Form 24 pathway)." Task 2's `DRUG_MANUFACTURING_LICENSE` node name remains
+  illustrative context only — see REQ-0003's requirement_notes on the Rule-70/Form-25 vs.
+  Rule-69/Form-24 discrepancy between Task 2 and verified evidence.
+
+combines_regulatory_facts:
+  - RF-0004   # core licence-application framework
+  - RF-0005   # licensing authority appointed by State Government (descriptive output only)
+  - RF-0006   # Form 24 reference (descriptive output only)
+  - RF-0007   # Schedule C/C(1)/X exclusion (the condition's negative scope)
+combination_rationale: >
+  RF-0005 (authority) and RF-0006 (Form 24) are not independently evaluable applicability
+  questions — they are descriptive attributes of the single pathway RF-0004 establishes and RF-0007
+  scopes. Per the Phase 5 brief's instruction not to create unnecessary rule categories, they are
+  folded into this one Rule's TRUE-branch output text rather than modeled as separate Rules.
+
+current_active_rule_version_id: null

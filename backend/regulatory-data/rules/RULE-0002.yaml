@@ -1,0 +1,20 @@
+rule_id: RULE-0002
+code: AIR_ACT_CONSENT_APPLICABILITY
+requirement_id: REQ-0002   # linked in Phase 6 — see requirement_id_note
+
+title: "Air Act, 1981 — Consent to Establish/Operate applicability (Section 21(1) location trigger)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the Air Act, 1981, Section 21(1) prior-consent-to-establish-or-operate
+  requirement is triggered for the project, based on the single evidenced scope condition: whether
+  the industrial plant is to be established or operated within a declared air pollution control
+  area.
+
+rule_type: APPLICABILITY_RULE
+
+requirement_id_note: >
+  Same Phase-6 linkage rationale as RULE-0001. This Rule now grounds REQ-0002, "MPCB Consent to
+  Establish/Operate (Air)."
+
+current_active_rule_version_id: null

@@ -1,0 +1,28 @@
+rule_id: RULE-0005
+code: FSSAI_DAIRY_CENTRAL_LICENSING_CATEGORY
+requirement_id: REQ-0004   # linked in Phase 6 as a CLASSIFICATION sub-rule of REQ-0004 — see
+                            # requirement_id_note and REQ-0004's classification_rule_note
+
+title: "FSSAI Schedule 1 — Central Licensing Authority dairy category applicability"
+output_type: CLASSIFICATION
+
+description: >
+  Determines whether the project's dairy processing unit falls within the FSSAI Schedule 1 Central
+  Licensing Authority category, based on the two alternative ("OR") capacity criteria: liquid milk
+  volume/day and/or milk solids/annum.
+
+rule_type: THRESHOLD_RULE
+
+requirement_id_note: >
+  Unlike RULE-0001–RULE-0004 (each the sole Rule for its Requirement, per Phase 2 §9's 1→1
+  Requirement:Rule model), this Rule and RULE-0006 both attach to REQ-0004 as CLASSIFICATION
+  sub-rules rather than as REQ-0004's `evaluated_by_rule_id` — see REQ-0004's
+  classification_rule_note for why, and for the open design question this raises about whether
+  Central/State dairy tiers should instead be modeled as separate Requirements.
+
+scope_note: >
+  This Rule determines Central-Licensing-category classification only. It does not by itself
+  conclude "no licence needed" if this classification is FALSE — see RULE-0006 (State category) and
+  RULE-REV-0003 in the Rule Review Register for the below-501-L/day registration-tier evidence gap.
+
+current_active_rule_version_id: null

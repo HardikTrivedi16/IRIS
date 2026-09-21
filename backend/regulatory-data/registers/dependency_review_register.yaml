@@ -1,0 +1,109 @@
+# IRIS — Phase 6 Dependency Review Register
+# Parallel in spirit to Phase 4's Review Register and the Phase 5 Rule Review Register: candidate
+# dependency relationships that were considered but could NOT be authored as verified DEP-###
+# edges, recorded here instead of silently omitted or silently invented.
+
+review_items:
+
+  - review_id: DEP-REV-0001
+    candidate_relationship: "MPCB Consent to Establish → MPCB Consent to Operate (\"CTE → CTO\")"
+    candidate_type: LEGAL_PREREQUISITE
+    task2_reference: "Task 2 §8 (R06 MPCB CTO): 'Prototype flow: MPCB CTE → Plant established → Pollution-control systems → MPCB CTO.' Task 2 calls this 'one of the strongest lifecycle dependencies in the prototype.'"
+    why_not_authored: >
+      Two independent problems, either one sufficient to block authoring this edge:
+      (1) Task 2's dependency diagrams are explicitly self-described as preliminary — "This
+      dependency model is preliminary and should be rigorously verified in Task 3 before being
+      treated as the final machine-readable dependency graph" (Task 2 §20). Task 2's own source
+      citations for R05/R06 are general MPCB webpage links (mpcb.gov.in/en/consentmgt/water-and-air-act),
+      not a specific verified excerpt establishing legal sequencing the way EVID-MPCB-01/02
+      establish the underlying consent requirements themselves. No Phase 3 evidence record
+      independently verifies a CTE-before-CTO legal precondition.
+      (2) Even setting that aside, the current Requirement catalog does not contain matching CTE/CTO
+      pairs to connect: REQ-0001 (Water Act) covers establishment only — no Water Act "operate" fact
+      was collected in Phase 3/4 (RF-0001's evidence text is establishment-only: "establish or take
+      any steps to establish"). REQ-0002 (Air Act) already covers BOTH establish and operate as one
+      combined Rule (RULE-0002), because RF-0002's evidence bundles "establish or operate" into a
+      single sentence. There is no pair of catalogued Requirements corresponding to a clean
+      "CTE Requirement" and a distinct "CTO Requirement" to draw an edge between.
+    what_is_needed: >
+      Independent Phase-3-grade evidence (a) establishing a Water Act consent-to-operate obligation
+      distinct from RF-0001 (so a Water Act REQ-CTO could be catalogued), and (b) establishing that
+      consent-to-operate is legally conditioned on prior consent-to-establish (not just
+      administratively sequential in practice).
+    current_status: REQUIRES_REVIEW
+    blocks: "Any DEP-### edge asserting a legal or practical prerequisite between MPCB establishment and operation consents."
+
+  - review_id: DEP-REV-0002
+    candidate_relationship: "DISH Factory Plan Approval → Construction → DISH Factory Inspection → DISH Factory Licence"
+    candidate_type: LEGAL_PREREQUISITE / PRACTICAL_DEPENDENCY (mixed, per Task 2)
+    task2_reference: "Task 2 §6 (R04 DISH Factory Licence), 'Dependency' diagram; Task 2 §20 Preliminary Dependency Model."
+    why_not_authored: >
+      No Requirement in the current catalog corresponds to either end of this relationship. RF-0003
+      (the only Phase 4 fact touching the Factories Act / DISH factory-plan domain) was
+      intentionally NOT converted into a Rule in Phase 5 (see RULE-REV-0001) because it establishes
+      only a central enabling power, not a verified Maharashtra-specific obligation — so there is no
+      "DISH Factory Plan Approval" Requirement to be the source of this edge, and no "DISH Factory
+      Licence" Requirement (no Regulatory Fact was ever collected for the licence/inspection stage
+      at all — Phase 3 found no verified evidence there either) to be its target.
+    what_is_needed: >
+      Verified Maharashtra Factories Rules, 1963, Rule 3 evidence (unblocks RULE-REV-0001, which
+      would let a "DISH Factory Plan Approval" Requirement be catalogued for the first time), plus
+      separate verified evidence for the DISH factory-licence/inspection stage (never collected in
+      Phase 3 at all).
+    current_status: REQUIRES_REVIEW
+    blocks: "Any DEP-### edge involving DISH factory-plan approval, construction, inspection, or licence — the entire chain is currently outside the verified Requirement catalog."
+
+  - review_id: DEP-REV-0003
+    candidate_relationship: "MPCB Hazardous Waste Authorization — conditional on MPCB CTE"
+    candidate_type: CONDITIONAL_DEPENDENCY
+    task2_reference: "Task 2 §9 (R07 Hazardous-Waste Authorization): conditional decision node, 'Does the facility generate regulated hazardous waste?'"
+    why_not_authored: >
+      No Regulatory Fact or Rule exists for Hazardous Waste Authorization at all — Phase 3 did not
+      collect verified evidence for this domain (it is outside the 8 evidence records normalized in
+      Phase 4), so there is no Requirement to be the target of a conditional edge from REQ-0001 or
+      REQ-0002.
+    what_is_needed: "Phase 3 evidence collection for the Hazardous Waste (Management, Handling and Transboundary Movement) Rules, followed by Phase 4 normalization and a Phase 5 Rule."
+    current_status: UNKNOWN
+    blocks: "Any DEP-### edge involving hazardous-waste authorization."
+
+  - review_id: DEP-REV-0004
+    candidate_relationship: "Provisional Fire Approval → Final Fire Approval"
+    candidate_type: LEGAL_PREREQUISITE
+    task2_reference: "Task 2 §11 (R09 Final Fire Approval), 'Prototype dependency'; Task 2 §20."
+    why_not_authored: "No Regulatory Fact or Rule exists for Fire NOC at all (Phase 4 REV-0004 / Phase 5 RULE-REV-0005) — Phase 3 found no primary source for this domain, so there is no Requirement to anchor either end of this edge."
+    what_is_needed: "Phase 3 evidence collection for local/MIDC Fire NOC provisions, per Phase 4 REV-0004 and Phase 5 RULE-REV-0005."
+    current_status: UNKNOWN
+    blocks: "Any DEP-### edge involving provisional or final Fire Approval."
+
+  - review_id: DEP-REV-0005
+    candidate_relationship: "MPCB Consent to Establish (Water) ↔ MPCB Consent to Establish/Operate (Air) — parallel/administrative relationship"
+    candidate_type: PRACTICAL_DEPENDENCY (candidate only — not asserted)
+    task2_reference: "None — this candidate was checked directly against the two MPCB evidence excerpts (EVID-MPCB-01, EVID-MPCB-02) rather than against a Task 2 diagram, because in current MPCB practice the two consents are commonly filed via a single Combined Application Form."
+    why_not_authored: >
+      Neither EVID-MPCB-01 nor EVID-MPCB-02 mentions a combined-application process, a shared form,
+      or any procedural linkage between the Water Act and Air Act consent provisions — each is a
+      standalone statutory excerpt. Asserting a PRACTICAL_DEPENDENCY between REQ-0001 and REQ-0002
+      here would be inventing a procedural fact not present in the evidence, which the Phase 5/6
+      briefs both prohibit.
+    what_is_needed: "Verified evidence (e.g. an official MPCB combined-consent-application procedure page or notification) establishing the administrative relationship, if any, between these two applications."
+    current_status: UNKNOWN
+    blocks: "Any DEP-### edge asserting a procedural/administrative relationship between REQ-0001 and REQ-0002."
+
+out_of_scope_for_this_register:
+  - subject: "FSSAI Central Licensing Authority (RULE-0005) vs. State Licensing Authority (RULE-0006) cross-dimension overlap"
+    note: >
+      This is explicitly NOT a dependency candidate and does not appear above as a DEP-REV item. It
+      is a same-Requirement (REQ-0004) cross-rule CLASSIFICATION conflict — both rules can evaluate
+      TRUE for the same project via different dimensions (liquid milk vs. milk solids) — not a
+      precedence or sequencing relationship between two different Requirements, which is what this
+      register and the Dependency Model track. It is recorded instead in
+      `regulatory-data/registers/rule_conflict_register.yaml` as `OVERLAP-0001`. No `DEP-###` has
+      been or should be created for it, and no Central-over-State or State-over-Central precedence
+      is asserted anywhere in this pipeline.
+
+counts:
+  total_review_items: 5
+  REQUIRES_REVIEW: 2
+  UNKNOWN: 3
+  candidate_edges_considered: 5
+  candidate_edges_authored: 0

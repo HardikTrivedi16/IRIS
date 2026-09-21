@@ -1,0 +1,26 @@
+condition_id: COND-0010
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0008
+  - COND-0009
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0010
+
+description: >
+  Composite: TRUE if liquid-milk capacity falls within the State Licensing Authority range
+  (501–50,000 L/day inclusive) — the AND of COND-0008 and COND-0009.
+
+normalization_notes: >
+  Evaluated with three-valued (Kleene) AND: if either bound's Project Fact is UNKNOWN and the other
+  is not definitively FALSE, this composite resolves UNKNOWN (never silently FALSE).

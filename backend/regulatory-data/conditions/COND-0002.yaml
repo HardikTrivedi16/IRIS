@@ -1,0 +1,27 @@
+condition_id: COND-0002
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.plant_located_in_air_pollution_control_area
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-MPCB-02
+
+grounding_regulatory_fact_ids:
+  - RF-0002
+
+description: >
+  True if the project's industrial plant is to be established or operated within a declared air
+  pollution control area — the exact statutory trigger in Air Act, 1981, Section 21(1).
+
+normalization_notes: >
+  target_variable_key restates the evidenced statutory trigger ("establish or operate any
+  industrial plant in an air pollution control area") without inventing a definition of what
+  counts as a declared air pollution control area — that classification, if needed, is a separate
+  evidenced fact for a future phase (not established by RF-0002/EVID-MPCB-02 alone). This condition
+  does not assume every industrial plant is inside such an area; the location fact must be supplied.

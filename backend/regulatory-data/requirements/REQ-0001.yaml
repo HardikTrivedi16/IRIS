@@ -1,0 +1,58 @@
+requirement_id: REQ-0001
+code: MPCB_CTE_WATER
+title: "MPCB Consent to Establish — Water Act, 1974"
+catalog_status: PROVISIONAL_BRIDGING   # NOT a complete or final Requirement catalog — populated
+                                        # only as a minimal prerequisite for Phase 6 dependency
+                                        # modeling to have real REQ-### identities to reference.
+                                        # See requirement_notes below and Phase6.md §2-3.
+authority_id: AUTH-MPCB   # the practical enforcing/issuing authority a project deals with — see
+                           # authority_attribution_note below on why this differs from RF-0001's
+                           # authority_id
+category: CORE_APPROVAL   # Task 2 R05 "MPCB CTE" — 🔵 Approval
+lifecycle_stage_ids:
+  - PRE_ESTABLISHMENT
+
+default_applicability: REQUIRES_REVIEW   # per Phase 2 §9: remains REQUIRES_REVIEW until a
+                                          # verified (ACTIVE) Rule Version exists; RULE-0001-V1 is
+                                          # currently DRAFT, not ACTIVE
+
+evaluated_by_rule_id: RULE-0001
+document_ids: []       # Document checklist generation is out of scope for this pass (Phase 0 §11
+                        # names it as future MVP core functionality, not yet executed)
+
+dependencies_as_target: []   # populated by Phase 6 dependency modeling — see
+                              # regulatory-data/registers/dependency_review_register.yaml; none
+                              # could be verified in this pass
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0001
+evidence_ids:
+  - EVID-MPCB-01
+
+requirement_notes: >
+  This Requirement identity is populated here as a bridging step: Phase 2 §9 assigns "populate the
+  actual catalog of verified Requirements" to Phase 4 (normalization), but the Phase 4 pass actually
+  performed left `requirement_id: null` on every fact and explicitly deferred this population
+  (Phase4.md §4, "a Requirement-population activity that has not yet been executed"). Phase 5
+  likewise left `requirement_id: null` on every Rule for the same reason. Since Phase 6 (Dependency
+  Modeling) cannot construct any `DEP-###` edge without real `REQ-###` identities on both ends
+  (Phase 2 §11, validation rule V-2: "no orphan edges"), this minimal, evidence-grounded population
+  was performed as a necessary prerequisite for this Phase 6 pass, scoped ONLY to the four
+  Requirements that Phase 5 already produced a DRAFT Rule Version for. No new claims about
+  documents, timelines, fees, or procedure are added here beyond what RULE-0001/RF-0001 already
+  establish.
+
+authority_attribution_note: >
+  RF-0001 and RULE-0001 correctly set `authority_id: AUTH-MoEFCC` following Phase 4's provenance
+  rule (attribute to the *instrument's issuing authority* — the central Act — not the state-level
+  body that enforces it; Phase4.md §5 point 2). A `Requirement`, by contrast, represents the
+  practical approval a project must obtain from a real regulator — and Phase 2 §9's own worked
+  example (`REQ-004 MPCB_CTE`) sets `authority: AUTH-MPCB`, confirming Requirement.authority_id is
+  meant to be the practical issuing/enforcing body, not the statute's central issuing authority.
+  `AUTH-MPCB` ("Maharashtra Pollution Control Board," level `STATE_REGULATOR`) is already catalogued
+  in Phase 3's Authority Index. The correspondence between the Water Act's "State Board" (the term
+  used in the evidenced statutory text, EVID-MPCB-01) and MPCB is Maharashtra's own constituted
+  State Pollution Control Board — a standard jurisdictional identification, not a new regulatory
+  claim, and consistent with Phase 3 having already catalogued AUTH-MPCB in connection with this
+  same evidence set even though it wasn't used as the Fact-level `authority_id`.

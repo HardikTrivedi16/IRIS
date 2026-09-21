@@ -1,0 +1,30 @@
+condition_id: COND-0004
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.industry
+operator: "=="
+comparison_value: FOOD
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-01
+
+grounding_regulatory_fact_ids:
+  - RF-0008
+
+description: >
+  True if the project's declared industry classification is FOOD (the IRIS Phase 0 §2 industry-scope
+  variable), used as the proxy for whether the project is conducting a "food business" within the
+  meaning of FSSAI Act, 2006, Section 31(1).
+
+normalization_notes: >
+  RF-0008/EVID-FSS-01 establishes that "no person shall commence or carry on any food business
+  except under a licence" but does not itself define "food business," nor does it map that term
+  onto IRIS's `project.industry` classification variable. Using `project.industry == FOOD` as the
+  triggering condition is a Phase 5 modeling choice, not a direct restatement of the evidence text —
+  it is a reasonable proxy given Phase 0 §2/§4's explicit FOOD industry scope, but it is an added
+  interpretive step. For this reason RULE-0004 (which uses this condition) carries
+  `confidence: REQUIRES_REVIEW` rather than VERIFIED — see RULE-0004's validation_notes.

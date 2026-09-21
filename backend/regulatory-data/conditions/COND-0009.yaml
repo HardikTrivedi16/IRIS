@@ -1,0 +1,32 @@
+condition_id: COND-0009
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.dairy_liquid_milk_capacity
+operator: "<="
+comparison_value: 50000
+unit: "L/day"
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0010
+
+description: >
+  Upper bound of the State Licensing Authority liquid-milk range: capacity is at most 50,000 litres
+  of liquid milk per day.
+
+normalization_notes: >
+  See COND-0008's normalization_notes on the inclusive-range interpretation. The 50,000 upper bound
+  here (State, inclusive "<=") and RF-0009's 50,000 lower bound (Central, exclusive ">") are
+  evidenced to not overlap ON THIS SAME DIMENSION (liquid milk volume): a project at exactly 50,000
+  L/day falls in the State category on this dimension, not Central, per the source's own preserved
+  operators. This narrow, same-dimension claim does NOT mean RULE-0005 (Central) and RULE-0006
+  (State) are mutually exclusive overall — they can both evaluate TRUE simultaneously via DIFFERENT
+  dimensions (e.g. high liquid volume + moderate milk solids). See
+  `regulatory-data/registers/rule_conflict_register.yaml` (OVERLAP-0001) for that cross-dimension
+  conflict, which is a corrected addition to this pass — an earlier version of this file's notes
+  incorrectly generalized the same-dimension check into a broader "no conflict" claim.

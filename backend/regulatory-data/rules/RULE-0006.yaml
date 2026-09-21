@@ -1,0 +1,27 @@
+rule_id: RULE-0006
+code: FSSAI_DAIRY_STATE_LICENSING_CATEGORY
+requirement_id: REQ-0004   # linked in Phase 6 as a CLASSIFICATION sub-rule of REQ-0004 — see
+                            # requirement_id_note and REQ-0004's classification_rule_note
+
+title: "FSSAI Schedule 1 — State Licensing Authority dairy category applicability"
+output_type: CLASSIFICATION
+
+description: >
+  Determines whether the project's dairy processing unit falls within the FSSAI Schedule 1 State
+  Licensing Authority category, based on the two alternative ("OR") capacity ranges: liquid milk
+  volume/day (501–50,000) and/or milk solids/annum (2.5–2,500).
+
+rule_type: THRESHOLD_RULE
+
+requirement_id_note: >
+  Same Phase-6 CLASSIFICATION sub-rule rationale as RULE-0005 — see REQ-0004's
+  classification_rule_note.
+
+scope_note: >
+  This Rule determines State-Licensing-category classification only. A project whose capacity falls
+  below both range floors (501 L/day and 2.5 MT/annum) evaluates FALSE here but is NOT thereby
+  concluded to have no obligation at all — the below-501/below-2.5 registration tier is an
+  unevidenced gap (Phase 4 REV-0002; this phase's RULE-REV-0003). See that register entry before
+  treating a FALSE result on this Rule as "no FSSAI obligation."
+
+current_active_rule_version_id: null

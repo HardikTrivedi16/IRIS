@@ -1,0 +1,18 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30
+pydantic>=2.7,<3.0
+pydantic-settings>=2.4
+httpx>=0.27
+requests>=2.31
+PyYAML>=6.0
+networkx>=3.2,<4.0
+pytest>=8.0
+python-jose[cryptography]>=3.3
+python-dotenv>=1.0   # loads backend/.env — see app/config.py
+
+# Local OCR (Tesseract) — image -> raw text only, see app/ai_integration/ocr_service.py.
+# Requires the Tesseract binary itself to be installed separately on the host
+# (apt: tesseract-ocr, brew: tesseract, Windows: https://github.com/UB-Mannheim/tesseract/wiki).
+pytesseract>=0.3.10
+Pillow>=10.0
+python-multipart>=0.0.9   # required by FastAPI to accept multipart/form-data file uploads

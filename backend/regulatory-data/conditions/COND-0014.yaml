@@ -1,0 +1,27 @@
+condition_id: COND-0014
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0010
+  - COND-0013
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0010
+
+description: >
+  Composite root: TRUE if either the liquid-milk range (COND-0010) OR the milk-solids range
+  (COND-0013) is met — the FSSAI Schedule 1 "OR" combination logic for the State Licensing
+  Authority dairy category, evaluated with three-valued (Kleene) OR.
+
+normalization_notes: >
+  Implements RF-0010's `combination_logic: "OR"` exactly as recorded in Phase 4, as machine-evaluable
+  boolean logic authored for the first time in Phase 5.

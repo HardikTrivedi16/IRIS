@@ -1,0 +1,60 @@
+requirement_id: REQ-0004
+code: FSSAI_FOOD_BUSINESS_LICENCE
+title: "FSSAI Food Business Licence — FSSAI Act, 2006, Section 31(1)"
+catalog_status: PROVISIONAL_BRIDGING   # NOT a complete or final Requirement catalog — populated
+                                        # only as a minimal prerequisite for Phase 6 dependency
+                                        # modeling to have real REQ-### identities to reference.
+                                        # See requirement_notes below and Phase6.md §2-3.
+authority_id: AUTH-FSSAI   # FSSAI is both the instrument-issuing authority (RF-0008) and the
+                            # practical licensing authority (Central or State Licensing Authority,
+                            # both designated under the FSSAI umbrella) — no attribution mismatch
+                            # here, unlike REQ-0001/REQ-0002/REQ-0003
+category: CORE_APPROVAL     # no direct Task 2 analogue (Task 2 did not cover the food/FSSAI
+                             # workstream at all); classified by analogy to Task 2 R05/"🔵 Approval"
+                             # since Section 31(1) is a similarly unconditional licensing mandate
+lifecycle_stage_ids:
+  - PRE_OPERATION
+  - OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0004
+classification_rule_ids:
+  - RULE-0005   # FSSAI dairy — Central Licensing Authority category (sub-classification, not a
+                # separate applicability question — see classification_rule_note below)
+  - RULE-0006   # FSSAI dairy — State Licensing Authority category (same)
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0008
+evidence_ids:
+  - EVID-FSS-01
+
+requirement_notes: >
+  Same bridging-population rationale as REQ-0001. Task 2 does not mention FSSAI or the food
+  workstream anywhere (confirmed by full-text search of IRIS_Task_2_Regulatory_Mapping_Verification)
+  — Task 2 was scoped entirely to the pharma (MahaPharm Formulations) scenario. This Requirement is
+  therefore populated from Phase 4/5's evidence chain alone, with no Task 2 illustrative context
+  available to cross-check against.
+
+classification_rule_note: >
+  Phase 2 §9 models Requirement→Rule as 1→1 ("a requirement's applicability is decided by exactly
+  one logical Rule"). RULE-0005 and RULE-0006 do not decide *whether* REQ-0004 applies (that is
+  RULE-0004's job) — they decide *which licensing-authority tier* (Central vs. State) governs the
+  licence once REQ-0004 is APPLICABLE, per RF-0009/RF-0010. This is a genuine structural question
+  the Phase 2 schema does not yet resolve: should a tier-classification Rule attach to the same
+  Requirement as its applicability Rule (as done here, via the non-schema-standard
+  `classification_rule_ids` field), or should FSSAI Central-tier and State-tier be modeled as two
+  separate Requirements? This pass takes the former approach as the more conservative one — it does
+  not invent two new Requirement identities for what the evidence treats as one underlying licence
+  obligation with two possible authority tiers — but flags it explicitly as a new Open Design
+  Question for whichever phase or reviewer owns the Phase 2 schema (see Phase6.md §3). To be
+  explicit: `classification_rule_ids` is NOT a canonical Phase 2 field and this pass does not treat
+  it as adopted schema — it is a documentation convenience pending a real schema decision.
+
+  Separately, and unrelated to this schema question: RULE-0005 and RULE-0006 are not mutually
+  exclusive with each other — see `OVERLAP-0001` in `regulatory-data/registers/
+  rule_conflict_register.yaml` for the cross-dimension conflict this pass identified between them.

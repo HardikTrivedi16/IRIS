@@ -1,0 +1,33 @@
+condition_id: COND-0003
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.drug_schedule_classification
+operator: NOT_IN
+comparison_value: ["SCHEDULE_C", "SCHEDULE_C1", "SCHEDULE_X"]
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FDA-01
+
+grounding_regulatory_fact_ids:
+  - RF-0004
+  - RF-0007
+
+description: >
+  True if the drug product(s) the project intends to manufacture are classified outside Schedule C,
+  Schedule C(1), and Schedule X of the Drugs Rules, 1945 — the exact scope condition under which the
+  Rule 69(1) licence-application pathway (Form 24) applies, per RF-0004 and the RF-0007 exclusion.
+
+normalization_notes: >
+  The three-value exclusion set (SCHEDULE_C, SCHEDULE_C1, SCHEDULE_X) is copied verbatim from the
+  evidenced exclusion in RF-0007/EVID-FDA-01. No other schedule categories are added. This condition
+  intentionally does NOT resolve what governs manufacturing-licence applications when the value is
+  FALSE (i.e., when the product IS in one of the excluded schedules) — that provision was not
+  collected as evidence in Phase 3 and is preserved as a gap (Phase 4 REV-0005 / this phase's
+  RULE-REV-0002), not invented here. `project.drug_schedule_classification` is a categorical
+  Project Fact expected to take a specific schedule value (or an explicit "NONE_OF_THE_ABOVE" /
+  general-schedule value) once populated by a later phase; Phase 5 does not define its full
+  enumerated domain beyond the three excluded values the evidence names.
