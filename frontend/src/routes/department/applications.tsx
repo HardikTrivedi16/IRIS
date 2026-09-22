@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Plus, Search } from "lucide-react";
 import {
@@ -9,6 +9,7 @@ import {
   applicationAge,
 } from "@/lib/iris/department-api";
 import type { ApplicationStage, SlaState } from "@/lib/iris/department-api";
+import { useAuth } from "@/lib/auth-context";
 import { PageShell, PageHeader } from "@/components/iris/page";
 import { cn } from "@/lib/utils";
 import { BackendUnavailableError } from "@/lib/iris/api-client";
@@ -62,11 +63,180 @@ const SLA_TONE_CLASSES: Record<SlaState, string> = {
   COMPLETED: "border-border bg-neutral-surface text-muted-foreground",
 };
 
+/**
+ * Creation modal for POST /api/v1/department/applications (departmentApi.
+ * createApplication — already existed, was just never wired to any UI
+ * control). department_id is locked to the signed-in officer's own
+ * department rather than offered as a free choice: the backend is the
+ * authoritative enforcer of department isolation, but the UI shouldn't
+ * invite a cross-department attempt it knows will be refused.
+ */
+function NewApplicationModal({
+  departmentId,
+  departmentName,
+  onClose,
+}: {
+  departmentId: string;
+  departmentName: string | null;
+  onClose: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const [projectId, setProjectId] = useState("");
+  const [requirementId, setRequirementId] = useState("");
+  const [title, setTitle] = useState("");
+  const [applicantName, setApplicantName] = useState("");
+
+  const mutation = useMutation({
+    mutationFn: () =>
+      departmentApi.createApplication({
+        project_id: projectId.trim(),
+        requirement_id: requirementId.trim(),
+        department_id: departmentId,
+        ...(title.trim() ? { title: title.trim() } : {}),
+        ...(applicantName.trim() ? { applicant_name: applicantName.trim() } : {}),
+      }),
+    onSuccess: (created) => {
+      void queryClient.invalidateQueries({
+        queryKey: ["department", "applications"],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["department", "dashboard"],
+      });
+      void navigate({
+        to: "/department/application/$appId",
+        params: { appId: created.id },
+      });
+    },
+  });
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-lg border border-border bg-card p-6 shadow-xl">
+        <h3 className="text-[16px] font-semibold text-foreground">
+          New Application
+        </h3>
+        <p className="mt-1 text-[12.5px] text-muted-foreground">
+          Register an application for an existing applicant project and
+          regulatory requirement.
+        </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            mutation.mutate();
+          }}
+          className="mt-4 space-y-3 text-[13px]"
+        >
+          <div>
+            <label className="mb-1 block text-[12px] font-medium">
+              Project ID *
+            </label>
+            <input
+              required
+              type="text"
+              value={projectId}
+              onChange={(e) => setProjectId(e.target.value)}
+              placeholder="e.g. 92ebc91d-e3e6-46ac-a5ce-46ef5ae240d4"
+              className="w-full rounded border border-border bg-background px-3 py-1.5"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-[12px] font-medium">
+              Requirement ID *
+            </label>
+            <input
+              required
+              type="text"
+              value={requirementId}
+              onChange={(e) => setRequirementId(e.target.value)}
+              placeholder="e.g. REQ-0001"
+              className="w-full rounded border border-border bg-background px-3 py-1.5"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-[12px] font-medium">
+              Department
+            </label>
+            <input
+              disabled
+              readOnly
+              value={
+                departmentName
+                  ? `${departmentName} (${departmentId})`
+                  : departmentId
+              }
+              className="w-full rounded border border-border bg-surface-sunken px-3 py-1.5 text-muted-foreground"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-[12px] font-medium">
+              Title (optional)
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. MPCB Consent to Establish — Water Act"
+              className="w-full rounded border border-border bg-background px-3 py-1.5"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-[12px] font-medium">
+              Applicant Name (optional)
+            </label>
+            <input
+              type="text"
+              value={applicantName}
+              onChange={(e) => setApplicantName(e.target.value)}
+              placeholder="Applicant / company name"
+              className="w-full rounded border border-border bg-background px-3 py-1.5"
+            />
+          </div>
+          {mutation.error && (
+            <p className="text-[12px] text-destructive">
+              {mutation.error instanceof Error
+                ? mutation.error.message
+                : "Application creation failed."}
+            </p>
+          )}
+          <div className="mt-5 flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded border border-border px-3 py-1.5 text-[12.5px] hover:bg-secondary"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={
+                !projectId.trim() || !requirementId.trim() || mutation.isPending
+              }
+              className="rounded bg-primary px-3.5 py-1.5 text-[12.5px] font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
+            >
+              {mutation.isPending ? "Creating…" : "Create Application"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 function ApplicationsPage() {
+  const { irisUser, isDemoMode } = useAuth();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<ApplicationStage | "">("");
   const [slaFilter, setSlaFilter] = useState<SlaState | "">("");
   const [reqFilter, setReqFilter] = useState("");
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // The signed-in officer's own department — used to lock the create form.
+  // Demo mode has no irisUser.department_id from a real profile, so it falls
+  // back to the department the demo dashboard already operates on.
+  const departmentId = irisUser?.department_id ?? (isDemoMode ? "dept-mpcb" : null);
+  const departmentName = irisUser?.department_name ?? null;
 
   const { data, isLoading, error } = useQuery({
     queryKey: [
@@ -97,13 +267,20 @@ function ApplicationsPage() {
         title="Applications"
         description="All applications submitted to the department for processing."
         actions={
-          <Link
-            to="/department"
-            className="focus-ring inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          <button
+            type="button"
+            disabled={!departmentId}
+            title={
+              departmentId
+                ? undefined
+                : "Your account has no department assigned yet."
+            }
+            onClick={() => setShowCreateModal(true)}
+            className="focus-ring inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
           >
             <Plus className="h-3.5 w-3.5" />
             New Application
-          </Link>
+          </button>
         }
       />
 
@@ -317,6 +494,14 @@ function ApplicationsPage() {
           </table>
         )}
       </div>
+
+      {showCreateModal && departmentId && (
+        <NewApplicationModal
+          departmentId={departmentId}
+          departmentName={departmentName}
+          onClose={() => setShowCreateModal(false)}
+        />
+      )}
     </PageShell>
   );
 }

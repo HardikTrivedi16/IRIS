@@ -2,7 +2,9 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -19,6 +21,7 @@ import type {
   ProjectScale,
   ProjectCharacteristics,
 } from "@/lib/iris/types";
+import { useAuth } from "@/lib/auth-context";
 import {
   NewProjectForm,
   type CreatedProject,
@@ -146,8 +149,20 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     null,
   );
 
+  const { session, irisUser, isLoading, isDemoMode } = useAuth();
+  // Auth state has three distinct phases; only the last two may decide anything.
+  //  - resolving: still loading, or a session exists but GET /auth/me has not
+  //    returned the IRIS profile yet (irisUser is null in both cases)
+  //  - resolved: session + profile known (demo mode is always resolved)
+  // A government role is not an applicant, so it never queries owned projects
+  // and an empty list must not push it into applicant intake.
+  const authResolved =
+    isDemoMode || (!isLoading && session !== null && irisUser !== null);
+  const isGovernment =
+    !isDemoMode && authResolved && Boolean(irisUser?.role.startsWith("DEPARTMENT_"));
   const query = useQuery({
     queryKey: ["projects"],
+    enabled: authResolved && !isGovernment,
     queryFn: () => irisApi.listProjects(),
     staleTime: 30_000,
     retry: (failureCount, error) =>
@@ -161,6 +176,25 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  // Set by first-run intake; consumed once the provider has switched from the
+  // intake form to the app, so the navigation is not lost in that swap.
+  const [pendingSetupId, setPendingSetupId] = useState<string | null>(null);
+
+  // activeProjectId is local component state, not part of the TanStack Query
+  // cache that __root.tsx clears on an account change — it must be reset
+  // here too, or it could keep pointing at a project id that belonged to
+  // the previous account (see __root.tsx's identity-change comment for why
+  // this matters). `undefined` (not yet observed) is not a change, so this
+  // doesn't fire on first mount.
+  const identityRef = useRef<string | null | undefined>(undefined);
+  const identity = isDemoMode ? "demo" : (session?.user?.id ?? null);
+  useEffect(() => {
+    if (identityRef.current !== undefined && identityRef.current !== identity) {
+      setActiveProjectIdState(null);
+      setPendingSetupId(null);
+    }
+    identityRef.current = identity;
+  }, [identity]);
   const registerCreatedProject = useCallback(
     (project: CreatedProject) => {
       queryClient.setQueryData<unknown[]>(["projects"], (old) => [
@@ -189,6 +223,39 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       projects.find((p) => p.id === activeProjectId) ?? projects[0]!;
     return { activeProject, setActiveProjectId, projects, registerCreatedProject };
   }, [projects, activeProjectId, setActiveProjectId, registerCreatedProject]);
+
+  useEffect(() => {
+    if (value && pendingSetupId) {
+      void navigate({
+        to: "/projects",
+        search: { setup: pendingSetupId },
+        replace: true,
+      });
+      setPendingSetupId(null);
+    }
+  }, [value, pendingSetupId, navigate]);
+
+  useEffect(() => {
+    if (isGovernment) void navigate({ to: "/department", replace: true });
+  }, [isGovernment, navigate]);
+
+  if (!authResolved) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-[13.5px] text-muted-foreground">Loading…</p>
+      </div>
+    );
+  }
+
+  if (isGovernment) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-[13.5px] text-muted-foreground">
+          Opening the government portal…
+        </p>
+      </div>
+    );
+  }
 
   if (query.isLoading) {
     return (
@@ -259,7 +326,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
           <NewProjectForm
             onCreated={(project) => {
               registerCreatedProject(project);
-              void navigate({ to: "/projects", search: { setup: project.id } });
+              setPendingSetupId(project.id);
             }}
           />
         </div>

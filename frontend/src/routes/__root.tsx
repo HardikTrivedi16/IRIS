@@ -8,7 +8,7 @@ import {
   Scripts,
   useNavigate,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useRouterState } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
@@ -155,6 +155,29 @@ function AppInner() {
     setAuthToken(token);
     setDeptAuthToken(token);
   }, [session]);
+
+  // Cross-account cache isolation: every useQuery cache in this app
+  // (["projects"], project-requirements/documents/activity, grievances,
+  // applications, schemes, renewals, department dashboards/applications/
+  // officers, ...) lives in one QueryClient instance that survives sign-out
+  // and sign-in in place (this is a client-rendered SPA, nothing reloads).
+  // None of those query keys are scoped by user id, so without this, a
+  // second account signing in in the same tab could see the previous
+  // account's still-cached, not-yet-stale data rendered before its own
+  // fetch resolves — a real cross-session data leak, not just stale UI.
+  // Clearing the whole cache whenever the authenticated principal actually
+  // changes (a different Supabase user, or a sign-out) is the standard
+  // TanStack Query pattern for this and needs no per-query-key changes.
+  // `undefined` (not yet observed) intentionally does not count as a
+  // change, so the cache isn't wiped on first load.
+  const identityRef = useRef<string | null | undefined>(undefined);
+  const identity = isDemoMode ? "demo" : (session?.user?.id ?? null);
+  useEffect(() => {
+    if (identityRef.current !== undefined && identityRef.current !== identity) {
+      queryClient.clear();
+    }
+    identityRef.current = identity;
+  }, [identity, queryClient]);
 
   const isDepartmentRoute = pathname.startsWith("/department");
   const isLoginRoute =
