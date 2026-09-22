@@ -1,4 +1,5 @@
 {
+  "authorities/README.md": "1ca40901c4a211b4ea2f25d4bbf33a49d0333e4d75497a46167ac1e3e2edbaf3",
   "conditions/COND-0001.yaml": "3f7908cf3f3ed3f89078fb5044e7bf873405ac0a0d951fec18d8cb035af2254f",
   "conditions/COND-0002.yaml": "553b0399b1f04fdc313d73c6d5cca72342a8b61a9739365809d3216b6a45047d",
   "conditions/COND-0003.yaml": "ead6945a9f75997cb702fd5e312b6c2a3c68317f3856739418354ead31482221",
@@ -13,10 +14,19 @@
   "conditions/COND-0012.yaml": "f603c516cbfeda260f44ecd2517886a8906376ef7e39a89c09930c8eea60027a",
   "conditions/COND-0013.yaml": "a05b9457fe529f66bbc6400c2f68e047dfd5513bec1c697a5e025fa7d8c86795",
   "conditions/COND-0014.yaml": "cec05b57f958a527c33a48936356185270adba6d1035c40cd0e618db58b9551a",
+  "evidence/README.md": "aeba580bb295db526bd6061ae1dbb1f6995045607ba99d8ffdce11b06aaa391e",
+  "facts/README.md": "8959e7920b3f0125d9b15fe726fc923114bd35f869925ebd855888ce2c5f25d8",
+  "index/authorities_index.yaml": "12d797e5d2d6de9c7519d133ac8aa00c646accd5fcced6d8f343ba99b3cf0d38",
   "index/conditions_index.yaml": "75d0f5228fe45261114c7bf30ced85b8982c088265bed98f0a8a4fa681fca37e",
   "index/dependencies_index.yaml": "20772bd3296e3a35fc5b66420cb2dff553b784b4732b92495707698fcc8a3734",
+  "index/evidence_index.yaml": "37d8f9d967c80e5ccac0bd1db208edc745eb600c444911ca72117cc37b220cb7",
+  "index/facts_index.yaml": "24798341b1a4a960da6e7fc56d90d068cd897b4bed6f8858bdaf63faa6878119",
+  "index/instruments_index.yaml": "a7e0fc2018ec024e205605126e02c6bc8e97b3c7baee41597baa3cb57edff90b",
   "index/requirements_index.yaml": "1ad6d3a2fc50a8258c20ed37a91ccf1c4b32daf7ec3ddc0dddcb89fa0d286c78",
   "index/rules_index.yaml": "27356f3dd2493c42589668146cecd63a56ac6be9f4c66772d33059ea297599b3",
+  "index/sources_index.yaml": "c57506606eec83867c319fad9fb1e93861173303c2288fddcd3b77f17034281a",
+  "index/verifications_index.yaml": "bdbfb65af3f73ae13e781496b5288730535b0cf57c3283b616e815b032926405",
+  "instruments/README.md": "6b92dc46390390d20d0f73ac50c363a45e434f2e4ed3f85e58c14576a1a7bac2",
   "registers/dependency_conflict_register.yaml": "b74918a733ce1e9ec75151daa35e3c17b468799291f7268081206226b6b566ab",
   "registers/dependency_review_register.yaml": "7d474cc271052bef89c8a5a0d64de2bcfa7bd3dafc6bf48110fe5cf05dfb35aa",
   "registers/rule_conflict_register.yaml": "ecb4be43dc496b7d6c19e1619cd4fa549b8eab859ea2439281c3eac97365cbe2",
@@ -36,5 +46,7 @@
   "rules/RULE-0003.yaml": "92123f3d8481d54480bf63ebdc076010d8dbbe5b76a50f6c59a952a396dd86d7",
   "rules/RULE-0004.yaml": "486caa5e8e61050a51c3c6e42c524dc41d3c5063f7b71c65f9ac993b94031940",
   "rules/RULE-0005.yaml": "d9e77ca6072ce49cdae0476ef19240698fc4850d5c62a02d5d5ca163738d3869",
-  "rules/RULE-0006.yaml": "2f55d0b26acb59b5f13f3937b0ef6a55d501c88f76a8d87030584baded0d9ab0"
+  "rules/RULE-0006.yaml": "2f55d0b26acb59b5f13f3937b0ef6a55d501c88f76a8d87030584baded0d9ab0",
+  "sources/README.md": "91342d9183f7ed95a7e771c0ebd48d70c5bd9041c51aad4338aa0334f5078494",
+  "verifications/README.md": "00c356eff6eda95e0afaeb93b4fa34f193128da3b9cb85916b4665e33d2511b6"
 }

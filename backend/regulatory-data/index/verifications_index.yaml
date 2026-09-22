@@ -1,0 +1,10 @@
+# IRIS — Provenance Substrate (Tranche 1): Verification (VER) Index
+# Machine-readable index of all authored Verification records. Empty because
+# no Rule Version has been promoted to ACTIVE and no VER record has been
+# authored — see regulatory-data/verifications/README.md.
+# This is a lookup aid; it introduces no applicability logic.
+
+verifications: []
+
+counts:
+  total_verifications: 0

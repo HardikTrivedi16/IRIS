@@ -18,11 +18,28 @@ import yaml
 
 def _load_yaml_dir(path: str) -> dict:
     """Load every *.yaml file in a directory into {id: doc}, using whichever
-    of the plausible *_id keys is present in the document."""
+    of the plausible *_id keys is present in the document.
+
+    Order matters: the FIRST key in ``id_keys`` present in a document wins.
+    A document's own true id must always be checked before any *foreign*
+    key it also happens to carry, or that document gets keyed by the wrong
+    id. The original five (``condition_id``..``dependency_id``) never
+    collide with each other or with the six provenance keys, because every
+    existing record type's own id is checked before any of the six
+    (e.g. a Rule Version's ``rule_version_id`` wins over its own
+    ``authority_id``/``instrument_id`` fields). Within the six provenance
+    keys, two real collisions exist and are ordered deliberately:
+    ``regulatory_fact_id`` before ``authority_id``/``instrument_id`` (an RF
+    record carries both its own id and those two as foreign keys), and
+    ``evidence_id`` before ``source_id`` (an Evidence record carries both
+    its own id and a ``source_id`` foreign key). Do not reorder this
+    tuple without re-checking every record type for this kind of collision."""
     out = {}
     id_keys = (
         "condition_id", "rule_version_id", "rule_id", "requirement_id",
         "dependency_id",
+        "evidence_id", "regulatory_fact_id", "verification_id",
+        "authority_id", "instrument_id", "source_id",
     )
     for fp in sorted(glob.glob(os.path.join(path, "*.yaml"))):
         with open(fp, "r", encoding="utf-8") as f:
@@ -57,10 +74,27 @@ class RegulatoryDataset:
     requirements: dict = field(default_factory=dict)
     dependencies: dict = field(default_factory=dict)
 
+    # Provenance substrate (Tranche 1). Directories may be empty — that is
+    # the correct, honest state until verified regulatory research is
+    # integrated. See docs/REGULATORY_PACK_INPUT_REQUIREMENTS.md.
+    authorities: dict = field(default_factory=dict)
+    instruments: dict = field(default_factory=dict)
+    sources: dict = field(default_factory=dict)
+    evidence: dict = field(default_factory=dict)
+    facts: dict = field(default_factory=dict)
+    verifications: dict = field(default_factory=dict)
+
     conditions_index: dict = field(default_factory=dict)
     rules_index: dict = field(default_factory=dict)
     requirements_index: dict = field(default_factory=dict)
     dependencies_index: dict = field(default_factory=dict)
+
+    authorities_index: dict = field(default_factory=dict)
+    instruments_index: dict = field(default_factory=dict)
+    sources_index: dict = field(default_factory=dict)
+    evidence_index: dict = field(default_factory=dict)
+    facts_index: dict = field(default_factory=dict)
+    verifications_index: dict = field(default_factory=dict)
 
     rule_conflict_register: dict = field(default_factory=dict)
     rule_review_register: dict = field(default_factory=dict)
@@ -78,6 +112,13 @@ class RegulatoryDataset:
         ds.requirements = _load_yaml_dir(os.path.join(root, "requirements"))
         ds.dependencies = _load_yaml_dir(os.path.join(root, "dependencies"))
 
+        ds.authorities = _load_yaml_dir(os.path.join(root, "authorities"))
+        ds.instruments = _load_yaml_dir(os.path.join(root, "instruments"))
+        ds.sources = _load_yaml_dir(os.path.join(root, "sources"))
+        ds.evidence = _load_yaml_dir(os.path.join(root, "evidence"))
+        ds.facts = _load_yaml_dir(os.path.join(root, "facts"))
+        ds.verifications = _load_yaml_dir(os.path.join(root, "verifications"))
+
         ds.conditions_index = _load_yaml_file(
             os.path.join(root, "index", "conditions_index.yaml")) or {}
         ds.rules_index = _load_yaml_file(
@@ -86,6 +127,19 @@ class RegulatoryDataset:
             os.path.join(root, "index", "requirements_index.yaml")) or {}
         ds.dependencies_index = _load_yaml_file(
             os.path.join(root, "index", "dependencies_index.yaml")) or {}
+
+        ds.authorities_index = _load_yaml_file(
+            os.path.join(root, "index", "authorities_index.yaml")) or {}
+        ds.instruments_index = _load_yaml_file(
+            os.path.join(root, "index", "instruments_index.yaml")) or {}
+        ds.sources_index = _load_yaml_file(
+            os.path.join(root, "index", "sources_index.yaml")) or {}
+        ds.evidence_index = _load_yaml_file(
+            os.path.join(root, "index", "evidence_index.yaml")) or {}
+        ds.facts_index = _load_yaml_file(
+            os.path.join(root, "index", "facts_index.yaml")) or {}
+        ds.verifications_index = _load_yaml_file(
+            os.path.join(root, "index", "verifications_index.yaml")) or {}
 
         ds.rule_conflict_register = _load_yaml_file(
             os.path.join(root, "registers", "rule_conflict_register.yaml")) or {}

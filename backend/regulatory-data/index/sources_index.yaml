@@ -1,0 +1,9 @@
+# IRIS — Provenance Substrate (Tranche 1): Source Index
+# Machine-readable index of all authored Source records. Empty because no
+# Source record has been added yet — see regulatory-data/sources/README.md.
+# This is a lookup aid; it introduces no applicability logic.
+
+sources: []
+
+counts:
+  total_sources: 0

@@ -15,9 +15,15 @@ def test_dataset_validates_cleanly(dataset):
     assert report.passed
 
 
-def test_38_files_inspected(dataset):
+def test_44_files_inspected(dataset):
+    # 38 Phase 5/6 files + 6 provenance substrate index files added in
+    # Tranche 1 (authorities/instruments/sources/evidence/facts/
+    # verifications _index.yaml — all currently empty; see
+    # regulatory-data/index/*_index.yaml and docs/REGULATORY_PACK_INPUT_
+    # REQUIREMENTS.md). The six new record-type directories themselves
+    # contain only a README.md each, which this *.yaml glob does not count.
     report = validate_dataset(DATA_ROOT, dataset)
-    assert len(report.files_inspected) == 38
+    assert len(report.files_inspected) == 44
 
 
 def test_broken_reference_is_detected(dataset):

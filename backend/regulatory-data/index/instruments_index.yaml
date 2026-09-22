@@ -1,0 +1,9 @@
+# IRIS — Provenance Substrate (Tranche 1): Instrument Index
+# Machine-readable index of all authored Instrument records. Empty because no
+# Instrument record has been added yet — see regulatory-data/instruments/README.md.
+# This is a lookup aid; it introduces no applicability logic.
+
+instruments: []
+
+counts:
+  total_instruments: 0

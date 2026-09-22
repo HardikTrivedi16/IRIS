@@ -1,0 +1,9 @@
+# IRIS — Provenance Substrate (Tranche 1): Evidence Index
+# Machine-readable index of all authored Evidence records. Empty because no
+# Evidence record has been added yet — see regulatory-data/evidence/README.md.
+# This is a lookup aid; it introduces no applicability logic.
+
+evidence: []
+
+counts:
+  total_evidence: 0
