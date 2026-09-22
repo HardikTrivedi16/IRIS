@@ -27,6 +27,7 @@ def client():
     from app.main import app
     from app.config import get_settings
     from app.engine_service import get_dataset, get_engine
+    from app.fact_registry import build_fact_registry
     from app.store import get_store
     import app.store.department_store as dept_store_module
     import app.security as security_module
@@ -34,6 +35,7 @@ def client():
     get_settings.cache_clear()
     get_dataset.cache_clear()
     get_engine.cache_clear()
+    build_fact_registry.cache_clear()
     get_store.cache_clear()
 
     # Reset the department store singleton for test isolation

@@ -3,13 +3,28 @@ Supported Project Fact registry — derived, never authored.
 
 Every entry in this registry is computed by reading the frozen regulatory
 dataset that ``engine_service`` already loads (conditions + rule versions +
-rules + requirements). Nothing here authors a fact key, a unit, a threshold,
-an allowed value, or a regulatory meaning: if the dataset does not mention
-it, this module does not know about it.
+rules + requirements) AND the scheme catalogue that ``app.schemes`` already
+loads (scheme conditions + schemes). Nothing here authors a fact key, a
+unit, a threshold, an allowed value, or a regulatory/scheme meaning: if
+neither dataset mentions it, this module does not know about it.
+
+ONE Project Fact vocabulary, two consumers
+-------------------------------------------
+A Project Fact (``project.*``) is a project fact regardless of which
+deterministic subsystem reads it. It may be declared/referenced by:
+
+  * regulatory Rule Versions and their Conditions (``iris_engine``), and/or
+  * Scheme records and their Scheme Conditions (``app.schemes``).
+
+A key referenced by both produces exactly ONE registry entry with
+``consumer_domains: ["REGULATORY", "SCHEME"]`` — this module never creates
+a second, scheme-specific fact vocabulary. There is one stored Project
+Facts object per project and one validation path (``validate_facts``)
+regardless of which domain(s) end up reading a given key.
 
 Why this exists
 ---------------
-Two features need to know "which project facts can a user meaningfully
+Three features need to know "which project facts can a user meaningfully
 supply, and what shape must the value be?":
 
   * P0-A fact capture — ask only for facts some Rule Version actually
@@ -17,31 +32,47 @@ supply, and what shape must the value be?":
   * P0-B change impact — validate a proposed fact change before handing it
     to the engine, so an unsupported key or a wrong-typed value is rejected
     with a clear message instead of silently evaluating to UNKNOWN.
+  * P2-K scheme eligibility — a fact a Scheme declares in its own
+    ``required_project_facts`` (or references via a Scheme Condition) must
+    be a legitimate, storable, validatable Project Fact even though it may
+    never move a regulatory Scenario Lab result.
 
-Deriving the registry (rather than hardcoding a list) is what keeps both
-features generic: when the regulatory-research teammate adds a verified
-Rule Version with new conditions, the registry, the fact-capture form and
-change impact all pick it up with no code change — and no threshold such as
-50000 L/day is ever written into application code.
+Deriving the registry (rather than hardcoding a list) is what keeps every
+consumer generic: when the regulatory-research or scheme-research teammate
+adds a verified record with new conditions, the registry, the fact-capture
+form and change impact all pick it up with no code change — and no
+threshold such as 50000 L/day is ever written into application code.
+
+The shipped production scheme catalogue (``scheme-data/``) is empty, so in
+production this module's output is unchanged from its regulatory-only
+predecessor except for the additive ``consumer_domains``/``scheme_*``
+metadata fields — see ``docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md``.
 
 Honesty constraints
 -------------------
-* ``values_referenced_by_rules`` is exactly that — the comparison values the
-  dataset's own conditions mention. It is NOT an enumeration of legally
-  permitted values, and is labelled as such everywhere it surfaces.
+* ``values_referenced_by_conditions`` (and its backward-compatible alias
+  ``values_referenced_by_rules``) is exactly that — the comparison values
+  the dataset's own regulatory Conditions and Scheme Conditions mention. It
+  is NOT an enumeration of legally permitted values, and is labelled as
+  such everywhere it surfaces.
 * ``value_type`` is inferred structurally from ``predicate_type`` (what the
-  engine's own evaluator requires of the operand), not from any regulatory
-  interpretation.
-* A fact key used with conflicting predicate types is reported as
-  ``"mixed"`` and marked not safely typed, rather than being guessed.
+  shared evaluator, ``iris_engine.conditions.evaluate_condition``, requires
+  of the operand), not from any regulatory or scheme interpretation.
+* A fact key used with conflicting predicate types across either/both
+  domains is reported as ``"mixed"`` and marked not safely typed, rather
+  than being guessed. A fact key referenced with two or more distinct,
+  non-empty units is reported via ``units_conflict: true`` and is also
+  marked not safely typed — no unit conversion is ever performed.
 """
 from __future__ import annotations
 
 import math
+import os
 from functools import lru_cache
 from typing import Any
 
-from . import engine_service
+from . import engine_service, schemes
+from .config import get_settings
 
 # predicate_type -> the operand shape iris_engine.conditions._apply_leaf_operator
 # actually requires. This is a statement about the evaluator, not about law.
@@ -50,6 +81,9 @@ _PREDICATE_VALUE_TYPE: dict[str, str] = {
     "THRESHOLD_COMPARISON": "number",
     "SET_MEMBERSHIP": "string",
 }
+
+REGULATORY = "REGULATORY"
+SCHEME = "SCHEME"
 
 
 class FactValidationError(Exception):
@@ -70,43 +104,75 @@ def _flatten_comparison_values(value: Any) -> list[Any]:
     return [value]
 
 
+def _scheme_catalogue_root() -> str:
+    """Resolve SCHEME_DATA_ROOT exactly as ``routers/schemes.py`` does, so
+    the Fact Registry and the ``/schemes`` endpoints always agree on which
+    catalogue is loaded."""
+    root = get_settings().scheme_data_root
+    return root if os.path.isabs(root) else os.path.join(engine_service.BACKEND_DIR, root)
+
+
+def _load_scheme_catalogue() -> schemes.SchemeCatalogue:
+    return schemes.load_catalogue(_scheme_catalogue_root())
+
+
+def _new_entry(key: str) -> dict:
+    return {
+        "key": key,
+        "domains": set(),
+        "predicate_types": set(),
+        "units": set(),
+        "condition_ids": [],
+        "scheme_condition_ids": [],
+        "values_referenced": [],
+        "rule_version_ids": [],
+        "requirement_ids": [],
+        "scheme_ids": [],
+    }
+
+
 @lru_cache
 def build_fact_registry() -> tuple[dict, ...]:
-    """Every ``project.*`` fact key any Condition in the dataset targets.
+    """Every ``project.*`` fact key any regulatory Condition/Rule Version or
+    Scheme Condition/Scheme in the dataset targets.
+
+    Both sources are merged BY KEY into one entry (see module docstring
+    "ONE Project Fact vocabulary, two consumers") — a key referenced by
+    both a regulation and a scheme never produces two entries.
+
+    An invalid scheme catalogue contributes nothing to the registry (fails
+    safe, the same way ``app.schemes.match_catalogue`` returns no results
+    for an INVALID catalogue) rather than breaking fact derivation for the
+    regulatory side.
 
     Returned as a tuple of plain dicts (hashable container so ``lru_cache``
     is safe; callers copy before mutating). Sorted by key for determinism —
     two processes loading the same dataset produce byte-identical output.
     """
     ds = engine_service.get_dataset()
+    cat = _load_scheme_catalogue()
+    scheme_records = {} if cat.errors else cat.schemes
+    scheme_conditions = {} if cat.errors else cat.conditions
 
     by_key: dict[str, dict] = {}
 
+    def entry_for(key: str) -> dict:
+        return by_key.setdefault(key, _new_entry(key))
+
+    # --- Regulatory Conditions --------------------------------------------
     for cond_id, cond in sorted(ds.conditions.items()):
         target_key = cond.get("target_variable_key")
         if not target_key:
             continue  # COMPOSITE nodes have no operand of their own
-        predicate_type = cond.get("predicate_type")
-        entry = by_key.setdefault(
-            target_key,
-            {
-                "key": target_key,
-                "value_type": None,
-                "predicate_types": set(),
-                "units": set(),
-                "condition_ids": [],
-                "values_referenced_by_rules": [],
-                "rule_version_ids": [],
-                "requirement_ids": [],
-            },
-        )
-        entry["predicate_types"].add(predicate_type)
+        entry = entry_for(target_key)
+        entry["domains"].add(REGULATORY)
+        entry["predicate_types"].add(cond.get("predicate_type"))
         entry["condition_ids"].append(cond_id)
         if cond.get("unit"):
             entry["units"].add(cond["unit"])
         for v in _flatten_comparison_values(cond.get("comparison_value")):
-            if v not in entry["values_referenced_by_rules"]:
-                entry["values_referenced_by_rules"].append(v)
+            if v not in entry["values_referenced"]:
+                entry["values_referenced"].append(v)
 
     # Which Rule Versions declare the fact as required, and which
     # Requirements those Rule Versions ultimately decide. Both links come
@@ -115,28 +181,41 @@ def build_fact_registry() -> tuple[dict, ...]:
         rule = ds.rules.get(rv.get("rule_id")) or {}
         requirement_id = rule.get("requirement_id")
         for key in rv.get("required_project_facts") or []:
-            entry = by_key.get(key)
-            if entry is None:
-                # A Rule Version declares a fact no Condition targets. Record
-                # it rather than dropping it — it is still a fact a user can
-                # be asked for, we just can't infer its type from a predicate.
-                entry = by_key.setdefault(
-                    key,
-                    {
-                        "key": key,
-                        "value_type": None,
-                        "predicate_types": set(),
-                        "units": set(),
-                        "condition_ids": [],
-                        "values_referenced_by_rules": [],
-                        "rule_version_ids": [],
-                        "requirement_ids": [],
-                    },
-                )
+            # A Rule Version may declare a fact no Condition targets. Record
+            # it rather than dropping it — it is still a fact a user can be
+            # asked for, we just can't infer its type from a predicate.
+            entry = entry_for(key)
+            entry["domains"].add(REGULATORY)
             if rv_id not in entry["rule_version_ids"]:
                 entry["rule_version_ids"].append(rv_id)
             if requirement_id and requirement_id not in entry["requirement_ids"]:
                 entry["requirement_ids"].append(requirement_id)
+
+    # --- Scheme Conditions ---------------------------------------------------
+    for cond_id, cond in sorted(scheme_conditions.items()):
+        target_key = cond.get("target_variable_key")
+        if not target_key:
+            continue  # COMPOSITE nodes have no operand of their own
+        entry = entry_for(target_key)
+        entry["domains"].add(SCHEME)
+        entry["predicate_types"].add(cond.get("predicate_type"))
+        entry["scheme_condition_ids"].append(cond_id)
+        if cond.get("unit"):
+            entry["units"].add(cond["unit"])
+        for v in _flatten_comparison_values(cond.get("comparison_value")):
+            if v not in entry["values_referenced"]:
+                entry["values_referenced"].append(v)
+
+    # Which Schemes declare the fact as required — the scheme-side analogue
+    # of the Rule Version loop above, using the same field name
+    # (``required_project_facts``) the scheme catalogue format already
+    # defines (see docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md §5).
+    for scheme_id, scheme in sorted(scheme_records.items()):
+        for key in scheme.get("required_project_facts") or []:
+            entry = entry_for(key)
+            entry["domains"].add(SCHEME)
+            if scheme_id not in entry["scheme_ids"]:
+                entry["scheme_ids"].append(scheme_id)
 
     out: list[dict] = []
     for key in sorted(by_key):
@@ -151,21 +230,44 @@ def build_fact_registry() -> tuple[dict, ...]:
             value_type = "unknown"
         else:
             value_type = "mixed"
+
+        # Two or more distinct, non-empty units referenced for the same key
+        # (e.g. a regulation stating L/day and a scheme stating kL/month)
+        # can never be safely resolved by this module — no unit conversion
+        # is performed, so typed input is refused rather than guessed.
+        units_conflict = len(entry["units"]) > 1
+        typed_input_supported = (
+            value_type in ("boolean", "number", "string") and not units_conflict
+        )
+
+        values_referenced = entry["values_referenced"]
         out.append(
             {
                 "key": key,
                 "value_type": value_type,
-                "typed_input_supported": value_type in ("boolean", "number", "string"),
+                "typed_input_supported": typed_input_supported,
                 "predicate_types": predicate_types,
                 "units": sorted(entry["units"]),
+                "units_conflict": units_conflict,
+                "consumer_domains": sorted(entry["domains"]),
                 "condition_ids": sorted(entry["condition_ids"]),
-                "values_referenced_by_rules": entry["values_referenced_by_rules"],
+                "scheme_condition_ids": sorted(entry["scheme_condition_ids"]),
+                # `values_referenced_by_conditions` is the generic name;
+                # `values_referenced_by_rules` is kept as a backward-
+                # compatible alias for the same list (existing API/frontend
+                # consumers are unaffected — see docs/SCHEME_CATALOGUE_
+                # INPUT_REQUIREMENTS.md and docs/REGULATORY_PACK_INPUT_
+                # REQUIREMENTS.md).
+                "values_referenced_by_conditions": values_referenced,
+                "values_referenced_by_rules": values_referenced,
                 "rule_version_ids": sorted(entry["rule_version_ids"]),
                 "requirement_ids": sorted(entry["requirement_ids"]),
+                "scheme_ids": sorted(entry["scheme_ids"]),
                 "values_note": (
-                    "Comparison values that this dataset's own Conditions "
-                    "reference for this fact. This is NOT an exhaustive or "
-                    "legally authoritative list of permitted values."
+                    "Comparison values that this dataset's own regulatory "
+                    "Conditions and Scheme Conditions reference for this "
+                    "fact. This is NOT an exhaustive or legally "
+                    "authoritative list of permitted values."
                 ),
             }
         )
@@ -194,6 +296,24 @@ def required_facts_for_requirement(requirement_id: str) -> list[dict]:
         for key in (rv or {}).get("required_project_facts") or []:
             if key not in wanted:
                 wanted.append(key)
+
+    index = fact_registry_index()
+    return [index[k] for k in sorted(wanted) if k in index]
+
+
+def required_facts_for_scheme(scheme_id: str) -> list[dict]:
+    """The fact entries ``scheme_id`` declares as required, via the same
+    unified registry ``required_facts_for_requirement`` uses for regulatory
+    Requirements. An unknown/invalid-catalogue scheme id returns []."""
+    cat = _load_scheme_catalogue()
+    scheme = ({} if cat.errors else cat.schemes).get(scheme_id)
+    if scheme is None:
+        return []
+
+    wanted: list[str] = []
+    for key in scheme.get("required_project_facts") or []:
+        if key not in wanted:
+            wanted.append(key)
 
     index = fact_registry_index()
     return [index[k] for k in sorted(wanted) if k in index]

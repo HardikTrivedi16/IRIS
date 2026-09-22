@@ -32,10 +32,12 @@ from ..fact_registry import build_fact_registry, required_facts_for_requirement
 router = APIRouter(prefix="/api/v1", tags=["facts"])
 
 _DERIVATION_NOTE = (
-    "Derived from the regulatory dataset's own Conditions and Rule Versions. "
-    "'values_referenced_by_rules' lists the comparison values those records "
-    "mention — it is not an exhaustive or legally authoritative list of "
-    "permitted values."
+    "Derived from the regulatory dataset's own Conditions/Rule Versions and "
+    "the scheme catalogue's own Scheme Conditions/Schemes — one shared "
+    "Project Fact vocabulary for both. 'values_referenced_by_conditions' "
+    "(alias: 'values_referenced_by_rules') lists the comparison values "
+    "those records mention — it is not an exhaustive or legally "
+    "authoritative list of permitted values."
 )
 
 

@@ -17,3 +17,13 @@ benefits_summary: "SYNTHETIC — no real benefit is described here."
 status: ACTIVE
 confidence: VERIFIED
 last_verified: {date: "2026-01-02", verified_by: "fixture", method: "synthetic"}
+
+# Independent application-status dimension (SYNTHETIC) — must never change
+# `outcome` above; see docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md §3.2/§3.3.
+application_status: VERIFIED_OPEN
+application_window:
+  mode: FIXED_WINDOW
+  opens: "2026-01-01"
+  closes: "2027-04-30"
+  as_of_date: "2026-09-21"
+  source_reference: {document_title: "SYNTHETIC", clause: "S-2", page_number: 1, quoted_text: "SYNTHETIC — applications open"}

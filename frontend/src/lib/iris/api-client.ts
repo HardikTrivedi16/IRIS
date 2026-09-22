@@ -307,20 +307,35 @@ interface AskIrisRequest {
 // Project Fact schema + deterministic Change Impact
 // ---------------------------------------------------------------------------
 
-/** One supported project fact, derived by the backend from the regulatory
- * dataset's own Conditions/Rule Versions (GET /api/v1/facts/registry).
- * Nothing here is authored in application code. */
+/** One supported project fact — the ONE Project Fact vocabulary shared by
+ * regulatory evaluation and scheme eligibility, derived by the backend from
+ * the regulatory dataset's own Conditions/Rule Versions AND the scheme
+ * catalogue's own Scheme Conditions/Schemes (GET /api/v1/facts/registry).
+ * Nothing here is authored in application code. A key referenced by both
+ * domains is ONE entry with consumer_domains: ["REGULATORY", "SCHEME"]. */
 export interface FactRegistryEntry {
   key: string;
   value_type: "boolean" | "number" | "string" | "mixed" | "unknown";
   typed_input_supported: boolean;
   predicate_types: string[];
   units: string[];
-  /** Comparison values the dataset's conditions reference — NOT an
-   * exhaustive or legally authoritative list of permitted values. */
+  /** True when this key is referenced with 2+ distinct, non-empty units
+   * across its consumers — no conversion is performed, so typed input is
+   * refused (typed_input_supported is also false in this case). */
+  units_conflict: boolean;
+  /** Which deterministic subsystem(s) reference this fact. */
+  consumer_domains: ("REGULATORY" | "SCHEME")[];
+  condition_ids: string[];
+  scheme_condition_ids: string[];
+  /** Comparison values the dataset's regulatory + scheme conditions
+   * reference — NOT an exhaustive or legally authoritative list of
+   * permitted values. */
+  values_referenced_by_conditions: unknown[];
+  /** Backward-compatible alias for values_referenced_by_conditions. */
   values_referenced_by_rules: unknown[];
   rule_version_ids: string[];
   requirement_ids: string[];
+  scheme_ids: string[];
   values_note: string;
 }
 
@@ -701,6 +716,39 @@ export interface SchemeMatch {
   confidence: string;
   last_verified: { date?: string } | null;
   is_authoritative_catalogue_entry: boolean;
+  /** Independent of `outcome` — whether the scheme is currently accepting
+   * applications at all. Never derived from `outcome`, and never changes
+   * it. See app/schemes.py's module docstring ("Two independent claims"). */
+  application_status: SchemeApplicationStatus | null;
+  application_window: SchemeApplicationWindow | null;
+  supersedes: string | null;
+  superseded_by: string | null;
+}
+
+export type SchemeApplicationStatus =
+  | "VERIFIED_OPEN"
+  | "VERIFIED_CLOSED"
+  | "VERIFIED_CONTINUING_BUT_NOT_OPEN_FOR_NEW_APPLICATIONS"
+  | "VERIFIED_PERIODIC_CALL_FOR_PROPOSALS"
+  | "SELECTION_COMPLETED"
+  | "NO_CURRENT_WINDOW"
+  | "UNRESOLVED_CURRENT_STATUS"
+  | "DISCONTINUED"
+  | "SUPERSEDED";
+
+export interface SchemeApplicationWindow {
+  mode:
+    | "CONTINUOUS"
+    | "PERIODIC_EOI"
+    | "FIXED_WINDOW"
+    | "PROPOSAL_BASED"
+    | "SELECTION_COMPLETED"
+    | "CLOSED"
+    | "UNKNOWN";
+  opens: string | null;
+  closes: string | null;
+  as_of_date: string | null;
+  source_reference: Record<string, unknown> | null;
 }
 
 export interface SchemeMatchResponse {

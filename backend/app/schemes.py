@@ -20,6 +20,21 @@ docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md. Tests use explicitly synthetic
   AND ``confidence: VERIFIED`` schemes produce a result in normal mode.
   Anything else is evaluated only in NON_PRODUCTION (diagnostic) mode and is
   labelled so.
+
+Two independent claims, never collapsed into one
+--------------------------------------------------
+1. **Eligibility** (``outcome``) — does this project's Project Facts satisfy
+   the scheme's published eligibility conditions? Computed by the
+   deterministic matcher below.
+2. **Application status** (``application_status`` / ``application_window``)
+   — is the scheme currently accepting applications at all? A separate,
+   catalogue-authored fact, copied through verbatim. A project can be
+   ``POTENTIALLY_ELIGIBLE`` for a scheme whose window is
+   ``VERIFIED_CLOSED``, and equally a scheme can be ``VERIFIED_OPEN`` for a
+   project that is ``NOT_ELIGIBLE``. Neither ever computes or overrides the
+   other; there is no wall-clock inference (no ``if today > closes``) —
+   the catalogue simply records what was verified true *as of*
+   ``application_window.as_of_date``.
 """
 from __future__ import annotations
 
@@ -42,6 +57,34 @@ _LIFECYCLE = {"DRAFT", "ACTIVE", "SUPERSEDED", "RETIRED"}
 _CONFIDENCE = {"UNVERIFIED", "VERIFIED"}
 _PREDICATES = {"BOOLEAN_EQUALS", "SET_MEMBERSHIP", "THRESHOLD_COMPARISON", "COMPOSITE"}
 _REQUIRED_SOURCE_FIELDS = ("url", "document_title", "published_date", "retrieved_date")
+
+# --- Application status / window (independent of eligibility — see module
+# docstring "Two independent claims" and docs/SCHEME_CATALOGUE_INPUT_
+# REQUIREMENTS.md). Every value here describes whether/how applications are
+# CURRENTLY being accepted under this scheme; NONE of them may ever feed
+# back into `outcome` (POTENTIALLY_ELIGIBLE / NEEDS_INFORMATION /
+# NOT_ELIGIBLE / CANNOT_EVALUATE), which is computed purely from the
+# eligibility condition tree in `match_scheme` below.
+_APPLICATION_STATUSES = {
+    "VERIFIED_OPEN",
+    "VERIFIED_CLOSED",
+    "VERIFIED_CONTINUING_BUT_NOT_OPEN_FOR_NEW_APPLICATIONS",
+    "VERIFIED_PERIODIC_CALL_FOR_PROPOSALS",
+    "SELECTION_COMPLETED",
+    "NO_CURRENT_WINDOW",
+    "UNRESOLVED_CURRENT_STATUS",
+    "DISCONTINUED",
+    "SUPERSEDED",
+}
+_APPLICATION_WINDOW_MODES = {
+    "CONTINUOUS",
+    "PERIODIC_EOI",
+    "FIXED_WINDOW",
+    "PROPOSAL_BASED",
+    "SELECTION_COMPLETED",
+    "CLOSED",
+    "UNKNOWN",
+}
 
 
 @dataclass
@@ -123,6 +166,41 @@ def validate_catalogue(cat: SchemeCatalogue) -> list[str]:
             errs.append(f"{sid}: effective_end_date must be YYYY-MM-DD")
         if is_active_verified(s) and not (s.get("last_verified") or {}).get("date"):
             errs.append(f"{sid}: ACTIVE + VERIFIED requires last_verified.date")
+
+        # --- application status / window (independent of eligibility) -------
+        app_status = s.get("application_status")
+        app_window = s.get("application_window")
+        if app_status is not None and app_status not in _APPLICATION_STATUSES:
+            errs.append(f"{sid}: application_status must be one of {sorted(_APPLICATION_STATUSES)}")
+        if app_window is not None:
+            mode = app_window.get("mode") if isinstance(app_window, dict) else None
+            if mode not in _APPLICATION_WINDOW_MODES:
+                errs.append(f"{sid}: application_window.mode must be one of {sorted(_APPLICATION_WINDOW_MODES)}")
+            for k in ("opens", "closes", "as_of_date"):
+                v = app_window.get(k) if isinstance(app_window, dict) else None
+                if v and not _iso(v):
+                    errs.append(f"{sid}: application_window.{k} must be YYYY-MM-DD")
+            # VERIFIED_OPEN under a FIXED_WINDOW means one known window with a
+            # known end — if the closing date genuinely isn't published yet,
+            # the correct mode is UNKNOWN (or another mode), not FIXED_WINDOW.
+            if app_status == "VERIFIED_OPEN" and mode == "FIXED_WINDOW" and not app_window.get("closes"):
+                errs.append(f"{sid}: application_window.closes is required for VERIFIED_OPEN + FIXED_WINDOW")
+        # Every application_status value asserts a verified position AS OF a
+        # specific date (even UNRESOLVED_CURRENT_STATUS asserts "as of this
+        # date, status could not be resolved") — never inferred from
+        # wall-clock time, so the catalogue must state it explicitly.
+        if app_status is not None:
+            as_of = (app_window or {}).get("as_of_date") if isinstance(app_window, dict) else None
+            if not as_of:
+                errs.append(f"{sid}: application_status requires application_window.as_of_date")
+            elif not _iso(as_of):
+                errs.append(f"{sid}: application_window.as_of_date must be YYYY-MM-DD")
+
+        # --- supersession (optional pointers, not historical-version machinery) --
+        for key in ("supersedes", "superseded_by"):
+            ref = s.get(key)
+            if ref and ref not in cat.schemes:
+                errs.append(f"{sid}: {key} -> unknown scheme {ref!r}")
     return errs
 
 
@@ -212,6 +290,16 @@ def match_scheme(scheme: dict, conditions: dict, facts: dict[str, Any], as_of: _
         "confidence": scheme.get("confidence"),
         "last_verified": scheme.get("last_verified"),
         "is_authoritative_catalogue_entry": is_active_verified(scheme),
+        # Independent application-status dimension (see module docstring and
+        # docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md §3.2/§3.3) — copied
+        # verbatim from the catalogue record, never computed from `outcome`,
+        # `as_of`, or any wall-clock comparison. `outcome` above is already
+        # fully determined before this dict is built; nothing below this
+        # line may ever influence it.
+        "application_status": scheme.get("application_status"),
+        "application_window": scheme.get("application_window"),
+        "supersedes": scheme.get("supersedes"),
+        "superseded_by": scheme.get("superseded_by"),
     }
 
 

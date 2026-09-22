@@ -229,6 +229,17 @@ vary. It is consumed at runtime by `backend/app/fact_registry.py`, which is
 * must use the `project.` prefix,
 * becomes a form field automatically — no frontend change needed.
 
+**Project Fact Registry is shared infrastructure.** The same `project.*`
+key may also be referenced by a Scheme's own `required_project_facts` /
+Scheme Conditions (see `docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md`). A
+key used by both produces ONE registry entry
+(`consumer_domains: ["REGULATORY", "SCHEME"]`), never a second "scheme
+fact". A fact key must have one meaning/type/unit across every consumer —
+do not repurpose an existing regulatory fact merely to avoid adding a new
+one for a scheme (or vice versa); if the value type or unit genuinely
+differs, the registry reports `value_type: "mixed"` / `units_conflict:
+true` and refuses typed input for that key rather than guessing.
+
 ### 4.3 Promotion to ACTIVE — the only way to unblock PRODUCTION
 
 `status: ACTIVE` is what moves a requirement off
@@ -471,7 +482,11 @@ Current keys (all of them):
 | `project.dairy_liquid_milk_capacity` | number | L/day | REQ-0004 |
 | `project.dairy_milk_solids_capacity` | number | MT/annum | REQ-0004 |
 
-Live machine-readable version: `GET /api/v1/facts/registry`.
+Live machine-readable version: `GET /api/v1/facts/registry`. This registry
+is shared with the scheme catalogue (see §4.2 above and
+`docs/SCHEME_CATALOGUE_INPUT_REQUIREMENTS.md`) — as of this writing the
+production scheme catalogue is still empty, so it contributes no additional
+keys yet.
 
 ---
 

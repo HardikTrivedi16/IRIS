@@ -15,6 +15,7 @@ from app.schemes import (
     POTENTIALLY_ELIGIBLE,
     load_catalogue,
     match_catalogue,
+    match_scheme,
     validate_catalogue,
 )
 
@@ -138,4 +139,191 @@ def test_api_with_synthetic_fixtures(client, monkeypatch):
     assert body["catalogue_state"] == "READY"
     assert [r["outcome"] for r in body["results"]] == [POTENTIALLY_ELIGIBLE]
     assert client.get("/api/v1/projects/nope/schemes").status_code == 404
+    get_settings.cache_clear()
+
+
+# --- Application status / window (independent of eligibility) --------------
+#
+# SCH-9001's fixture carries application_status: VERIFIED_OPEN +
+# application_window (see tests/fixtures/scheme-data/schemes/SCH-9001.yaml).
+# Scenarios that need a DIFFERENT application_status build an in-memory
+# overlay of that same fixture scheme + its real, loaded SCHC-9003 condition
+# tree — no new YAML fixture files are needed, and no catalogue-level
+# result-count assumption in the tests above is disturbed.
+
+_ELIGIBLE_FACTS = {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 5000}
+_MISSING_CAPACITY_FACTS = {"project.industry": "FOOD"}
+_NOT_ELIGIBLE_FACTS = {"project.industry": "PHARMA", "project.dairy_liquid_milk_capacity": 5000}
+
+
+def _overlay(cat, **application_fields):
+    """A copy of the loaded SCH-9001 fixture with different application_status
+    fields — never a different eligibility condition tree."""
+    return {**cat.schemes["SCH-9001"], **application_fields}
+
+
+def test_A_potentially_eligible_plus_verified_open(cat):
+    r = match_scheme(_overlay(cat), cat.conditions, _ELIGIBLE_FACTS, AS_OF)
+    assert r["outcome"] == POTENTIALLY_ELIGIBLE
+    assert r["application_status"] == "VERIFIED_OPEN"
+    assert r["application_window"]["mode"] == "FIXED_WINDOW"
+
+
+def test_B_potentially_eligible_plus_verified_closed(cat):
+    scheme = _overlay(
+        cat,
+        application_status="VERIFIED_CLOSED",
+        application_window={
+            "mode": "CLOSED", "opens": "2025-01-01", "closes": "2025-09-30",
+            "as_of_date": "2026-09-21",
+            "source_reference": {"document_title": "SYNTHETIC"},
+        },
+    )
+    r = match_scheme(scheme, cat.conditions, _ELIGIBLE_FACTS, AS_OF)
+    assert r["outcome"] == POTENTIALLY_ELIGIBLE
+    assert r["application_status"] == "VERIFIED_CLOSED"
+    assert r["application_window"]["closes"] == "2025-09-30"
+
+
+def test_C_needs_information_plus_verified_open(cat):
+    r = match_scheme(_overlay(cat), cat.conditions, _MISSING_CAPACITY_FACTS, AS_OF)
+    assert r["outcome"] == NEEDS_INFORMATION
+    assert r["application_status"] == "VERIFIED_OPEN"
+
+
+def test_D_not_eligible_plus_verified_open(cat):
+    r = match_scheme(_overlay(cat), cat.conditions, _NOT_ELIGIBLE_FACTS, AS_OF)
+    assert r["outcome"] == NOT_ELIGIBLE
+    assert r["application_status"] == "VERIFIED_OPEN"
+
+
+def test_E_potentially_eligible_plus_selection_completed(cat):
+    scheme = _overlay(
+        cat,
+        application_status="SELECTION_COMPLETED",
+        application_window={
+            "mode": "SELECTION_COMPLETED", "opens": None, "closes": None,
+            "as_of_date": "2026-09-21",
+            "source_reference": {"document_title": "SYNTHETIC"},
+        },
+    )
+    r = match_scheme(scheme, cat.conditions, _ELIGIBLE_FACTS, AS_OF)
+    assert r["outcome"] == POTENTIALLY_ELIGIBLE
+    assert r["application_status"] == "SELECTION_COMPLETED"
+
+
+def test_F_potentially_eligible_plus_no_current_window(cat):
+    scheme = _overlay(
+        cat,
+        application_status="NO_CURRENT_WINDOW",
+        application_window={
+            "mode": "UNKNOWN", "opens": None, "closes": None,
+            "as_of_date": "2026-09-21",
+            "source_reference": {"document_title": "SYNTHETIC"},
+        },
+    )
+    r = match_scheme(scheme, cat.conditions, _ELIGIBLE_FACTS, AS_OF)
+    assert r["outcome"] == POTENTIALLY_ELIGIBLE
+    assert r["application_status"] == "NO_CURRENT_WINDOW"
+
+
+def test_G_malformed_application_status_fails_validation(cat):
+    cat.schemes["SCH-9001"] = _overlay(cat, application_status="OPEN_FOREVER")
+    errs = validate_catalogue(cat)
+    assert any("application_status must be one of" in e for e in errs)
+
+
+def test_H_malformed_application_window_mode_fails_validation(cat):
+    cat.schemes["SCH-9001"] = _overlay(
+        cat, application_window={**cat.schemes["SCH-9001"]["application_window"], "mode": "ALWAYS_OPEN"},
+    )
+    errs = validate_catalogue(cat)
+    assert any("application_window.mode must be one of" in e for e in errs)
+
+
+def test_I_verified_current_status_without_as_of_date_fails_validation(cat):
+    window = {k: v for k, v in cat.schemes["SCH-9001"]["application_window"].items() if k != "as_of_date"}
+    cat.schemes["SCH-9001"] = _overlay(cat, application_window=window)
+    errs = validate_catalogue(cat)
+    assert any("requires application_window.as_of_date" in e for e in errs)
+
+
+def test_verified_open_fixed_window_without_closes_fails_validation(cat):
+    window = {**cat.schemes["SCH-9001"]["application_window"], "closes": None}
+    cat.schemes["SCH-9001"] = _overlay(cat, application_window=window)
+    errs = validate_catalogue(cat)
+    assert any("closes is required for VERIFIED_OPEN + FIXED_WINDOW" in e for e in errs)
+
+
+def test_malformed_application_window_date_fails_validation(cat):
+    window = {**cat.schemes["SCH-9001"]["application_window"], "as_of_date": "21/09/2026"}
+    cat.schemes["SCH-9001"] = _overlay(cat, application_window=window)
+    errs = validate_catalogue(cat)
+    assert any("as_of_date must be YYYY-MM-DD" in e for e in errs)
+
+
+def test_J_supersedes_unknown_scheme_fails_validation(cat):
+    cat.schemes["SCH-9001"] = _overlay(cat, supersedes="SCH-9099")
+    errs = validate_catalogue(cat)
+    assert any("supersedes -> unknown scheme" in e for e in errs)
+
+
+def test_superseded_by_unknown_scheme_fails_validation(cat):
+    cat.schemes["SCH-9001"] = _overlay(cat, superseded_by="SCH-9098")
+    errs = validate_catalogue(cat)
+    assert any("superseded_by -> unknown scheme" in e for e in errs)
+
+
+def test_supersedes_resolving_to_a_real_scheme_is_valid(cat):
+    cat.schemes["SCH-9001"] = _overlay(cat, supersedes="SCH-9002")
+    errs = validate_catalogue(cat)
+    assert not any("supersedes" in e for e in errs)
+
+
+def test_K_application_status_never_alters_eligibility(cat):
+    """Same application_status/window, three different fact sets -> three
+    different outcomes driven ONLY by the eligibility condition tree."""
+    scheme = _overlay(cat)  # application_status: VERIFIED_OPEN, unchanged
+    outcomes = {
+        "eligible": match_scheme(scheme, cat.conditions, _ELIGIBLE_FACTS, AS_OF)["outcome"],
+        "missing": match_scheme(scheme, cat.conditions, _MISSING_CAPACITY_FACTS, AS_OF)["outcome"],
+        "not_eligible": match_scheme(scheme, cat.conditions, _NOT_ELIGIBLE_FACTS, AS_OF)["outcome"],
+    }
+    assert outcomes == {
+        "eligible": POTENTIALLY_ELIGIBLE,
+        "missing": NEEDS_INFORMATION,
+        "not_eligible": NOT_ELIGIBLE,
+    }
+    # and conversely: same facts, every possible application_status ->
+    # identical outcome, because application_status is never read by the
+    # matcher's outcome computation.
+    for status in (
+        "VERIFIED_OPEN", "VERIFIED_CLOSED", "SELECTION_COMPLETED",
+        "NO_CURRENT_WINDOW", "UNRESOLVED_CURRENT_STATUS", "DISCONTINUED",
+    ):
+        r = match_scheme(_overlay(cat, application_status=status), cat.conditions, _ELIGIBLE_FACTS, AS_OF)
+        assert r["outcome"] == POTENTIALLY_ELIGIBLE
+
+
+def test_L_empty_production_catalogue_still_awaits_verified_data():
+    """The real shipped backend/scheme-data/ root, end-to-end, with the new
+    schema in place. No real or synthetic scheme is shipped there."""
+    from app.engine_service import BACKEND_DIR
+    root = os.path.join(BACKEND_DIR, "scheme-data")
+    cat = load_catalogue(root)
+    assert cat.errors == []
+    out = match_catalogue(cat, {"project.industry": "FOOD"}, as_of=AS_OF)
+    assert out["catalogue_state"] == "AWAITING_VERIFIED_DATA"
+    assert out["results"] == []
+
+
+def test_api_catalogue_exposes_application_status_fields(client, monkeypatch):
+    monkeypatch.setenv("SCHEME_DATA_ROOT", FIXTURES)
+    from app.config import get_settings
+    get_settings.cache_clear()
+    body = client.get("/api/v1/schemes/catalogue").json()
+    sch9001 = next(s for s in body["schemes"] if s["scheme_id"] == "SCH-9001")
+    assert sch9001["application_status"] == "VERIFIED_OPEN"
+    assert sch9001["application_window"]["mode"] == "FIXED_WINDOW"
+    assert sch9001["supersedes"] is None and sch9001["superseded_by"] is None
     get_settings.cache_clear()
