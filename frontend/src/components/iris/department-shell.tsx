@@ -96,16 +96,21 @@ function DeptSidebar() {
         </div>
       </div>
 
-      {/* Switch to Industry portal */}
-      <div className="px-3 py-2.5 border-b border-nav-border">
-        <Link
-          to="/"
-          className="flex items-center gap-2 rounded-md px-2.5 py-[7px] text-[11.5px] text-nav-muted transition-colors hover:bg-white/[0.05] hover:text-nav-foreground"
-        >
-          <Shield className="h-3.5 w-3.5 opacity-60" />
-          Switch to Industry Portal
-        </Link>
-      </div>
+      {/* Demo mode has no single real role — it intentionally allows
+          exploring both portals freely. A real authenticated DEPARTMENT_*
+          officer has no industry-applicant access, so this control is
+          hidden for them rather than offered and then not working. */}
+      {isDemoMode && (
+        <div className="px-3 py-2.5 border-b border-nav-border">
+          <Link
+            to="/"
+            className="flex items-center gap-2 rounded-md px-2.5 py-[7px] text-[11.5px] text-nav-muted transition-colors hover:bg-white/[0.05] hover:text-nav-foreground"
+          >
+            <Shield className="h-3.5 w-3.5 opacity-60" />
+            Switch to Industry Portal
+          </Link>
+        </div>
+      )}
 
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         {deptNavSections.map((section, i) => (

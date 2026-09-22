@@ -167,11 +167,43 @@ export interface EngineDecision {
   final_state: string;
   is_non_production_result: boolean;
   conflict_id: string | null;
+  review_reason: string | null;
   reason_text: string | null;
   decision_id: string;
   engine_version: string;
   missing_project_fact_keys: string[];
   explanation?: { narrative?: string | null } | null;
+}
+
+/** One requirement node from GET /projects/{id}/dependency-graph
+ * (backend/app/graph/service.py). `status` is dependency_engine's own
+ * WorkflowStatus — whether this APPLICABLE requirement's verified
+ * prerequisites are satisfied. It is workflow-sequencing readiness, not
+ * regulatory applicability and not an application's operational stage. */
+export interface DependencyGraphNode {
+  requirement_id: string;
+  requirement_code: string;
+  name: string;
+  status: "BLOCKED" | "AVAILABLE" | "INDEPENDENT";
+  parallel_classification: string;
+  parallel_constraint: string | null;
+  duration: number | null;
+  direct_prerequisite_ids: string[];
+  unmet_prerequisite_ids: string[];
+}
+
+/** Mirrors GET /projects/{id}/dependency-graph. Only ever built from
+ * verified DEP-### edges (today: zero) — never a fabricated dependency. */
+export interface DependencyGraphResponse {
+  nodes: DependencyGraphNode[];
+  edges: unknown[];
+  ignored_dependencies: unknown[];
+  topological_order: string[];
+  critical_path: string[];
+  critical_path_duration: number | null;
+  critical_path_available: boolean;
+  excluded_requirements: { requirement_id: string; final_state: string }[];
+  dependency_data_note: string;
 }
 
 /** Mirrors GET /api/v1/engine (backend/app/engine_service.py::engine_info). */
@@ -895,6 +927,13 @@ export const irisApi = {
   /** The project's own applications (stage + SLA timing only). */
   listProjectApplications: (projectId: string) =>
     request<ApplicantApplication[]>(`/api/v1/projects/${projectId}/applications`),
+
+  /** Real, engine-native dependency graph — built from the project's STORED
+   * facts only. Read-only; never used to fabricate a dependency. */
+  getDependencyGraph: (projectId: string, evaluationMode: EvaluationMode = "PRODUCTION") =>
+    request<DependencyGraphResponse>(
+      `/api/v1/projects/${projectId}/dependency-graph?evaluation_mode=${evaluationMode}`,
+    ),
 
   listGrievances: (projectId: string) =>
     request<Grievance[]>(`/api/v1/projects/${projectId}/grievances`),

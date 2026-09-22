@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CircleAlert } from "lucide-react";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowRight } from "lucide-react";
 import { useProject } from "@/lib/iris/project-context";
 import {
   readiness,
   byAuthority,
-  deriveNextActions,
   deriveDeadlines,
   lastEvaluated,
 } from "@/lib/iris/derive";
@@ -12,6 +13,17 @@ import {
   useProjectRequirements,
   useProjectActivity,
 } from "@/lib/iris/use-project-data";
+import { useDatasetRequirementTitles } from "@/lib/iris/facts";
+import { useEngineEvaluation } from "@/components/iris/engine-evaluation-panel";
+import {
+  attentionFromApplications,
+  attentionFromDependencyGraph,
+  attentionFromEngineDecisions,
+  orderAttentionItems,
+  ATTENTION_CATEGORY_LABEL,
+  type AttentionItem,
+} from "@/lib/iris/attention";
+import { irisApi, BackendUnavailableError } from "@/lib/iris/api-client";
 import {
   PageShell,
   PageHeader,
@@ -19,7 +31,7 @@ import {
   DataField,
   StatLine,
 } from "@/components/iris/page";
-import { StatusBadge, StatusDot, Meter, Tag } from "@/components/iris/status";
+import { StatusDot, Meter, Tag } from "@/components/iris/status";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -48,10 +60,42 @@ function Overview() {
   const { data: activity = [] } = useProjectActivity(activeProject.id);
   const summary = readiness(reqs);
   const authorities = byAuthority(reqs);
-  const actions = deriveNextActions(reqs);
   const deadlines = deriveDeadlines(reqs);
 
-  const blocker = summary.blockers[0];
+  // REGULATORY ATTENTION — every source below reads the project's STORED
+  // state only (evaluateAll takes no ad-hoc fact overrides; the applications
+  // and dependency-graph reads are plain GETs). Scenario Lab's hypothetical
+  // results live only in change-impact.tsx's own local state and are never
+  // read here.
+  const titlesQuery = useDatasetRequirementTitles();
+  const evaluationQuery = useEngineEvaluation(activeProject.id, "PRODUCTION");
+  const applicationsQuery = useQuery({
+    queryKey: ["project-applications", activeProject.id],
+    queryFn: () => irisApi.listProjectApplications(activeProject.id),
+    retry: (n, e) => !(e instanceof BackendUnavailableError) && n < 1,
+  });
+  const dependencyGraphQuery = useQuery({
+    queryKey: ["dependency-graph", activeProject.id, "PRODUCTION"],
+    queryFn: () => irisApi.getDependencyGraph(activeProject.id, "PRODUCTION"),
+    retry: (n, e) => !(e instanceof BackendUnavailableError) && n < 1,
+  });
+
+  const attentionItems = useMemo<AttentionItem[]>(() => {
+    const titles = titlesQuery.data ?? {};
+    const titleFor = (id: string) => titles[id] ?? id;
+    return orderAttentionItems([
+      ...attentionFromEngineDecisions(evaluationQuery.data ?? [], titleFor),
+      ...attentionFromApplications(applicationsQuery.data ?? []),
+      ...attentionFromDependencyGraph(dependencyGraphQuery.data),
+    ]);
+  }, [
+    titlesQuery.data,
+    evaluationQuery.data,
+    applicationsQuery.data,
+    dependencyGraphQuery.data,
+  ]);
+  const attentionLoading =
+    evaluationQuery.isLoading || applicationsQuery.isLoading || dependencyGraphQuery.isLoading;
 
   return (
     <PageShell wide>
@@ -216,52 +260,19 @@ function Overview() {
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
         <div className="space-y-8">
-          {/* Blocker */}
-          {blocker && (
-            <section>
-              <SectionHeading
-                title="Active blocker"
-                hint="Requirement halting the current approval sequence."
-              />
-              <div className="mt-3 border border-destructive/25 bg-danger-surface">
-                <div className="flex flex-wrap items-start gap-3 border-b border-destructive/20 px-5 py-4">
-                  <CircleAlert className="mt-[3px] h-4 w-4 shrink-0 text-destructive" />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-[14px] font-semibold">
-                        {blocker.name}
-                      </h3>
-                      <StatusBadge status="blocked" />
-                    </div>
-                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-foreground/80">
-                      {blocker.reason ?? blocker.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="grid gap-x-6 gap-y-4 bg-surface px-5 py-4 sm:grid-cols-4">
-                  <DataField
-                    label="Authority"
-                    value={blocker.authority}
-                    className="sm:col-span-2"
-                  />
-                  <DataField
-                    label="Documents"
-                    value={`${blocker.documents.complete} of ${blocker.documents.total}`}
-                  />
-                  <DataField
-                    label="Downstream blocked"
-                    value={`${blocker.blocks.length} requirement${blocker.blocks.length === 1 ? "" : "s"}`}
-                  />
-                </div>
-              </div>
-            </section>
-          )}
-
-          {/* Next actions */}
+          {/* Regulatory attention — what needs attention in IRIS's
+              regulatory understanding or the project's regulatory
+              workflow. Not a blocker list, not a compliance/risk score:
+              each item keeps the distinct meaning of the signal it came
+              from (see lib/iris/attention.ts). */}
           <section>
             <SectionHeading
-              title="Next actions"
-              hint="Ordered by impact on the current approval path."
+              title="Regulatory attention"
+              hint={
+                attentionItems.length > 0
+                  ? `${attentionItems.length} item${attentionItems.length === 1 ? "" : "s"}`
+                  : "What needs attention in IRIS's regulatory understanding or this project's regulatory workflow."
+              }
               actions={
                 <Link
                   to="/requirements"
@@ -271,42 +282,50 @@ function Overview() {
                 </Link>
               }
             />
-            <ul className="mt-3 divide-y divide-border border border-border bg-surface">
-              {actions.map((a, i) => (
-                <li
-                  key={a.title}
-                  className="row-hover px-5 py-4 hover:bg-surface-sunken"
-                >
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5">
-                    <div className="flex min-w-0 items-baseline gap-3">
-                      <span className="tabular text-[11.5px] text-muted-foreground">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <h3 className="text-[13.5px] font-medium">{a.title}</h3>
+            {attentionLoading ? (
+              <p className="mt-3 border border-border bg-surface px-5 py-6 text-[12.5px] text-muted-foreground">
+                Checking regulatory evaluation, applications and dependencies…
+              </p>
+            ) : attentionItems.length === 0 ? (
+              <p className="mt-3 border border-dashed border-border bg-surface px-5 py-6 text-[12.5px] leading-relaxed text-muted-foreground">
+                No unresolved regulatory attention items found from the
+                information IRIS currently holds.
+              </p>
+            ) : (
+              <ul className="mt-3 divide-y divide-border border border-border bg-surface">
+                {attentionItems.map((item) => (
+                  <li key={item.id} className="row-hover px-5 py-4 hover:bg-surface-sunken">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1.5">
+                      <div className="flex min-w-0 items-baseline gap-3">
+                        <span className="label-meta shrink-0">
+                          {ATTENTION_CATEGORY_LABEL[item.category]}
+                        </span>
+                        <h3 className="text-[13.5px] font-medium">{item.title}</h3>
+                      </div>
+                      <Link
+                        to={item.action.route}
+                        className="flex shrink-0 items-center gap-1 text-[12px] font-medium text-info transition-opacity hover:opacity-80"
+                      >
+                        {item.action.label}
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
                     </div>
-                    <div className="flex items-center gap-2.5">
-                      <StatusBadge status={a.severity} />
-                      <span className="text-[11.5px] text-muted-foreground">
-                        {a.due}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="mt-1.5 pl-[30px] text-[12.5px] leading-relaxed text-muted-foreground">
-                    {a.why}
-                  </p>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-4 pl-[30px] text-[11.5px] text-muted-foreground">
-                    <span>
-                      <span className="label-meta mr-1.5">Requirement</span>
-                      {a.requirement}
-                    </span>
-                    <span>
-                      <span className="label-meta mr-1.5">Authority</span>
-                      {a.authority}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">
+                      {item.reason}
+                    </p>
+                    {item.missingFactKeys && item.missingFactKeys.length > 0 && (
+                      <ul className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5">
+                        {item.missingFactKeys.map((k) => (
+                          <li key={k} className="font-mono text-[11px] text-warning">
+                            {k}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
 
           {/* Requirements by authority */}
@@ -396,27 +415,6 @@ function Overview() {
                 </li>
               ))}
             </ul>
-          </section>
-
-          {/* Change impact prompt */}
-          <section className="row-hover border border-border bg-surface px-4 py-4 hover:border-border-strong">
-            <div className="flex items-center justify-between gap-3">
-              <div className="label-meta">Change impact</div>
-              <span className="rounded-sm border border-warning/30 bg-warning-surface px-1.5 py-[2px] text-[10px] font-medium text-warning">
-                1 pending
-              </span>
-            </div>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-muted-foreground">
-              A proposed scope change is awaiting impact review before
-              submission.
-            </p>
-            <Link
-              to="/change-impact"
-              className="focus-ring mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-info transition-opacity hover:opacity-80"
-            >
-              Run change impact analysis
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
           </section>
 
           {/* Activity */}

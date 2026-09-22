@@ -3,6 +3,7 @@ import {
   Bell,
   Building2,
   ChevronDown,
+  FileSearch,
   FileText,
   GitCompare,
   LayoutGrid,
@@ -49,7 +50,8 @@ const navSections: {
       { label: "Regulatory Map", to: "/regulatory-map", icon: Network },
       { label: "Requirements", to: "/requirements", icon: ListChecks },
       { label: "Documents", to: "/documents", icon: FileText },
-      { label: "Change Impact", to: "/change-impact", icon: GitCompare },
+      { label: "Evidence Consistency", to: "/consistency", icon: FileSearch },
+      { label: "Scenario Lab", to: "/change-impact", icon: GitCompare },
     ],
   },
   {
@@ -66,6 +68,7 @@ const navSections: {
 
 function Sidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { isDemoMode } = useAuth();
 
   return (
     <aside className="sticky top-0 hidden h-screen w-[228px] shrink-0 flex-col border-r border-nav-border bg-nav lg:flex">
@@ -128,17 +131,23 @@ function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t border-nav-border px-3 py-2.5">
-        <Link
-          to="/department"
-          className="flex items-center gap-2 rounded-md px-2.5 py-[7px] text-[11.5px] text-nav-muted transition-colors hover:bg-white/[0.05] hover:text-nav-foreground"
-        >
-          <span className="flex h-4 w-4 items-center justify-center rounded-sm bg-gradient-to-br from-[oklch(0.42_0.14_155)] to-[oklch(0.32_0.12_155)] text-[8px] font-bold text-white">
-            G
-          </span>
-          Switch to Gov Portal
-        </Link>
-      </div>
+      {/* Demo mode has no single real role — it intentionally allows
+          exploring both portals freely. A real authenticated INDUSTRY_USER
+          has no government access, so this control is hidden for them
+          rather than offered and then failing authorization. */}
+      {isDemoMode && (
+        <div className="border-t border-nav-border px-3 py-2.5">
+          <Link
+            to="/department"
+            className="flex items-center gap-2 rounded-md px-2.5 py-[7px] text-[11.5px] text-nav-muted transition-colors hover:bg-white/[0.05] hover:text-nav-foreground"
+          >
+            <span className="flex h-4 w-4 items-center justify-center rounded-sm bg-gradient-to-br from-[oklch(0.42_0.14_155)] to-[oklch(0.32_0.12_155)] text-[8px] font-bold text-white">
+              G
+            </span>
+            Switch to Gov Portal
+          </Link>
+        </div>
+      )}
       <div className="border-t border-nav-border px-5 py-4">
         <p className="text-[10.5px] leading-relaxed text-nav-muted">
           A project-level intelligence layer around NSWS and MAITRI approvals.

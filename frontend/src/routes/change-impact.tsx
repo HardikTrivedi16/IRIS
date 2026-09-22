@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FlaskConical } from "lucide-react";
 import { useProject } from "@/lib/iris/project-context";
 import {
   ApiError,
@@ -13,7 +13,7 @@ import {
   type ChangeImpactSide,
   type FactRegistryEntry,
 } from "@/lib/iris/api-client";
-import { PageHeader, PageShell, SectionHeading } from "@/components/iris/page";
+import { PageHeader, PageShell, SectionHeading, DataField } from "@/components/iris/page";
 import { Tag } from "@/components/iris/status";
 import { finalStateMeta } from "@/lib/iris/decision-states";
 import {
@@ -34,17 +34,17 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/change-impact")({
   head: () => ({
     meta: [
-      { title: "Change Impact Analysis — IRIS" },
+      { title: "Regulatory Scenario Lab — IRIS" },
       {
         name: "description",
         content:
-          "Re-evaluate the deterministic rule engine against a proposed change to this project's facts, and compare the result with the current one.",
+          "Explore how hypothetical project changes affect regulatory outcomes without changing your stored project.",
       },
-      { property: "og:title", content: "Change Impact Analysis — IRIS" },
+      { property: "og:title", content: "Regulatory Scenario Lab — IRIS" },
       {
         property: "og:description",
         content:
-          "Deterministic before/after regulatory comparison for a proposed project change.",
+          "Deterministic before/after regulatory comparison for a proposed, non-persistent project change.",
       },
     ],
   }),
@@ -55,7 +55,9 @@ export const Route = createFileRoute("/change-impact")({
 // Presentation metadata. These describe ENGINE STATE TRANSITIONS reported by
 // the backend — not legal consequences. No requirement, threshold, pathway or
 // narrative is authored here; everything rendered below comes from the
-// /change-impact response.
+// POST /projects/{id}/change-impact response (app/change_impact.py), which is
+// an adapter over the same frozen iris_engine used everywhere else in IRIS —
+// nothing here re-evaluates or duplicates regulatory logic.
 // ---------------------------------------------------------------------------
 
 const CATEGORY_META: Record<
@@ -69,6 +71,11 @@ const CATEGORY_META: Record<
   CHANGED: { label: "Changed", tone: "warning" },
   UNCHANGED: { label: "Unchanged", tone: "neutral" },
 };
+
+const NEEDS_ATTENTION: ChangeImpactCategory[] = [
+  "REQUIRES_INFORMATION",
+  "REQUIRES_REVIEW",
+];
 
 function stateLabel(state: string): string {
   return finalStateMeta(state).label;
@@ -88,6 +95,11 @@ function parseDraft(entry: FactRegistryEntry, raw: string) {
   return parseFactInput(entry, raw === "__CLEAR__" ? FACT_UNKNOWN : raw);
 }
 
+/**
+ * One fact's CURRENT (stored) value beside its SCENARIO (hypothetical, not
+ * yet submitted) value — the before/after relationship the Scenario Lab
+ * brief asks be "visually obvious" at the input stage, not just in results.
+ */
 function FactInput({
   entry,
   currentValue,
@@ -101,9 +113,15 @@ function FactInput({
 }) {
   const unit = entry.units[0];
   const referenced = entry.values_referenced_by_rules;
+  const edited = value !== "" && value !== undefined;
 
   return (
-    <div className="grid gap-x-6 gap-y-2 border-b border-border px-5 py-4 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_200px]">
+    <div
+      className={cn(
+        "grid gap-x-6 gap-y-3 border-b border-border px-5 py-4 last:border-b-0 sm:grid-cols-[minmax(0,1fr)_280px]",
+        edited && "bg-info-surface/30",
+      )}
+    >
       <div>
         <p className="text-[13px] font-medium capitalize">
           {factLabel(entry.key)}
@@ -112,49 +130,56 @@ function FactInput({
           {entry.key}
           {unit ? ` · ${unit}` : ""}
         </p>
-        <p className="mt-1 text-[11.5px] text-muted-foreground">
-          Current: <span className="tabular">{formatValue(currentValue)}</span>
-          {referenced.length > 0 && (
-            <>
-              {" · "}
-              Values referenced by rules:{" "}
-              <span className="tabular">
-                {referenced.map((v) => formatValue(v)).join(", ")}
-              </span>
-            </>
-          )}
-        </p>
+        {referenced.length > 0 && (
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Values referenced by rules:{" "}
+            <span className="tabular">
+              {referenced.map((v) => formatValue(v)).join(", ")}
+            </span>
+          </p>
+        )}
       </div>
 
-      <div className="flex items-start">
-        {entry.value_type === "boolean" ? (
-          <select
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
-          >
-            <option value="">No change</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-            <option value="__CLEAR__">Clear (unknown)</option>
-          </select>
-        ) : entry.value_type === "number" ? (
-          <input
-            type="number"
-            value={value === "__CLEAR__" ? "" : value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder="No change"
-            className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px] tabular"
-          />
-        ) : (
-          <input
-            type="text"
-            value={value === "__CLEAR__" ? "" : value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder="No change"
-            className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
-          />
-        )}
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <div className="label-meta">Current</div>
+          <p className="tabular mt-1.5 text-[12.5px] font-medium text-muted-foreground">
+            {formatValue(currentValue)}
+          </p>
+        </div>
+        <div>
+          <div className="label-meta">Scenario</div>
+          <div className="mt-1">
+            {entry.value_type === "boolean" ? (
+              <select
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
+              >
+                <option value="">No change</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+                <option value="__CLEAR__">Clear (unknown)</option>
+              </select>
+            ) : entry.value_type === "number" ? (
+              <input
+                type="number"
+                value={value === "__CLEAR__" ? "" : value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder="No change"
+                className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px] tabular"
+              />
+            ) : (
+              <input
+                type="text"
+                value={value === "__CLEAR__" ? "" : value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder="No change"
+                className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -231,25 +256,59 @@ function RequirementDiff({
   onProof: (requirementId: string, side: "current" | "proposed") => void;
 }) {
   const meta = CATEGORY_META[req.category];
+  const needsAttention = NEEDS_ATTENTION.includes(req.category);
+  const missing = req.after.missing_project_fact_keys;
+
   return (
     <div className="border border-border bg-surface">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-border px-4 py-3">
         <div>
           <h3 className="text-[13.5px] font-medium">{req.requirement_title}</h3>
-          <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
-            {req.requirement_id}
-            {req.authority_id ? ` · ${req.authority_id}` : ""}
-          </p>
+          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5">
+            <span className="font-mono text-[11px] text-muted-foreground">
+              {req.requirement_id}
+            </span>
+            {req.authority_id && (
+              <span className="text-[11px] text-muted-foreground">
+                Authority: <span className="font-medium text-foreground">{req.authority_id}</span>
+              </span>
+            )}
+          </div>
         </div>
         <Tag tone={meta.tone}>{meta.label}</Tag>
       </div>
 
+      {/* REQUIRES_INFORMATION / REQUIRES_REVIEW must not be buried — surfaced
+          from response data only (missing_project_fact_keys / review_reason),
+          nothing invented here. */}
+      {needsAttention && (missing.length > 0 || req.after.review_reason) && (
+        <div className="border-b border-warning/30 bg-warning-surface px-4 py-2.5">
+          <p className="text-[11.5px] font-semibold uppercase tracking-[0.05em] text-warning">
+            {req.category === "REQUIRES_INFORMATION" ? "Requires information" : "Requires review"}
+          </p>
+          {missing.length > 0 && (
+            <p className="mt-1 text-[12px] leading-relaxed">
+              Missing:{" "}
+              {missing.map((k, i) => (
+                <span key={k} className="font-mono text-[11.5px]">
+                  {i > 0 ? ", " : ""}
+                  {k}
+                </span>
+              ))}
+            </p>
+          )}
+          {req.after.review_reason && (
+            <p className="mt-1 text-[12px] leading-relaxed">{req.after.review_reason}</p>
+          )}
+        </div>
+      )}
+
       <div className="grid sm:grid-cols-[minmax(0,1fr)_28px_minmax(0,1fr)]">
-        <SideColumn label="Current" side={req.before} tone="muted" />
+        <SideColumn label="Before" side={req.before} tone="muted" />
         <div className="hidden items-center justify-center sm:flex">
           <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/60" />
         </div>
-        <SideColumn label="Proposed" side={req.after} tone="active" />
+        <SideColumn label="After" side={req.after} tone="active" />
       </div>
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-border px-4 py-2">
@@ -258,14 +317,14 @@ function RequirementDiff({
           onClick={() => onProof(req.requirement_id, "current")}
           className="text-[12px] font-medium text-info hover:opacity-80"
         >
-          Decision proof — current →
+          View Decision Proof — before →
         </button>
         <button
           type="button"
           onClick={() => onProof(req.requirement_id, "proposed")}
           className="text-[12px] font-medium text-info hover:opacity-80"
         >
-          Decision proof — proposed →
+          View Decision Proof — after →
         </button>
       </div>
 
@@ -302,7 +361,8 @@ function ChangeImpact() {
     };
     if (side === "proposed") {
       // Exactly the effective changes the diff used — proven as hypothetical,
-      // never saved.
+      // never saved. Reuses the existing hypothetical Decision Proof path
+      // (POST /decision-proof/{id}), unchanged.
       target.hypotheticalFacts = Object.fromEntries(
         result.proposed_changes.map((c) => [c.key, c.proposed_value]),
       );
@@ -318,6 +378,11 @@ function ChangeImpact() {
   const supported = useMemo(
     () => (registryQuery.data?.facts ?? []).filter((f) => f.typed_input_supported),
     [registryQuery.data],
+  );
+
+  const editedCount = useMemo(
+    () => Object.values(draft).filter((v) => v !== undefined && v !== "").length,
+    [draft],
   );
 
   const mutation = useMutation({
@@ -339,7 +404,16 @@ function ChangeImpact() {
     },
   });
 
-  function analyse() {
+  function resetScenario() {
+    // UI-only: clears the draft back to the stored baseline. Never calls the
+    // backend — there is nothing to undo server-side because nothing was
+    // ever written (see the persistence note below).
+    setDraft({});
+    setResult(null);
+    setFieldErrors({});
+  }
+
+  function runScenario() {
     const proposed: Record<string, unknown> = {};
     const errors: Record<string, string> = {};
     for (const entry of supported) {
@@ -370,19 +444,37 @@ function ChangeImpact() {
       <PageHeader
         trail={[
           { label: "Regulatory intelligence" },
-          { label: "Change Impact" },
+          { label: "Scenario Lab" },
         ]}
-        title="Change Impact Analysis"
-        description={`Re-evaluate ${activeProject.name} against a proposed change to its project facts`}
+        title="Regulatory Scenario Lab"
+        description="Explore how hypothetical project changes affect regulatory outcomes without changing your stored project."
+        meta={
+          <div className="flex flex-wrap items-center gap-2 text-[11.5px] text-muted-foreground">
+            <FlaskConical className="h-3.5 w-3.5 text-info" />
+            Nothing in this scenario has been saved to your project.
+          </div>
+        }
       />
 
-      <section className="mt-6 border border-border bg-surface">
+      {/* BASELINE — makes explicit which project's stored facts this
+          scenario starts from, without duplicating the project dashboard. */}
+      <section className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border border-border bg-surface px-5 py-3.5">
+        <DataField label="Current project" value={activeProject.name} />
+        <p className="max-w-[46ch] text-[11.5px] leading-relaxed text-muted-foreground">
+          The scenario starts from this project's stored Project Facts. Any
+          fact you don't edit below keeps its stored value.
+        </p>
+      </section>
+
+      <section className="mt-4 border border-border bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-border px-5 py-3">
           <div>
-            <h2 className="text-[13.5px] font-semibold">Proposed change</h2>
+            <h2 className="text-[13.5px] font-semibold">Fact change workspace</h2>
             <p className="mt-0.5 text-[12px] text-muted-foreground">
               Only facts the current regulatory dataset's rules actually read
               are listed. Leave a field blank to keep its current value.
+              {editedCount > 0 &&
+                ` ${editedCount} fact${editedCount === 1 ? "" : "s"} edited.`}
             </p>
           </div>
           <label className="flex items-center gap-2 text-[12px] text-muted-foreground">
@@ -404,7 +496,7 @@ function ChangeImpact() {
           <p className="px-5 py-6 text-[12.5px] text-muted-foreground">
             {registryQuery.error instanceof BackendUnavailableError ||
             factsQuery.error instanceof BackendUnavailableError
-              ? "The IRIS backend isn't reachable, so a change cannot be analysed right now."
+              ? "The IRIS backend isn't reachable, so a scenario cannot be run right now."
               : "The supported project facts could not be loaded."}
           </p>
         ) : supported.length === 0 ? (
@@ -435,22 +527,18 @@ function ChangeImpact() {
             <div className="flex flex-wrap items-center gap-3 border-t border-border px-5 py-3">
               <button
                 type="button"
-                onClick={analyse}
+                onClick={runScenario}
                 disabled={mutation.isPending}
                 className="focus-ring rounded-sm bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
               >
-                {mutation.isPending ? "Analysing…" : "Analyse impact"}
+                {mutation.isPending ? "Running scenario…" : "Run Scenario"}
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setDraft({});
-                  setResult(null);
-                  setFieldErrors({});
-                }}
+                onClick={resetScenario}
                 className="focus-ring rounded-sm border border-border px-3 py-[7px] text-[12.5px] font-medium transition-colors hover:bg-secondary"
               >
-                Reset
+                Reset scenario
               </button>
               <span className="text-[11.5px] text-muted-foreground">
                 Preview only — proposed values are never saved to this project.
@@ -464,13 +552,25 @@ function ChangeImpact() {
         <p className="mt-4 border border-destructive/30 bg-danger-surface px-5 py-3 text-[12.5px]">
           {mutation.error instanceof BackendUnavailableError
             ? "The IRIS backend isn't reachable right now."
-            : "The change could not be analysed. Check the proposed values and try again."}
+            : "The scenario could not be evaluated. Check the proposed values and try again."}
         </p>
       )}
 
       {result && (
         <>
-          <section className="mt-6 border border-border bg-surface px-5 py-4">
+          {!result.authoritative && (
+            <section className="mt-6 border border-warning/40 bg-warning-surface px-5 py-3.5">
+              <p className="text-[12.5px] font-semibold uppercase tracking-[0.05em] text-warning">
+                Diagnostic scenario
+              </p>
+              <p className="mt-1 text-[12.5px] leading-relaxed">
+                Uses unverified/DRAFT regulatory rules and is not an
+                authoritative regulatory determination.
+              </p>
+            </section>
+          )}
+
+          <section className="mt-4 border border-border bg-surface px-5 py-4">
             <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
@@ -483,6 +583,11 @@ function ChangeImpact() {
                     {result.evaluation_mode} · {result.engine_version}
                   </span>
                 </div>
+                <p className="mt-2 text-[15px] font-semibold">
+                  {changed.length === 0
+                    ? "No regulatory outcomes changed"
+                    : `${changed.length} regulatory outcome${changed.length === 1 ? "" : "s"} changed`}
+                </p>
                 {result.proposed_changes.length > 0 ? (
                   <ul className="mt-2 space-y-1">
                     {result.proposed_changes.map((c) => (
@@ -542,7 +647,7 @@ function ChangeImpact() {
             <SectionHeading
               title={
                 changed.length > 0
-                  ? "Requirements whose engine result changed"
+                  ? "Regulatory consequences"
                   : "No requirement changed result"
               }
               hint="Each side is a separate evaluation of the same deterministic rule engine."
@@ -570,8 +675,8 @@ function ChangeImpact() {
                 onClick={() => setShowUnchanged((v) => !v)}
                 className="text-[12px] font-medium text-info hover:opacity-80"
               >
-                {showUnchanged ? "Hide" : "Show"} {unchanged.length} unchanged
-                requirement{unchanged.length === 1 ? "" : "s"}
+                {showUnchanged ? "Hide" : "Show"} unchanged regulatory outcomes
+                ({unchanged.length})
               </button>
               {showUnchanged && (
                 <div className="mt-3 space-y-3">

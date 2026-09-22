@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChangeImpactRouteImport } from './routes/change-impact'
 import { Route as ComplianceRouteImport } from './routes/compliance'
+import { Route as ConsistencyRouteImport } from './routes/consistency'
 import { Route as DepartmentRouteImport } from './routes/department'
 import { Route as DocumentsRouteImport } from './routes/documents'
 import { Route as EvaluationRouteImport } from './routes/evaluation'
@@ -52,6 +53,11 @@ const ChangeImpactRoute = ChangeImpactRouteImport.update({
 const ComplianceRoute = ComplianceRouteImport.update({
   id: '/compliance',
   path: '/compliance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsistencyRoute = ConsistencyRouteImport.update({
+  id: '/consistency',
+  path: '/consistency',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepartmentRoute = DepartmentRouteImport.update({
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/assistant': typeof AssistantRoute
   '/change-impact': typeof ChangeImpactRoute
   '/compliance': typeof ComplianceRoute
+  '/consistency': typeof ConsistencyRoute
   '/department': typeof DepartmentRouteWithChildren
   '/documents': typeof DocumentsRoute
   '/evaluation': typeof EvaluationRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/assistant': typeof AssistantRoute
   '/change-impact': typeof ChangeImpactRoute
   '/compliance': typeof ComplianceRoute
+  '/consistency': typeof ConsistencyRoute
   '/documents': typeof DocumentsRoute
   '/evaluation': typeof EvaluationRoute
   '/grievances': typeof GrievancesRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/assistant': typeof AssistantRoute
   '/change-impact': typeof ChangeImpactRoute
   '/compliance': typeof ComplianceRoute
+  '/consistency': typeof ConsistencyRoute
   '/department': typeof DepartmentRouteWithChildren
   '/documents': typeof DocumentsRoute
   '/evaluation': typeof EvaluationRoute
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/change-impact'
     | '/compliance'
+    | '/consistency'
     | '/department'
     | '/documents'
     | '/evaluation'
@@ -267,6 +277,7 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/change-impact'
     | '/compliance'
+    | '/consistency'
     | '/documents'
     | '/evaluation'
     | '/grievances'
@@ -292,6 +303,7 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/change-impact'
     | '/compliance'
+    | '/consistency'
     | '/department'
     | '/documents'
     | '/evaluation'
@@ -319,6 +331,7 @@ export interface RootRouteChildren {
   AssistantRoute: typeof AssistantRoute
   ChangeImpactRoute: typeof ChangeImpactRoute
   ComplianceRoute: typeof ComplianceRoute
+  ConsistencyRoute: typeof ConsistencyRoute
   DepartmentRoute: typeof DepartmentRouteWithChildren
   DocumentsRoute: typeof DocumentsRoute
   EvaluationRoute: typeof EvaluationRoute
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       path: '/compliance'
       fullPath: '/compliance'
       preLoaderRoute: typeof ComplianceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consistency': {
+      id: '/consistency'
+      path: '/consistency'
+      fullPath: '/consistency'
+      preLoaderRoute: typeof ConsistencyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/department': {
@@ -538,6 +558,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantRoute: AssistantRoute,
   ChangeImpactRoute: ChangeImpactRoute,
   ComplianceRoute: ComplianceRoute,
+  ConsistencyRoute: ConsistencyRoute,
   DepartmentRoute: DepartmentRouteWithChildren,
   DocumentsRoute: DocumentsRoute,
   EvaluationRoute: EvaluationRoute,
