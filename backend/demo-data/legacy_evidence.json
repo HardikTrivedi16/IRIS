@@ -1,0 +1,50 @@
+{
+  "_description": "Synthetic-demo metadata (NOT regulatory data, NOT a database field). Identifies documents that are explicitly LEGACY evidence of a project's prior facility. Legacy status is asserted here by name/path only - never inferred from state, filename pattern or document age. Matching is exact.",
+  "projects": {
+    "92ebc91d-e3e6-46ac-a5ce-46ef5ae240d4": {
+      "project_name": "SwaadHarvest Foods Private Limited",
+      "prior_facility": "Plot No. 18, Sector 11, IIE SIDCUL, Haridwar, Uttarakhand",
+      "current_facility": "Supa MIDC, Pune district, Maharashtra (synthetic demo fact)",
+      "basis": "reference-data/swaadharvest-evidence/README.md, section 'Legacy / historical status'",
+      "match": "storage_path",
+      "storage_paths": [
+        "reference-data/swaadharvest-evidence/documents/FOOD-ENT-003.pdf",
+        "reference-data/swaadharvest-evidence/documents/FOOD-ENT-006.pdf",
+        "reference-data/swaadharvest-evidence/documents/FOOD-FAC-001.pdf",
+        "reference-data/swaadharvest-evidence/documents/FOOD-FAC-004.pdf",
+        "reference-data/swaadharvest-evidence/documents/FOOD-REG-011.pdf"
+      ]
+    },
+    "aarav-lifesciences": {
+      "project_name": "Aarav Lifesciences Private Limited",
+      "prior_facility": "Selaqui Formulations Plant, Dehradun, Uttarakhand",
+      "current_facility": "Waluj MIDC, Chhatrapati Sambhajinagar, Maharashtra (synthetic demo fact)",
+      "basis": "backend/scripts/seed_five_project_portfolio.py, module docstring 'LEGACY EVIDENCE'",
+      "match": "external_document_id",
+      "external_document_ids": [
+        "DOC-ENT-001",
+        "DOC-ENT-002",
+        "DOC-ENT-003",
+        "DOC-ENT-004",
+        "DOC-ENT-005",
+        "DOC-ENT-006",
+        "DOC-ENT-007",
+        "DOC-FAC-001",
+        "DOC-FAC-002",
+        "DOC-FAC-003",
+        "DOC-FAC-004",
+        "DOC-REG-001",
+        "DOC-REG-002",
+        "DOC-REG-003",
+        "DOC-REG-004",
+        "DOC-REG-005",
+        "DOC-REG-006",
+        "DOC-REG-007",
+        "DOC-REG-008",
+        "DOC-REG-009",
+        "DOC-REG-010",
+        "DOC-REG-011"
+      ]
+    }
+  }
+}

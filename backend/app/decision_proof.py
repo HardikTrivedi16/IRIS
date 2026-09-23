@@ -10,12 +10,11 @@ an outcome, never resolves a citation and never writes anything:
   condition tree (``explanation.condition_evaluation_tree`` and the
   classification trees), whose ``actual_project_value`` the engine itself
   filled in via ``conditions._get_fact``.
-* ``provenance`` keeps the ID references the Rule Version carries. The
-  upstream Regulatory Fact / Evidence / Source / Authority / Instrument
-  records are NOT in this repository, so status is ``UNRESOLVED`` and no
-  human-readable citation is constructed from an ID. It flips to RESOLVED
-  only if the engine ever supplies resolved records — this module will not
-  synthesise them.
+* ``provenance`` is resolved by ``provenance_resolver`` from the records that
+  actually exist in the loaded dataset (Rule Version -> Regulatory Fact ->
+  Evidence -> Source, Instrument, Authority, Verification). It reports
+  provenance-resolved, source-archived and human-verified SEPARATELY, lists
+  every gap, and never fabricates a record.
 * ``refuses_to_guess`` explains, mechanically, why the engine withheld a
   definite answer (missing facts, review flag, DRAFT lifecycle block). It is
   a restatement of engine state, never legal prose.
@@ -25,6 +24,7 @@ from __future__ import annotations
 from typing import Any, Iterable
 
 from . import engine_service
+from .provenance_resolver import resolve_provenance
 
 _REFUSAL_STATES = {"REQUIRES_INFORMATION", "REQUIRES_REVIEW", "UNKNOWN"}
 
@@ -113,8 +113,6 @@ def build_decision_proof(decision: dict) -> dict:
         }
         (matched if leaf.get("result") == "TRUE" else not_matched).append(row)
 
-    provenance = dict(decision.get("provenance") or {})
-    resolved_records = provenance.get("resolved_records")
     refuses, refusal_reasons = _refusal(decision)
 
     ds = engine_service.get_dataset()
@@ -160,16 +158,7 @@ def build_decision_proof(decision: dict) -> dict:
         }
         if decision.get("classification")
         else None,
-        "provenance": {
-            "status": "RESOLVED" if resolved_records else "UNRESOLVED",
-            "instrument_id": provenance.get("instrument_id"),
-            "authority_id": provenance.get("authority_id"),
-            "source_ids": list(provenance.get("source_ids") or []),
-            "evidence_ids": list(provenance.get("evidence_ids") or []),
-            "regulatory_fact_ids": list(provenance.get("regulatory_fact_ids") or []),
-            "resolved_records": resolved_records or None,
-            "note": provenance.get("unresolved_note"),
-        },
+        "provenance": resolve_provenance(ds, decision),
     }
 
 

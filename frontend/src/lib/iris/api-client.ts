@@ -474,15 +474,40 @@ export interface DecisionProof {
     output_mappings: Record<string, Record<string, string>> | null;
   } | null;
   provenance: {
-    /** UNRESOLVED until the upstream source/evidence records exist. The UI
-     * must never turn the IDs below into a readable citation. */
-    status: "RESOLVED" | "UNRESOLVED";
+    /** Whether the referenced Regulatory Fact / Evidence / Source records
+     * exist in the dataset. This is NOT a statement that the source is
+     * archived or that a human has verified anything — see `source_archival`
+     * and `human_verification`. */
+    status: "RESOLVED" | "PARTIAL" | "UNRESOLVED";
     instrument_id: string | null;
     authority_id: string | null;
     source_ids: string[];
     evidence_ids: string[];
     regulatory_fact_ids: string[];
-    resolved_records: unknown;
+    resolved_records: {
+      authorities: Record<string, unknown>[];
+      instruments: Record<string, unknown>[];
+      regulatory_facts: Record<string, unknown>[];
+      evidence: Record<string, unknown>[];
+      sources: Record<string, unknown>[];
+    } | null;
+    rule_versions: {
+      rule_version_id: string;
+      status: string | null;
+      confidence: string | null;
+      effective_end_date: string | null;
+    }[];
+    source_archival: {
+      state: "ALL_ARCHIVED" | "NOT_ALL_ARCHIVED" | "NO_SOURCES";
+      archived: string[];
+      not_archived: string[];
+    };
+    human_verification: {
+      state: "HUMAN_VERIFIED" | "NOT_VERIFIED";
+      verification_ids: string[];
+    };
+    /** Everything that is missing or unverified, stated plainly. */
+    gaps: string[];
     note: string | null;
   };
   fact_basis: "STORED" | "HYPOTHETICAL";
@@ -800,6 +825,14 @@ export interface DocumentRecord {
   status: "uploaded" | "extracted" | "missing-info" | "mismatch";
   linked_requirement_ids: string[];
   uploaded_at: string;
+  /** Present only when the synthetic-demo metadata explicitly names this
+   * document as evidence of a PRIOR facility (backend/demo-data). */
+  legacy_evidence?: {
+    label: string;
+    prior_facility: string | null;
+    current_facility: string | null;
+    basis: string | null;
+  } | null;
   /** Added in migration 0006 — display detail for the document register. */
   issues?: string[];
   extracted_information?: {
@@ -964,6 +997,19 @@ export const irisApi = {
         include_project_record: payload.includeProjectRecord ?? true,
       }),
     }),
+
+  /** Committed synthetic observations (no results) for the demo project's
+   * legacy evidence; `available:false` for every other project. */
+  getLegacyConsistencyObservations: (projectId: string) =>
+    request<
+      | { available: false }
+      | {
+          available: true;
+          description: string | null;
+          basis: string | null;
+          observations: ConsistencyObservationInput[];
+        }
+    >(`/api/v1/projects/${projectId}/consistency/legacy-observations`),
 
   getRenewals: (projectId: string, actionWindowDays?: number) =>
     request<RenewalRegister>(

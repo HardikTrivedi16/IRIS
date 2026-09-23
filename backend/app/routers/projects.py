@@ -10,6 +10,7 @@ from ..config import get_settings
 from ..fact_registry import FactValidationError, fact_registry_index, validate_facts
 from ..schemas import ProjectIn, ProjectFactsIn, DocumentIn
 from ..security import CurrentUser, get_optional_user
+from ..legacy_evidence import annotate_documents
 from ..store import get_store
 from ..store.base import StoreError
 
@@ -146,7 +147,9 @@ def list_documents(
     user: Optional[CurrentUser] = Depends(get_optional_user),
 ) -> list[dict]:
     get_project(project_id, user=user)
-    return _store_call(get_store().list_documents, project_id)
+    docs = _store_call(get_store().list_documents, project_id)
+    # Presentation-only: mark explicitly-named legacy (prior-facility) evidence.
+    return annotate_documents(project_id, docs)
 
 
 @router.post("/projects/{project_id}/documents", status_code=201)

@@ -26,6 +26,9 @@ export interface CheckSource {
   id: string;
   name: string;
   kind: "DOCUMENT" | "MANUAL";
+  /** LEGACY_FIXTURE = committed synthetic legacy-evidence observation (not
+   * extracted live, no confidence). */
+  origin?: "LEGACY_FIXTURE";
   observations: ConsistencyObservationInput[];
 }
 

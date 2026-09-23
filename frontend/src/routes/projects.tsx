@@ -14,6 +14,7 @@ import {
   type ProofTarget,
 } from "@/components/iris/decision-proof-drawer";
 import type { Project } from "@/lib/iris/types";
+import { INDUSTRY_LABELS } from "@/lib/iris/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/projects")({
@@ -224,7 +225,7 @@ function ProjectCard({
       <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4">
         <DataField
           label="Industry"
-          value={<span className="capitalize">{project.industry}</span>}
+          value={<span>{INDUSTRY_LABELS[project.industry]}</span>}
         />
         <DataField
           label="Stage"

@@ -1,0 +1,60 @@
+{
+  "_description": "Observations ONLY - no comparison result is stored here. Synthetic LEGACY evidence of SwaadHarvest's prior Haridwar facility, transcribed from the committed PDFs / product master in this directory and offered to the existing consistency check as candidate values. They were not extracted live by AI, so no confidence is recorded. The deterministic Consistency Engine computes every status at request time.",
+  "project_id": "92ebc91d-e3e6-46ac-a5ce-46ef5ae240d4",
+  "basis": "reference-data/swaadharvest-evidence/README.md (Legacy / historical status) and documents/*.pdf, products.json",
+  "observations": [
+    {
+      "field": "entity_name",
+      "value": "Swaad Harvest Foods Pvt Ltd",
+      "source": {
+        "kind": "DOCUMENT",
+        "document_id": "FOOD-ENT-006",
+        "document_name": "Address Proof - Electricity Bill (FOOD-ENT-006), legacy synthetic evidence",
+        "evidence_text": "Consumer Name: Swaad Harvest Foods Pvt Ltd"
+      }
+    },
+    {
+      "field": "address",
+      "value": "Plot No. 20, Sector 11, IIE SIDCUL, Haridwar, Uttarakhand - 249403",
+      "source": {
+        "kind": "DOCUMENT",
+        "document_id": "FOOD-FAC-001",
+        "document_name": "Factory Licence (FOOD-FAC-001), legacy synthetic evidence",
+        "evidence_text": "Premises: Plot No. 20, Sector 11, IIE SIDCUL, Haridwar, Uttarakhand - 249403"
+      }
+    },
+    {
+      "field": "net_quantity",
+      "value": 500,
+      "unit": "g",
+      "source": {
+        "kind": "DOCUMENT",
+        "document_id": "FOOD-REG-011",
+        "document_name": "Product Label - Mango Fruit Pulp (FOOD-REG-011), legacy synthetic evidence",
+        "evidence_text": "Declared Net Weight: 500 g"
+      }
+    },
+    {
+      "field": "net_quantity",
+      "value": 200,
+      "unit": "g",
+      "is_reference": true,
+      "source": {
+        "kind": "DOCUMENT",
+        "document_id": "IRIS-FOOD-PRD-0001",
+        "document_name": "Product master (products.json, IRIS-FOOD-PRD-0001), legacy synthetic reference",
+        "evidence_text": "pack_size: 200 g"
+      }
+    },
+    {
+      "field": "valid_until",
+      "value": "2025-11-14",
+      "source": {
+        "kind": "DOCUMENT",
+        "document_id": "FOOD-FAC-004",
+        "document_name": "Water Quality Test Report (FOOD-FAC-004), legacy synthetic evidence",
+        "evidence_text": "Valid Upto: 2025-11-14"
+      }
+    }
+  ]
+}

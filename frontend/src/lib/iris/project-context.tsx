@@ -14,6 +14,7 @@ import {
   ApiError,
   BackendUnavailableError,
 } from "@/lib/iris/api-client";
+import { normalizeIndustry } from "@/lib/iris/types";
 import type {
   Project,
   Industry,
@@ -60,7 +61,6 @@ const DEFAULT_CHARACTERISTICS: ProjectCharacteristics = {
   chemicalStorage: false,
 };
 
-const KNOWN_INDUSTRIES: readonly Industry[] = ["pharmaceutical", "food"];
 const KNOWN_STAGES: readonly ProjectStage[] = [
   "pre-establishment",
   "construction",
@@ -84,12 +84,13 @@ function includesValue<T extends string>(list: readonly T[], value: string): val
  * regulatory — Phase 9 evaluation reads Project Facts, not this object.
  */
 function normalizeProject(raw: Record<string, unknown>): Project {
-  const rawIndustry = String(raw["industry"] ?? "").toLowerCase();
-  const industry: Industry = includesValue(KNOWN_INDUSTRIES, rawIndustry)
-    ? rawIndustry
-    : "pharmaceutical"; // display/icon grouping only
+  const industry: Industry = normalizeIndustry(raw["industry"]);
 
-  const rawStage = String(raw["stage"] ?? "");
+  // Stored stage may be any case and "operation" (canonical in the portfolio)
+  // rather than the frontend union's "operations".
+  const stageAliases: Record<string, string> = { operation: "operations", operational: "operations" };
+  const stageKey = String(raw["stage"] ?? "").trim().toLowerCase().replace(/[_\s]+/g, "-");
+  const rawStage = stageAliases[stageKey] ?? stageKey;
   const stage: ProjectStage = includesValue(KNOWN_STAGES, rawStage)
     ? rawStage
     : "pre-establishment";

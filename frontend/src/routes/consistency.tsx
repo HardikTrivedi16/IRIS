@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { FileSearch } from "lucide-react";
 import { useProject } from "@/lib/iris/project-context";
 import {
@@ -113,7 +113,13 @@ function SourcesPanel({
               <span>
                 {s.name}{" "}
                 <span className="text-[11px] text-muted-foreground">
-                  · {s.kind === "MANUAL" ? "manual entry" : "extracted"} ·{" "}
+                  ·{" "}
+                  {s.origin === "LEGACY_FIXTURE"
+                    ? "legacy synthetic evidence observation"
+                    : s.kind === "MANUAL"
+                      ? "manual entry"
+                      : "extracted"}{" "}
+                  ·{" "}
                   {s.observations.map((o) => o.field.replace(/_/g, " ")).join(", ") || "no comparable fields"}
                 </span>
               </span>
@@ -145,6 +151,37 @@ function EvidenceConsistency() {
       }),
   });
 
+  // Demo-only: committed synthetic OBSERVATIONS for legacy evidence. The
+  // engine — not this page — computes every status from them.
+  const legacyQuery = useQuery({
+    queryKey: ["consistency-legacy-observations", activeProject.id],
+    queryFn: () => irisApi.getLegacyConsistencyObservations(activeProject.id),
+    staleTime: 5 * 60_000,
+  });
+  const legacy = legacyQuery.data && legacyQuery.data.available ? legacyQuery.data : null;
+  const legacyLoaded = sources.some((s) => s.origin === "LEGACY_FIXTURE");
+
+  function compareLegacyEvidence() {
+    if (!legacy || legacyLoaded) return;
+    // One check source per document the observations name (honest provenance).
+    const byDoc = new Map<string, CheckSource>();
+    for (const o of legacy.observations) {
+      const key = o.source.document_id ?? o.source.document_name ?? "legacy";
+      const existing = byDoc.get(key) ?? {
+        id: `legacy-${key}`,
+        name: o.source.document_name ?? key,
+        kind: "DOCUMENT" as const,
+        origin: "LEGACY_FIXTURE" as const,
+        observations: [],
+      };
+      existing.observations.push(o);
+      byDoc.set(key, existing);
+    }
+    const next = [...sources, ...byDoc.values()];
+    setSources(next);
+    run.mutate(next);
+  }
+
   // Runs once on load (project's confirmed record alone — include_project_record
   // defaults true server-side) and again whenever a source is added/removed.
   // Always deterministic and read-only: nothing is saved by running it.
@@ -173,6 +210,30 @@ function EvidenceConsistency() {
     result!.checks_performed === 0 &&
     result!.uncompared_fields.length === 0;
 
+    const legacyPanel = legacy ? (
+    <section className="mt-4 border border-border bg-surface px-5 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+        <div>
+          <p className="text-[13px] font-medium">Legacy evidence — prior facility</p>
+          <p className="mt-1 max-w-[80ch] text-[12px] leading-relaxed text-muted-foreground">
+            Compare the committed synthetic legacy-evidence observations for this project's prior
+            facility against its current project record. They are transcribed synthetic values, not
+            live AI extractions, and carry no confidence score. Statuses are computed by the same
+            deterministic engine. Nothing is saved.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={compareLegacyEvidence}
+          disabled={legacyLoaded || run.isPending}
+          className="focus-ring rounded-sm bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+        >
+          {legacyLoaded ? "Legacy evidence loaded" : "Compare legacy evidence"}
+        </button>
+      </div>
+    </section>
+  ) : null;
+
   const issues = result?.checks.filter((c) => c.status !== "CONSISTENT") ?? [];
   const consistent = result?.checks.filter((c) => c.status === "CONSISTENT") ?? [];
 
@@ -200,6 +261,8 @@ function EvidenceConsistency() {
           </span>
         )}
       </section>
+
+      {legacyPanel}
 
       {run.isPending && !hasRun && (
         <p className="mt-4 px-1 text-[12.5px] text-muted-foreground">

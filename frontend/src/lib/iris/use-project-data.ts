@@ -61,6 +61,12 @@ export function useProjectDocuments(projectId: string) {
             : "extracted",
           uploadedAt: formatDate(r.uploaded_at),
         };
+        if (r.legacy_evidence) {
+          item.legacy = {
+            label: r.legacy_evidence.label,
+            priorFacility: r.legacy_evidence.prior_facility,
+          };
+        }
         if (r.issues && r.issues.length) item.issues = r.issues;
         if (r.extracted_information && r.extracted_information.length)
           item.extractedInformation = r.extracted_information;

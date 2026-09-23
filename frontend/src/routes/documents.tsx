@@ -431,6 +431,7 @@ function LiveExtractionPanel({
               {realDocuments.data.map((d) => (
                 <li key={d.id}>
                   {d.name} · {d.status} · {new Date(d.uploaded_at).toLocaleString()}
+                  {d.legacy_evidence ? ` · ${d.legacy_evidence.label}` : ""}
                 </li>
               ))}
             </ul>
@@ -482,6 +483,8 @@ function DocumentsPage() {
     };
   }, [docs]);
 
+  const legacyCount = docs.filter((d) => d.legacy).length;
+  const legacyFacility = docs.find((d) => d.legacy)?.legacy?.priorFacility ?? null;
   const filtered =
     filter === "all" ? docs : docs.filter((d) => d.status === filter);
   const outstanding = counts["missing-info"] + counts.mismatch;
@@ -577,6 +580,21 @@ function DocumentsPage() {
         <Tag tone="info">Live register — loaded from this project's records</Tag>
       </div>
 
+      {legacyCount > 0 && (
+        <div className="mt-3 border border-warning/30 bg-warning-surface px-4 py-3">
+          <p className="text-[12.5px] font-medium">
+            {legacyCount} of {docs.length} documents are legacy evidence — prior facility
+          </p>
+          <p className="mt-1 max-w-[80ch] text-[11.5px] leading-relaxed text-foreground/80">
+            {legacyFacility
+              ? `They describe the earlier facility (${legacyFacility}), not ${activeProject.name}'s current location (${activeProject.location}). `
+              : "They describe an earlier facility, not the current one. "}
+            They are kept for reference and are not evidence of the current facility; their expiry dates are excluded
+            from current compliance alerts.
+          </p>
+        </div>
+      )}
+
       <div className="mt-2 border border-border bg-surface">
         {filtered.length === 0 ? (
           <EmptyState
@@ -600,6 +618,11 @@ function DocumentsPage() {
                         <div className="truncate text-[13px] font-medium">
                           {doc.name}
                         </div>
+                        {doc.legacy && (
+                          <div className="mt-1">
+                            <Tag tone="warning">{doc.legacy.label}</Tag>
+                          </div>
+                        )}
                         {doc.issues?.[0] && (
                           <div className="mt-1 text-[11.5px] text-muted-foreground">
                             {doc.issues[0]}
@@ -671,10 +694,13 @@ function DocumentsPage() {
         title={selected?.name ?? ""}
         subtitle={
           selected ? (
-            <StatusBadge
-              status={docStatusMeta[selected.status].status}
-              label={docStatusMeta[selected.status].label}
-            />
+            <span className="flex flex-wrap items-center gap-1.5">
+              <StatusBadge
+                status={docStatusMeta[selected.status].status}
+                label={docStatusMeta[selected.status].label}
+              />
+              {selected.legacy && <Tag tone="warning">{selected.legacy.label}</Tag>}
+            </span>
           ) : null
         }
         footer={

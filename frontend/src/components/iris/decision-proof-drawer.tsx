@@ -235,26 +235,135 @@ function ProofBody({ proof }: { proof: DecisionProof }) {
       </DrawerSection>
 
       <DrawerSection label="Source & provenance">
-        {proof.provenance.status === "UNRESOLVED" && (
-          <div className="mb-2 border border-warning/30 bg-warning-surface px-3 py-2">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-warning">
-              Source details unresolved
-            </p>
-            <p className="mt-1 text-[11.5px] leading-relaxed text-foreground/80">
-              Only reference IDs are available. The underlying source, evidence
-              and instrument records are not in this dataset, so no citation is shown.
-            </p>
-          </div>
-        )}
-        <div className="space-y-1">
-          <IdList label="Instrument" ids={[proof.provenance.instrument_id]} />
-          <IdList label="Authority" ids={[proof.provenance.authority_id]} />
-          <IdList label="Sources" ids={proof.provenance.source_ids} />
-          <IdList label="Evidence" ids={proof.provenance.evidence_ids} />
-          <IdList label="Regulatory facts" ids={proof.provenance.regulatory_fact_ids} />
-        </div>
+        <ProvenanceBlock provenance={proof.provenance} />
       </DrawerSection>
     </>
+  );
+}
+
+const s = (v: unknown) => (v === null || v === undefined || v === "" ? "—" : String(v));
+
+function RecordList({
+  label,
+  rows,
+  render,
+}: {
+  label: string;
+  rows: Record<string, unknown>[] | undefined;
+  render: (r: Record<string, unknown>) => React.ReactNode;
+}) {
+  if (!rows || rows.length === 0) return null;
+  return (
+    <div className="mt-3">
+      <p className="label-meta">{label}</p>
+      <ul className="mt-1 space-y-2">
+        {rows.map((r, i) => (
+          <li key={i} className="border-l-2 border-border pl-3 text-[12px] leading-relaxed">
+            {render(r)}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** Three separate answers — records resolved, source archived, human verified —
+ * plus every gap. Nothing here is a citation the dataset does not hold. */
+function ProvenanceBlock({ provenance: p }: { provenance: DecisionProof["provenance"] }) {
+  const rec = p.resolved_records;
+  const archival = p.source_archival;
+  return (
+    <div>
+      <div className="flex flex-wrap gap-1.5">
+        <Tag tone={p.status === "RESOLVED" ? "info" : p.status === "PARTIAL" ? "warning" : "neutral"}>
+          Records: {p.status === "RESOLVED" ? "resolved" : p.status === "PARTIAL" ? "partly resolved" : "not recorded"}
+        </Tag>
+        <Tag tone={archival.state === "ALL_ARCHIVED" ? "success" : "warning"}>
+          Source: {archival.state === "ALL_ARCHIVED" ? "archived" : archival.state === "NO_SOURCES" ? "none linked" : "not archived"}
+        </Tag>
+        <Tag tone={p.human_verification.state === "HUMAN_VERIFIED" ? "success" : "warning"}>
+          {p.human_verification.state === "HUMAN_VERIFIED" ? "Human verified" : "Not human verified"}
+        </Tag>
+      </div>
+
+      {p.gaps.length > 0 && (
+        <div className="mt-3 border border-warning/30 bg-warning-surface px-3 py-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-warning">
+            What is missing or unverified
+          </p>
+          <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[11.5px] leading-relaxed text-foreground/80">
+            {p.gaps.map((g) => (
+              <li key={g}>{g}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <RecordList
+        label="Rule versions"
+        rows={p.rule_versions as unknown as Record<string, unknown>[]}
+        render={(r) => (
+          <span>
+            <span className="font-mono">{s(r["rule_version_id"])}</span> · {s(r["status"])}
+            {r["effective_end_date"] ? ` · ended ${s(r["effective_end_date"])}` : ""}
+          </span>
+        )}
+      />
+      <RecordList
+        label="Authority"
+        rows={rec?.authorities}
+        render={(r) => (
+          <span>
+            {s(r["name"])} <span className="font-mono text-muted-foreground">{s(r["authority_id"])}</span>
+          </span>
+        )}
+      />
+      <RecordList
+        label="Instrument"
+        rows={rec?.instruments}
+        render={(r) => (
+          <span>
+            {s(r["full_citation"] ?? r["short_title"])}{" "}
+            <span className="text-muted-foreground">({s(r["currency_status"])})</span>
+          </span>
+        )}
+      />
+      <RecordList
+        label="Regulatory facts"
+        rows={rec?.regulatory_facts}
+        render={(r) => (
+          <span>
+            <span className="font-mono">{s(r["regulatory_fact_id"])}</span> · {s(r["verification_status"])}
+            <br />
+            {s(r["statement"])}
+          </span>
+        )}
+      />
+      <RecordList
+        label="Evidence"
+        rows={rec?.evidence}
+        render={(r) => (
+          <span>
+            <span className="font-mono">{s(r["evidence_id"])}</span> · {s(r["section_or_clause"])} ·{" "}
+            {s(r["verification_status"])}
+            <br />
+            <span className="text-muted-foreground">{s(r["excerpt"])}</span>
+          </span>
+        )}
+      />
+      <RecordList
+        label="Sources"
+        rows={rec?.sources}
+        render={(r) => (
+          <span>
+            <span className="font-mono">{s(r["source_id"])}</span> · {s(r["source_status"])}
+            {r["source_status"] === "ARCHIVED" ? " (archived locally)" : " (not archived locally)"}
+            <br />
+            {s(r["title"])}
+          </span>
+        )}
+      />
+    </div>
   );
 }
 

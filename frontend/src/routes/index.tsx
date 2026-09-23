@@ -27,6 +27,7 @@ import {
   StatLine,
 } from "@/components/iris/page";
 import { Tag } from "@/components/iris/status";
+import { INDUSTRY_LABELS } from "@/lib/iris/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -176,7 +177,7 @@ function Overview() {
             <DataField
               label="Industry"
               value={
-                <span className="capitalize">{activeProject.industry}</span>
+                <span>{INDUSTRY_LABELS[activeProject.industry]}</span>
               }
             />
             <DataField

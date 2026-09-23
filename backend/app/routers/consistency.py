@@ -11,6 +11,8 @@ Authorization reuses ``get_project`` like every ``/projects/{id}/*`` route.
 from __future__ import annotations
 
 import datetime as _dt
+import json
+import os
 import logging
 from typing import Optional
 
@@ -36,6 +38,38 @@ router = APIRouter(prefix="/api/v1", tags=["consistency"])
 def get_consistency_fields() -> dict:
     """The published comparison rule for every supported field."""
     return {"fields": field_registry()}
+
+
+# Packaged with the backend (alongside legacy_evidence.json) so the demo action
+# survives a deployment that does not ship the repository-level reference-data.
+_DEMO_FIXTURE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "demo-data", "swaadharvest_consistency_observations.json",
+)
+
+
+@router.get("/projects/{project_id}/consistency/legacy-observations")
+def get_legacy_observations(
+    project_id: str,
+    user: Optional[CurrentUser] = Depends(get_optional_user),
+) -> dict:
+    """Committed synthetic OBSERVATIONS (no results) for the demo project's
+    legacy evidence, offered to the existing consistency-check. Read-only;
+    nothing is persisted and no status is stored in the fixture."""
+    get_project(project_id, user=user)
+    try:
+        with open(_DEMO_FIXTURE, encoding="utf-8") as f:
+            fx = json.load(f)
+    except (OSError, ValueError):
+        return {"available": False}
+    if fx.get("project_id") != project_id:
+        return {"available": False}
+    return {
+        "available": True,
+        "description": fx.get("_description"),
+        "basis": fx.get("basis"),
+        "observations": fx.get("observations") or [],
+    }
 
 
 @router.post("/projects/{project_id}/consistency-check")

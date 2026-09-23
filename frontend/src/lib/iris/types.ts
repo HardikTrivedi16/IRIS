@@ -1,7 +1,36 @@
 export type Status =
   "ready" | "attention" | "blocked" | "not-applicable" | "not-ready";
 
-export type Industry = "pharmaceutical" | "food";
+export type Industry =
+  | "pharmaceutical"
+  | "food"
+  | "automobile-ev"
+  | "electronics-esdm"
+  | "chemicals"
+  | "other";
+
+/** Display labels for the closed Industry union (presentation only). */
+export const INDUSTRY_LABELS: Record<Industry, string> = {
+  pharmaceutical: "Pharmaceuticals",
+  food: "Food",
+  "automobile-ev": "Automobile / EV",
+  "electronics-esdm": "Electronics / ESDM",
+  chemicals: "Chemicals",
+  other: "Other",
+};
+
+/** Maps a raw stored `industry` value (any case, `_` or `-` separators) onto
+ * the closed Industry union. Presentation only — never used for regulatory
+ * decisions (the engine reads Project Facts). */
+export function normalizeIndustry(raw: unknown): Industry {
+  const v = String(raw ?? "").trim().toLowerCase().replace(/[_\s]+/g, "-");
+  if (["pharmaceutical", "pharmaceuticals", "pharma", "life-sciences", "lifesciences"].includes(v)) return "pharmaceutical";
+  if (["food", "food-processing", "food-and-agro-processing", "agro-processing"].includes(v)) return "food";
+  if (["automobile-ev", "auto-ev", "automobile", "automotive", "ev"].includes(v)) return "automobile-ev";
+  if (["electronics-esdm", "electronics", "esdm"].includes(v)) return "electronics-esdm";
+  if (["chemicals", "chemical", "specialty-chemicals"].includes(v)) return "chemicals";
+  return "other";
+}
 
 export type ProjectStage =
   "pre-establishment" | "construction" | "commissioning" | "operations";
@@ -34,6 +63,8 @@ export interface DocumentItem {
   name: string;
   status: "extracted" | "missing-info" | "mismatch";
   uploadedAt: string;
+  /** Explicit legacy (prior-facility) evidence — not evidence of the current facility. */
+  legacy?: { label: string; priorFacility: string | null };
   extractedInformation?: {
     label: string;
     projectProfile: string;

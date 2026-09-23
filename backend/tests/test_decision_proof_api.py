@@ -115,17 +115,50 @@ def test_draft_rule_blocked_in_production(client):
 
 # --- provenance honesty ------------------------------------------------------------
 
-def test_provenance_stays_unresolved_and_ids_exact(client):
+def test_provenance_resolves_existing_records_and_ids_stay_exact(client):
     from app.engine_service import get_dataset
 
-    rv = get_dataset().rule_versions["RULE-0001-V1"]
+    ds = get_dataset()
+    rv = ds.rule_versions["RULE-0001-V1"]
     prov = _proof(client, "REQ-0001").json()["proof"]["provenance"]
-    assert prov["status"] == "UNRESOLVED"
-    assert prov["resolved_records"] is None
-    assert prov["source_ids"] == rv["source_ids"]
-    assert prov["evidence_ids"] == rv["evidence_ids"]
+    # ids are exactly what the Rule Version carries
+    assert prov["source_ids"] == sorted(rv["source_ids"])
+    assert prov["evidence_ids"] == sorted(rv["evidence_ids"])
     assert prov["instrument_id"] == rv["instrument_id"]
-    assert prov["note"]  # the engine's own unresolved note, verbatim
+    # records that genuinely exist are resolved from the dataset
+    rec = prov["resolved_records"]
+    assert [f["regulatory_fact_id"] for f in rec["regulatory_facts"]] == sorted(rv["regulatory_fact_ids"])
+    assert {s["source_id"] for s in rec["sources"]} == set(rv["source_ids"])
+    assert prov["note"] is None
+    # resolved != archived != human verified: three separate answers
+    assert prov["source_archival"]["state"] in {"ALL_ARCHIVED", "NOT_ALL_ARCHIVED", "NO_SOURCES"}
+    assert prov["human_verification"]["state"] == "NOT_VERIFIED"  # no APPROVED VER exists
+    assert prov["human_verification"]["verification_ids"] == []
+    assert any("APPROVED human Verification" in g for g in prov["gaps"])
+
+
+def test_available_source_is_reported_not_archived(client):
+    # AU-02's source (SRC-015) is AVAILABLE, never ARCHIVED.
+    from app.engine_service import get_dataset
+
+    assert get_dataset().sources["SRC-015"]["source_status"] == "AVAILABLE"
+    r = client.post("/api/v1/evaluate", json={"project_id": "mahapharm", "requirement_id": "REQ-0017",
+                                              "evaluation_mode": "NON_PRODUCTION", "persist": False,
+                                              "facts": {"project.places_batteries_on_market": True}})
+    assert r.status_code == 200
+    prov = client.get("/api/v1/projects/mahapharm/decision-proof/REQ-0017?evaluation_mode=NON_PRODUCTION").json()["proof"]["provenance"]
+    assert prov["source_archival"]["state"] == "NOT_ALL_ARCHIVED"
+    assert "SRC-015" in prov["source_archival"]["not_archived"]
+    assert any("not archived" in g for g in prov["gaps"])
+
+
+def test_incomplete_provenance_names_what_is_missing(client):
+    # AU-01 (REQ-0016) deliberately has no Regulatory Fact / Evidence / Source.
+    prov = client.get("/api/v1/projects/mahapharm/decision-proof/REQ-0016?evaluation_mode=NON_PRODUCTION").json()["proof"]["provenance"]
+    assert prov["status"] == "UNRESOLVED"
+    assert prov["source_archival"]["state"] == "NO_SOURCES"
+    assert any("no Regulatory Fact is recorded" in g for g in prov["gaps"])
+    assert "were NOT included" not in str(prov)
 
 
 def test_no_fabricated_citation_fields(client):

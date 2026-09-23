@@ -115,6 +115,24 @@ function FactInput({
   const referenced = entry.values_referenced_by_rules;
   const edited = value !== "" && value !== undefined;
 
+  // Enum-like fact: a string fact whose conditions compare it against 2+ named
+  // string values. Options come from the Unified Fact Registry (never hardcoded
+  // here). The registry list is NOT exhaustive, so the stored value is always
+  // offered too and "Other value…" keeps any legitimate unlisted value enterable.
+  const enumOptions = useMemo(() => {
+    if (entry.value_type !== "string") return null;
+    const named = entry.values_referenced_by_conditions.filter(
+      (v): v is string => typeof v === "string",
+    );
+    if (named.length < 2 || named.length !== entry.values_referenced_by_conditions.length) {
+      return null;
+    }
+    const set = new Set(named);
+    if (typeof currentValue === "string" && currentValue !== "") set.add(currentValue);
+    return [...set];
+  }, [entry, currentValue]);
+  const [otherMode, setOtherMode] = useState(false);
+
   return (
     <div
       className={cn(
@@ -169,6 +187,49 @@ function FactInput({
                 placeholder="No change"
                 className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px] tabular"
               />
+            ) : enumOptions ? (
+              <div className="space-y-1.5">
+                <select
+                  value={
+                    value === "__CLEAR__"
+                      ? "__CLEAR__"
+                      : otherMode
+                        ? "__OTHER__"
+                        : enumOptions.includes(value)
+                          ? value
+                          : ""
+                  }
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (v === "__OTHER__") {
+                      setOtherMode(true);
+                      onChange("");
+                    } else {
+                      setOtherMode(false);
+                      onChange(v);
+                    }
+                  }}
+                  className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
+                >
+                  <option value="">No change</option>
+                  {enumOptions.map((o) => (
+                    <option key={o} value={o}>
+                      {o}
+                    </option>
+                  ))}
+                  <option value="__OTHER__">Other value…</option>
+                  <option value="__CLEAR__">Clear (unknown)</option>
+                </select>
+                {otherMode && value !== "__CLEAR__" && (
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    placeholder="Enter a value"
+                    className="focus-ring w-full rounded-sm border border-border bg-surface px-2 py-[7px] text-[12.5px]"
+                  />
+                )}
+              </div>
             ) : (
               <input
                 type="text"
@@ -348,6 +409,7 @@ function ChangeImpact() {
   const { activeProject } = useProject();
   const [draft, setDraft] = useState<DraftValues>({});
   const [showUnchanged, setShowUnchanged] = useState(false);
+  const [resetCount, setResetCount] = useState(0);
   const [diagnostic, setDiagnostic] = useState(false);
   const [result, setResult] = useState<ChangeImpactResponse | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -405,6 +467,7 @@ function ChangeImpact() {
   });
 
   function resetScenario() {
+    setResetCount((n) => n + 1); // remount inputs so enum "Other value…" mode clears too
     // UI-only: clears the draft back to the stored baseline. Never calls the
     // backend — there is nothing to undo server-side because nothing was
     // ever written (see the persistence note below).
@@ -507,7 +570,7 @@ function ChangeImpact() {
         ) : (
           <>
             {supported.map((entry) => (
-              <div key={entry.key}>
+              <div key={`${entry.key}-${resetCount}`}>
                 <FactInput
                   entry={entry}
                   currentValue={currentFacts[entry.key]}
