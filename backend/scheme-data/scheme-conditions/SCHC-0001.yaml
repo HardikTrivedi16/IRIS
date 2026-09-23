@@ -1,0 +1,33 @@
+# DRAFT — automated-retrieval evidence only, NOT human-verified. See
+# reference-data/scheme-evidence/SRC-SCH-002/MANIFEST.md and the SCH-0004
+# human review pack. Do not promote to a claim of VERIFIED confidence.
+scheme_condition_id: SCHC-0001
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.location_state
+operator: "=="
+comparison_value: MAHARASHTRA
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+source_reference:
+  document_title: "Maharashtra State Export Promotion Policy 2023 — Modalities GR dated 01.07.2025 (GR No. Export-2024/C.R.43/Industry-7)"
+  clause: "Cover page / preamble — scheme title and administering department (Directorate of Industries, GoM)"
+  page_number: 1
+  quoted_text: >
+    "महाराष्ट्र राज्य निर्यात प्रोत्साहन धोरण - 2023" (Maharashtra State Export
+    Promotion Policy - 2023), issued by "उद्योग, ऊर्जा, कामगार व खनिकर्म विभाग"
+    (Industries, Energy, Labour & Mining Department), Government of
+    Maharashtra.
+
+description: >
+  Project is located in Maharashtra.
+normalization_notes: >
+  NO standalone "the project must be located in Maharashtra" eligibility
+  sentence was located anywhere in the archived document — this condition
+  is inferred structurally from the scheme's own name/administering
+  department (a Maharashtra State Government policy, administered solely by
+  Maharashtra's Directorate of Industries; every annexure/application form
+  routes to that one department). This is a normalization judgment call,
+  not a quoted criterion, and is explicitly flagged for human confirmation
+  in the SCH-0004 review pack (QUESTIONS FOR HUMAN REVIEW).

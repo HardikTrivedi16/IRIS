@@ -1,0 +1,84 @@
+# DRAFT — prepared from automated document retrieval, NOT human-verified.
+# See reference-data/scheme-evidence/SRC-SCH-002/MANIFEST.md and the
+# SCH-0004 human review pack returned alongside this file. Do not set
+# confidence: VERIFIED, status: ACTIVE, last_verified, or
+# application_status/application_window until a human has reviewed the
+# archived source and approved the excerpts.
+scheme_id: SCH-0004
+name: "Maharashtra State Export Promotion Policy 2023 — Special LSI / general export-incentive track"
+administering_authority_id: null   # no AUTH-#### provenance records exist yet (regulatory-data provenance substrate ships empty) — do not invent one
+administering_authority_name: "Directorate of Industries, Government of Maharashtra"
+
+official_source:
+  url: "https://maitri.maharashtra.gov.in/wp-content/themes/maitri/PDF/Maharashtra State Export Promotion Policy - 2023.pdf"
+  document_title: "Maharashtra State Export Promotion Policy 2023 — Modalities/Operational Procedure (Government Resolution No. Export-2024/C.R.43/Industry-7)"
+  reference_number: "Export-2024/C.R.43/Industry-7 (references original policy GR Export-2023/C.R.135/Industry-7 dated 22.11.2023)"
+  published_date: "2025-07-01"
+  retrieved_date: "2026-09-23"
+  retrieved_by: null   # AUTOMATED RETRIEVAL ONLY — pending human verifier name, see review pack
+
+effective_start_date: "2023-11-22"   # date of the original policy GR this Modalities GR implements
+effective_end_date: null             # no expiry stated in either GR located
+
+jurisdiction: "MAHARASHTRA"
+sector_scope: []
+
+eligibility_condition_root_id: SCHC-0003
+
+required_project_facts:
+  - project.location_state
+  - project.export_share_of_turnover_pct
+
+benefits_summary: >
+  For units qualifying under the "Special Large Scale" (Special LSI) track:
+  (1) Electricity Duty Exemption "as applicable under PSI 2019"; (2)
+  reimbursement of 50% of the employer's Employees' Provident Fund (EPF)
+  contribution; (3) a Special Capital Incentive for Plant & Machinery
+  investment made for technology upgradation to meet export standards,
+  reimbursed at 30% of the investment or Rs. 1 crore, whichever is lower.
+  CORRECTION TO EARLIER RESEARCH: the "1-2% of incremental export turnover"
+  cash incentive documented elsewhere in this policy is specific to the
+  separate MSME track (Annexure VI) — the archived evidence for the
+  Special-LSI track (Annexure X + XX, p.43/56-57) shows this different
+  benefit basket, not a percentage-of-export-turnover incentive. See review
+  pack.
+
+required_documents:
+  - Land documents (sale deed / lease & license / deed of sublet / PLI)
+  - Constitution documents (Certificate of Incorporation, MOA, AOA)
+  - MPCB Consent to Establish and Consent to Operate
+  - Project Report
+  - Bank Appraisal Letter
+  - Term loan sanction letter
+  - Building Plan approval
+  - MSEDCL Power Sanction
+  - Architect Certificate
+  - Board Resolution
+  - ELP-1
+  - Self-certification
+
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED — no human has verified this record.
+# application_status / application_window intentionally OMITTED — genuinely
+# unverified (schema docs: "optional — omit if genuinely unverified").
+# Indirect evidence for CONTINUOUS is described in the review pack (no
+# window/call-cycle language found; standing application-form process with
+# defined processing SLA), but this falls short of a human-verified claim.
+
+notes: >
+  DRAFT — automated document retrieval only, prepared by Claude (AI agent).
+  Scoped deliberately to the "Special Large Scale" (Special LSI) unit-level
+  export-incentive track ONLY. Explicitly excludes: (a) the separate MSME
+  track (1-2%/2-3% incremental-export cash incentive, Annexure VI) — a
+  different benefit basket entirely, not this record; (b) the
+  first-time-MSME-exporter logistics-reimbursement track; (c) the
+  EOSP/EOIP infrastructure/park-level scheme (Annexures I-V), which is
+  CONDITIONAL/SPV-route and not a single-unit incentive. See the SCH-0004
+  human review pack for the full source excerpts, the unresolved
+  30%-promoter-category-threshold question, and other open questions
+  requiring human review before any of this can be promoted.
+
+supersedes: null
+superseded_by: null

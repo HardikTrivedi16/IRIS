@@ -1,0 +1,36 @@
+# DRAFT — automated-retrieval evidence only, NOT human-verified. See
+# reference-data/scheme-evidence/SRC-SCH-007/MANIFEST.md and the SCH-0002
+# human review pack. Do not promote to a claim of VERIFIED confidence.
+scheme_condition_id: SCHC-0007
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.msme_classification
+operator: NOT_IN
+comparison_value: [MEDIUM, NOT_MSME]
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+source_reference:
+  document_title: "Credit Guarantee Fund Scheme for Micro and Small Enterprises (CGS-I) — Scheme Document, updated as on Apr 1 2026"
+  clause: "Section 4 — Credit facilities eligible under the Scheme"
+  page_number: 5
+  quoted_text: >
+    "The Trust shall cover credit facilities (Fund based and/or Non fund
+    based) extended by Member Lending Institution(s) to a single eligible
+    borrower in the Micro and Small Enterprises sector for credit facility
+    ... without any collateral security and/or third party guarantees..."
+
+description: >
+  Project's enterprise is classified as Micro or Small — CGS-I explicitly
+  does not cover Medium enterprises (confirmed by the scheme's own name:
+  "Credit Guarantee Fund Scheme for Micro and Small Enterprises").
+normalization_notes: >
+  Single-leaf root — CGTMSE (CGS-I)'s only eligibility test I can evidence
+  is the Micro/Small enterprise classification. Per instruction, I did NOT
+  add project.bank_term_loan_sanctioned as a gate: nothing in the archived
+  Scheme Document makes prior loan sanction a precondition of enterprise
+  eligibility — the Trust guarantees a credit facility the Member Lending
+  Institution extends; the MLI (not the borrower) applies for cover "anytime
+  during the tenure of Loan" (Section 4, p.6), which is evidence of a
+  continuous application process, not an eligibility precondition on the
+  project.

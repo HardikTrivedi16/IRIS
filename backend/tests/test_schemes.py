@@ -115,18 +115,45 @@ def test_not_in_force_reported(cat):
     assert r["not_in_force_reason"] == "No longer in force (ended 2026-01-31)."
 
 
-def test_shipped_catalogue_is_empty():
+def test_shipped_catalogue_has_no_errors_and_exactly_one_authoritative_scheme():
+    """Tranche-1 production baseline (2026-09-23): backend/scheme-data/ ships
+    3 real records (SCH-0001, SCH-0002, SCH-0004), of which exactly SCH-0002
+    (CGTMSE) has been human-verified to ACTIVE + VERIFIED. SCH-0001 (ZED)
+    and SCH-0004 (MS-EPP) remain DRAFT/UNVERIFIED. Production is no longer
+    empty, but it is still not a free-for-all: lifecycle gating still
+    admits only one authoritative record. See HANDOFF.md for the archival
+    trail behind this."""
     from app.engine_service import BACKEND_DIR
     shipped = load_catalogue(os.path.join(BACKEND_DIR, "scheme-data"))
-    assert shipped.schemes == {} and shipped.conditions == {}
+    assert shipped.errors == []
+    assert set(shipped.schemes) == {"SCH-0001", "SCH-0002", "SCH-0004"}
+    assert [s["scheme_id"] for s in shipped.usable] == ["SCH-0002"]
+    assert shipped.schemes["SCH-0002"]["status"] == "ACTIVE"
+    assert shipped.schemes["SCH-0002"]["confidence"] == "VERIFIED"
+    for sid in ("SCH-0001", "SCH-0004"):
+        assert shipped.schemes[sid]["status"] == "DRAFT"
+        assert shipped.schemes[sid]["confidence"] == "UNVERIFIED"
 
 
 # --- API ---------------------------------------------------------------------------
 
-def test_api_shipped_state_awaits_verified_data(client):
-    assert client.get("/api/v1/schemes/catalogue").json()["catalogue_state"] == "AWAITING_VERIFIED_DATA"
+def test_api_shipped_state_ready_with_one_authoritative_scheme(client):
+    catalogue = client.get("/api/v1/schemes/catalogue").json()
+    assert catalogue["catalogue_state"] == "READY"
+    assert catalogue["counts"] == {"total": 3, "active_verified": 1}
+    by_id = {s["scheme_id"]: s for s in catalogue["schemes"]}
+    assert by_id["SCH-0002"]["is_authoritative_catalogue_entry"] is True
+    assert by_id["SCH-0001"]["is_authoritative_catalogue_entry"] is False
+    assert by_id["SCH-0004"]["is_authoritative_catalogue_entry"] is False
+
+    # PRODUCTION-mode project matching: DRAFT records (SCH-0001, SCH-0004)
+    # never appear in results at all — only the one authoritative record
+    # does, evaluated normally (freshbite has no facts set, so it comes
+    # back NEEDS_INFORMATION rather than being silently omitted).
     body = client.get("/api/v1/projects/freshbite/schemes").json()
-    assert body["catalogue_state"] == "AWAITING_VERIFIED_DATA" and body["results"] == []
+    assert body["catalogue_state"] == "READY"
+    assert [r["scheme_id"] for r in body["results"]] == ["SCH-0002"]
+    assert body["results"][0]["outcome"] == NEEDS_INFORMATION
 
 
 def test_api_with_synthetic_fixtures(client, monkeypatch):
@@ -305,16 +332,24 @@ def test_K_application_status_never_alters_eligibility(cat):
         assert r["outcome"] == POTENTIALLY_ELIGIBLE
 
 
-def test_L_empty_production_catalogue_still_awaits_verified_data():
+def test_L_production_catalogue_is_ready_with_tranche1_records():
     """The real shipped backend/scheme-data/ root, end-to-end, with the new
-    schema in place. No real or synthetic scheme is shipped there."""
+    schema in place. Tranche-1 baseline (2026-09-23): 3 real records
+    shipped, exactly SCH-0002 (CGTMSE) human-verified to ACTIVE+VERIFIED;
+    SCH-0001 (ZED) and SCH-0004 (MS-EPP) remain DRAFT and therefore never
+    appear in a PRODUCTION-mode result."""
     from app.engine_service import BACKEND_DIR
     root = os.path.join(BACKEND_DIR, "scheme-data")
     cat = load_catalogue(root)
     assert cat.errors == []
     out = match_catalogue(cat, {"project.industry": "FOOD"}, as_of=AS_OF)
-    assert out["catalogue_state"] == "AWAITING_VERIFIED_DATA"
-    assert out["results"] == []
+    assert out["catalogue_state"] == "READY"
+    assert out["counts"] == {"total": 3, "active_verified": 1}
+    assert [r["scheme_id"] for r in out["results"]] == ["SCH-0002"]
+    # freshbite-style facts above don't touch project.msme_classification,
+    # so the one authoritative record comes back NEEDS_INFORMATION, not
+    # ELIGIBLE/APPROVED/GUARANTEED and not silently dropped.
+    assert out["results"][0]["outcome"] == NEEDS_INFORMATION
 
 
 def test_api_catalogue_exposes_application_status_fields(client, monkeypatch):

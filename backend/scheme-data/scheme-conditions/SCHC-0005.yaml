@@ -1,0 +1,26 @@
+# DRAFT — automated-retrieval evidence only, NOT human-verified. See
+# reference-data/scheme-evidence/SRC-SCH-005/MANIFEST.md and the SCH-0001
+# human review pack. Do not promote to a claim of VERIFIED confidence.
+scheme_condition_id: SCHC-0005
+predicate_type: BOOLEAN_EQUALS
+target_variable_key: project.udyam_registered
+operator: "=="
+comparison_value: true
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+source_reference:
+  document_title: "MSME Sustainable (ZED) Certification Scheme GUIDELINES 2022"
+  clause: "Section 2.3/2.4 — Eligibility"
+  page_number: 11
+  quoted_text: >
+    "All MSMEs registered with the UDYAM registration portal (of the
+    MoMSME) will be eligible to participate in MSME Sustainable (ZED)
+    Certification and avail related benefits/incentives."
+
+description: >
+  Project's enterprise is registered on the Udyam Registration portal.
+normalization_notes: >
+  See SCHC-0004 — same source sentence, split across the two existing
+  Project Facts it maps onto.

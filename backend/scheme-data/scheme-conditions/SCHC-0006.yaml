@@ -1,0 +1,23 @@
+# DRAFT — automated-retrieval evidence only, NOT human-verified.
+scheme_condition_id: SCHC-0006
+predicate_type: COMPOSITE
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+child_scheme_condition_ids: [SCHC-0004, SCHC-0005]
+unresolved_behavior: UNKNOWN
+
+source_reference:
+  document_title: "MSME Sustainable (ZED) Certification Scheme GUIDELINES 2022"
+  clause: "Composite root — combines SCHC-0004 (MSME classification) and SCHC-0005 (Udyam registration)"
+  page_number: 11
+  quoted_text: >
+    No single sentence — this node combines the two leaf conditions below
+    it, which are themselves both drawn from the same source sentence.
+
+description: >
+  Root of the SCH-0001 (ZED) eligibility tree: MSME classification AND
+  Udyam registration.
+normalization_notes: >
+  Composite node — no independent evidence of its own.

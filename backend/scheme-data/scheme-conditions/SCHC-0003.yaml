@@ -1,0 +1,24 @@
+# DRAFT — automated-retrieval evidence only, NOT human-verified.
+scheme_condition_id: SCHC-0003
+predicate_type: COMPOSITE
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+child_scheme_condition_ids: [SCHC-0001, SCHC-0002]
+unresolved_behavior: UNKNOWN
+
+source_reference:
+  document_title: "Maharashtra State Export Promotion Policy 2023 — Modalities GR dated 01.07.2025 (GR No. Export-2024/C.R.43/Industry-7)"
+  clause: "Composite root — combines SCHC-0001 (location) and SCHC-0002 (export share)"
+  page_number: 56
+  quoted_text: >
+    No single sentence — this node combines the two leaf conditions below
+    it. See SCHC-0001/SCHC-0002 for the quoted source text each encodes.
+
+description: >
+  Root of the SCH-0004 (Maharashtra State Export Promotion Policy 2023 —
+  Special LSI/general track) eligibility tree: located in Maharashtra AND
+  export share of turnover >= 50%.
+normalization_notes: >
+  Composite node — no independent evidence of its own.

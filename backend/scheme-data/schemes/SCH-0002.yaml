@@ -1,0 +1,94 @@
+# PROMOTED TO ACTIVE/VERIFIED 2026-09-23 — human project owner explicitly
+# reviewed the archived CGTMSE evidence and confirmed via project chat:
+# "CGTMSE verified by me." This verification covers SCH-0002 ONLY — it is
+# not a verification of SCH-0001, SCH-0004, or Circular 257. See
+# reference-data/scheme-evidence/SRC-SCH-007/MANIFEST.md for the archived
+# source files this record relies on.
+scheme_id: SCH-0002
+name: "Credit Guarantee Scheme for Micro and Small Enterprises (CGTMSE / CGS-I)"
+administering_authority_id: null   # no AUTH-#### provenance records exist yet — do not invent one
+administering_authority_name: "Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE) — SIDBI / Ministry of MSME"
+
+official_source:
+  url: "https://www.cgtmse.in/Default/ViewFile/?id=1743176302611_CGTMSE%20-%20Scheme%20Document%20CGS%20I_updated%20as%20on%20Apr%201%202026.pdf&path=Page"
+  document_title: "Credit Guarantee Fund Scheme for Micro and Small Enterprises (CGS-I) — Scheme Document, updated as on Apr 1 2026"
+  reference_number: null
+  published_date: "2026-04-01"   # this consolidated document's own "updated as on" date; the underlying scheme itself dates to 2000 (see notes)
+  retrieved_date: "2026-09-23"
+  retrieved_by: null   # document download was automated (Claude/AI agent); this field identifies the RETRIEVER, not the human VERIFIER — see last_verified below for the human-verification event
+
+effective_start_date: "2025-04-01"   # date the CURRENTLY documented ceiling/coverage terms took effect (Circular 250); the scheme itself is older, see notes
+effective_end_date: null
+
+jurisdiction: "INDIA"
+sector_scope: []
+
+eligibility_condition_root_id: SCHC-0007
+
+required_project_facts:
+  - project.msme_classification
+
+benefits_summary: >
+  Credit guarantee (not a grant/subsidy) covering credit facilities Member
+  Lending Institutions extend to Micro and Small Enterprises without
+  collateral security or third-party guarantees, up to a ceiling of ₹10
+  crore per borrower (raised from ₹5 crore, effective for guarantees
+  approved on or after 01.04.2025 — Circular No.250/2024-25). Extent of
+  guarantee coverage ranges 75%-90% depending on enterprise category and
+  credit-facility slab (e.g. Micro Enterprises: 75-85%; Women
+  entrepreneurs/MSEs promoted by Agniveers: 90%; SC/ST/PwD/Aspirational
+  District/ZED-certified/Transgender entrepreneurs: 85%). This record
+  covers Credit Guarantee Scheme-I (CGS-I) only.
+
+required_documents: []   # not itself an applicant-facing checklist — the Member Lending Institution applies, not the borrower directly
+
+status: ACTIVE
+confidence: VERIFIED
+
+last_verified:
+  date: "2026-09-23"
+  verified_by: "Project owner (human-in-the-loop verification via project chat)"
+  method: >
+    Human review of the archived CGTMSE CGS-I Scheme Document and Circular
+    No.250/2024-25 (reference-data/scheme-evidence/SRC-SCH-007/), approved
+    via explicit project-chat verification event: "CGTMSE verified by me."
+    This verification covers SCH-0002 only.
+
+application_status: VERIFIED_OPEN
+application_window:
+  mode: CONTINUOUS
+  opens: null
+  closes: null
+  as_of_date: "2026-09-23"
+  source_reference:
+    document_title: "Credit Guarantee Fund Scheme for Micro and Small Enterprises (CGS-I) — Scheme Document, updated as on Apr 1 2026"
+    clause: "Section 4 — Credit facilities eligible under the Scheme"
+    page_number: 6
+    quoted_text: >
+      "Member Lending Institutions (MLIs) can apply for guarantee cover
+      anytime during the tenure of Loan provided the credit facility was
+      not restructured / remained in SMA2 status in last 1 year from the
+      date of submission of application."
+
+notes: >
+  ACTIVE/VERIFIED 2026-09-23 (human-verified; automated document retrieval
+  originally prepared this DRAFT). This condition tree deliberately does
+  NOT gate on project.bank_term_loan_sanctioned — nothing in the archived
+  Scheme Document makes prior loan sanction an eligibility precondition
+  (see SCHC-0007 normalization_notes). The base CGS-I scheme itself dates
+  to 2000 (per research); this record's effective_start_date instead marks
+  when the currently-documented ₹10 cr ceiling/coverage table took effect
+  (Circular No.250/2024-25), which is the only date precisely evidenced
+  for the CURRENT terms — this is not a claim about CGTMSE's original
+  inception. SCOPE NOTE: Circular 257's "Collateral Support for Export
+  Credit" intervention is a separate scheme — it covers Medium Enterprises
+  (at 65%) as well as Micro/Small, which this record's Micro/Small-only
+  eligibility tree cannot represent without contradiction. It is
+  intentionally NOT described here and was NOT part of this verification
+  event; it remains a separate future catalogue candidate with its own
+  eligibility conditions. The archived source
+  (reference-data/scheme-evidence/SRC-SCH-007/CGTMSE_Circular_257_Export_Credit_Guarantee.pdf)
+  is retained for that future candidate.
+
+supersedes: null
+superseded_by: null

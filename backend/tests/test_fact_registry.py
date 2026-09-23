@@ -95,16 +95,48 @@ def _write_condition(root, cond_id: str, **fields) -> None:
         yaml.safe_dump(doc, f)
 
 
-# --- A: regulatory-only baseline is unaffected by an empty scheme catalogue --
+# --- A: production baseline as of the Tranche-1 archival (2026-09-23) --------
+#
+# backend/scheme-data/ is no longer empty: it now ships 3 real records
+# (SCH-0001 ZED DRAFT, SCH-0002 CGTMSE ACTIVE+VERIFIED, SCH-0004 MS-EPP
+# DRAFT). Lifecycle status (DRAFT vs ACTIVE+VERIFIED) gates ELIGIBILITY
+# MATCHING (app.schemes.match_catalogue) — it does NOT gate fact
+# *registration* here, exactly like a DRAFT regulatory Rule Version's
+# required_project_facts already appear in this same registry. So all 4
+# Tranche-1 fact keys are expected to be present and SCHEME-attributed
+# regardless of which of their owning scheme(s) are still DRAFT.
 
-def test_A_regulatory_only_registry_unchanged_with_empty_scheme_catalogue():
+def test_A_production_registry_includes_all_authored_scheme_facts_regardless_of_lifecycle():
     registry = fact_registry_index()
-    assert registry  # the 6 real regulatory keys are present
-    for entry in registry.values():
-        assert entry["consumer_domains"] == ["REGULATORY"]
-        assert entry["scheme_ids"] == []
-        assert entry["scheme_condition_ids"] == []
-        assert entry["units_conflict"] is False
+    assert registry
+
+    tranche1 = {
+        "project.location_state": {"SCH-0004"},
+        "project.export_share_of_turnover_pct": {"SCH-0004"},
+        "project.msme_classification": {"SCH-0001", "SCH-0002"},
+        "project.udyam_registered": {"SCH-0001"},
+    }
+    for key, scheme_ids in tranche1.items():
+        assert key in registry, key
+        entry = registry[key]
+        assert entry["consumer_domains"] == ["SCHEME"], key
+        assert set(entry["scheme_ids"]) == scheme_ids, key
+        assert entry["units_conflict"] is False, key
+
+    original_regulatory_keys = {
+        "project.likely_to_discharge_sewage_or_trade_effluent",
+        "project.plant_located_in_air_pollution_control_area",
+        "project.drug_schedule_classification",
+        "project.industry",
+        "project.dairy_liquid_milk_capacity",
+        "project.dairy_milk_solids_capacity",
+    }
+    for key in original_regulatory_keys:
+        assert registry[key]["consumer_domains"] == ["REGULATORY"], key
+        assert registry[key]["scheme_ids"] == [], key
+
+    # Exactly these 10 keys — Tranche 1 is additive, nothing more/less.
+    assert set(registry) == original_regulatory_keys | set(tranche1)
 
 
 # --- B/C/D: scheme-only facts of each inferred type appear -------------------

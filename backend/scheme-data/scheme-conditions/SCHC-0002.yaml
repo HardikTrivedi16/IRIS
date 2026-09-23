@@ -1,0 +1,38 @@
+# DRAFT — automated-retrieval evidence only, NOT human-verified. See
+# reference-data/scheme-evidence/SRC-SCH-002/MANIFEST.md and the SCH-0004
+# human review pack. Do not promote to a claim of VERIFIED confidence.
+scheme_condition_id: SCHC-0002
+predicate_type: THRESHOLD_COMPARISON
+target_variable_key: project.export_share_of_turnover_pct
+operator: ">="
+comparison_value: 50
+unit: "%"
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+source_reference:
+  document_title: "Maharashtra State Export Promotion Policy 2023 — Modalities GR dated 01.07.2025 (GR No. Export-2024/C.R.43/Industry-7)"
+  clause: "Annexure XX — Letter of Intent (LoI) from the Directorate of Industries for MSMEs/Special LSIs"
+  page_number: 56
+  quoted_text: >
+    "Eligibility Certificate/ Letter of Intent to Export Oriented Unit (50%
+    export of total turnover) under MSEPP Policy-2023."
+
+description: >
+  Project's export value is at least 50% of total turnover (the "Export
+  Oriented Unit" test that gates the Eligibility Certificate/Letter of
+  Intent under which BOTH the MSME and the Special Large Scale Industries
+  (Special LSI) incentive tracks are granted).
+normalization_notes: >
+  This exact 50% clause is the one I can directly evidence for the
+  MSME/Special-LSI "Export Oriented Unit" track (Annexure XX, p.56) — this
+  is DIFFERENT from the Export-Oriented Specific Project / Export-Oriented
+  Industrial Park (EOSP/EOIP) undertaking on p.32, which is a separate,
+  infrastructure/park-level scheme (out of scope for SCH-0004; see research
+  pack). A parallel "30% for agro/aquafood, women, SC/ST entrepreneurs"
+  alternate threshold IS present in this document, but every occurrence I
+  found is textually inside the EOSP/EOIP sections (pp.6, 32, 34), not the
+  MSME/Special-LSI Annexure XX section. I could NOT independently confirm
+  the 30% alternate applies to this track — see SCH-0004 review pack,
+  QUESTIONS FOR HUMAN REVIEW. Do not add a promoter-category branch to this
+  scheme's condition tree until that is confirmed.
