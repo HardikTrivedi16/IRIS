@@ -1,0 +1,21 @@
+condition_id: COND-0065
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.manufactures_schedule1_eee
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-EWASTE-02]
+grounding_regulatory_fact_ids: [RF-0031]
+
+description: >
+  True if the project manufactures Schedule-I EEE (incl. contract
+  manufacture) - E-Waste Rules 2022 r.4 'manufacturer' (EL-02).
+
+normalization_notes: >
+  Single leaf, RULE-0027-V1's root. Separate from COND-0064: producer and
+  manufacturer are distinct registrations (research §12 EL-02 note).

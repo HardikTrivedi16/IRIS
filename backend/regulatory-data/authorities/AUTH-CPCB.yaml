@@ -1,0 +1,10 @@
+authority_id: AUTH-CPCB
+name: "Central Pollution Control Board"
+level: CENTRAL_REGULATOR
+jurisdiction: INDIA
+parent_authority_id: null
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.1). Registering
+  authority (centralised EPR portal) for AU-02 (Battery Waste Management
+  Rules 2022 r.4(1)) and EL-01/EL-02 (E-Waste (Management) Rules 2022
+  r.4). Instrument issuer for both Rule sets remains AUTH-MoEFCC.

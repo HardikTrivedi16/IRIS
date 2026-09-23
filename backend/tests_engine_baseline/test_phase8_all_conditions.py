@@ -148,11 +148,11 @@ def test_cond_0014_or_state_root(dataset):
     assert evaluate_condition("COND-0014", c, {}).result is U
 
 
-def test_all_61_conditions_are_present_and_individually_evaluable(dataset):
+def test_all_67_conditions_are_present_and_individually_evaluable(dataset):
     # 14 Phase 5/6 + 24 Shared+Food (COND-0015..0038) + 7 FSSAI
     # currentness-correction (COND-0039..0045) + 16 Pharma tranche
-    # (COND-0046..0061) — see regulatory-data/conditions/*.yaml.
-    ids = [f"COND-{i:04d}" for i in range(1, 62)]
+    # (COND-0046..0061) + 6 remaining-sector tranche (COND-0062..0067) — see regulatory-data/conditions/*.yaml.
+    ids = [f"COND-{i:04d}" for i in range(1, 68)]
     assert set(ids) == set(dataset.conditions.keys())
     for cid in ids:
         # every condition must be evaluable against an empty fact set without raising

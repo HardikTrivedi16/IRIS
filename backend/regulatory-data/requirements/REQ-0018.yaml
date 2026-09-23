@@ -1,0 +1,27 @@
+requirement_id: REQ-0018
+code: EWASTE_PRODUCER_REGISTRATION_EPR
+title: "E-waste producer registration + EPR - E-Waste Rules 2022 r.4"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-CPCB
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0026
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0030
+evidence_ids:
+  - EVID-EWASTE-01
+
+requirement_notes: >
+  EL-01: VERIFIED_READY_FOR_PROVENANCE. Own Requirement, not merged with EL-02 (H2.2). The Schedule-I item match is a legal check performed when capturing the fact; Schedule I is not transcribed.
+  Standalone Requirement per H2.2. Fact-triggered (project.sells_schedule1_eee_under_own_brand); NOT keyed on
+  sector. Rule Version is DRAFT; no source archival, APPROVED VER or ACTIVE
+  promotion attempted (multi-sector remaining-tranche pass, 2026-09-23).

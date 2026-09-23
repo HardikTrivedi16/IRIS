@@ -137,14 +137,15 @@ def test_output_mapping_is_read_from_yaml_not_hardcoded(dataset):
         dataset.rule_versions["RULE-0001-V1"] = original
 
 
-def test_all_twentyfive_rule_versions_exist_and_none_is_active(dataset):
+def test_all_thirtyone_rule_versions_exist_and_none_is_active(dataset):
     # RULE-0001..0006 (Phase 5/6) + RULE-0007..0016 (Shared+Food +
     # FSSAI currentness-correction passes) + RULE-0014-V2/0015-V2 (FSSAI
-    # successors) + RULE-0017..0023 (Pharma tranche) = 25 rule versions.
+    # successors) + RULE-0017..0023 (Pharma tranche) + RULE-0024..0029 (remaining-sector
+    # tranche) = 31 rule versions.
     # Not all are status DRAFT any more: RULE-0014-V1/RULE-0015-V1 are
     # SUPERSEDED (FSSAI currentness correction) — the invariant this test
     # actually protects is "nothing is ACTIVE", not "everything is DRAFT".
-    assert len(dataset.rule_versions) == 25
+    assert len(dataset.rule_versions) == 31
     for rv_id, rv in dataset.rule_versions.items():
         assert rv["status"] in ("DRAFT", "SUPERSEDED"), rv_id
         assert rv["status"] != "ACTIVE", rv_id

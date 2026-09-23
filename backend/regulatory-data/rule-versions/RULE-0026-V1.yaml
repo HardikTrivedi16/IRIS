@@ -1,0 +1,53 @@
+rule_version_id: RULE-0026-V1
+rule_id: RULE-0026
+version_number: 1
+
+condition_expression_root_id: COND-0064
+logic: "COND-0064 = (sells_schedule1_eee_under_own_brand==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - producer of Schedule-I EEE must register on the CPCB EPR e-waste portal and meet EPR recycling targets (Schedules III/IV); no business without registration.
+false_outcome: >
+  NOT_APPLICABLE - the project does not sell Schedule-I EEE under its own brand.
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until sells_schedule1_eee_under_own_brand is known.
+
+required_project_facts:
+  - project.sells_schedule1_eee_under_own_brand
+
+regulatory_fact_ids: [RF-0030]
+evidence_ids: [EVID-EWASTE-01]
+source_ids: [SRC-016]
+authority_id: AUTH-CPCB
+instrument_id: INST-EWASTE-2022
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0026-V1
+  regulatory_fact_ids: [RF-0030]
+  evidence_ids: [EVID-EWASTE-01]
+  source_ids: [SRC-016]
+  authority_id: AUTH-CPCB
+  instrument_id: INST-EWASTE-2022
+
+validation_notes: >
+  EL-01: VERIFIED_READY_FOR_PROVENANCE. Own Requirement, not merged with EL-02 (H2.2). The Schedule-I item match is a legal check performed when capturing the fact; Schedule I is not transcribed.

@@ -1,0 +1,11 @@
+regulatory_fact_id: RF-0033
+statement: >
+  Under the MSIHC Rules, 1989 r.13, an occupier at the same
+  Schedule-3 threshold trigger as r.7 must prepare and keep up to date an
+  on-site emergency plan (Schedule 11 details) before commencing. Distinct
+  statutory duty from the r.7 site notification (CH-02). Transitional
+  CIMAH-2003 caveat applies. (CH-03.)
+evidence_ids: [EVID-MSIHC-02]
+authority_id: AUTH-DISH-MH
+instrument_id: INST-MSIHC-1989
+verification_status: UNVERIFIED

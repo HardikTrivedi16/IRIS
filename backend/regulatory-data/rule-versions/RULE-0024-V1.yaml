@@ -1,0 +1,53 @@
+rule_version_id: RULE-0024-V1
+rule_id: RULE-0024
+version_number: 1
+
+condition_expression_root_id: COND-0062
+logic: "COND-0062 = (manufactures_motor_vehicles_for_sale==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - CMVR r.126 requires the prototype of every motor vehicle for sale to be tested by notified agencies (ARAI/ICAT/GARC/CIRT/VRDE; AIS-017/AIS-161 procedure) before sale. Research-level statement only: the r.126 statutory text was not retrieved.
+false_outcome: >
+  NOT_APPLICABLE - the project does not manufacture motor vehicles for sale.
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until manufactures_motor_vehicles_for_sale is known.
+
+required_project_facts:
+  - project.manufactures_motor_vehicles_for_sale
+
+regulatory_fact_ids: []
+evidence_ids: []
+source_ids: []
+authority_id: AUTH-MORTH
+instrument_id: INST-CMVR-1989
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0024-V1
+  regulatory_fact_ids: []
+  evidence_ids: []
+  source_ids: []
+  authority_id: AUTH-MORTH
+  instrument_id: INST-CMVR-1989
+
+validation_notes: >
+  AU-01: KEEP_DRAFT / REQUIRES_MORE_RESEARCH (research §12, H2.2). No RF/EVID/SRC authored: portal-level grounding only (VERIFIED_PORTAL); r.126 text (heavily amended provisos) not retrieved from India Code - a research gap, not an archival step. Nothing is asserted beyond the researched trigger fact; no timelines, fees or test parameters are encoded.

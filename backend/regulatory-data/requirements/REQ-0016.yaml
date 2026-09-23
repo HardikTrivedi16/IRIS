@@ -1,0 +1,25 @@
+requirement_id: REQ-0016
+code: CMVR_TYPE_APPROVAL_R126
+title: "Vehicle type approval - CMVR 1989 r.126"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-MORTH
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0024
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids: []
+evidence_ids: []
+
+requirement_notes: >
+  AU-01: KEEP_DRAFT / REQUIRES_MORE_RESEARCH (research §12, H2.2). No RF/EVID/SRC authored: portal-level grounding only (VERIFIED_PORTAL); r.126 text (heavily amended provisos) not retrieved from India Code - a research gap, not an archival step. Nothing is asserted beyond the researched trigger fact; no timelines, fees or test parameters are encoded.
+  Standalone Requirement per H2.2. Fact-triggered (project.manufactures_motor_vehicles_for_sale); NOT keyed on
+  sector. Rule Version is DRAFT; no source archival, APPROVED VER or ACTIVE
+  promotion attempted (multi-sector remaining-tranche pass, 2026-09-23).

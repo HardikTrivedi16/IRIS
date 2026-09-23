@@ -48,6 +48,55 @@ requirements:
     lifecycle_stage_ids: [PRE_OPERATION, OPERATION]
     default_applicability: REQUIRES_REVIEW
 
+  - requirement_id: REQ-0016
+    code: CMVR_TYPE_APPROVAL_R126
+    authority_id: AUTH-MORTH
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0024
+    lifecycle_stage_ids: [PRE_OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0017
+    code: BWM_PRODUCER_REGISTRATION_EPR
+    authority_id: AUTH-CPCB
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0025
+    lifecycle_stage_ids: [PRE_OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0018
+    code: EWASTE_PRODUCER_REGISTRATION_EPR
+    authority_id: AUTH-CPCB
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0026
+    lifecycle_stage_ids: [PRE_OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0019
+    code: EWASTE_MANUFACTURER_REGISTRATION
+    authority_id: AUTH-CPCB
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0027
+    lifecycle_stage_ids: [PRE_OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0020
+    code: MSIHC_SITE_NOTIFICATION_R7
+    authority_id: AUTH-DISH-MH
+    category: CORE_APPROVAL
+    evaluated_by_rule_id: RULE-0028
+    lifecycle_stage_ids: [PRE_CONSTRUCTION]
+    default_applicability: REQUIRES_REVIEW
+
+  - requirement_id: REQ-0021
+    code: MSIHC_ONSITE_EMERGENCY_PLAN_R13
+    authority_id: AUTH-DISH-MH
+    category: CONTINUING_OBLIGATION
+    evaluated_by_rule_id: RULE-0029
+    lifecycle_stage_ids: [PRE_OPERATION]
+    default_applicability: REQUIRES_REVIEW
+
+
 requirements_not_catalogued:
   - subject: "MIDC Building Plan Approval"
     reason: "See Phase 4 REV-0003 / Phase 5 RULE-REV-0004 — no Regulatory Fact was ever collected."
@@ -57,13 +106,13 @@ requirements_not_catalogued:
     reason: "See Phase 4 REV-0002 / Phase 5 RULE-REV-0003 — no primary evidence exists; not a distinct Requirement in any case, but flagged here for completeness."
 
 counts:
-  total_requirements: 15
+  total_requirements: 21
   by_category:
-    CORE_APPROVAL: 12
+    CORE_APPROVAL: 17
     CONDITIONAL_PATHWAY: 1
-    CONTINUING_OBLIGATION: 2
+    CONTINUING_OBLIGATION: 3
   by_default_applicability:
-    REQUIRES_REVIEW: 15
+    REQUIRES_REVIEW: 21
 
 # NOTE (Shared+Food regulatory-data integration pass): REQ-0005..REQ-0012
 # added (SH-03/04/05/07/08/10, FD-01, FD-02) — see requirements/*.yaml.
@@ -80,3 +129,9 @@ counts:
 # added; REQ-0003 corrected (authority AUTH-CDSCO -> AUTH-FDA-MH,
 # classification_rule_ids added for PH-01/02/03) — see
 # rule_review_register.yaml RULE-REV-0002 and requirements/REQ-0003.yaml.
+#
+# NOTE (remaining-sector tranche, 2026-09-23): REQ-0016 (AU-01, KEEP_DRAFT),
+# REQ-0017 (AU-02), REQ-0018 (EL-01), REQ-0019 (EL-02), REQ-0020 (CH-02),
+# REQ-0021 (CH-03) added. CH-01 (EIA 5(f) chemicals) has no Requirement
+# (no canonical activity fact - RULE-REV-0007); CH-04/CH-05 are research-
+# register-only (RULE-REV-0008/0009) and are deliberately NOT Requirements.

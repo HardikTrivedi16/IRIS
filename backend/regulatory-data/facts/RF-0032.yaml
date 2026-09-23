@@ -1,0 +1,12 @@
+regulatory_fact_id: RF-0032
+statement: >
+  Under the MSIHC Rules, 1989 r.7(1), an occupier whose site holds a
+  Schedule-3 chemical at or above its Schedule-3 threshold quantity
+  (aggregated across the same occupier's installations within 500 m) must
+  submit a written site notification with the Schedule 7 particulars at
+  least 3 months before commencing the industrial activity. Threshold
+  quantities are per named chemical and are NOT encoded in IRIS. (CH-02.)
+evidence_ids: [EVID-MSIHC-01]
+authority_id: AUTH-DISH-MH
+instrument_id: INST-MSIHC-1989
+verification_status: UNVERIFIED

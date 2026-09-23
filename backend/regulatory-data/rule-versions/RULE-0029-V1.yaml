@@ -1,0 +1,53 @@
+rule_version_id: RULE-0029-V1
+rule_id: RULE-0029
+version_number: 1
+
+condition_expression_root_id: COND-0067
+logic: "COND-0067 = (msihc_schedule3_chemical_at_or_above_threshold==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - occupier must prepare and keep up to date an on-site emergency plan (Schedule 11 details) before commencing (MSIHC Rules r.13).
+false_outcome: >
+  NOT_APPLICABLE - no Schedule-3 chemical is at or above its threshold quantity.
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until the Schedule-3 threshold worksheet result is known.
+
+required_project_facts:
+  - project.msihc_schedule3_chemical_at_or_above_threshold
+
+regulatory_fact_ids: [RF-0033]
+evidence_ids: [EVID-MSIHC-02]
+source_ids: [SRC-017]
+authority_id: AUTH-DISH-MH
+instrument_id: INST-MSIHC-1989
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0029-V1
+  regulatory_fact_ids: [RF-0033]
+  evidence_ids: [EVID-MSIHC-02]
+  source_ids: [SRC-017]
+  authority_id: AUTH-DISH-MH
+  instrument_id: INST-MSIHC-1989
+
+validation_notes: >
+  CH-03: KEEP_DRAFT (research §12). Distinct duty from CH-02 sharing its trigger (H2.2). Same Schedule-3 archival blocker; transitional CIMAH-2003 caveat (Maharashtra Factories (CIMAH) Rules 2003 ride on the repealed Factories Act).

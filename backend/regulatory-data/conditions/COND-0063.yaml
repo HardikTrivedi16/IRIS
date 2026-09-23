@@ -1,0 +1,22 @@
+condition_id: COND-0063
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.places_batteries_on_market
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-BWM-01]
+grounding_regulatory_fact_ids: [RF-0029]
+
+description: >
+  True if the project places batteries on the market (incl. in equipment
+  sold under its own brand, or imported) - BWM Rules 2022 'producer' (AU-02).
+
+normalization_notes: >
+  Single leaf, RULE-0025-V1's root. Not keyed on sector; battery assembly
+  alone does not trigger. project.battery_types_placed (F-26) is NOT
+  consumed: EPR targets differ per type but appear only in outcome text.

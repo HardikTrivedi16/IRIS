@@ -1,0 +1,27 @@
+requirement_id: REQ-0021
+code: MSIHC_ONSITE_EMERGENCY_PLAN_R13
+title: "MSIHC on-site emergency plan - r.13"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-DISH-MH
+category: CONTINUING_OBLIGATION
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0029
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0033
+evidence_ids:
+  - EVID-MSIHC-02
+
+requirement_notes: >
+  CH-03: KEEP_DRAFT (research §12). Distinct duty from CH-02 sharing its trigger (H2.2). Same Schedule-3 archival blocker; transitional CIMAH-2003 caveat (Maharashtra Factories (CIMAH) Rules 2003 ride on the repealed Factories Act).
+  Standalone Requirement per H2.2. Fact-triggered (project.msihc_schedule3_chemical_at_or_above_threshold); NOT keyed on
+  sector. Rule Version is DRAFT; no source archival, APPROVED VER or ACTIVE
+  promotion attempted (multi-sector remaining-tranche pass, 2026-09-23).

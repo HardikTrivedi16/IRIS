@@ -89,9 +89,39 @@ conditions:
     used_by_rule_versions: [RULE-0006-V1]
     child_condition_ids: [COND-0010, COND-0013]
 
+  - condition_id: COND-0062
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.manufactures_motor_vehicles_for_sale
+    used_by_rule_versions: [RULE-0024-V1]
+
+  - condition_id: COND-0063
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.places_batteries_on_market
+    used_by_rule_versions: [RULE-0025-V1]
+
+  - condition_id: COND-0064
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.sells_schedule1_eee_under_own_brand
+    used_by_rule_versions: [RULE-0026-V1]
+
+  - condition_id: COND-0065
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.manufactures_schedule1_eee
+    used_by_rule_versions: [RULE-0027-V1]
+
+  - condition_id: COND-0066
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.msihc_schedule3_chemical_at_or_above_threshold
+    used_by_rule_versions: [RULE-0028-V1]
+
+  - condition_id: COND-0067
+    predicate_type: BOOLEAN_EQUALS
+    target_variable_key: project.msihc_schedule3_chemical_at_or_above_threshold
+    used_by_rule_versions: [RULE-0029-V1]
+
 counts:
-  total_conditions: 61
-  leaf_conditions: 38
+  total_conditions: 67
+  leaf_conditions: 44
   composite_conditions: 23
 
 # NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): COND-0039..
@@ -114,3 +144,5 @@ counts:
 # summary counts, which is what iris_engine/validate.py actually checks.
 # The individual condition files themselves are the authoritative source;
 # this index is a lookup aid.
+
+# NOTE (remaining-sector tranche, 2026-09-23): COND-0062..COND-0067 (6 single-leaf BOOLEAN_EQUALS) added.

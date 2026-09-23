@@ -1,0 +1,23 @@
+condition_id: COND-0066
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.msihc_schedule3_chemical_at_or_above_threshold
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-MSIHC-01]
+grounding_regulatory_fact_ids: [RF-0032]
+
+description: >
+  True if any MSIHC Schedule-3 chemical is held at or above its own
+  Schedule-3 threshold quantity (500 m same-occupier aggregation).
+
+normalization_notes: >
+  Single leaf, RULE-0028-V1's root. The per-chemical comparison is done
+  outside IRIS (worksheet, F-29/F-30); IRIS consumes only its boolean
+  result. No tonnage is compared here - a generic threshold would be
+  legally wrong.

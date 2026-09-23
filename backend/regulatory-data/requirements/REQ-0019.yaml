@@ -1,0 +1,27 @@
+requirement_id: REQ-0019
+code: EWASTE_MANUFACTURER_REGISTRATION
+title: "E-waste manufacturer registration - E-Waste Rules 2022 r.4"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-CPCB
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0027
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0031
+evidence_ids:
+  - EVID-EWASTE-02
+
+requirement_notes: >
+  EL-02: VERIFIED_READY_FOR_PROVENANCE. Own Requirement alongside EL-01 (one entity may hold both registrations).
+  Standalone Requirement per H2.2. Fact-triggered (project.manufactures_schedule1_eee); NOT keyed on
+  sector. Rule Version is DRAFT; no source archival, APPROVED VER or ACTIVE
+  promotion attempted (multi-sector remaining-tranche pass, 2026-09-23).

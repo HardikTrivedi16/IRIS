@@ -1,0 +1,11 @@
+rule_id: RULE-0025
+code: BWM_PRODUCER_REGISTRATION_EPR_APPLICABILITY
+requirement_id: REQ-0017
+title: "Battery producer registration + EPR - BWM Rules 2022 r.4(1)"
+output_type: APPLICABILITY
+
+description: >
+  AU-02. Determines whether Battery producer registration + EPR - BWM Rules 2022 r.4(1) attaches, from project.places_batteries_on_market.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

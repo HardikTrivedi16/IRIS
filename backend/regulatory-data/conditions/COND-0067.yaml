@@ -1,0 +1,21 @@
+condition_id: COND-0067
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.msihc_schedule3_chemical_at_or_above_threshold
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-MSIHC-02]
+grounding_regulatory_fact_ids: [RF-0033]
+
+description: >
+  Same Schedule-3 threshold trigger as COND-0066, for the r.13 on-site
+  emergency plan duty (CH-03).
+
+normalization_notes: >
+  Single leaf, RULE-0029-V1's root. Separate leaf (not a reuse of
+  COND-0066) so it carries its own RF-0033/EVID-MSIHC-02 grounding.

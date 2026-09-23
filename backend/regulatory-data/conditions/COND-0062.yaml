@@ -1,0 +1,22 @@
+condition_id: COND-0062
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.manufactures_motor_vehicles_for_sale
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: []
+
+description: >
+  True if the project manufactures motor vehicles for sale - CMVR r.126
+  type approval attaches to vehicle prototypes for market (AU-01).
+
+normalization_notes: >
+  Single leaf, RULE-0024-V1's root. No RF/EVID: AU-01's Regulatory Fact is
+  BLOCKED (r.126 statutory text not retrieved - H2.2). Deliberately not
+  keyed on sector == AUTO/EV.

@@ -158,8 +158,56 @@ review_items:
     next_phase: "Human legal review of the successor Rule Versions (RULE-0014-V2/RULE-0015-V2/RULE-0016-V1) and the outstanding gazette-text gap, then human verification (APPROVED VER) before any ACTIVE-promotion attempt."
     blocks: "Promotion of RULE-0014-V1/RULE-0015-V1 (now SUPERSEDED, and in any case historical) to ACTIVE; and promotion of RULE-0014-V2, RULE-0015-V2, or RULE-0016-V1 to ACTIVE, until a human reviewer verifies each and an APPROVED VER record is created."
 
+  - review_id: RULE-REV-0007
+    subject: "CH-01 - Environmental Clearance, EIA 2006 item 5(f) for synthetic organic chemicals (Category A outside / B inside a notified industrial area)"
+    related_regulatory_fact_ids: []
+    related_phase4_review_id: null
+    reason: >
+      H2.2 classifies CH-01 as a KEEP_DRAFT REQUIREMENT ("same instrument/logic as PH-04 with sub-category
+      (a)-(e) breadth"). Its research trigger is "sector activity fact + project.located_in_notified_industrial_area",
+      but MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §11 registers NO canonical fact for the chemicals 5(f) activity
+      (the only 5(f) activity fact, project.pharma_activity_type, is pharma-specific and its BULK_DRUG value is
+      already consumed by PH-04). Encoding CH-01 on the location fact alone would classify every project outside/inside
+      a notified area as an EC project - a wrong legal conclusion; inventing an un-registered activity key would
+      violate the "exact §11 keys, no aliases" rule. Consolidated 5(f) text (2006 + S.O. 1599(E) 2014 + S.O. 1223(E)
+      2020) is also not assembled (H5 #6 - same gap that keeps PH-04 DRAFT).
+    decision: >
+      No Requirement / Rule / Rule Version / Condition was created for CH-01 this pass (fail-closed representation
+      blocker, not an approximation).
+    current_status: REQUIRES_REVIEW
+    what_is_needed: "(1) A canonical §11-style Project Fact for the 5(f) synthetic-organic-chemicals activity (with sub-category (a)-(e) values) defined by the research owner; (2) the consolidated current 5(f) text."
+    next_phase: "Research/fact-definition follow-up, then a CH-01 Requirement mirroring REQ-0014's coarse-gate + Category A/B classification pattern."
+    blocks: "Any CH-01 Requirement/Rule; ACTIVE promotion of PH-04 shares the same consolidation blocker."
+
+  - review_id: RULE-REV-0008
+    subject: "CH-04 - Hazardous-process factory provisions (OSH Code lineage of Factories Act Ch. IVA)"
+    related_regulatory_fact_ids: []
+    related_phase4_review_id: null
+    reason: >
+      RESEARCH_REGISTER_ONLY (H2.2). The OSH Code's hazardous-process section mapping and the Maharashtra
+      notification list of hazardous processes have not been retrieved (H5 #9); the repealed Act's Ch. IVA must not
+      be encoded. No unresolved legal question can be modelled as a deterministic rule yet.
+    decision: "Not an executable Requirement/Rule/Condition/Regulatory Fact. Recorded here only."
+    current_status: UNKNOWN
+    what_is_needed: "Primary retrieval of the OSH Code hazardous-process section(s) + Maharashtra notified hazardous-process list (and MFR r.2(o) transitional status)."
+    next_phase: "Further primary research; then a future integration pass."
+    blocks: "Any Rule asserting hazardous-process factory obligations."
+
+  - review_id: RULE-REV-0009
+    subject: "CH-05 - PESO licences (Petroleum Rules 2002 / SMPV(U) Rules 2016 / Gas Cylinders Rules)"
+    related_regulatory_fact_ids: []
+    related_phase4_review_id: null
+    reason: >
+      RESEARCH_REGISTER_ONLY (H2.2). PESO exemption/threshold tables were not retrieved (H5 #4); the research
+      asserts no threshold and blocks encoding. No threshold is invented here.
+    decision: "Not an executable Requirement/Rule/Condition/Regulatory Fact. Recorded here only."
+    current_status: UNKNOWN
+    what_is_needed: "Primary retrieval of the PESO licensing exemption/threshold tables per substance class (petroleum classes, compressed gases/SMPV(U), gas cylinders)."
+    next_phase: "Further primary research; then a future integration pass."
+    blocks: "Any Rule asserting PESO licence applicability or thresholds."
+
 counts:
-  total_review_items: 6
-  REQUIRES_REVIEW: 3
-  UNKNOWN: 2
+  total_review_items: 9
+  REQUIRES_REVIEW: 4
+  UNKNOWN: 4
   RESOLVED: 1   # RULE-REV-0002, Pharma tranche 2026-09-23

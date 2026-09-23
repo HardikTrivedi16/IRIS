@@ -1,0 +1,53 @@
+rule_version_id: RULE-0027-V1
+rule_id: RULE-0027
+version_number: 1
+
+condition_expression_root_id: COND-0065
+logic: "COND-0065 = (manufactures_schedule1_eee==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - manufacturer of Schedule-I EEE (incl. contract manufacture) must register on the CPCB EPR e-waste portal, separately from any producer registration.
+false_outcome: >
+  NOT_APPLICABLE - the project does not manufacture Schedule-I EEE.
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until manufactures_schedule1_eee is known.
+
+required_project_facts:
+  - project.manufactures_schedule1_eee
+
+regulatory_fact_ids: [RF-0031]
+evidence_ids: [EVID-EWASTE-02]
+source_ids: [SRC-016]
+authority_id: AUTH-CPCB
+instrument_id: INST-EWASTE-2022
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0027-V1
+  regulatory_fact_ids: [RF-0031]
+  evidence_ids: [EVID-EWASTE-02]
+  source_ids: [SRC-016]
+  authority_id: AUTH-CPCB
+  instrument_id: INST-EWASTE-2022
+
+validation_notes: >
+  EL-02: VERIFIED_READY_FOR_PROVENANCE. Own Requirement alongside EL-01 (one entity may hold both registrations).

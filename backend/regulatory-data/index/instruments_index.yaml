@@ -13,6 +13,10 @@ instruments:
   - INST-HW-16
   - INST-DRUGS-RULES-1945
   - INST-EIA-2006
+  - INST-CMVR-1989
+  - INST-BWM-2022
+  - INST-EWASTE-2022
+  - INST-MSIHC-1989
 
 counts:
-  total_instruments: 10
+  total_instruments: 14

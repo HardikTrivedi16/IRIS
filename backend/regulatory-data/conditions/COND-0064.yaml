@@ -1,0 +1,20 @@
+condition_id: COND-0064
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.sells_schedule1_eee_under_own_brand
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-EWASTE-01]
+grounding_regulatory_fact_ids: [RF-0030]
+
+description: >
+  True if the project sells Schedule-I EEE under its own brand - E-Waste
+  Rules 2022 r.4 'producer' hinge (EL-01).
+
+normalization_notes: >
+  Single leaf, RULE-0026-V1's root. Not keyed on sector == ELECTRONICS.

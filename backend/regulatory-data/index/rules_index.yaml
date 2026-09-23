@@ -226,6 +226,66 @@ rules:
     latest_confidence: VERIFIED
     # PH-05 — evaluated_by_rule_id of REQ-0015.
 
+  - rule_id: RULE-0024
+    code: CMVR_TYPE_APPROVAL_R126_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: []
+    latest_rule_version_id: RULE-0024-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+    # AU-01 - evaluated_by_rule_id of REQ-0016.
+
+  - rule_id: RULE-0025
+    code: BWM_PRODUCER_REGISTRATION_EPR_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0029]
+    latest_rule_version_id: RULE-0025-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # AU-02 - evaluated_by_rule_id of REQ-0017.
+
+  - rule_id: RULE-0026
+    code: EWASTE_PRODUCER_REGISTRATION_EPR_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0030]
+    latest_rule_version_id: RULE-0026-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # EL-01 - evaluated_by_rule_id of REQ-0018.
+
+  - rule_id: RULE-0027
+    code: EWASTE_MANUFACTURER_REGISTRATION_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0031]
+    latest_rule_version_id: RULE-0027-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # EL-02 - evaluated_by_rule_id of REQ-0019.
+
+  - rule_id: RULE-0028
+    code: MSIHC_SITE_NOTIFICATION_R7_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0032]
+    latest_rule_version_id: RULE-0028-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+    # CH-02 - evaluated_by_rule_id of REQ-0020.
+
+  - rule_id: RULE-0029
+    code: MSIHC_ONSITE_EMERGENCY_PLAN_R13_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0033]
+    latest_rule_version_id: RULE-0029-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+    # CH-03 - evaluated_by_rule_id of REQ-0021.
+
 known_conflicts:
   - conflict_id: OVERLAP-0001
     involved_rules: [RULE-0005, RULE-0006]
@@ -237,14 +297,14 @@ facts_with_no_rule:
     reason: "See RULE-REV-0001 in the Rule Review Register."
 
 counts:
-  total_rules: 23
-  total_rule_versions: 25
-  status_DRAFT: 23
+  total_rules: 29
+  total_rule_versions: 31
+  status_DRAFT: 29
   status_SUPERSEDED: 2
   status_ACTIVE: 0
-  confidence_VERIFIED: 20
-  confidence_REQUIRES_REVIEW: 5
-  regulatory_facts_converted: 28   # +RF-0011..RF-0021 (Shared+Food) + RF-0022..RF-0024 (FSSAI
+  confidence_VERIFIED: 23
+  confidence_REQUIRES_REVIEW: 8
+  regulatory_facts_converted: 33   # +RF-0011..RF-0021 (Shared+Food) + RF-0022..RF-0024 (FSSAI
                                      # currentness pass) + RF-0025..RF-0028 (Pharma tranche)
   regulatory_facts_not_converted: 1   # RF-0003
   known_conflicts: 1   # OVERLAP-0001 — see rule_conflict_register.yaml
@@ -266,3 +326,7 @@ counts:
 # added as REQ-0003 classification_rule_ids. RULE-0020/0021/0022 (PH-04
 # coarse gate + Category A/B, KEEP_DRAFT) and RULE-0023 (PH-05) added
 # under new REQ-0014/REQ-0015. See rule_review_register.yaml RULE-REV-0002.
+
+# NOTE (remaining-sector tranche, 2026-09-23): RULE-0024..RULE-0029 (+ -V1)
+# added for AU-01/AU-02/EL-01/EL-02/CH-02/CH-03 under REQ-0016..REQ-0021.
+# All DRAFT; RF-0029..RF-0033 added (AU-01 has none - grounding blocked).

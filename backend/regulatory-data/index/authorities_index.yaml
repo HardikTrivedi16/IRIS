@@ -14,6 +14,8 @@ authorities:
   - AUTH-FDA-MH
   - AUTH-CDSCO
   - AUTH-SEIAA-MH
+  - AUTH-CPCB
+  - AUTH-MORTH
 
 counts:
-  total_authorities: 11
+  total_authorities: 13

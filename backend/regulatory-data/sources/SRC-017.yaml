@@ -1,0 +1,17 @@
+source_id: SRC-017
+title: "MSIHC Rules, 1989 (rr.4-5, 7-15; Schedules 1/3) - consolidated rules"
+publisher_authority_id: AUTH-MoEFCC
+document_type: GAZETTE
+official_url: "https://indiacode.nic.in"
+publication_date: null
+retrieved_date: "2026-09-22"
+archived_artifact_path: null
+checksum_sha256: null
+source_status: AVAILABLE
+notes: >
+  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
+  (SRC-MH-MSIHC) - NOT independently retrieved or archived by this pass.
+  publication_date null: the research gives none. `official_url` is the
+  general India Code portal. Covers CH-02/CH-03 (REQ-0020/REQ-0021).
+  BLOCKER: Schedule 3 per-chemical threshold quantities are NOT
+  transcribed (H5 #5); no threshold value is asserted anywhere in IRIS.

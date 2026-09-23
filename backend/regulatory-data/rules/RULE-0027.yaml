@@ -1,0 +1,11 @@
+rule_id: RULE-0027
+code: EWASTE_MANUFACTURER_REGISTRATION_APPLICABILITY
+requirement_id: REQ-0019
+title: "E-waste manufacturer registration - E-Waste Rules 2022 r.4"
+output_type: APPLICABILITY
+
+description: >
+  EL-02. Determines whether E-waste manufacturer registration - E-Waste Rules 2022 r.4 attaches, from project.manufactures_schedule1_eee.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

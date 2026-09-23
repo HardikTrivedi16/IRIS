@@ -1,0 +1,11 @@
+rule_id: RULE-0028
+code: MSIHC_SITE_NOTIFICATION_R7_APPLICABILITY
+requirement_id: REQ-0020
+title: "MSIHC site notification - r.7"
+output_type: APPLICABILITY
+
+description: >
+  CH-02. Determines whether MSIHC site notification - r.7 attaches, from project.msihc_schedule3_chemical_at_or_above_threshold.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

@@ -1,0 +1,11 @@
+rule_id: RULE-0029
+code: MSIHC_ONSITE_EMERGENCY_PLAN_R13_APPLICABILITY
+requirement_id: REQ-0021
+title: "MSIHC on-site emergency plan - r.13"
+output_type: APPLICABILITY
+
+description: >
+  CH-03. Determines whether MSIHC on-site emergency plan - r.13 attaches, from project.msihc_schedule3_chemical_at_or_above_threshold.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

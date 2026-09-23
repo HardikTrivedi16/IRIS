@@ -1,0 +1,11 @@
+rule_id: RULE-0024
+code: CMVR_TYPE_APPROVAL_R126_APPLICABILITY
+requirement_id: REQ-0016
+title: "Vehicle type approval - CMVR 1989 r.126"
+output_type: APPLICABILITY
+
+description: >
+  AU-01. Determines whether Vehicle type approval - CMVR 1989 r.126 attaches, from project.manufactures_motor_vehicles_for_sale.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

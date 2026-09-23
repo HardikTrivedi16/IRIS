@@ -1,0 +1,19 @@
+instrument_id: INST-CMVR-1989
+short_title: "Central Motor Vehicles Rules, 1989"
+full_citation: "Central Motor Vehicles Rules, 1989 (r.126 - type approval / testing of vehicle prototypes)"
+issuing_authority_id: AUTH-MORTH
+year: 1989
+currency_status: IN_FORCE
+effective_start_date: "1989-01-01"
+effective_end_date: null
+supersedes_instrument_id: null
+superseded_by_instrument_id: null
+last_currency_check: "2026-09-23"
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.2). Used by AU-01
+  (REQ-0016). The research classifies the rule text as VERIFIED_PORTAL only
+  (MoRTH portal) - the current r.126 text (heavily amended provisos) was
+  NOT retrieved from India Code. `currency_status: IN_FORCE` records only
+  that the Rules remain in force, not that r.126's current wording has been
+  verified. effective_start_date "1989-01-01" is a YEAR-LEVEL PLACEHOLDER (same convention as INST-DRUGS-RULES-1945): the research gives no
+  commencement date and none is invented here.

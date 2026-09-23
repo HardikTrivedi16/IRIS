@@ -1,0 +1,53 @@
+rule_version_id: RULE-0025-V1
+rule_id: RULE-0025
+version_number: 1
+
+condition_expression_root_id: COND-0063
+logic: "COND-0063 = (places_batteries_on_market==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - producer registration with CPCB (Form 1(A), centralised portal) plus EPR collection/recycling obligations under BWM Rules 2022 r.4(1).
+false_outcome: >
+  NOT_APPLICABLE - the project does not place batteries on the market (e.g. a pure contract assembler).
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until places_batteries_on_market is known.
+
+required_project_facts:
+  - project.places_batteries_on_market
+
+regulatory_fact_ids: [RF-0029]
+evidence_ids: [EVID-BWM-01]
+source_ids: [SRC-015]
+authority_id: AUTH-CPCB
+instrument_id: INST-BWM-2022
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0025-V1
+  regulatory_fact_ids: [RF-0029]
+  evidence_ids: [EVID-BWM-01]
+  source_ids: [SRC-015]
+  authority_id: AUTH-CPCB
+  instrument_id: INST-BWM-2022
+
+validation_notes: >
+  AU-02: VERIFIED_READY_FOR_PROVENANCE. Provenance created (RF-0029/EVID-BWM-01/SRC-015, source_status AVAILABLE, not archived). EPR target percentages, renewal cadence (60 days before expiry) and battery-type targets are deliberately NOT in conditions or outcome semantics beyond this note.

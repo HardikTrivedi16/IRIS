@@ -1,0 +1,27 @@
+requirement_id: REQ-0017
+code: BWM_PRODUCER_REGISTRATION_EPR
+title: "Battery producer registration + EPR - BWM Rules 2022 r.4(1)"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-CPCB
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0025
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0029
+evidence_ids:
+  - EVID-BWM-01
+
+requirement_notes: >
+  AU-02: VERIFIED_READY_FOR_PROVENANCE. Provenance created (RF-0029/EVID-BWM-01/SRC-015, source_status AVAILABLE, not archived). EPR target percentages, renewal cadence (60 days before expiry) and battery-type targets are deliberately NOT in conditions or outcome semantics beyond this note.
+  Standalone Requirement per H2.2. Fact-triggered (project.places_batteries_on_market); NOT keyed on
+  sector. Rule Version is DRAFT; no source archival, APPROVED VER or ACTIVE
+  promotion attempted (multi-sector remaining-tranche pass, 2026-09-23).

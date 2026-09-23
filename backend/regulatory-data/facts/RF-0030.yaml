@@ -1,0 +1,12 @@
+regulatory_fact_id: RF-0030
+statement: >
+  Under the E-Waste (Management) Rules, 2022 r.4, a producer of
+  Schedule-I EEE (including one selling such EEE under its own brand) must
+  register on the CPCB EPR e-waste portal and meet Schedule III/IV EPR
+  recycling targets; it may not carry on business without registration.
+  Whether an item is Schedule-I EEE is a legal check captured in the fact,
+  not inferred. (EL-01.)
+evidence_ids: [EVID-EWASTE-01]
+authority_id: AUTH-CPCB
+instrument_id: INST-EWASTE-2022
+verification_status: UNVERIFIED

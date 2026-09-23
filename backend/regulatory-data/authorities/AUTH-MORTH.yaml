@@ -1,0 +1,18 @@
+authority_id: AUTH-MORTH
+name: "Ministry of Road Transport and Highways"
+level: CENTRAL
+jurisdiction: INDIA
+parent_authority_id: null
+notes: >
+  The Ministry's identity (Ministry of Road Transport and Highways / "MoRTH
+  portal") comes from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
+  (SRC-MH-CMVR-R126 publisher) and §8. The canonical ID AUTH-MORTH is
+  IRIS's own normalization: the research does not prescribe it and does
+  not list this authority in §13.1. Used only by AU-01 (REQ-0016).
+  Creating this record does NOT imply that AU-01's CMVR 1989 r.126
+  primary text has been retrieved or verified - it has not (research
+  H2.2: AU-01 remains KEEP_DRAFT / REQUIRES_MORE_RESEARCH). Testing itself
+  is performed by notified agencies (ARAI/ICAT/GARC/CIRT/VRDE); those are
+  not modelled as separate Authority records because the research does
+  not catalogue them as such. Replaceable if the research pack later
+  designates a different authority for AU-01.

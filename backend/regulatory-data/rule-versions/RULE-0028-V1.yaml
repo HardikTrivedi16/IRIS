@@ -1,0 +1,53 @@
+rule_version_id: RULE-0028-V1
+rule_id: RULE-0028
+version_number: 1
+
+condition_expression_root_id: COND-0066
+logic: "COND-0066 = (msihc_schedule3_chemical_at_or_above_threshold==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - occupier must submit a written site notification (Schedule 7 particulars) at least 3 months before commencing the industrial activity (MSIHC Rules r.7(1)).
+false_outcome: >
+  NOT_APPLICABLE - no Schedule-3 chemical is at or above its threshold quantity.
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until the Schedule-3 threshold worksheet result is known.
+
+required_project_facts:
+  - project.msihc_schedule3_chemical_at_or_above_threshold
+
+regulatory_fact_ids: [RF-0032]
+evidence_ids: [EVID-MSIHC-01]
+source_ids: [SRC-017]
+authority_id: AUTH-DISH-MH
+instrument_id: INST-MSIHC-1989
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_CONSTRUCTION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0028-V1
+  regulatory_fact_ids: [RF-0032]
+  evidence_ids: [EVID-MSIHC-01]
+  source_ids: [SRC-017]
+  authority_id: AUTH-DISH-MH
+  instrument_id: INST-MSIHC-1989
+
+validation_notes: >
+  CH-02: KEEP_DRAFT (research §12). Promotable only once Schedule 3 is archived/transcribed and the F-29/F-30 worksheet procedure is documented (H5 #5). Trigger is the boolean worksheet result - no threshold quantity is stored or compared.
