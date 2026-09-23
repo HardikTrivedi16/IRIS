@@ -1,0 +1,22 @@
+scheme_condition_id: SCHC-0023
+predicate_type: COMPOSITE
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+child_scheme_condition_ids: [SCHC-0024, SCHC-0025]
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Pradhan Mantri Kisan SAMPADA Yojana (PMKSY) - Creation/Expansion of Food Processing & Preservation Capacities (CEFPPC) guidelines"
+  clause: "Grant-in-aid for creation / expansion of capacity"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  The project is either a new unit (creation of capacity) or an expansion of an existing unit.
+  Either satisfies the scheme's stated purpose; if neither fact is known the result is
+  NEEDS_INFORMATION.
+normalization_notes: >
+  OR node over Research F-12 (is_new_unit) and F-12a (is_expansion). Research pack
+  MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 8 FD-S1, 13 F-12) is the only basis for this
+  condition; the underlying official artifact is not yet archived, so the clause and quoted text
+  are unpinned and the record stays DRAFT.

@@ -1,0 +1,55 @@
+scheme_id: SCH-0005
+name: "Electronics Component Manufacturing Scheme (ECMS) - Target Segment D"
+administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
+administering_authority_name: "Ministry of Electronics and Information Technology (MeitY)"
+official_source:
+  url: "https://www.meity.gov.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
+  document_title: "Electronics Component Manufacturing Scheme (ECMS) - notification 08.04.2025, Target Segment D guidelines and window notices"
+  reference_number: null
+  published_date: "2025-04-08"
+  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  retrieved_by: null
+effective_start_date: "2025-04-08"
+effective_end_date: null
+jurisdiction: "INDIA"
+sector_scope: []
+eligibility_condition_root_id: SCHC-0008
+required_project_facts:
+  - project.manufactures_ecms_eligible_product
+  - project.ecms_target_segment
+benefits_summary: >
+  Capex-linked incentive of 25% over 5 years, turnover-linked incentive over 6 years, or a hybrid,
+  per Segment D tables; part of the incentive is tied to employment commitments. Partially
+  deterministic: the segment tables (minimum cumulative investment/turnover thresholds) are NOT
+  encoded, so no rupee entitlement is computed. Selection is first-come-first-served and separate
+  applications are made per product.
+required_documents: []   # not established by the research pack
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
+application_status: VERIFIED_OPEN
+application_window:
+  mode: FIXED_WINDOW
+  opens: "2025-05-01"
+  closes: "2027-04-30"
+  as_of_date: "2026-09-22"
+  source_reference:
+    document_title: "ECMS window notices (MeitY) - Target Segment D"
+    clause: "Segment D application window (research pack section 16)"
+    page_number: null
+    quoted_text: null   # PENDING ARCHIVAL
+notes: >
+  DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
+  SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-018: no official artifact is archived in this repository,
+  the url below is the research pack's domain-level pointer (exact document path to be confirmed at
+  archival), and retrieved_date is the research pass date, not an artifact download. No human
+  verification has occurred. application_status reflects the research pack's currency finding as of
+  2026-09-22, not a human-verified claim, and is never inferred from today's date. SEGMENT D ONLY:
+  Segments A/B/C/E (separate, closed 30.09.2025) are not implemented here. LIMITATION: segment-wise
+  minimum investment/turnover thresholds are not encoded or evaluated; a POTENTIALLY_ELIGIBLE result
+  only means the declared product and segment fit, never that thresholds are met. Eligibility and
+  the open window are independent claims. Blocks ACTIVE: archive SRC-SCH-018 (notification
+  08.04.2025, guidelines, window notices), pin the threshold tables, human verification.
+supersedes: null
+superseded_by: null

@@ -1,0 +1,24 @@
+scheme_condition_id: SCHC-0026
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.industry
+operator: "=="
+comparison_value: PHARMACEUTICAL
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Production Linked Incentive Scheme for Pharmaceuticals - Department of Pharmaceuticals notification and selection lists"
+  clause: "Scheme scope - pharmaceutical products (SCOPE-LEVEL ONLY)"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  SCOPE-LEVEL ONLY: the project's sector is pharmaceuticals. The scheme's real eligibility
+  criteria (applicant groups by global manufacturing revenue, product lists, thresholds) were NOT
+  read and are NOT evaluated. Selection is already completed (55 selectees), so a
+  POTENTIALLY_ELIGIBLE result here is a scope match only and never means the project can apply or
+  qualify.
+normalization_notes: >
+  Single-leaf root; the only condition encoded is sector scope. Research pack
+  MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 9 PH-S3, 14 FD-S4/PH-S3) is the only basis for this
+  condition; the underlying official artifact is not yet archived, so the clause and quoted text
+  are unpinned and the record stays DRAFT.

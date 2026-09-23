@@ -1,0 +1,55 @@
+scheme_id: SCH-0007
+name: "MIISP 2025 - MSME Industrial Promotion Subsidy (Maharashtra)"
+administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
+administering_authority_name: "Directorate of Industries, Government of Maharashtra"
+official_source:
+  url: "https://industry.maharashtra.gov.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
+  document_title: "Maharashtra Industries, Investment & Services Policy 2025 (MIISP 2025)"
+  reference_number: "GR No. Maudho-2023/Pra.Kra.187/Udyog-2 dated 31.12.2025"
+  published_date: "2025-12-31"
+  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  retrieved_by: null
+effective_start_date: "2025-12-31"
+effective_end_date: "2030-12-30"
+jurisdiction: "MAHARASHTRA"
+sector_scope: []
+eligibility_condition_root_id: SCHC-0014
+required_project_facts:
+  - project.msme_classification
+  - project.location_state
+  - project.sells_within_maharashtra
+benefits_summary: >
+  Industrial Promotion Subsidy for MSMEs: reimbursement of 100% of gross SGST on the first sale of
+  eligible products within Maharashtra, with zone-based tenure and caps per the implementing GRs.
+  Partially deterministic: the zone/category matrix, tenure and caps are NOT encoded because the
+  implementing GRs are not archived; IRIS computes no rupee amount.
+required_documents: []   # not established by the research pack
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
+application_status: UNRESOLVED_CURRENT_STATUS
+application_window:
+  mode: UNKNOWN
+  opens: null
+  closes: null
+  as_of_date: "2026-09-22"
+  source_reference:
+    document_title: "MIISP 2025 GR dated 31.12.2025"
+    clause: "Filing mechanics transitional via PSI-2019 machinery until scheme GRs are operational (research pack sections 5, 16)"
+    page_number: null
+    quoted_text: null   # PENDING ARCHIVAL
+notes: >
+  DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
+  SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-001 / SRC-SCH-001a: no official artifact is archived in this
+  repository, the url below is the research pack's domain-level pointer (exact document path to be
+  confirmed at archival), and retrieved_date is the research pass date, not an artifact download. No
+  human verification has occurred. application_status reflects the research pack's currency finding
+  as of 2026-09-22, not a human-verified claim, and is never inferred from today's date. Only the
+  MSME Industrial Promotion Subsidy pathway is implemented; the full MIISP framework, Mega/Ultra-
+  Mega packages (NEGOTIATED, determined by the competent authority) and green/other incentive
+  families are NOT implemented. PSI 2019 is the transitional predecessor and is not modelled here.
+  Blocks ACTIVE: archive SRC-SCH-001 and SRC-SCH-001a (implementing GRs), transcribe tenure/caps,
+  human verification.
+supersedes: null
+superseded_by: null

@@ -1,0 +1,21 @@
+scheme_condition_id: SCHC-0009
+predicate_type: BOOLEAN_EQUALS
+target_variable_key: project.manufactures_ecms_eligible_product
+operator: "=="
+comparison_value: true
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Electronics Component Manufacturing Scheme (ECMS) - notification 08.04.2025, Target Segment D guidelines (MeitY)"
+  clause: "Product-list matching (Schedule of eligible products)"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Project manufactures a product listed in the ECMS Schedule of eligible products. Declared by the
+  applicant; IRIS does not verify the product against the Schedule.
+normalization_notes: >
+  Research F-21 (project.manufactures_ecms_eligible_product). Research pack
+  MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 13 F-21, 14 EL-S1) is the only basis for this
+  condition; the underlying official artifact is not yet archived, so the clause and quoted text
+  are unpinned and the record stays DRAFT.

@@ -1,0 +1,54 @@
+scheme_id: SCH-0006
+name: "Maharashtra EV Policy 2025 - supply-side manufacturer incentive"
+administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
+administering_authority_name: "Industries Department, Government of Maharashtra (Transport Department GR 23.05.2025; operational guidelines pending)"
+official_source:
+  url: "https://www.maharashtra.gov.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
+  document_title: "Maharashtra Electric Vehicle Policy 2025 - Transport Department Government Resolution (supply-side clause)"
+  reference_number: "GR dated 23.05.2025 (number not recorded in the research pack)"
+  published_date: "2025-05-23"
+  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  retrieved_by: null
+effective_start_date: "2025-04-01"
+effective_end_date: "2030-03-31"
+jurisdiction: "MAHARASHTRA"
+sector_scope: []
+eligibility_condition_root_id: SCHC-0011
+required_project_facts:
+  - project.location_state
+  - project.ev_value_chain_role
+benefits_summary: >
+  EV, EV-battery and EV-component manufacturers, including MSMEs, receive incentives under the 'D+'
+  category of Mega projects regardless of unit location. The quantum is UNRESOLVED: the Industries
+  Department's operational guidelines for supply-side incentives were not located. The package is
+  determined by the competent authority; IRIS computes no rupee amount. Demand-side purchase
+  subsidies are consumer incentives and are not represented here.
+required_documents: []   # not established by the research pack
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
+application_status: UNRESOLVED_CURRENT_STATUS
+application_window:
+  mode: UNKNOWN
+  opens: null
+  closes: null
+  as_of_date: "2026-09-22"
+  source_reference:
+    document_title: "Maharashtra EV Policy 2025 - Transport Department GR 23.05.2025"
+    clause: "Application mechanics pending Industries Department operational guidelines (research pack sections 6.4, 16)"
+    page_number: null
+    quoted_text: null   # PENDING ARCHIVAL
+notes: >
+  DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
+  SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-003: no official artifact is archived in this repository,
+  the url below is the research pack's domain-level pointer (exact document path to be confirmed at
+  archival), and retrieved_date is the research pass date, not an artifact download. No human
+  verification has occurred. application_status reflects the research pack's currency finding as of
+  2026-09-22, not a human-verified claim, and is never inferred from today's date. Only the supply-
+  side factory pathway is implemented; PM E-DRIVE and demand-side subsidies are excluded. NEGOTIATED
+  / competent-authority semantics: benefit quantum and mechanics are not determinable. Blocks
+  ACTIVE: archive SRC-SCH-003 (GR) and obtain the supply-side Operational Guidelines; human
+  verification.
+supersedes: null
+superseded_by: null

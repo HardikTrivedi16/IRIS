@@ -1,0 +1,53 @@
+scheme_id: SCH-0008
+name: "Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME)"
+administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
+administering_authority_name: "National Credit Guarantee Trustee Company (NCGTC) / Department of Financial Services, via member lending institutions"
+official_source:
+  url: "https://www.ncgtc.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
+  document_title: "Mutual Credit Guarantee Scheme for MSMEs in Manufacturing Sector - NCGTC guidelines (approved 29.01.2025) and 2026 modification"
+  reference_number: null
+  published_date: "2025-01-29"
+  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  retrieved_by: null
+effective_start_date: "2025-01-29"
+effective_end_date: null
+jurisdiction: "INDIA"
+sector_scope: []
+eligibility_condition_root_id: SCHC-0018
+required_project_facts:
+  - project.msme_classification
+  - project.udyam_registered
+benefits_summary: >
+  Credit guarantee (not a grant): 60% guarantee coverage on eligible loans up to Rs. 100 crore for
+  plant, machinery and equipment purchase, through member lending institutions. Cover is
+  deterministic by scheme terms but subject to lender sanction; this is not a subsidy and IRIS
+  promises no sanction.
+required_documents: []   # not established by the research pack
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
+application_status: VERIFIED_OPEN
+application_window:
+  mode: CONTINUOUS
+  opens: null
+  closes: null
+  as_of_date: "2026-09-22"
+  source_reference:
+    document_title: "NCGTC MCGS-MSME product page / guidelines"
+    clause: "Continuous application via member lending institutions (research pack section 16)"
+    page_number: null
+    quoted_text: null   # PENDING ARCHIVAL
+notes: >
+  DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
+  SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-008: no official artifact is archived in this repository,
+  the url below is the research pack's domain-level pointer (exact document path to be confirmed at
+  archival), and retrieved_date is the research pass date, not an artifact download. No human
+  verification has occurred. application_status reflects the research pack's currency finding as of
+  2026-09-22, not a human-verified claim, and is never inferred from today's date. LIMITATION: the
+  equipment-share-of-project-cost test (75%, 60% under the 2026 modification), the Rs. 100 crore
+  loan ceiling and refundable-contribution staging are NOT encoded or evaluated. Unlike CGTMSE
+  (SCH-0002), Medium enterprises are included. Blocks ACTIVE: archive SRC-SCH-008 (NCGTC guidelines
+  + 2026 modification), human verification.
+supersedes: null
+superseded_by: null

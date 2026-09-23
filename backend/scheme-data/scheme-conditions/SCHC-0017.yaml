@@ -1,0 +1,21 @@
+scheme_condition_id: SCHC-0017
+predicate_type: BOOLEAN_EQUALS
+target_variable_key: project.sells_within_maharashtra
+operator: "=="
+comparison_value: true
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Maharashtra Industries, Investment & Services Policy 2025 (GR No. Maudho-2023/Pra.Kra.187/Udyog-2 dated 31.12.2025) - MSME Industrial Promotion Subsidy"
+  clause: "IPS = reimbursement of gross SGST on first sale of eligible products within Maharashtra"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Project makes first sales of its eligible products within Maharashtra (the Industrial Promotion
+  Subsidy base is in-State SGST).
+normalization_notes: >
+  Research F-17 (project.sells_within_maharashtra). Research pack
+  MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 13 F-17, 14 MH-01a) is the only basis for this
+  condition; the underlying official artifact is not yet archived, so the clause and quoted text
+  are unpinned and the record stays DRAFT.

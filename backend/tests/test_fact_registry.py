@@ -119,10 +119,11 @@ def test_A_production_registry_includes_all_authored_scheme_facts_regardless_of_
     # module docstring), not a Tranche-1-only key — updated 2026-09-23 when
     # this became the actual, correct, cross-domain state.
     tranche1 = {
-        "project.location_state": {"SCH-0004"},
+        # Tranche 1 of the scheme showcase (SCH-0005..0010) added further consumers of shared keys.
+        "project.location_state": {"SCH-0004", "SCH-0006", "SCH-0007"},
         "project.export_share_of_turnover_pct": {"SCH-0004"},
-        "project.msme_classification": {"SCH-0001", "SCH-0002"},
-        "project.udyam_registered": {"SCH-0001"},
+        "project.msme_classification": {"SCH-0001", "SCH-0002", "SCH-0007", "SCH-0008"},
+        "project.udyam_registered": {"SCH-0001", "SCH-0008"},
     }
     cross_domain_keys = {"project.msme_classification"}
     for key, scheme_ids in tranche1.items():
@@ -141,7 +142,14 @@ def test_A_production_registry_includes_all_authored_scheme_facts_regardless_of_
         "project.dairy_liquid_milk_capacity",
         "project.dairy_milk_solids_capacity",
     }
+    # project.industry became cross-domain when Scheme Tranche 1 gated SCH-0009 (PMKSY) and SCH-0010
+    # (PLI Pharma) on it (the matcher does not evaluate sector_scope) — the intended one-vocabulary merge.
+    scheme_consumed = {"project.industry": {"SCH-0009", "SCH-0010"}}
     for key in original_regulatory_keys:
+        if key in scheme_consumed:
+            assert registry[key]["consumer_domains"] == ["REGULATORY", "SCHEME"], key
+            assert set(registry[key]["scheme_ids"]) == scheme_consumed[key], key
+            continue
         assert registry[key]["consumer_domains"] == ["REGULATORY"], key
         assert registry[key]["scheme_ids"] == [], key
 

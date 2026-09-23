@@ -1,0 +1,21 @@
+scheme_condition_id: SCHC-0010
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.ecms_target_segment
+operator: "=="
+comparison_value: D
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Electronics Component Manufacturing Scheme (ECMS) - notification 08.04.2025, Target Segment D guidelines (MeitY)"
+  clause: "Target Segment D - supply-chain ecosystem and capital equipment"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Project's declared ECMS target segment is D (supply-chain ecosystem & capital equipment).
+  Segments A/B/C/E are separate, closed windows and are NOT implemented in this record.
+normalization_notes: >
+  Research F-20 (project.ecms_target_segment, ENUM {A,B,C,D,E,NONE}). Research pack
+  MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 13 F-20, 12 EL-S1) is the only basis for this
+  condition; the underlying official artifact is not yet archived, so the clause and quoted text
+  are unpinned and the record stays DRAFT.

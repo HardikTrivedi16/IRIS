@@ -1,0 +1,21 @@
+scheme_condition_id: SCHC-0022
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.industry
+operator: "=="
+comparison_value: FOOD
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Pradhan Mantri Kisan SAMPADA Yojana (PMKSY) - Creation/Expansion of Food Processing & Preservation Capacities (CEFPPC) guidelines"
+  clause: "Scheme scope - food processing & preservation"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Project's sector is food processing. sector_scope is not evaluated by the matcher, so the sector
+  is gated explicitly on project.industry.
+normalization_notes: >
+  Existing canonical key project.industry (shared with regulatory conditions). Research pack
+  MH_MULTI_SECTOR_SCHEME_RESEARCH.md (section 8 FD-S1) is the only basis for this condition; the
+  underlying official artifact is not yet archived, so the clause and quoted text are unpinned and
+  the record stays DRAFT.

@@ -1,0 +1,20 @@
+scheme_condition_id: SCHC-0015
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.msme_classification
+operator: NOT_IN
+comparison_value: [NOT_MSME]
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Maharashtra Industries, Investment & Services Policy 2025 (GR No. Maudho-2023/Pra.Kra.187/Udyog-2 dated 31.12.2025) - MSME Industrial Promotion Subsidy"
+  clause: "MSME Industrial Promotion Subsidy - MSME units"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Project's enterprise is classified as an MSME (Micro, Small or Medium).
+normalization_notes: >
+  Research F-01 (project.msme_classification). Same canonical key and NOT_IN shape as SCHC-0004.
+  Research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 13 F-01, 14 MH-01a) is the only basis
+  for this condition; the underlying official artifact is not yet archived, so the clause and
+  quoted text are unpinned and the record stays DRAFT.

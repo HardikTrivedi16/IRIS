@@ -1,0 +1,22 @@
+scheme_condition_id: SCHC-0018
+predicate_type: COMPOSITE
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+child_scheme_condition_ids: [SCHC-0019, SCHC-0020]
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Mutual Credit Guarantee Scheme for MSMEs in Manufacturing Sector (MCGS-MSME) - NCGTC operational guidelines and 2026 modification"
+  clause: "Composite root - MSME AND Udyam-registered"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Root of the SCH-0008 tree: MSME classification AND Udyam registration. NOT EVALUATED: the
+  equipment-share-of-project-cost test (75%, or 60% under the 2026 modification), the loan ceiling
+  (Rs. 100 crore) and the lender-mediated route are not encoded, so a POTENTIALLY_ELIGIBLE result
+  is not an assurance of guarantee cover.
+normalization_notes: >
+  Composite node. Research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 7 CN-04, 14 CN-04) is
+  the only basis for this condition; the underlying official artifact is not yet archived, so the
+  clause and quoted text are unpinned and the record stays DRAFT.

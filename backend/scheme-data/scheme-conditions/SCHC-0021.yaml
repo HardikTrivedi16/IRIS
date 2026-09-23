@@ -1,0 +1,21 @@
+scheme_condition_id: SCHC-0021
+predicate_type: COMPOSITE
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+child_scheme_condition_ids: [SCHC-0022, SCHC-0023]
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Pradhan Mantri Kisan SAMPADA Yojana (PMKSY) - Creation/Expansion of Food Processing & Preservation Capacities (CEFPPC) guidelines"
+  clause: "Composite root - food-processing project AND creation or expansion of capacity"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Root of the SCH-0009 tree: a food-processing project AND the project is creating new capacity or
+  expanding existing capacity. Project-cost and grant-ceiling tests (Research F-08) are NOT
+  encoded.
+normalization_notes: >
+  Composite node. Research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 8 FD-S1, 14 FD-S1) is
+  the only basis for this condition; the underlying official artifact is not yet archived, so the
+  clause and quoted text are unpinned and the record stays DRAFT.

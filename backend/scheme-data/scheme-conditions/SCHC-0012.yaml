@@ -1,0 +1,20 @@
+scheme_condition_id: SCHC-0012
+predicate_type: SET_MEMBERSHIP
+target_variable_key: project.location_state
+operator: "=="
+comparison_value: MAHARASHTRA
+unit: null
+child_scheme_condition_ids: []
+unresolved_behavior: UNKNOWN
+source_reference:
+  document_title: "Maharashtra Electric Vehicle Policy 2025 - Transport Department GR dated 23.05.2025 (supply-side clause)"
+  clause: "Supply-side incentive clause (State policy; jurisdiction gate)"
+  page_number: null
+  quoted_text: null   # PENDING ARCHIVAL - the official artifact has not been archived/read in this repository; clause text and page are to be pinned by the archiving human.
+description: >
+  Project is located in Maharashtra (State policy jurisdiction gate).
+normalization_notes: >
+  Research F-03 (project.location_state). Same canonical key as SCHC-0001 - one fact vocabulary.
+  Research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md (sections 13 F-03, 6.4) is the only basis for
+  this condition; the underlying official artifact is not yet archived, so the clause and quoted
+  text are unpinned and the record stays DRAFT.

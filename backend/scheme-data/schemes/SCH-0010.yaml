@@ -1,0 +1,52 @@
+scheme_id: SCH-0010
+name: "PLI Scheme for Pharmaceuticals - scope-level record (selection completed)"
+administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
+administering_authority_name: "Department of Pharmaceuticals, Government of India"
+official_source:
+  url: "https://pharmaceuticals.gov.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
+  document_title: "Production Linked Incentive Scheme for Pharmaceuticals - notification and selection lists"
+  reference_number: null
+  published_date: "2021"
+  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  retrieved_by: null
+effective_start_date: null
+effective_end_date: null
+jurisdiction: "INDIA"
+sector_scope: []
+eligibility_condition_root_id: SCHC-0026
+required_project_facts:
+  - project.industry
+benefits_summary: >
+  Incentive on incremental sales for 55 selected applicants, performance years FY2023-24 to
+  FY2027-28, in groups by global manufacturing revenue. Only previously selected beneficiaries
+  receive incentives; a new project cannot apply. IRIS computes no entitlement.
+required_documents: []   # not established by the research pack
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
+application_status: SELECTION_COMPLETED
+application_window:
+  mode: SELECTION_COMPLETED
+  opens: null
+  closes: null
+  as_of_date: "2026-09-22"
+  source_reference:
+    document_title: "PLI Pharmaceuticals notification and selection lists (Department of Pharmaceuticals)"
+    clause: "Selection completed; 55 selectees (research pack sections 5, 16)"
+    page_number: null
+    quoted_text: null   # PENDING ARCHIVAL
+notes: >
+  DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
+  SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-014: no official artifact is archived in this repository,
+  the url below is the research pack's domain-level pointer (exact document path to be confirmed at
+  archival), and retrieved_date is the research pass date, not an artifact download. No human
+  verification has occurred. application_status reflects the research pack's currency finding as of
+  2026-09-22, not a human-verified claim, and is never inferred from today's date. SCOPE-LEVEL
+  RECORD: only sector scope (project.industry) is evaluated, because the scheme's real eligibility
+  criteria (revenue groups, product lists, thresholds) were not read. A POTENTIALLY_ELIGIBLE result
+  is a scope match only and is never full eligibility; the selection process is already complete.
+  Bulk-drug PLI and Bulk Drug Parks are separate and not implemented. Blocks ACTIVE: archive SRC-
+  SCH-014, read and encode the real criteria, human verification.
+supersedes: null
+superseded_by: null

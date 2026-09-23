@@ -1,0 +1,57 @@
+scheme_id: SCH-0009
+name: "PMKSY - Creation/Expansion of Food Processing & Preservation Capacities (CEFPPC)"
+administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
+administering_authority_name: "Ministry of Food Processing Industries (MoFPI)"
+official_source:
+  url: "https://www.mofpi.gov.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
+  document_title: "PMKSY CEFPPC guidelines and Expression of Interest notice dated 27.01.2025 (extended, closed)"
+  reference_number: null
+  published_date: "2025-01-27"
+  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  retrieved_by: null
+effective_start_date: null
+effective_end_date: null
+jurisdiction: "INDIA"
+sector_scope: []
+eligibility_condition_root_id: SCHC-0021
+required_project_facts:
+  - project.industry
+  - project.is_new_unit
+  - project.is_expansion
+benefits_summary: >
+  Grant-in-aid (about 35% family, capped per the guidelines) for creation or expansion of food
+  processing and preservation capacity. Partially deterministic: the grant ceiling and project-cost
+  tests are NOT encoded, so no rupee entitlement is computed. Applications are Expression-of-
+  Interest gated.
+required_documents: []   # not established by the research pack
+status: DRAFT
+confidence: UNVERIFIED
+
+# last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
+application_status: NO_CURRENT_WINDOW
+application_window:
+  mode: PERIODIC_EOI
+  opens: null
+  closes: null
+  as_of_date: "2026-09-22"
+  source_reference:
+    document_title: "MoFPI / SAMPADA EOI notices"
+    clause: "Last EOI 27.01.2025 (extended, then closed); next cycle unapproved (research pack sections 5, 16)"
+    page_number: null
+    quoted_text: null   # PENDING ARCHIVAL
+notes: >
+  DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
+  SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-010: no official artifact is archived in this repository,
+  the url below is the research pack's domain-level pointer (exact document path to be confirmed at
+  archival), and retrieved_date is the research pass date, not an artifact download. No human
+  verification has occurred. application_status reflects the research pack's currency finding as of
+  2026-09-22, not a human-verified claim, and is never inferred from today's date. The status the
+  research calls NO_CURRENT_APPLICATION_WINDOW is encoded with the schema's existing vocabulary
+  value NO_CURRENT_WINDOW. No current EOI exists and none is implied. The 15th-FC cycle ran to
+  2025-26; continuation is unresolved, so effective_end_date is left null rather than asserting the
+  scheme is out of force. LIMITATION: project-cost (F-08) and grant tests are not encoded.
+  is_new_unit / is_expansion are intentionally unknown for the showcase projects, so SwaadHarvest
+  stays NEEDS_INFORMATION. Blocks ACTIVE: archive SRC-SCH-010, re-check the window, human
+  verification.
+supersedes: null
+superseded_by: null
