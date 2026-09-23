@@ -1,0 +1,177 @@
+[
+  {
+    "product_id": "IRIS-FOOD-PRD-0001",
+    "product_name": "Mango Fruit Pulp",
+    "product_category": "Processed Fruit Product",
+    "food_category": "Fruit pulp/puree",
+    "description": "Pasteurized mango pulp prepared from ripe Alphonso/Totapuri mango, aseptically packed",
+    "brand_name": "SwaadHarvest Amrasa",
+    "ingredients": [
+      "Mango pulp (100%)"
+    ],
+    "composition": "100% mango pulp, no added sugar or preservative",
+    "pack_size": "200 g",
+    "unit": "pouch",
+    "manufacturer": "SwaadHarvest Foods Private Limited",
+    "marketer": "SwaadHarvest Foods Private Limited",
+    "hsn": "20079910",
+    "batch_number": "BATCH-MP-001",
+    "manufacturing_date": "2025-06-10",
+    "expiry_date": "2026-12-09",
+    "storage_conditions": "Store in a cool, dry place; refrigerate after opening",
+    "intended_use": "Culinary/direct consumption base for beverages and desserts",
+    "product_status": "Active",
+    "regulatory_classification": "FSSAI-licensed processed fruit product",
+    "applicable_licences": [
+      "FOOD-REG-001",
+      "FOOD-REG-002"
+    ],
+    "applicable_regulations": [
+      "Food Safety and Standards Act, 2006",
+      "FSS (Licensing and Registration of Food Businesses) Regulations, 2011"
+    ]
+  },
+  {
+    "product_id": "IRIS-FOOD-PRD-0002",
+    "product_name": "Mixed Fruit Jam",
+    "product_category": "Processed Fruit Product",
+    "food_category": "Jam/preserve",
+    "description": "Mixed fruit jam prepared from apple, papaya and mango pulp with added sugar and pectin",
+    "brand_name": "SwaadHarvest MixFruit",
+    "ingredients": [
+      "Mixed fruit pulp",
+      "Sugar",
+      "Pectin (INS 440)",
+      "Citric acid (INS 330)"
+    ],
+    "composition": "Fruit content not less than 45% w/w",
+    "pack_size": "500 g",
+    "unit": "glass jar",
+    "manufacturer": "SwaadHarvest Foods Private Limited",
+    "marketer": "SwaadHarvest Foods Private Limited",
+    "hsn": "20079990",
+    "batch_number": "BATCH-JM-014",
+    "manufacturing_date": "2025-07-02",
+    "expiry_date": "2026-07-01",
+    "storage_conditions": "Store in a cool, dry place away from direct sunlight",
+    "intended_use": "Table spread",
+    "product_status": "Active",
+    "regulatory_classification": "FSSAI-licensed processed fruit product",
+    "applicable_licences": [
+      "FOOD-REG-001"
+    ],
+    "applicable_regulations": [
+      "Food Safety and Standards Act, 2006",
+      "FSS (Food Product Standards and Food Additives) Regulations, 2011"
+    ]
+  },
+  {
+    "product_id": "IRIS-FOOD-PRD-0003",
+    "product_name": "Tomato Cooking Sauce",
+    "product_category": "Sauce/Condiment",
+    "food_category": "Cooking sauce",
+    "description": "Ready-to-use tomato cooking sauce for curries and pasta base",
+    "brand_name": "SwaadHarvest Rasoi",
+    "ingredients": [
+      "Tomato puree",
+      "Onion",
+      "Garlic",
+      "Edible vegetable oil",
+      "Spices",
+      "Salt",
+      "Sugar"
+    ],
+    "composition": "Tomato content not less than 60% w/w",
+    "pack_size": "300 g",
+    "unit": "pouch",
+    "manufacturer": "SwaadHarvest Foods Private Limited",
+    "marketer": "SwaadHarvest Foods Private Limited",
+    "hsn": "21032000",
+    "batch_number": "BATCH-TS-027",
+    "manufacturing_date": "2025-09-05",
+    "expiry_date": "2026-09-04",
+    "storage_conditions": "Store in a cool, dry place; refrigerate after opening",
+    "intended_use": "Cooking base/condiment",
+    "product_status": "Active",
+    "regulatory_classification": "FSSAI-licensed sauce/condiment",
+    "applicable_licences": [
+      "FOOD-REG-001"
+    ],
+    "applicable_regulations": [
+      "Food Safety and Standards Act, 2006",
+      "FSS (Food Product Standards and Food Additives) Regulations, 2011"
+    ]
+  },
+  {
+    "product_id": "IRIS-FOOD-PRD-0004",
+    "product_name": "Instant Spice Blend",
+    "product_category": "Spice Product",
+    "food_category": "Spice mix/masala",
+    "description": "Pre-mixed spice blend for a regional curry preparation",
+    "brand_name": "SwaadHarvest Masala",
+    "ingredients": [
+      "Coriander",
+      "Cumin",
+      "Turmeric",
+      "Red chilli",
+      "Black pepper",
+      "Salt"
+    ],
+    "composition": "100% blended spices, no added colour",
+    "pack_size": "100 g",
+    "unit": "pouch",
+    "manufacturer": "SwaadHarvest Foods Private Limited",
+    "marketer": "SwaadHarvest Foods Private Limited",
+    "hsn": "09109990",
+    "batch_number": "BATCH-SB-009",
+    "manufacturing_date": "2025-10-01",
+    "expiry_date": "2026-09-30",
+    "storage_conditions": "Store in a cool, dry place away from direct sunlight",
+    "intended_use": "Culinary seasoning",
+    "product_status": "Active",
+    "regulatory_classification": "FSSAI-licensed spice product",
+    "applicable_licences": [
+      "FOOD-REG-001"
+    ],
+    "applicable_regulations": [
+      "Food Safety and Standards Act, 2006",
+      "Spices Board Act, 1986 (quality guidelines, non-mandatory certification)"
+    ]
+  },
+  {
+    "product_id": "IRIS-FOOD-PRD-0005",
+    "product_name": "Ready-to-Eat Vegetable Meal",
+    "product_category": "Ready-to-Eat Food",
+    "food_category": "RTE chilled meal",
+    "description": "Chilled ready-to-eat mixed vegetable meal tray, requires refrigerated storage and short shelf life",
+    "brand_name": "SwaadHarvest QuickMeal",
+    "ingredients": [
+      "Mixed vegetables",
+      "Rice",
+      "Edible vegetable oil",
+      "Spices",
+      "Salt"
+    ],
+    "composition": "Vegetable content not less than 35% w/w",
+    "pack_size": "350 g",
+    "unit": "tray",
+    "manufacturer": "SwaadHarvest Foods Private Limited",
+    "marketer": "SwaadHarvest Foods Private Limited",
+    "hsn": "21069099",
+    "batch_number": "BATCH-RM-005",
+    "manufacturing_date": "2026-08-20",
+    "expiry_date": "2026-09-15",
+    "storage_conditions": "Keep refrigerated at 2\u20138\u00b0C; consume within shelf life",
+    "intended_use": "Direct consumption after reheating",
+    "product_status": "Active",
+    "regulatory_classification": "FSSAI-licensed RTE chilled food (short shelf life)",
+    "applicable_licences": [
+      "FOOD-REG-001"
+    ],
+    "applicable_regulations": [
+      "Food Safety and Standards Act, 2006",
+      "FSS (Packaging and Labelling) Regulations, 2011"
+    ],
+    "note": "No Certificate of Analysis / lab test report generated for this product \u2014 intentional, see scenario SCN-0005 (missing evidence)."
+  }
+]

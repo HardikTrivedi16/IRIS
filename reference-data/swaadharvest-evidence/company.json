@@ -1,0 +1,64 @@
+{
+  "company_id": "IRIS-FOOD-COMP-0001",
+  "legal_name": "SwaadHarvest Foods Private Limited",
+  "trade_name": "SwaadHarvest Foods",
+  "cin": "U15490UK2018PTC009876",
+  "pan": "AABCS5678D",
+  "gstin": "05AABCS5678D1Z2",
+  "tan": "DEHS54321G",
+  "incorporation_date": "2018-11-06",
+  "constitution": "Private Limited Company (Companies Act, 2013)",
+  "industry": "Food Processing",
+  "registered_address": {
+    "line1": "Plot No. 18, Sector 11",
+    "area": "IIE SIDCUL",
+    "city": "Haridwar",
+    "state": "Uttarakhand",
+    "pincode": "249403"
+  },
+  "principal_place_of_business": {
+    "line1": "Plot No. 18, Sector 11",
+    "area": "IIE SIDCUL",
+    "city": "Haridwar",
+    "state": "Uttarakhand",
+    "pincode": "249403"
+  },
+  "manufacturing_facility": {
+    "line1": "Plot No. 18, Sector 11",
+    "area": "IIE SIDCUL",
+    "city": "Haridwar",
+    "state": "Uttarakhand",
+    "pincode": "249403"
+  },
+  "directors": [
+    {
+      "name": "Rohan Mehta",
+      "designation": "Managing Director & Authorized Signatory",
+      "din": "07998211"
+    },
+    {
+      "name": "Priya Nair",
+      "designation": "Whole-time Director",
+      "din": "07998212"
+    }
+  ],
+  "authorized_signatory": {
+    "name": "Rohan Mehta",
+    "designation": "Managing Director"
+  },
+  "contact": {
+    "email": "compliance@swaadharvest.example",
+    "phone": "+91-1334-2XXXXX"
+  },
+  "bank": {
+    "bank_name": "Synthetic National Bank",
+    "account_no": "XXXXXXXX4521",
+    "ifsc": "SYNB0002211"
+  },
+  "business_activities": [
+    "Manufacture of processed fruit and vegetable products",
+    "Manufacture of sauces, condiments and spice blends",
+    "Manufacture of ready-to-eat packaged food"
+  ],
+  "manufacturer_distributor_role": "Manufacturer"
+}

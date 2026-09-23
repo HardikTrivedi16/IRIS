@@ -1,0 +1,75 @@
+[
+  {
+    "scenario_id": "SCN-0001",
+    "title": "Fully compliant — clean baseline",
+    "input_documents": ["FOOD-ENT-001","FOOD-ENT-002","FOOD-ENT-003","FOOD-ENT-004","FOOD-ENT-005","FOOD-ENT-007",
+                          "FOOD-REG-001","FOOD-REG-004","FOOD-REG-005","FOOD-REG-006","FOOD-REG-008","FOOD-REG-009",
+                          "FOOD-REG-012","FOOD-REG-013","FOOD-REG-014","FOOD-REG-015",
+                          "FOOD-FAC-002","FOOD-FAC-003","FOOD-FAC-005","FOOD-FAC-006"],
+    "expected_result": "GREEN / COMPLIANT",
+    "reason": "All identifiers, names, addresses, batches and dates agree across entity, product and facility documents."
+  },
+  {
+    "scenario_id": "SCN-0002",
+    "title": "Expired food licence",
+    "input_documents": ["FOOD-REG-003"],
+    "expected_result": "RED / NON-COMPLIANT",
+    "reason": "State FSSAI Basic Registration expiry_date (2023-12-19) is before the demo evaluation date (2026-09-07)."
+  },
+  {
+    "scenario_id": "SCN-0003",
+    "title": "Company name mismatch",
+    "input_documents": ["FOOD-ENT-003", "FOOD-ENT-006"],
+    "expected_result": "AMBER / POTENTIAL ENTITY MISMATCH",
+    "reason": "GST certificate (FOOD-ENT-003) shows 'SwaadHarvest Foods Private Limited'; address proof (FOOD-ENT-006) shows 'Swaad Harvest Foods Pvt Ltd' — same entity, subtle wording difference for entity-resolution to catch."
+  },
+  {
+    "scenario_id": "SCN-0004",
+    "title": "Manufacturing address mismatch",
+    "input_documents": ["FOOD-ENT-003", "FOOD-FAC-001"],
+    "expected_result": "AMBER / ADDRESS INCONSISTENCY",
+    "reason": "GST/registered address (FOOD-ENT-003) is Plot No. 18, Sector 11; factory licence (FOOD-FAC-001) lists Plot No. 20, Sector 11, same locality."
+  },
+  {
+    "scenario_id": "SCN-0005",
+    "title": "Missing product evidence",
+    "input_documents": [],
+    "expected_result": "AMBER / EVIDENCE MISSING",
+    "reason": "Ready-to-Eat Vegetable Meal (IRIS-FOOD-PRD-0005) has no Certificate of Analysis or lab test report on file, unlike every other product — intentionally not generated."
+  },
+  {
+    "scenario_id": "SCN-0006",
+    "title": "Product label mismatch",
+    "input_documents": ["FOOD-REG-011"],
+    "expected_result": "AMBER / DOCUMENT-PRODUCT MISMATCH",
+    "reason": "Product label for Mango Fruit Pulp (FOOD-REG-011) declares Net Weight 500 g; the product master (IRIS-FOOD-PRD-0001) specifies pack_size 200 g for the same batch."
+  },
+  {
+    "scenario_id": "SCN-0007",
+    "title": "Batch mismatch",
+    "input_documents": ["FOOD-REG-007", "FOOD-REG-010"],
+    "expected_result": "AMBER / BATCH TRACEABILITY MISMATCH",
+    "reason": "Batch Manufacturing Record (FOOD-REG-010) is BATCH-MP-001; the Certificate of Analysis for the same product (FOOD-REG-007) cites BATCH-MP-002."
+  },
+  {
+    "scenario_id": "SCN-0008",
+    "title": "Invoice/product mismatch",
+    "input_documents": [],
+    "expected_result": "NOT GENERATED IN THIS DELIVERY",
+    "reason": "Needs GST sales-invoice records (Phase 6 of the original brief), which were out of scope for this documents-only delivery — flagged here so it isn't silently dropped if the full dataset is requested later."
+  },
+  {
+    "scenario_id": "SCN-0009",
+    "title": "Water-quality evidence expired",
+    "input_documents": ["FOOD-FAC-004"],
+    "expected_result": "AMBER / EVIDENCE ISSUE",
+    "reason": "Water Quality Test Report (FOOD-FAC-004) expired 2025-11-14, before the demo evaluation date (2026-09-07), with no renewed report on file."
+  },
+  {
+    "scenario_id": "SCN-0010",
+    "title": "Valid/compliant renewal",
+    "input_documents": ["FOOD-REG-001", "FOOD-REG-002"],
+    "expected_result": "GREEN",
+    "reason": "FSSAI Central Licence (FOOD-REG-001) and its renewal record (FOOD-REG-002) are both correctly renewed and currently valid as of the demo evaluation date."
+  }
+]
