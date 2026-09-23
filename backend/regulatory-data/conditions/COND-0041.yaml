@@ -1,0 +1,30 @@
+condition_id: COND-0041
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.annual_turnover_inr
+operator: ">"
+comparison_value: 15000000
+unit: INR
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+
+grounding_regulatory_fact_ids:
+  - RF-0023
+
+description: >
+  True if annual turnover is strictly more than Rs. 1.5 crore
+  (15,000,000 INR) — the lower bound of the current State-licence
+  turnover band ("above Rs. 1.5 crore and up to Rs. 50 crore",
+  SRC-011/SRC-012).
+
+normalization_notes: >
+  ANDed with COND-0042 (upper bound) and COND-0032 (subsector guard) as
+  RULE-0015-V2's composite root, COND-0043. At exactly 1.5 crore this
+  leaf is FALSE (State does not fire) — the boundary belongs to
+  Registration (COND-0044/RF-0024), matching the Order's own "above
+  Rs. 1.5 crore" wording, never "at or above."

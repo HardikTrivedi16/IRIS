@@ -1,0 +1,13 @@
+rule_id: RULE-0011
+code: CGWA_NOC_APPLICABILITY
+requirement_id: REQ-0008
+title: "CGWA groundwater NOC applicability (S.O. 3289(E))"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether a project abstracting groundwater must obtain a CGWA
+  NOC, applying the Para 1.0(v) Micro/Small-Enterprise exemption
+  (abstraction < 10 m³/day) via its De Morgan-derived executable form.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

@@ -30,7 +30,8 @@ def test_audit_record_has_all_required_fields(engine):
 
 
 def test_audit_record_is_json_serializable(engine):
-    facts = {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+    facts = {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+             "project.dairy_liquid_milk_capacity": 60000,
              "project.dairy_milk_solids_capacity": 1000}
     d = engine.evaluate_requirement("P", "REQ-0004", facts, NP)
     record = build_audit_record(d)

@@ -1,0 +1,72 @@
+rule_version_id: RULE-0016-V1
+rule_id: RULE-0016
+version_number: 1
+
+condition_expression_root_id: COND-0045
+logic: "COND-0045 = AND(annual_turnover_inr<=15000000, food_subsector NOT_IN [DAIRY,VEGETABLE_OIL,SLAUGHTER,MEAT_PROCESSING,GRAIN_CEREAL_PULSE_MILLING])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — only FSSAI Registration is required (residual/general-
+  manufacturing category, annual turnover up to Rs. 1.5 crore), effective
+  01.04.2026 per FSSAI Order dated 13.03.2026. No Central or State
+  licence is required at this turnover band.
+false_outcome: >
+  NOT_APPLICABLE on this trigger — either annual turnover is more than
+  Rs. 1.5 crore (see RULE-0015-V2/State or RULE-0014-V2/Central), or the
+  project's food subsector is dairy/vegetable-oil/slaughter/meat/milling.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine Registration applicability
+  until annual turnover and food subsector are known.
+
+required_project_facts:
+  - project.annual_turnover_inr
+  - project.food_subsector
+
+regulatory_fact_ids:
+  - RF-0024
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+source_ids:
+  - SRC-011
+  - SRC-012
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: "2026-04-01"
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0016-V1
+  regulatory_fact_ids: [RF-0024, RF-0013]
+  evidence_ids: [EVID-FSS-07, EVID-FSS-08]
+  source_ids: [SRC-011, SRC-012]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  New — no predecessor Rule Version (supersedes_rule_version_id: null).
+  See RULE-0014-V2's validation_notes for the full currentness rationale
+  and STILL DRAFT / STILL BLOCKED FROM ACTIVE reasoning, which applies
+  identically here (same Order, same corroborating table, same effective
+  date, no human verification yet). Bounded strictly to "<=1.5 crore" —
+  the exact complement of RULE-0015-V2's ">1.5 crore" lower bound, never
+  overlapping.

@@ -1,0 +1,13 @@
+rule_id: RULE-0010
+code: BOILER_CERTIFICATE_LIFECYCLE_GATE
+requirement_id: REQ-0007
+title: "Boiler certificate renewal/event-based cessation gate (Boilers Act, 2025)"
+output_type: APPLICABILITY
+
+description: >
+  Gates whether the certificate-lifecycle/renewal continuing obligation
+  applies: true only if the project currently holds a boiler certificate
+  (project.holds_boiler_certificate).
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

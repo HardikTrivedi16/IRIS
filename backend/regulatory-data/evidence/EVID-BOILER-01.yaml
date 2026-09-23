@@ -1,0 +1,19 @@
+evidence_id: EVID-BOILER-01
+source_id: SRC-007
+section_or_clause: "Section 2(c)"
+page: null
+excerpt: >
+  "boiler" means a pressure vessel in which steam is generated for use
+  external to itself by the application of heat wholly or partly under
+  pressure, but excludes (i) any such vessel having a capacity of less
+  than 25 litres, measured from the feed check valve to the main steam
+  stop valve; (ii) any such vessel which has a design and working gauge
+  pressure not exceeding [i.e. below] 1 kilogram per square centimetre;
+  and (iii) any such vessel in which water is heated below 100 degrees
+  Celsius. Boundary discipline: the exclusion is strictly "<" — capacity
+  less than 25 L, pressure less than 1 kg/cm² — so the executable inclusion
+  test is ">= 25" litres and ">= 1" kg/cm², never "> 25"/"> 1". The third
+  exclusion leg (water heated below 100°C) has no corresponding Project
+  Fact in this pass and is not part of SH-04's executable predicate — see
+  SH-04's own validation_notes.
+verification_status: UNVERIFIED

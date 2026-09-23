@@ -1,0 +1,28 @@
+condition_id: COND-0038
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0036
+  - COND-0014
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0013
+  - RF-0010
+
+description: >
+  FD-04-corrected root for RULE-0006 (FSSAI dairy State band):
+  food_subsector == "DAIRY" AND (the existing COND-0014 liquid-milk-OR-
+  solids State criterion, unchanged). Replaces COND-0014 as
+  RULE-0006-V1's condition_expression_root_id; COND-0014 itself is
+  preserved verbatim as a child.
+
+normalization_notes: >
+  Reuses COND-0036 (the same dairy guard leaf as COND-0037) unchanged —
+  one guard fact, wrapped above both the Central and State dairy trees.

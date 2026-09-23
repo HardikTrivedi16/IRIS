@@ -1,0 +1,26 @@
+rule_id: RULE-0008
+code: OSH_FACTORY_LICENCE_DETAIL_TRANSITIONAL
+requirement_id: REQ-0005
+title: "Maharashtra factory licence/plan-approval procedural detail (transitional MFR machinery)"
+output_type: APPLICABILITY
+
+description: >
+  Describes the transitional plan-approval/registration/licence machinery
+  (Maharashtra Factories Rules, 1963 rr.3-9 lineage) that continues under
+  repeal-and-savings pending Maharashtra's own OSH Code state rules
+  (still DRAFT as of this pass). Shares RULE-0007's applicability trigger
+  (the same establishment either is or is not a factory) but describes a
+  distinct procedural obligation — see rule_type_note.
+
+rule_type: APPLICABILITY_RULE
+
+rule_type_note: >
+  This Rule deliberately reuses RULE-0007's condition tree (same
+  applicability trigger, worker_count/uses_power) rather than authoring a
+  second, fabricated predicate — the research pack identifies no distinct
+  legal threshold for "does the licence-detail machinery apply," only that
+  the machinery is transitional and its Maharashtra-specific procedural
+  content (plan approval Form 1, licence Form 3, annual renewal calendar)
+  cannot be finalised until Maharashtra's OSH state rules are notified.
+
+current_active_rule_version_id: null

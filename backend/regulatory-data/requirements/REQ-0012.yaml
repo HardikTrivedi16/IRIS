@@ -1,0 +1,32 @@
+requirement_id: REQ-0012
+code: FSSAI_STATE_LICENCE_2_1_2_4_RESIDUAL
+title: "FSSAI State licence — Regulation 2.1.2(4) residual pathway (Schedule 1 entry V subsector)"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-FDA-MH-FOOD
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0015
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0012
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-05
+  - EVID-FSS-06
+
+requirement_notes: >
+  FD-02 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2) — the
+  complementary State pathway for the same entry-V subsector as FD-01/
+  REQ-0011, at or below the 2 MT/day Central threshold. Modelled as a
+  standalone Requirement, sibling to FD-01 — see REQ-0011's requirement_notes
+  for the same reasoning (no contract conflict). Watch item (2026-amendment
+  Reg. 2.1.2(6)): the Food Authority may re-specify eligibility criteria/
+  Licensing Authority by order; not yet exercised as of this pass.

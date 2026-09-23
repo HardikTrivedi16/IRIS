@@ -1,0 +1,44 @@
+source_id: SRC-011
+title: "Order dated 13.03.2026 — Implementation of revised turnover threshold for food businesses under FSS (Licensing and Registration of Food Businesses) Regulations, 2011 [F. No. RCD-01002/1/2021-Regulatory-FSSAI-Part(1)]"
+publisher_authority_id: AUTH-FSSAI
+document_type: OFFICIAL_WEBSITE
+official_url: "https://www.fssai.gov.in/upload/advisories/2026/03/69b4054bb6cd6Order%20dated%2013thMarch2026_Revised%20Turnover%20threshold.pdf"
+publication_date: "2026-03-13"
+retrieved_date: "2026-09-23"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-011_Order_13Mar2026_Revised_Turnover_Threshold.pdf"
+checksum_sha256: "5b28f6e8306dcfbfa957e709b6c8f51f44be485ebe9cf600c6b040f8b8280d90"
+source_status: ARCHIVED
+notes: >
+  Genuinely downloaded 2026-09-23 (HTTP 200, 4-page PDF). Issued by FSSAI's
+  Regulatory Compliance Division. Recites that the Food Safety and
+  Standards (Licensing and Registration of Food Businesses) amendment
+  Regulations, 2026 (Gazette Notification dated 10.03.2026 — NOT
+  independently archived by this pass, see blocker note below) inserted an
+  "enabling provision for specifying turnover thresholds and other
+  categorisation criteria by the Food Authority." Exercising that power,
+  this Order sets: Registration <= Rs. 1.5 Cr turnover; State Licence
+  > Rs. 1.5 Cr to Rs. 50 Cr; Central Licence > Rs. 50 Cr — effective
+  01.04.2026. Paragraph 4 states verbatim: "This supersedes all other
+  earlier orders and regulations with respect to turnover thresholds or
+  criteria specified under [the 2011 Regulations] for categorisation of
+  Food Businesses."
+
+  BLOCKER: the underlying Gazette Notification dated 10.03.2026 itself
+  (the amendment regulation text that inserted the Reg. 2.1.2(6)-type
+  power this Order exercises) could not be retrieved this pass — the
+  secondary-source link to it (fssai.gov.in/upload/notifications/2026/03/
+  69b2a2c804123Notification%20dt%2010.03.2026.pdf, cited by a Chambers and
+  Partners article) returns HTTP 200 but serves the site's SPA-shell
+  fallback (confirmed via direct browser navigation + network inspection),
+  not the actual PDF — the file has evidently been moved/rehashed since
+  that article was written. This Order (SRC-011) is the closest primary
+  artifact actually retrieved; it is a subsidiary implementing document,
+  not the amendment regulation text itself.
+
+  RELEVANCE TO FD-01/FD-02: see rule_review_register.yaml RULE-REV-0006.
+  This Order's blanket supersession of "turnover thresholds or criteria...
+  for categorisation of Food Businesses" is in tension with FD-01/FD-02's
+  reliance on Schedule 1 entry V's installed-capacity criterion
+  (">2 MT/day") as the Central-vs-State discriminator for the residual
+  food-processing category — see SRC-012 for corroborating operative
+  evidence.

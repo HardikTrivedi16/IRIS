@@ -34,7 +34,8 @@ def test_extra_irrelevant_project_facts_do_not_change_outcome(engine):
 
 
 def test_repeated_evaluation_is_idempotent(engine):
-    facts = {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+    facts = {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+             "project.dairy_liquid_milk_capacity": 60000,
              "project.dairy_milk_solids_capacity": 1000}
     outcomes = [engine.evaluate_requirement("P", "REQ-0004", facts, NP, evaluated_at="fixed")
                 for _ in range(20)]

@@ -1,0 +1,20 @@
+instrument_id: INST-AIR-81
+short_title: "Air (Prevention and Control of Pollution) Act, 1981"
+full_citation: "The Air (Prevention and Control of Pollution) Act, 1981, as accepted by Maharashtra (1983)"
+issuing_authority_id: AUTH-MoEFCC
+year: 1981
+currency_status: IN_FORCE
+effective_start_date: "1981-03-29"
+effective_end_date: null
+supersedes_instrument_id: null
+superseded_by_instrument_id: null
+last_currency_check: "2026-09-22"
+notes: >
+  Currency confirmed per MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §4 I-02: the
+  Jan Vishwas (Amendment of Provisions) Act, 2023 decriminalised certain
+  penalties but left s.21's consent duty unchanged. The whole of Maharashtra
+  has been declared an Air Pollution Control Area since 06/11/1996 per
+  MPCB's own RTI s.4 disclosures (SRC-002/EVID-MPCB-02); a single 2001 CAG
+  report states "November 1995" instead — a minor discrepancy noted, not
+  resolved, in EVID-MPCB-02. The 1996 gazette itself remains the ideal
+  upgrade source and has not been located/archived.

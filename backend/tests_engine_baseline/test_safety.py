@@ -43,7 +43,8 @@ def test_dependency_result_reports_zero_edges(engine):
 
 def test_unresolved_overlap_remains_review_never_resolved(engine):
     d = engine.evaluate_requirement("P", "REQ-0004",
-        {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+        {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 60000,
          "project.dairy_milk_solids_capacity": 1000}, NP)
     assert d["final_state"] == "REQUIRES_REVIEW"
     assert d["conflict_id"] == "OVERLAP-0001"

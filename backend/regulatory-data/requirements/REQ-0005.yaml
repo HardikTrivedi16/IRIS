@@ -1,0 +1,41 @@
+requirement_id: REQ-0005
+code: OSH_FACTORY_APPLICABILITY
+title: "Factory applicability and registration — OSH Code, 2020"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-DISH-MH
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_ESTABLISHMENT
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0007            # applicability (20/40-worker test)
+classification_rule_ids: [RULE-0008]       # licence/renewal procedural detail — same
+                                            # Requirement, second Rule Version, per
+                                            # H2.1 of MH_MULTI_SECTOR_REGULATORY_RESEARCH.md
+                                            # (mirrors the existing REQ-0004 /
+                                            # classification_rule_ids pattern — never a
+                                            # second Requirement node for SH-03)
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0014
+  - RF-0015
+evidence_ids:
+  - EVID-OSH-01
+  - EVID-OSH-02
+
+requirement_notes: >
+  SH-03 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.1): ONE Requirement,
+  TWO Rule Versions. RULE-0007 answers only "is this establishment a
+  factory?" (the 20-with-power / 40-without-power OSH Code test) — this is
+  VERIFIED_READY_FOR_PROVENANCE per the research pack's own classification.
+  RULE-0008 answers the separate question of what licence/plan-approval
+  procedure follows, which remains transitional (Maharashtra Factories
+  Rules, 1963 machinery) pending Maharashtra's own OSH state rules, still
+  DRAFT as of this pass — RULE-0008 must never be promoted merely because
+  RULE-0007 promotes; its blocker is a genuine open state-rules question,
+  not archival.

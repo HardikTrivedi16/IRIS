@@ -1,0 +1,31 @@
+evidence_id: EVID-FSS-05
+source_id: SRC-004
+section_or_clause: "Regulation 2.1.2(3) and 2.1.2(4)"
+page: 4
+excerpt: >
+  "(3) License for commencing or carrying on food business, which falls
+  under Schedule 1, shall be granted by the Central Licensing Authority,
+  provided that Food Authority may through notification make such changes
+  or modify the list given in the Schedule I as considered necessary.
+  (4) License for commencing or carrying on food business, which are not
+  covered under Schedule 1, shall be granted by the concerned State/UT's
+  Licensing Authority." — bounded exact quote confirmed against SRC-004
+  (archived 2026-09-23), PDF page 4. Note the literal text of (4) is a
+  general residual rule ("not covered under Schedule 1" -> State), not a
+  clause specific to entry V or to the 2 MT/day threshold; FD-02's
+  application of it to entry-V businesses at/below 2 MT/day is a derived
+  reading (such businesses fail entry V's own ">2 MT/day" test and so are
+  "not covered under Schedule 1"), not a separately-worded provision.
+
+  2026-amendment currentness finding (see SRC-011, SRC-012 and
+  rule_review_register.yaml RULE-REV-0006): an FSSAI Order dated
+  13.03.2026, issued under a Reg. 2.1.2(6)-type power the amendment
+  regulations reportedly inserted, replaced the turnover/eligibility
+  criteria for food-business categorisation with a purely turnover-based
+  scheme, and FSSAI's own FoSCoS operative eligibility table (02.04.2026)
+  shows the entry-V-equivalent "General manufacturing" category classified
+  by turnover only, with no installed-capacity criterion. Whether Reg.
+  2.1.2(3)/(4) themselves were textually amended, versus superseded in
+  practice by this delegated-power order, is unresolved — flagged for
+  human review, not decided here.
+verification_status: UNVERIFIED

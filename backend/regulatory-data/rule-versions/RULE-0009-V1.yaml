@@ -1,0 +1,72 @@
+rule_version_id: RULE-0009-V1
+rule_id: RULE-0009
+version_number: 1
+
+condition_expression_root_id: COND-0024
+logic: "COND-0024 = AND(boiler_volumetric_capacity_litres>=25, boiler_design_gauge_pressure_kg_cm2>=1)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — the vessel is a "boiler" under the Boilers Act, 2025, s.2(c);
+  registration (s.12) and a certificate (renewal duties: see REQ-0007/SH-05)
+  are required before use (s.11(1)).
+false_outcome: >
+  NOT_APPLICABLE — the vessel's stated capacity/pressure falls outside the
+  statutory definition on the two Project Facts this dataset captures. This
+  does NOT independently evaluate the Act's third exclusion (water heated
+  below 100°C), for which no Project Fact exists — see validation_notes.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine boiler-registration applicability
+  until volumetric capacity and design/working gauge pressure are known.
+
+required_project_facts:
+  - project.boiler_volumetric_capacity_litres
+  - project.boiler_design_gauge_pressure_kg_cm2
+
+regulatory_fact_ids:
+  - RF-0016
+evidence_ids:
+  - EVID-BOILER-01
+source_ids:
+  - SRC-007
+authority_id: AUTH-BOILER-MH
+instrument_id: INST-BOILERS-25
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0009-V1
+  regulatory_fact_ids: [RF-0016]
+  evidence_ids: [EVID-BOILER-01]
+  source_ids: [SRC-007]
+  authority_id: AUTH-BOILER-MH
+  instrument_id: INST-BOILERS-25
+
+validation_notes: >
+  Retires any prior reference to the repealed Boilers Act, 1923 — this Rule
+  cites only the Boilers Act, 2025 (in force 01.05.2025). Unit discipline:
+  litres and kg/cm² only, never TPH (an evaporation rate, not the statutory
+  volumetric measure) or bar. Boundary discipline: inclusion test is ">= 25"
+  / ">= 1", never "> 25" / "> 1" — the statute excludes strictly "< 25 L" /
+  "< 1 kg/cm²". LIMITATION, stated explicitly and not to be silently
+  presented as complete: this two-fact condition does not represent the
+  Act's third exclusion leg (water heated below 100°C, s.2(c)(iii)) — no
+  Project Fact for temperature exists in this dataset. Cannot be promoted
+  to ACTIVE without archived SRC-007 + a human VER record.

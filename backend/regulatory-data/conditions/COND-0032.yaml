@@ -1,0 +1,28 @@
+condition_id: COND-0032
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.food_subsector
+operator: NOT_IN
+comparison_value: ["DAIRY", "VEGETABLE_OIL", "SLAUGHTER", "MEAT_PROCESSING", "GRAIN_CEREAL_PULSE_MILLING"]
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-06
+
+grounding_regulatory_fact_ids:
+  - RF-0013
+
+description: >
+  True if the project's food subsector is NOT dairy, vegetable oil,
+  slaughter, meat processing, or grain/cereal/pulse milling — Schedule 1
+  entry V is residual ("other than mentioned under (I) to (IV)") and
+  self-excludes milling units by its own text.
+
+normalization_notes: >
+  Shared guard leaf: reused, unchanged, as one of the AND children of both
+  FD-01's root (COND-0033) and FD-02's root (COND-0035) — the same
+  subsector exclusion applies to both the Central and State pathways of
+  the same entry-V subsector.

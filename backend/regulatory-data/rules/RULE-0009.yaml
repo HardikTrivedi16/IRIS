@@ -1,0 +1,14 @@
+rule_id: RULE-0009
+code: BOILER_REGISTRATION_APPLICABILITY
+requirement_id: REQ-0006
+title: "Boilers Act, 2025 — registration/certificate applicability (s.2(c) definition)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether a pressure vessel meets the Boilers Act, 2025 s.2(c)
+  definition of "boiler" (volumetric capacity >= 25 litres AND design/
+  working gauge pressure >= 1 kg/cm²), triggering registration and
+  certification duties before use (s.11(1), s.12).
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

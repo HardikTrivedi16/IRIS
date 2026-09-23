@@ -1,0 +1,24 @@
+condition_id: COND-0019
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.manufacturing_process_uses_power
+operator: "=="
+comparison_value: false
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-OSH-02
+
+grounding_regulatory_fact_ids:
+  - RF-0015
+
+description: >
+  True if the manufacturing process is carried on without the aid of
+  power (OSH Code, 2020, s.2(1)(w)(ii)).
+
+normalization_notes: >
+  ANDed with COND-0018 (worker_count >= 40) as the without-power branch of
+  SH-03's composite root, COND-0021.

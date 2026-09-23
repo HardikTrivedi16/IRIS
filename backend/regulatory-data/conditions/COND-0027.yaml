@@ -1,0 +1,28 @@
+condition_id: COND-0027
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.msme_classification
+operator: NOT_IN
+comparison_value: ["MICRO", "SMALL"]
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-CGWA-02
+
+grounding_regulatory_fact_ids:
+  - RF-0019
+
+description: >
+  True if the project's MSME classification is not Micro or Small (i.e.
+  Medium, Not-MSME, or explicitly Unknown-tolerant per engine UNKNOWN
+  policy) — the enterprise-size leg of the MSE exemption test (S.O.
+  3289(E), Para 1.0(v)).
+
+normalization_notes: >
+  Never inferred from project size/scale — project.msme_classification is
+  the statutory MSMED status, a distinct user-declared fact (per §7 of the
+  implementation brief). ORed with COND-0026 as SH-07's composite root,
+  COND-0028.

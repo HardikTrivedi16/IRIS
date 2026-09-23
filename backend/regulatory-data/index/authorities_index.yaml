@@ -1,9 +1,16 @@
-# IRIS — Provenance Substrate (Tranche 1): Authority Index
-# Machine-readable index of all authored Authority records. Empty because no
-# Authority record has been added yet — see regulatory-data/authorities/README.md.
-# This is a lookup aid; it introduces no applicability logic.
+# IRIS — Provenance Substrate: Authority Index
+# Machine-readable index of all authored Authority records. This is a
+# lookup aid; it introduces no applicability logic.
 
-authorities: []
+authorities:
+  - AUTH-MPCB
+  - AUTH-MoEFCC
+  - AUTH-FSSAI
+  - AUTH-FDA-MH-FOOD
+  - AUTH-DISH-MH
+  - AUTH-BOILER-MH
+  - AUTH-CGWA
+  - AUTH-LMO-MH
 
 counts:
-  total_authorities: 0
+  total_authorities: 8

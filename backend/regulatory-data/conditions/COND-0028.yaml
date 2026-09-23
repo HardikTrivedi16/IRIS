@@ -1,0 +1,39 @@
+condition_id: COND-0028
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0026
+  - COND-0027
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0018
+  - RF-0019
+
+description: >
+  SH-07 root: CGWA NOC applies unless the project is exempt. Exemption
+  (S.O. 3289(E) Para 1.0(v)) = abstraction < 10 m³/day AND msme
+  classification in {MICRO, SMALL}. By De Morgan's law, "not exempt" =
+  (abstraction >= 10 m³/day) OR (msme_classification NOT_IN
+  {MICRO, SMALL}) — exactly the research pack's own specified composite
+  (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12 SH-07), implemented verbatim
+  because the engine's operator vocabulary has no "<" or negated-AND form.
+
+normalization_notes: >
+  KNOWN LIMITATION, preserved rather than silently fixed: as specified,
+  this composite can resolve TRUE (APPLICABLE) for a project with
+  groundwater_abstraction_m3_per_day == 0 (no abstraction at all) purely
+  because its msme_classification is NOT_IN {MICRO, SMALL} — the second
+  OR branch does not itself require any abstraction to be occurring. This
+  is inherited exactly as specified in the research pack's own predicate
+  formula (implementing "the exact representable research logic" per the
+  implementation brief) and is flagged here for human review rather than
+  corrected unilaterally; correcting it would require either a genuine
+  ">" gate on abstraction (an operator the engine does not support) or an
+  explicit "abstraction > 0" leaf the research pack did not specify.

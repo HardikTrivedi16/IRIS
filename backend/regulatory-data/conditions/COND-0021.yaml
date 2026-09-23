@@ -1,0 +1,33 @@
+condition_id: COND-0021
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0017
+  - COND-0020
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0014
+  - RF-0015
+
+description: >
+  SH-03 root: the OSH Code, 2020 "factory" test — (worker_count >= 20 AND
+  uses_power == true) OR (worker_count >= 40 AND uses_power == false).
+  Shared by both of SH-03's Rule Versions (RULE-0007-V1 applicability and
+  RULE-0008-V1 licence-detail — see RULE-0008's own notes on why it reuses
+  this same root rather than a distinct one).
+
+normalization_notes: >
+  Three-valued OR: a known-TRUE branch is sufficient even if the other
+  branch's facts are UNKNOWN; both branches UNKNOWN (or one FALSE/one
+  UNKNOWN) resolves UNKNOWN, never FALSE. FALSE only when both branches are
+  definitely FALSE, at which point the FALSE-branch caveat (State
+  notification powers may extend coverage to certain smaller/notified
+  activities regardless of headcount — RF-0015) must still be shown; that
+  caveat lives in RULE-0007-V1's false_outcome text, not in this condition.

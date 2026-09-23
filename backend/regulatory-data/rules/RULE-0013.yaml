@@ -1,0 +1,13 @@
+rule_id: RULE-0013
+code: HAZARDOUS_WASTE_AUTHORISATION_APPLICABILITY
+requirement_id: REQ-0010
+title: "HOWM Rules, 2016, r.6 hazardous-waste authorisation applicability"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the project must hold a Form 2 hazardous-waste
+  authorisation — triggered by actually generating or handling
+  Schedule-listed hazardous or other waste.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

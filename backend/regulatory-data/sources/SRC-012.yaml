@@ -1,0 +1,39 @@
+source_id: SRC-012
+title: "FoSCoS — Kind of Business Eligibility (Registration / State Licence / Central Licence criteria), updated 02.04.2026"
+publisher_authority_id: AUTH-FSSAI
+document_type: OFFICIAL_WEBSITE
+official_url: "https://foscos.fssai.gov.in/assets/docs/Revised_2ndApril2026KindofBusinessEligibility.pdf"
+publication_date: "2026-04-02"
+retrieved_date: "2026-09-23"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-012_FoSCoS_KindOfBusinessEligibility_02Apr2026.pdf"
+checksum_sha256: "d066f7e7284a600abe3438ad9a5ac3a2098e799433446e113b6f9288e4668c85"
+source_status: ARCHIVED
+notes: >
+  Genuinely downloaded 2026-09-23 (HTTP 200, 9-page PDF) from FoSCoS
+  (FSSAI's own licensing/registration portal, foscos.fssai.gov.in — an
+  FSSAI subdomain, treated as an official host of the same authority as
+  AUTH-FSSAI). This is FSSAI's operative eligibility table used in
+  practice for FoSCoS categorisation, dated after both the 10.03.2026 and
+  23.06.2026 2026 amendments.
+
+  RELEVANCE TO FD-01/FD-02: this table's "General manufacturing" row —
+  defined as "Manufacturers/Processors other than Dairy Units, Vegetable
+  Oil, Meat Processing, Fish and Fish products, and Slaughtering unit...
+  No Grains, Cereals or Pulses Milling Units" (verbatim from the PDF) —
+  is the direct operative successor of Schedule 1 entry V (same exclusion
+  list: dairy/oil/slaughter/meat, minus grains/cereals/pulses milling).
+  It is classified ENTIRELY by annual turnover: Registration up to
+  Rs. 1.5 Cr; State Licence > Rs. 1.5 Cr to Rs. 50 Cr; Central Licence
+  > Rs. 50 Cr. The table contains NO installed-capacity
+  (MT/day) criterion anywhere for this row. The same is true of every
+  other Schedule-1-derived row in this table (dairy, vegetable oil,
+  slaughtering, meat, fish) — all now shown by turnover only, not by
+  their historical Schedule 1 volume/count metrics.
+
+  This corroborates SRC-011's Order: the installed-capacity criterion FD-01
+  (RULE-0014, ">2 MT/day") and FD-02 (RULE-0015, "<=2 MT/day") rely on
+  does not appear as the operative Central/State discriminator in FSSAI's
+  own current categorisation table. See rule_review_register.yaml
+  RULE-REV-0006. This is a currentness finding only — no conclusion is
+  drawn here about the dairy Schedule-1 rows (RULE-0005/RULE-0006), which
+  are out of scope for this pass and were not modified.

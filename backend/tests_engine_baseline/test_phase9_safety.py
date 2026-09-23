@@ -28,7 +28,8 @@ def test_draft_rule_version_never_produces_a_production_decision(engine, dataset
 def test_fssai_conflict_is_never_silently_resolved_by_explanation_layer(engine):
     d = engine.evaluate_requirement(
         "P", "REQ-0004",
-        {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+        {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 60000,
          "project.dairy_milk_solids_capacity": 1000},
         NP,
     )

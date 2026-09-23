@@ -1,0 +1,75 @@
+rule_version_id: RULE-0008-V1
+rule_id: RULE-0008
+version_number: 1
+
+condition_expression_root_id: COND-0021   # same root as RULE-0007-V1 — see RULE-0008's rule_type_note
+logic: "Reuses COND-0021 (the OSH Code 20/40 factory test) — see rule_type_note on RULE-0008."
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE IN PRINCIPLE, BUT PROCEDURALLY TRANSITIONAL — if RULE-0007
+  finds the establishment to be a factory, the Maharashtra Factories Rules,
+  1963-lineage plan-approval/registration/licence machinery (site
+  permission Form 1, stability certificate 1-A, registration Form 2,
+  licence Form 3, historically ≤10-yr grant / ≤5-yr renewal, 2-month prior
+  renewal window, 4-month deemed grant) continues to apply only
+  transitionally, under repeal-and-savings, pending Maharashtra's own OSH
+  Code state rules (still DRAFT). This outcome is descriptive, not a
+  promotable procedural determination — see validation_notes.
+false_outcome: >
+  NOT_APPLICABLE — same basis as RULE-0007's FALSE outcome (and the same
+  notified-activity caveat applies).
+unknown_outcome: >
+  REQUIRES_INFORMATION — same basis as RULE-0007's UNKNOWN outcome.
+
+required_project_facts:
+  - project.worker_count
+  - project.manufacturing_process_uses_power
+
+regulatory_fact_ids:
+  - RF-0014
+  - RF-0015
+evidence_ids:
+  - EVID-OSH-01
+  - EVID-OSH-02
+source_ids:
+  - SRC-006
+authority_id: AUTH-DISH-MH
+instrument_id: INST-OSH-20
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_ESTABLISHMENT
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 2
+
+provenance:
+  rule_version_id: RULE-0008-V1
+  regulatory_fact_ids: [RF-0014, RF-0015]
+  evidence_ids: [EVID-OSH-01, EVID-OSH-02]
+  source_ids: [SRC-006]
+  authority_id: AUTH-DISH-MH
+  instrument_id: INST-OSH-20
+
+validation_notes: >
+  KEEP_DRAFT independently of archival — this Rule Version's blocker is a
+  genuinely open Maharashtra state-rules question (Maharashtra's OSH Code
+  state rules were still DRAFT as of the research pack's verification
+  date), not a citation/archival gap. Do not promote this Rule Version to
+  ACTIVE merely because RULE-0007-V1 (the applicability test it shares a
+  condition tree with) is eligible for promotion — the two answer
+  different questions and have independent lifecycle status per H2.1 of
+  MH_MULTI_SECTOR_REGULATORY_RESEARCH.md.

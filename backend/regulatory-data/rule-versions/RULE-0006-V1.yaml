@@ -2,11 +2,14 @@ rule_version_id: RULE-0006-V1
 rule_id: RULE-0006
 version_number: 1
 
-condition_expression_root_id: COND-0014
+condition_expression_root_id: COND-0038
 logic: >
-  COND-0014 = OR(
-    COND-0010: AND(liquid_milk >= 501 L/day, liquid_milk <= 50000 L/day),
-    COND-0013: AND(milk_solids >= 2.5 MT/annum, milk_solids <= 2500 MT/annum)
+  COND-0038 = AND(
+    food_subsector == DAIRY [FD-04 guard],
+    COND-0014 = OR(
+      COND-0010: AND(liquid_milk >= 501 L/day, liquid_milk <= 50000 L/day),
+      COND-0013: AND(milk_solids >= 2.5 MT/annum, milk_solids <= 2500 MT/annum)
+    )
   )
 
 output_mapping:
@@ -21,24 +24,29 @@ true_outcome: >
   `known_conflicts` (OVERLAP-0001) below. In that simultaneous-TRUE situation, the combined result
   is REQUIRES_REVIEW / UNDETERMINED_OVERLAP, not a resolved Central-vs-State determination.
 false_outcome: >
-  NOT_APPLICABLE to the State Licensing category specifically. Two distinct real-world situations
-  produce this result and must not be conflated: (a) capacity above the State range (which should
-  instead resolve APPLICABLE on RULE-0005/Central), or (b) capacity below the State range floor
-  (501 L/day and 2.5 MT/annum) — for which the evidence is silent on what registration obligation,
-  if any, applies. See RULE-REV-0003. This Rule's FALSE outcome must not be read as "no FSSAI
-  obligation" without also checking RULE-0005 and RULE-REV-0003.
+  NOT_APPLICABLE to the State Licensing category specifically. Three distinct situations produce
+  this result and must not be conflated: (a) the project's food subsector is not DAIRY (FD-04
+  guard — the dairy bands are never evaluated for a non-dairy project); (b) it is DAIRY but
+  capacity is above the State range (which should instead resolve APPLICABLE on RULE-0005/
+  Central); or (c) it is DAIRY but capacity is below the State range floor (501 L/day and
+  2.5 MT/annum) — for which the evidence is silent on what registration obligation, if any,
+  applies. See RULE-REV-0003. This Rule's FALSE outcome must not be read as "no FSSAI obligation"
+  without also checking RULE-0005 and RULE-REV-0003.
 unknown_outcome: >
   REQUIRES_INFORMATION — cannot determine State-category classification until the dairy unit's
   liquid milk and/or milk solids capacity is known.
 
 required_project_facts:
+  - project.food_subsector
   - project.dairy_liquid_milk_capacity
   - project.dairy_milk_solids_capacity
 
 regulatory_fact_ids:
   - RF-0010
+  - RF-0013
 evidence_ids:
   - EVID-FSS-03
+  - EVID-FSS-06
 source_ids:
   - SRC-004
 authority_id: AUTH-FSSAI
@@ -91,3 +99,9 @@ validation_notes: >
 known_conflicts:
   - conflict_id: OVERLAP-0001
     summary: "See RULE-0005-V1's known_conflicts entry and rule_conflict_register.yaml for full detail."
+
+dairy_guard_note: >
+  DAIRY GUARD (this pass, FD-04, MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12): condition_expression_root_id
+  changed from COND-0014 to COND-0038 (= food_subsector == "DAIRY" AND COND-0014), so this rule can
+  never answer a non-dairy project on the basis of stray/absent capacity facts. COND-0014 itself is
+  unchanged.

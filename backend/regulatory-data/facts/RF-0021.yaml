@@ -1,0 +1,10 @@
+regulatory_fact_id: RF-0021
+statement: >
+  Every occupier engaged in generating, handling, storing, transporting,
+  or disposing of hazardous and other wastes must apply for and hold a
+  Form 2 authorisation (valid 5 years) from the State Pollution Control
+  Board (Hazardous and Other Wastes (M&TM) Rules, 2016, r.6(1)-(2)).
+evidence_ids: [EVID-HW-01]
+authority_id: AUTH-MPCB
+instrument_id: INST-HW-16
+verification_status: UNVERIFIED

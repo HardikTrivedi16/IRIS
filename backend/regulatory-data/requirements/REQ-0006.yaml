@@ -1,0 +1,29 @@
+requirement_id: REQ-0006
+code: BOILER_REGISTRATION_CERTIFICATE
+title: "Boiler registration and certificate — Boilers Act, 2025"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-BOILER-MH
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0009
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0016
+evidence_ids:
+  - EVID-BOILER-01
+
+requirement_notes: >
+  SH-04 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). Fact-triggered,
+  applies across all sectors that operate a qualifying boiler. Renewal/
+  certificate-lifecycle content lives in REQ-0007 (SH-05), a separate
+  Requirement, not a Rule Version of this one — its obligation (event-based
+  cessation/renewal) is a distinct continuing duty from initial
+  registration, per H2.2's own classification.

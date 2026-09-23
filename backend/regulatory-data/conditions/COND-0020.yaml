@@ -1,0 +1,24 @@
+condition_id: COND-0020
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0018
+  - COND-0019
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0015
+
+description: >
+  Without-power factory branch: worker_count >= 40 AND
+  manufacturing_process_uses_power == false (OSH Code, 2020, s.2(1)(w)(ii)).
+
+normalization_notes: >
+  ORed with COND-0017 (with-power branch) as SH-03's composite root,
+  COND-0021.

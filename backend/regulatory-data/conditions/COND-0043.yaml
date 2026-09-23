@@ -1,0 +1,32 @@
+condition_id: COND-0043
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0041
+  - COND-0042
+  - COND-0032
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0023
+
+description: >
+  FD-02-V2 root (current, turnover-based): annual_turnover_inr > 15000000
+  AND annual_turnover_inr <= 500000000 AND food_subsector NOT_IN {DAIRY,
+  VEGETABLE_OIL, SLAUGHTER, MEAT_PROCESSING, GRAIN_CEREAL_PULSE_MILLING}
+  — the current successor to COND-0035 (RULE-0015-V1's now-superseded
+  root). Reuses COND-0032 unchanged, same as COND-0040.
+
+normalization_notes: >
+  RULE-0015-V2's condition_expression_root_id. A flat 3-child AND (the
+  evaluator's COMPOSITE/AND reduces over any number of children, per
+  iris_engine.conditions.evaluate_condition) rather than nesting an
+  intermediate composite for the two turnover leaves — no behavioral
+  difference, fewer records. See rule_review_register.yaml
+  RULE-REV-0006.

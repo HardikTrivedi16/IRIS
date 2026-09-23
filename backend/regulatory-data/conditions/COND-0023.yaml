@@ -1,0 +1,30 @@
+condition_id: COND-0023
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.boiler_design_gauge_pressure_kg_cm2
+operator: ">="
+comparison_value: 1
+unit: kg/cm2
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-BOILER-01
+
+grounding_regulatory_fact_ids:
+  - RF-0016
+
+description: >
+  True if design and working gauge pressure is 1 kg/cm² or more (Boilers
+  Act, 2025, s.2(c)(ii)).
+
+normalization_notes: >
+  Boundary discipline: the Act excludes "< 1 kg/cm²", so the inclusion
+  test is ">= 1", never "> 1". Capture unit is kg/cm² only — never bar
+  (a bar capture would silently poison this comparison; no conversion is
+  performed by this dataset). ANDed with COND-0022 as SH-04's composite
+  root, COND-0024. The Act's third exclusion leg (water heated < 100°C)
+  has no corresponding Project Fact and is not represented by any
+  condition in this pass — see SH-04's Rule Version validation_notes; this
+  two-fact condition does not capture every statutory exclusion.

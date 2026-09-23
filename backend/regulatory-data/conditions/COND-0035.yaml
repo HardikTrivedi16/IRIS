@@ -1,0 +1,26 @@
+condition_id: COND-0035
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0034
+  - COND-0032
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0012
+  - RF-0013
+
+description: >
+  FD-02 root: food_processing_installed_capacity_mt_per_day <= 2 AND
+  food_subsector NOT_IN {DAIRY, VEGETABLE_OIL, SLAUGHTER, MEAT_PROCESSING,
+  GRAIN_CEREAL_PULSE_MILLING} (Reg. 2.1.2(4), State licence, residual
+  entry-V subsector).
+
+normalization_notes: >
+  Reuses COND-0032 (the same subsector guard as FD-01) unchanged.

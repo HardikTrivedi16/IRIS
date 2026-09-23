@@ -48,10 +48,6 @@ requirements:
     default_applicability: REQUIRES_REVIEW
 
 requirements_not_catalogued:
-  - subject: "Maharashtra factory-plan approval / DISH factory licence"
-    reason: "See RULE-REV-0001 / DEP-REV-0002 — no verified Rule exists to ground it."
-  - subject: "MPCB Hazardous Waste Authorization"
-    reason: "See DEP-REV-0003 — no Regulatory Fact was ever collected."
   - subject: "MIDC Building Plan Approval"
     reason: "See Phase 4 REV-0003 / Phase 5 RULE-REV-0004 — no Regulatory Fact was ever collected."
   - subject: "Fire NOC (provisional and final)"
@@ -60,9 +56,20 @@ requirements_not_catalogued:
     reason: "See Phase 4 REV-0002 / Phase 5 RULE-REV-0003 — no primary evidence exists; not a distinct Requirement in any case, but flagged here for completeness."
 
 counts:
-  total_requirements: 4
+  total_requirements: 13
   by_category:
-    CORE_APPROVAL: 3
+    CORE_APPROVAL: 11
     CONDITIONAL_PATHWAY: 1
+    CONTINUING_OBLIGATION: 1
   by_default_applicability:
-    REQUIRES_REVIEW: 4
+    REQUIRES_REVIEW: 13
+
+# NOTE (Shared+Food regulatory-data integration pass): REQ-0005..REQ-0012
+# added (SH-03/04/05/07/08/10, FD-01, FD-02) — see requirements/*.yaml.
+# Detailed per-requirement listing above this counts block was not
+# extended item-by-item; the requirement files themselves are
+# authoritative.
+#
+# NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): REQ-0013
+# added (FSSAI Registration, residual/general-manufacturing category) —
+# see rule_review_register.yaml RULE-REV-0006.

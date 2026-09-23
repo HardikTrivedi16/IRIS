@@ -1,0 +1,33 @@
+condition_id: COND-0037
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0036
+  - COND-0007
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0013
+  - RF-0009
+
+description: >
+  FD-04-corrected root for RULE-0005 (FSSAI dairy Central band):
+  food_subsector == "DAIRY" AND (the existing COND-0007 liquid-milk-OR-
+  solids Central criterion, unchanged). Replaces COND-0007 as
+  RULE-0005-V1's condition_expression_root_id; COND-0007 itself is
+  preserved verbatim as a child, not modified or deleted.
+
+normalization_notes: >
+  This is the engineering pass's implementation of FD-04
+  (CONDITION/SUBRULE, not a Requirement — MH_MULTI_SECTOR_REGULATORY_
+  RESEARCH.md H2.2). Kleene AND: a definite FALSE on the dairy-subsector
+  guard now correctly resolves RULE-0005 to NOT_APPLICABLE for any
+  non-dairy project regardless of whatever unrelated capacity facts (if
+  any) happen to be present, instead of silently evaluating COND-0007
+  alone.

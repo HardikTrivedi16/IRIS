@@ -1,0 +1,13 @@
+regulatory_fact_id: RF-0014
+statement: >
+  An establishment on whose premises 20 or more workers work, or worked on
+  any day of the preceding 12 months, in a manufacturing process carried
+  on with the aid of power is a "factory" under the OSH Code, 2020
+  (s.2(1)(w)(i)) and must be registered; Maharashtra's own statutory
+  worker-number (Factories (Maharashtra Amendment) Act, 2015) is the same
+  20, so the State-number proviso does not change this threshold in
+  Maharashtra.
+evidence_ids: [EVID-OSH-01]
+authority_id: AUTH-DISH-MH
+instrument_id: INST-OSH-20
+verification_status: UNVERIFIED

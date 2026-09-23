@@ -1,0 +1,25 @@
+requirement_id: REQ-0009
+code: LEGAL_METROLOGY_PACKER_REGISTRATION
+title: "Legal Metrology manufacturer/packer registration — LM(PC) Rules, 2011 r.27"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-LMO-MH
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0012
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0020
+evidence_ids:
+  - EVID-LM-01
+
+requirement_notes: >
+  SH-08 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). No verified validity/
+  expiry period exists for this registration — none is captured.

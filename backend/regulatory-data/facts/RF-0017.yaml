@@ -1,0 +1,13 @@
+regulatory_fact_id: RF-0017
+statement: >
+  A boiler certificate is valid for at most 12 months (24 for qualifying
+  economiser/unfired boilers) and ceases to be in force, event-based, on
+  expiry, accident, movement (subject to a small-vertical-boiler
+  exception), structural alteration, or a prohibition order; renewal
+  requires inspection within 15 days, and continued use pending renewal is
+  lawful only if renewal was applied for before expiry (Boilers Act, 2025,
+  ss.12(6), 13, 15, 23).
+evidence_ids: [EVID-BOILER-02]
+authority_id: AUTH-BOILER-MH
+instrument_id: INST-BOILERS-25
+verification_status: UNVERIFIED

@@ -1,9 +1,23 @@
-# IRIS — Provenance Substrate (Tranche 1): Evidence Index
-# Machine-readable index of all authored Evidence records. Empty because no
-# Evidence record has been added yet — see regulatory-data/evidence/README.md.
-# This is a lookup aid; it introduces no applicability logic.
+# IRIS — Provenance Substrate: Evidence Index
+# Machine-readable index of all authored Evidence records. This is a
+# lookup aid; it introduces no applicability logic.
 
-evidence: []
+evidence:
+  - EVID-MPCB-01
+  - EVID-MPCB-02
+  - EVID-FSS-04
+  - EVID-FSS-05
+  - EVID-FSS-06
+  - EVID-OSH-01
+  - EVID-OSH-02
+  - EVID-BOILER-01
+  - EVID-BOILER-02
+  - EVID-CGWA-01
+  - EVID-CGWA-02
+  - EVID-LM-01
+  - EVID-HW-01
+  - EVID-FSS-07
+  - EVID-FSS-08
 
 counts:
-  total_evidence: 0
+  total_evidence: 15

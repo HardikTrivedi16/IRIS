@@ -1,0 +1,13 @@
+authority_id: AUTH-MoEFCC
+name: "Ministry of Environment, Forest and Climate Change"
+level: CENTRAL
+jurisdiction: INDIA
+parent_authority_id: null
+notes: >
+  Instrument-level issuing authority for the Water (P&CP) Act, 1974 and Air
+  (P&CP) Act, 1981 (central Parliament-enacted Acts under this Ministry's
+  administrative lineage), per Phase 4's provenance convention of
+  attributing RF/RuleVersion authority_id to the instrument's issuing
+  authority rather than the state enforcing body (see REQ-0001's
+  authority_attribution_note). Already referenced by
+  RULE-0001-V1/RULE-0002-V1 prior to this record's creation.

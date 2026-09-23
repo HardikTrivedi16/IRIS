@@ -1,0 +1,74 @@
+rule_version_id: RULE-0010-V1
+rule_id: RULE-0010
+version_number: 1
+
+condition_expression_root_id: COND-0025
+logic: "COND-0025 = (holds_boiler_certificate == true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — certificate renewal/event-based-cessation duties apply
+  (Boilers Act, 2025, ss.12(6) [≤12 months validity, 24 for qualifying
+  economiser/unfired boilers], 13(1) [expiry/accident/movement/structural
+  alteration/prohibition order], 13(3)-(4) [renewal inspection within 15
+  days], 15 [continued use pending renewal only if applied before expiry],
+  23 [24-hour accident report]). This engine evaluates the GATE
+  (certificate held) only — the renewal calendar/event tracking itself is
+  not modelled as a separate executable condition in this pass (see
+  validation_notes).
+false_outcome: >
+  NOT_APPLICABLE — no boiler certificate is currently held, so this
+  continuing obligation does not attach. Does not mean no boiler
+  registration is needed at all — see REQ-0006/SH-04.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine whether the certificate-lifecycle
+  obligation applies until certificate-holding status is known.
+
+required_project_facts:
+  - project.holds_boiler_certificate
+
+regulatory_fact_ids:
+  - RF-0017
+evidence_ids:
+  - EVID-BOILER-02
+source_ids:
+  - SRC-007
+authority_id: AUTH-BOILER-MH
+instrument_id: INST-BOILERS-25
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0010-V1
+  regulatory_fact_ids: [RF-0017]
+  evidence_ids: [EVID-BOILER-02]
+  source_ids: [SRC-007]
+  authority_id: AUTH-BOILER-MH
+  instrument_id: INST-BOILERS-25
+
+validation_notes: >
+  Per the research pack: "renewal calendar must model event-based lapse,
+  not dates alone." This Rule Version models the gate (does the continuing
+  obligation attach at all) deterministically; it does not attempt to
+  compute a renewal due-date or detect the individual cessation events
+  (accident/movement/structural alteration/prohibition order) from Project
+  Facts — those remain descriptive in true_outcome pending a dedicated
+  event/date-tracking mechanism, which this pass does not build. Cannot be
+  promoted to ACTIVE without archived SRC-007 + a human VER record.

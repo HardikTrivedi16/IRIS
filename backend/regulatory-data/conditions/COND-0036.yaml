@@ -1,0 +1,33 @@
+condition_id: COND-0036
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.food_subsector
+operator: "=="
+comparison_value: "DAIRY"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-06
+
+grounding_regulatory_fact_ids:
+  - RF-0013
+
+description: >
+  FD-04 dairy guard leaf: true only if the project's food subsector is
+  DAIRY. Schedule 1 entry I ("Dairy units including milk chilling units")
+  and entry V ("other than mentioned under (I) to (IV)") are mutually
+  exclusive by their own words, so a non-dairy project's capacity must
+  never be evaluated against entry I's dairy bands (RULE-0005/RULE-0006).
+
+normalization_notes: >
+  Canonical key is project.food_subsector (F-04 in the research pack's
+  fact registry) — NOT project.primary_food_activity, which is not a
+  registered fact. Reused, unchanged, as one AND child of both
+  COND-0037 (new root for RULE-0005-V1) and COND-0038 (new root for
+  RULE-0006-V1) — the single guard now sits above both existing dairy
+  condition trees, fixing the silent-zero-capacity failure the research
+  pack documents (a non-dairy project supplying no dairy facts previously
+  risked the dairy bands resolving on unrelated/absent data).

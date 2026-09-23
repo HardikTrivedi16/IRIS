@@ -1,0 +1,10 @@
+authority_id: AUTH-DISH-MH
+name: "Directorate of Industrial Safety and Health, Maharashtra (Chief Inspector of Factories lineage; OSH Code registering officer)"
+level: STATE_REGULATOR
+jurisdiction: MAHARASHTRA
+parent_authority_id: null
+notes: >
+  Practical registering/enforcing authority for factory applicability and
+  registration under the OSH Code, 2020 (SH-03) in Maharashtra. Already
+  referenced elsewhere in the dataset (dependency review notes) prior to
+  this record's creation — id not changed.

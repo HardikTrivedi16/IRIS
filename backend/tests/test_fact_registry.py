@@ -110,16 +110,26 @@ def test_A_production_registry_includes_all_authored_scheme_facts_regardless_of_
     registry = fact_registry_index()
     assert registry
 
+    # project.msme_classification is SCHEME-attributed for SCH-0001/SCH-0002
+    # (Tranche 1) AND, since the later Shared+Food regulatory-data pass,
+    # also REGULATORY-attributed (RULE-0011-V1/COND-0027-0028, SH-07 CGWA's
+    # MSME groundwater-abstraction exemption — see regulatory-data/
+    # rule-versions/RULE-0011-V1.yaml). This is the intended "ONE Project
+    # Fact vocabulary, two consumers" merge (app/fact_registry.py's own
+    # module docstring), not a Tranche-1-only key — updated 2026-09-23 when
+    # this became the actual, correct, cross-domain state.
     tranche1 = {
         "project.location_state": {"SCH-0004"},
         "project.export_share_of_turnover_pct": {"SCH-0004"},
         "project.msme_classification": {"SCH-0001", "SCH-0002"},
         "project.udyam_registered": {"SCH-0001"},
     }
+    cross_domain_keys = {"project.msme_classification"}
     for key, scheme_ids in tranche1.items():
         assert key in registry, key
         entry = registry[key]
-        assert entry["consumer_domains"] == ["SCHEME"], key
+        expected_domains = ["REGULATORY", "SCHEME"] if key in cross_domain_keys else ["SCHEME"]
+        assert entry["consumer_domains"] == expected_domains, key
         assert set(entry["scheme_ids"]) == scheme_ids, key
         assert entry["units_conflict"] is False, key
 
@@ -135,8 +145,13 @@ def test_A_production_registry_includes_all_authored_scheme_facts_regardless_of_
         assert registry[key]["consumer_domains"] == ["REGULATORY"], key
         assert registry[key]["scheme_ids"] == [], key
 
-    # Exactly these 10 keys — Tranche 1 is additive, nothing more/less.
-    assert set(registry) == original_regulatory_keys | set(tranche1)
+    # NOT an exact-set check any more: the regulatory dataset has grown well
+    # beyond these 10 keys (Shared+Food integration pass, then the FD-01/
+    # FD-02 currentness-correction pass) — this test predates both and was
+    # never scoped to know about their fact keys. It asserts only that
+    # these specific 10 keys are present and correctly attributed, not that
+    # the registry is closed to exactly them.
+    assert (original_regulatory_keys | set(tranche1)) <= set(registry)
 
 
 # --- B/C/D: scheme-only facts of each inferred type appear -------------------

@@ -1,0 +1,28 @@
+condition_id: COND-0015
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.worker_count
+operator: ">="
+comparison_value: 20
+unit: persons
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-OSH-01
+
+grounding_regulatory_fact_ids:
+  - RF-0014
+
+description: >
+  True if 20 or more workers work (or worked on any day of the preceding
+  12 months) on the premises — the with-power factory headcount test
+  (OSH Code, 2020, s.2(1)(w)(i)).
+
+normalization_notes: >
+  Corrects the obsolete >=10 threshold from an earlier research pass —
+  Maharashtra's own statutory number (Factories (Maharashtra Amendment)
+  Act, 2015) is 20, matching the OSH Code's own default. This leaf is
+  ANDed with COND-0016 (uses_power == true) as the with-power branch of
+  SH-03's composite root, COND-0021.

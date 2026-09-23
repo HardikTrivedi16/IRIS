@@ -1,0 +1,14 @@
+rule_id: RULE-0016
+code: FSSAI_REGISTRATION_RESIDUAL_TURNOVER_APPLICABILITY
+requirement_id: REQ-0013
+title: "FSSAI Registration — residual/general-manufacturing turnover threshold (<=Rs. 1.5 crore)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether a residual/general-manufacturing food-processing
+  unit (not dairy/vegetable-oil/slaughter/meat/milling) with annual
+  turnover up to Rs. 1.5 crore requires only FSSAI Registration rather
+  than a Central or State licence, effective 01.04.2026.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

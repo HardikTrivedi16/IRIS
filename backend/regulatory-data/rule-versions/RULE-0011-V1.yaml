@@ -1,0 +1,77 @@
+rule_version_id: RULE-0011-V1
+rule_id: RULE-0011
+version_number: 1
+
+condition_expression_root_id: COND-0028
+logic: "COND-0028 = OR(groundwater_abstraction_m3_per_day>=10, msme_classification NOT_IN [MICRO,SMALL])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — a CGWA NOC is required (S.O. 3289(E)); the project either
+  abstracts 10 m³/day or more, or is not a Micro/Small Enterprise (and so
+  does not qualify for the Para 1.0(v) exemption).
+false_outcome: >
+  NOT_APPLICABLE on this trigger — abstraction is below 10 m³/day AND the
+  project is a Micro or Small Enterprise (the Para 1.0(v) exemption
+  applies).
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine NOC applicability until
+  groundwater abstraction and MSME classification are known. Per the
+  engine's existing missing-data policy, an explicit
+  msme_classification value of "UNKNOWN" is itself treated as missing
+  (never guessed as MICRO/SMALL or NOT_MSME) and correctly resolves this
+  branch to REQUIRES_INFORMATION.
+
+required_project_facts:
+  - project.groundwater_abstraction_m3_per_day
+  - project.msme_classification
+
+regulatory_fact_ids:
+  - RF-0018
+  - RF-0019
+evidence_ids:
+  - EVID-CGWA-01
+  - EVID-CGWA-02
+source_ids:
+  - SRC-008
+authority_id: AUTH-CGWA
+instrument_id: INST-CGWA-20
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: [PRE_ESTABLISHMENT, OPERATION]
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0011-V1
+  regulatory_fact_ids: [RF-0018, RF-0019]
+  evidence_ids: [EVID-CGWA-01, EVID-CGWA-02]
+  source_ids: [SRC-008]
+  authority_id: AUTH-CGWA
+  instrument_id: INST-CGWA-20
+
+validation_notes: >
+  Never infers msme_classification from project size/scale — it is a
+  distinct, user-declared statutory fact. KNOWN LIMITATION, preserved as
+  specified rather than silently corrected (see COND-0028's own
+  normalization_notes): this composite can resolve APPLICABLE for a
+  project with zero groundwater abstraction, purely on the
+  not-Micro/Small branch — flagged for human review, implemented exactly
+  as the research pack's own predicate formula (item 7 of the
+  implementation brief: "use the exact representable research logic").
+  Cannot be promoted to ACTIVE without archived SRC-008 + a human VER
+  record.

@@ -1,0 +1,13 @@
+rule_id: RULE-0012
+code: LM_PACKER_REGISTRATION_APPLICABILITY
+requirement_id: REQ-0009
+title: "LM(PC) Rules, 2011 r.27 manufacturer/packer registration applicability"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the project must register as a manufacturer/packer
+  under LM(PC) Rules, 2011 r.27(1) — triggered by pre-packing commodities
+  for retail sale.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

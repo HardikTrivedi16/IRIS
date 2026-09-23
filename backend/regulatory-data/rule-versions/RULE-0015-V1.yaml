@@ -1,0 +1,79 @@
+rule_version_id: RULE-0015-V1
+rule_id: RULE-0015
+version_number: 1
+
+condition_expression_root_id: COND-0035
+logic: "COND-0035 = AND(food_processing_installed_capacity_mt_per_day<=2, food_subsector NOT_IN [DAIRY,VEGETABLE_OIL,SLAUGHTER,MEAT_PROCESSING,GRAIN_CEREAL_PULSE_MILLING])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — a State FSSAI licence is required under Reg. 2.1.2(4)
+  (installed capacity 2 MT/day or less, residual food-processing
+  subsector).
+false_outcome: >
+  NOT_APPLICABLE on this trigger — either installed capacity is more than
+  2 MT/day (see FD-01/REQ-0011, the Central pathway), or the project's
+  food subsector is dairy/vegetable-oil/slaughter/meat/milling.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine State-licence applicability
+  until installed capacity and food subsector are known.
+
+required_project_facts:
+  - project.food_processing_installed_capacity_mt_per_day
+  - project.food_subsector
+
+regulatory_fact_ids:
+  - RF-0012
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-05
+  - EVID-FSS-06
+source_ids:
+  - SRC-004
+authority_id: AUTH-FDA-MH-FOOD
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: "2011-08-05"
+effective_end_date: "2026-03-31"
+
+status: SUPERSEDED
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0015-V1
+  regulatory_fact_ids: [RF-0012, RF-0013]
+  evidence_ids: [EVID-FSS-05, EVID-FSS-06]
+  source_ids: [SRC-004]
+  authority_id: AUTH-FDA-MH-FOOD
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  Uses the engine's supported "<=" operator (no "<" was invented). At
+  exactly 2.0 MT/day this Rule is TRUE (State) and RULE-0014 (Central) is
+  FALSE — the two pathways are exact complements on the capacity dimension,
+  never simultaneously TRUE or FALSE for a known, non-boundary-excluded
+  capacity value. 2026-amendment watch item (this note's own prediction,
+  now confirmed): Reg. 2.1.2(6) lets the Food Authority re-specify
+  eligibility/Licensing-Authority by order — exercised via SRC-011's
+  Order dated 13.03.2026, corroborated by SRC-012's live FoSCoS table.
+
+  SUPERSEDED (2026-09-23): exactly the re-verification this note warned
+  would be needed, not silent continuation. This Rule Version is
+  preserved, unedited, as the historically-evidenced capacity-based
+  regime (2011-08-05 to 2026-03-31) — see RULE-0015-V2 for the current
+  (turnover-based) successor and rule_review_register.yaml RULE-REV-0006
+  for the full rationale. Never promoted to ACTIVE; retains its original
+  confidence/evidence exactly as authored.

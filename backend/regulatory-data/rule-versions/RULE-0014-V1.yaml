@@ -1,0 +1,83 @@
+rule_version_id: RULE-0014-V1
+rule_id: RULE-0014
+version_number: 1
+
+condition_expression_root_id: COND-0033
+logic: "COND-0033 = AND(food_processing_installed_capacity_mt_per_day>2, food_subsector NOT_IN [DAIRY,VEGETABLE_OIL,SLAUGHTER,MEAT_PROCESSING,GRAIN_CEREAL_PULSE_MILLING])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — a Central FSSAI licence is required under Schedule 1 entry V
+  (installed capacity more than 2 MT/day, residual food-processing
+  subsector).
+false_outcome: >
+  NOT_APPLICABLE on this trigger — either installed capacity is 2 MT/day
+  or less (see FD-02/REQ-0012, the complementary State pathway), or the
+  project's food subsector is dairy/vegetable-oil/slaughter/meat/milling
+  (which have their own distinct Schedule 1 entries, not this one).
+  Schedule 1 entries VI (100% EOU) and IX (multi-state operator) route to
+  Central independently of capacity and are NOT evaluated by this Rule —
+  no Project Fact exists for them in this pass.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine Central-licence applicability
+  until installed capacity and food subsector are known.
+
+required_project_facts:
+  - project.food_processing_installed_capacity_mt_per_day
+  - project.food_subsector
+
+regulatory_fact_ids:
+  - RF-0011
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-04
+  - EVID-FSS-06
+source_ids:
+  - SRC-004
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: "2011-08-05"
+effective_end_date: "2026-03-31"
+
+status: SUPERSEDED
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0014-V1
+  regulatory_fact_ids: [RF-0011, RF-0013]
+  evidence_ids: [EVID-FSS-04, EVID-FSS-06]
+  source_ids: [SRC-004]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  Operator is strictly ">" per entry V's own words ("more than 2 MT/day") —
+  confirmed at the boundary: exactly 2.0 MT/day is FALSE on this Rule
+  (must resolve to FD-02/State instead, never Central). Never re-derives
+  or repurposes the sub-501-L/day dairy registration gap (RULE-REV-0003) —
+  entry V is a wholly separate, residual, non-dairy pathway.
+
+  SUPERSEDED (2026-09-23): archival confirmed the Schedule 1 entry V text
+  itself (SRC-004, archived), but also surfaced an FSSAI Order dated
+  13.03.2026 (SRC-011) and a corroborating live FoSCoS table (SRC-012)
+  showing this installed-capacity criterion has been replaced in practice
+  by a turnover-based one for this category, effective 01.04.2026. This
+  Rule Version is preserved, unedited, as the historically-evidenced
+  capacity-based regime (2011-08-05 to 2026-03-31) — see RULE-0014-V2 for
+  the current successor and rule_review_register.yaml RULE-REV-0006 for
+  the full rationale. Never promoted to ACTIVE; retains its original
+  confidence/evidence exactly as authored.

@@ -1,0 +1,11 @@
+regulatory_fact_id: RF-0001
+statement: >
+  A person must obtain the previous consent of the State Pollution Control
+  Board before establishing (or taking steps to establish) any industry,
+  operation or process, or any treatment/disposal system or extension/
+  addition thereto, that is likely to discharge sewage or trade effluent
+  into a stream, well, sewer, or on land (Water Act, 1974, s.25(1)(a)).
+evidence_ids: [EVID-MPCB-01]
+authority_id: AUTH-MoEFCC   # instrument's issuing authority per Phase 4 convention — see REQ-0001's authority_attribution_note; AUTH-MPCB is the practical enforcing authority at Requirement level
+instrument_id: INST-WATER-74
+verification_status: UNVERIFIED

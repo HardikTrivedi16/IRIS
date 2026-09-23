@@ -2,8 +2,8 @@ rule_version_id: RULE-0005-V1
 rule_id: RULE-0005
 version_number: 1
 
-condition_expression_root_id: COND-0007
-logic: "COND-0007 = OR(COND-0005: liquid_milk > 50000 L/day, COND-0006: milk_solids > 2500 MT/annum)"
+condition_expression_root_id: COND-0037
+logic: "COND-0037 = AND(food_subsector == DAIRY [FD-04 guard], COND-0007 = OR(COND-0005: liquid_milk > 50000 L/day, COND-0006: milk_solids > 2500 MT/annum))"
 
 output_mapping:
   TRUE: APPLICABLE
@@ -17,15 +17,18 @@ true_outcome: >
   see `known_conflicts` (OVERLAP-0001) below. In that simultaneous-TRUE situation, the combined
   result is REQUIRES_REVIEW / UNDETERMINED_OVERLAP, not a resolved Central-vs-State determination.
 false_outcome: >
-  NOT_APPLICABLE — the dairy unit does not meet either Central Licensing Authority capacity
-  criterion. This does not by itself mean no FSSAI licence/registration is needed — see RULE-0006
-  (State category) and RULE-REV-0003 (sub-501-L/day registration-tier gap).
+  NOT_APPLICABLE — either the project's food subsector is not DAIRY (FD-04 guard; a non-dairy
+  project is never evaluated against these capacity bands), or it is DAIRY but does not meet
+  either Central Licensing Authority capacity criterion. This does not by itself mean no FSSAI
+  licence/registration is needed — see RULE-0006 (State category) and RULE-REV-0003
+  (sub-501-L/day registration-tier gap).
 unknown_outcome: >
   REQUIRES_INFORMATION — cannot determine Central-category classification until the dairy unit's
   liquid milk and/or milk solids capacity is known (per Kleene OR, only the criteria still needed to
   resolve the result should be requested — see engine implementation note below).
 
 required_project_facts:
+  - project.food_subsector
   - project.dairy_liquid_milk_capacity
   - project.dairy_milk_solids_capacity
 
@@ -37,8 +40,10 @@ engine_note: >
 
 regulatory_fact_ids:
   - RF-0009
+  - RF-0013
 evidence_ids:
   - EVID-FSS-02
+  - EVID-FSS-06
 source_ids:
   - SRC-004
 authority_id: AUTH-FSSAI
@@ -71,6 +76,10 @@ provenance:
 validation_notes: >
   Preserves the two threshold criteria as alternative ("OR") conditions per Phase 4 §15, rather than
   merging into a single numeric threshold. Boundary operator (">") and units preserved exactly.
+  DAIRY GUARD (this pass, FD-04, MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12): condition_expression_root_id
+  changed from COND-0007 to COND-0037 (= food_subsector == "DAIRY" AND COND-0007), so this rule
+  can never answer a non-dairy project on the basis of stray/absent capacity facts. COND-0007
+  itself is unchanged.
 
 known_conflicts:
   - conflict_id: OVERLAP-0001

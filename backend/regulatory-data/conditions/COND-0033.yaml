@@ -1,0 +1,28 @@
+condition_id: COND-0033
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0031
+  - COND-0032
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0011
+  - RF-0013
+
+description: >
+  FD-01 root: food_processing_installed_capacity_mt_per_day > 2 AND
+  food_subsector NOT_IN {DAIRY, VEGETABLE_OIL, SLAUGHTER, MEAT_PROCESSING,
+  GRAIN_CEREAL_PULSE_MILLING} (Schedule 1 entry V, Central licence).
+
+normalization_notes: >
+  Schedule 1 entries VI (100% EOU) and IX (multi-state operator) route to
+  Central independently of capacity per the research pack — not modelled
+  as an additional OR branch in this pass (no corresponding Project Fact
+  exists); documented here as a validation note, not silently ignored.

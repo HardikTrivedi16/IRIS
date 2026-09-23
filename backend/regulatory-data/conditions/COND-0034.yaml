@@ -1,0 +1,30 @@
+condition_id: COND-0034
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.food_processing_installed_capacity_mt_per_day
+operator: "<="
+comparison_value: 2
+unit: MT/day
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-05
+
+grounding_regulatory_fact_ids:
+  - RF-0012
+
+description: >
+  True if installed capacity is 2 MT/day or less — the complementary
+  residual State-licence band to FD-01's Central ">2 MT/day" test, using
+  the engine's supported "<=" operator (the statute's own "more than 2"
+  wording is captured on the FD-01 side as strict ">"; this side is its
+  exact logical complement, not a separately worded statutory threshold).
+
+normalization_notes: >
+  ANDed with COND-0032 (same subsector guard FD-01 uses) as FD-02's
+  composite root, COND-0035. At exactly 2 MT/day this leaf is TRUE (State),
+  and FD-01's ">" leaf is FALSE (not Central) — the two pathways are
+  mutually exclusive at the boundary, never both TRUE or both FALSE for a
+  known capacity value.

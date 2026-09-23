@@ -1,0 +1,25 @@
+condition_id: COND-0026
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.groundwater_abstraction_m3_per_day
+operator: ">="
+comparison_value: 10
+unit: m3/day
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-CGWA-02
+
+grounding_regulatory_fact_ids:
+  - RF-0019
+
+description: >
+  True if groundwater abstraction is 10 m³/day or more — the Micro/Small
+  Enterprise exemption threshold (S.O. 3289(E), Para 1.0(v)), expressed
+  here as its own negation (see COND-0028's normalization_notes for the
+  De Morgan derivation).
+
+normalization_notes: >
+  ORed with COND-0027 as SH-07's composite root, COND-0028.

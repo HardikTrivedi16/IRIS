@@ -10,7 +10,8 @@ NP = EvaluationMode.NON_PRODUCTION
 
 
 def _facts(liquid, solids):
-    return {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": liquid,
+    return {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+            "project.dairy_liquid_milk_capacity": liquid,
             "project.dairy_milk_solids_capacity": solids}
 
 

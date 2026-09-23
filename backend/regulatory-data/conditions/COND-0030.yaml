@@ -1,0 +1,28 @@
+condition_id: COND-0030
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.generates_or_handles_scheduled_hazardous_waste
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-HW-01
+
+grounding_regulatory_fact_ids:
+  - RF-0021
+
+description: >
+  SH-10 root: true if the project generates or handles Schedule-listed
+  hazardous and other waste — the authorisation trigger verbatim
+  (Hazardous and Other Wastes (M&TM) Rules, 2016, r.6(1)).
+
+normalization_notes: >
+  Boolean trigger only, never inferred from sector (Food, Pharma,
+  Chemicals, EV, or Electronics) — e.g. a DG set's used oil is
+  Schedule-listed and must be captured honestly as a fact, not assumed
+  from the project's declared industry. Single-leaf root, no composite
+  needed.

@@ -1,0 +1,14 @@
+regulatory_fact_id: RF-0016
+statement: >
+  A pressure vessel generating steam for external use is a "boiler"
+  requiring registration and certification under the Boilers Act, 2025
+  when its volumetric capacity is 25 litres or more AND its design/working
+  gauge pressure is 1 kg/cm² or more (s.2(c); the statute's own exclusion
+  is strictly "less than" 25 L / 1 kg/cm², so the inclusion test is ">="
+  never ">"). A third exclusion (water heated below 100°C) exists in the
+  statute but has no corresponding Project Fact in this dataset and is not
+  part of the executable predicate.
+evidence_ids: [EVID-BOILER-01]
+authority_id: AUTH-BOILER-MH
+instrument_id: INST-BOILERS-25
+verification_status: UNVERIFIED

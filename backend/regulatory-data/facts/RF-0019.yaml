@@ -1,0 +1,9 @@
+regulatory_fact_id: RF-0019
+statement: >
+  A Micro or Small Enterprise abstracting groundwater at a rate of less
+  than 10 m³/day is exempt from the CGWA NOC requirement (S.O. 3289(E)
+  Para 1.0(v)).
+evidence_ids: [EVID-CGWA-02]
+authority_id: AUTH-CGWA
+instrument_id: INST-CGWA-20
+verification_status: UNVERIFIED

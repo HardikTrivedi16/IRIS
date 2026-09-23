@@ -1,0 +1,14 @@
+rule_id: RULE-0015
+code: FSSAI_STATE_ENTRY_V_RESIDUAL_APPLICABILITY
+requirement_id: REQ-0012
+title: "FSSAI Reg. 2.1.2(4) — State licence residual pathway (<=2 MT/day, non-milling residual food)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether a residual food-processing unit (not dairy/vegetable-
+  oil/slaughter/meat/milling) with installed capacity at or below 2 MT/day
+  is licensed by the State Licensing Authority under Reg. 2.1.2(4) — the
+  exact logical complement of FD-01/RULE-0014.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

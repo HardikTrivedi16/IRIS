@@ -43,15 +43,26 @@ def test_leaf_unknown_missing_fact(engine):
 
 
 def test_nested_composite_tree_shape_for_fssai_dependency_rule(engine, dataset):
-    # RULE-0006 (State) is COND-0014: OR(AND(COND-0008,COND-0009), AND(COND-0011,COND-0012))
-    facts = {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 40000,
+    # RULE-0006 (State)'s root is now COND-0038 (FD-04 dairy guard, this
+    # pass): AND(food_subsector==DAIRY leaf, COND-0014 = OR(AND(COND-0008,
+    # COND-0009), AND(COND-0011,COND-0012))). COND-0014 itself is
+    # unchanged; only the root above it changed from COND-0014 to COND-0038.
+    facts = {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+             "project.dairy_liquid_milk_capacity": 40000,
              "project.dairy_milk_solids_capacity": 1000}
     d = engine.evaluate_requirement("P", "REQ-0004", facts, NP)
     tree = d["explanation"]["classification_condition_trees"]["RULE-0006"]
     assert tree["predicate_type"] == "COMPOSITE"
-    assert tree["operator"] == "OR"
+    assert tree["operator"] == "AND"
     assert len(tree["children"]) == 2
-    for child in tree["children"]:
+    guard, or_node = tree["children"]
+    assert guard["predicate_type"] != "COMPOSITE"
+    assert "condition_id" in guard and "result" in guard
+
+    assert or_node["predicate_type"] == "COMPOSITE"
+    assert or_node["operator"] == "OR"
+    assert len(or_node["children"]) == 2
+    for child in or_node["children"]:
         assert child["predicate_type"] == "COMPOSITE"
         assert child["operator"] == "AND"
         assert len(child["children"]) == 2

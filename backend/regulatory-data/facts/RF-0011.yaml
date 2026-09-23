@@ -1,0 +1,12 @@
+regulatory_fact_id: RF-0011
+statement: >
+  A food processing unit other than a dairy unit (entry I), vegetable-oil/
+  solvent-extraction unit (entry II), slaughterhouse (entry III), or meat
+  processing unit (entry IV) — including relabellers/repackers, but
+  excluding grains/cereals/pulses milling units — with installed capacity
+  more than 2 MT/day requires a Central FSSAI licence (Schedule 1 entry
+  V, FSS (L&R) Regulations, 2011).
+evidence_ids: [EVID-FSS-04]
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+verification_status: UNVERIFIED

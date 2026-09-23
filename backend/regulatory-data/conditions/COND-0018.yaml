@@ -1,0 +1,25 @@
+condition_id: COND-0018
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.worker_count
+operator: ">="
+comparison_value: 40
+unit: persons
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-OSH-02
+
+grounding_regulatory_fact_ids:
+  - RF-0015
+
+description: >
+  True if 40 or more workers work (or worked on any day of the preceding
+  12 months) on the premises — the without-power factory headcount test
+  (OSH Code, 2020, s.2(1)(w)(ii)).
+
+normalization_notes: >
+  ANDed with COND-0019 (uses_power == false) as the without-power branch of
+  SH-03's composite root, COND-0021.

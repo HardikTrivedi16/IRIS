@@ -1,0 +1,29 @@
+condition_id: COND-0045
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0044
+  - COND-0032
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0024
+
+description: >
+  FSSAI Registration root (new — no historical predecessor in this
+  dataset): annual_turnover_inr <= 15000000 AND food_subsector NOT_IN
+  {DAIRY, VEGETABLE_OIL, SLAUGHTER, MEAT_PROCESSING,
+  GRAIN_CEREAL_PULSE_MILLING}. Reuses COND-0032 unchanged.
+
+normalization_notes: >
+  RULE-0016-V1's condition_expression_root_id, under new Requirement
+  REQ-0013. Not a Rule Version of REQ-0011/REQ-0012 — Registration is a
+  distinct approval question from either licence, per the same "one
+  Requirement per distinct approval question" contract FD-01/FD-02
+  themselves follow. See rule_review_register.yaml RULE-REV-0006.

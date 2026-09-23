@@ -28,14 +28,15 @@ def test_invariant_missing_data_never_becomes_false(dataset):
 
 
 def test_invariant_draft_never_becomes_production(dataset):
-    for rv_id in [f"RULE-{i:04d}-V1" for i in range(1, 7)]:
+    for rv_id in [f"RULE-{i:04d}-V1" for i in range(1, 16)]:
         r = evaluate_rule_version(rv_id, dataset, {}, PROD)
         assert r.final_state == "BLOCKED_DRAFT_NOT_PRODUCTION"
 
 
 def test_invariant_unresolved_conflict_never_resolved(engine):
     d = engine.evaluate_requirement("P", "REQ-0004",
-        {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+        {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 60000,
          "project.dairy_milk_solids_capacity": 1000}, NP)
     assert d["final_state"] == "REQUIRES_REVIEW"
     assert d["final_state"] not in ("APPLICABLE", "NOT_APPLICABLE")
@@ -139,7 +140,8 @@ def test_mutation_fssai_precedence_hardcoded_is_detected(dataset):
         return rule_evals["RULE-0005"].final_state
 
     from iris_engine.rules import evaluate_rule_version
-    facts_case3 = {"project.dairy_liquid_milk_capacity": 40000,
+    facts_case3 = {"project.food_subsector": "DAIRY",
+                   "project.dairy_liquid_milk_capacity": 40000,
                    "project.dairy_milk_solids_capacity": 1000}
     central = evaluate_rule_version(
         dataset.latest_rule_version_id("RULE-0005"), dataset, facts_case3, NP)

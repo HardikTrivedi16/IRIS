@@ -1,0 +1,14 @@
+rule_id: RULE-0007
+code: OSH_FACTORY_APPLICABILITY_TEST
+requirement_id: REQ-0005
+title: "OSH Code, 2020 — factory applicability (20-with-power / 40-without-power test)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether the establishment is a "factory" under the OSH Code,
+  2020, s.2(1)(w): 20 or more workers with power, or 40 or more workers
+  without power, on any day of the preceding 12 months.
+
+rule_type: APPLICABILITY_RULE
+
+current_active_rule_version_id: null

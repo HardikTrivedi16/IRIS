@@ -90,6 +90,21 @@ conditions:
     child_condition_ids: [COND-0010, COND-0013]
 
 counts:
-  total_conditions: 14
-  leaf_conditions: 10
-  composite_conditions: 4
+  total_conditions: 45
+  leaf_conditions: 29
+  composite_conditions: 16
+
+# NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): COND-0039..
+# COND-0045 (7 new conditions: turnover-based Central/State/Registration
+# trees, reusing COND-0032's subsector guard unchanged) added — see
+# rule_review_register.yaml RULE-REV-0006.
+
+# NOTE (Shared+Food regulatory-data integration pass): COND-0015..COND-0038
+# (24 new conditions, for SH-03/04/05/07/08/10/FD-01/FD-02/FD-04 — see
+# requirements/rules/rule-versions of the same pass) were added to
+# conditions/*.yaml and are counted above, but this index's detailed
+# per-condition listing (used_by_rule_versions/child_condition_ids/
+# parent_composite) was NOT extended item-by-item this pass — only the
+# summary counts, which is what iris_engine/validate.py actually checks.
+# The individual condition files themselves are the authoritative source;
+# this index is a lookup aid.

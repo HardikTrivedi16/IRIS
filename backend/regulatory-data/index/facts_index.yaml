@@ -1,9 +1,24 @@
-# IRIS — Provenance Substrate (Tranche 1): Regulatory Fact (RF) Index
-# Machine-readable index of all authored Regulatory Fact records. Empty
-# because no RF record has been added yet — see regulatory-data/facts/README.md.
-# This is a lookup aid; it introduces no applicability logic.
+# IRIS — Provenance Substrate: Regulatory Fact (RF) Index
+# Machine-readable index of all authored Regulatory Fact records. This is
+# a lookup aid; it introduces no applicability logic.
 
-facts: []
+facts:
+  - RF-0001
+  - RF-0002
+  - RF-0011
+  - RF-0012
+  - RF-0013
+  - RF-0014
+  - RF-0015
+  - RF-0016
+  - RF-0017
+  - RF-0018
+  - RF-0019
+  - RF-0020
+  - RF-0021
+  - RF-0022
+  - RF-0023
+  - RF-0024
 
 counts:
-  total_regulatory_facts: 0
+  total_regulatory_facts: 16

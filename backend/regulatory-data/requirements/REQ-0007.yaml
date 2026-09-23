@@ -1,0 +1,28 @@
+requirement_id: REQ-0007
+code: BOILER_CERTIFICATE_LIFECYCLE
+title: "Boiler certificate renewal / event-based expiry — Boilers Act, 2025"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-BOILER-MH
+category: CONTINUING_OBLIGATION
+lifecycle_stage_ids:
+  - OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0010
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0017
+evidence_ids:
+  - EVID-BOILER-02
+
+requirement_notes: >
+  SH-05 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2). Modelled as a
+  REQUIREMENT (a genuine continuing obligation with its own event-based
+  consequence), not RENEWAL_METADATA — its expiry logic (accident/movement/
+  structural alteration/prohibition order, not dates alone) is itself the
+  substantive rule, per H2.2's classification basis.

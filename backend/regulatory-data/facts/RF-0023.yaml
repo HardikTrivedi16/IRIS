@@ -1,0 +1,13 @@
+regulatory_fact_id: RF-0023
+statement: >
+  Effective 01.04.2026, a food processing unit within the same residual/
+  general-manufacturing category with annual turnover above Rs. 1.5 crore
+  and up to Rs. 50 crore requires a State FSSAI licence, per the same
+  FSSAI Order dated 13.03.2026. This is the current (turnover-based)
+  successor to RF-0012's historical (installed-capacity-based) State
+  criterion — RF-0012 is NOT retracted, it grounds the now-superseded
+  RULE-0015-V1.
+evidence_ids: [EVID-FSS-07, EVID-FSS-08]
+authority_id: AUTH-FDA-MH-FOOD
+instrument_id: INST-FSS-LR-11
+verification_status: UNVERIFIED

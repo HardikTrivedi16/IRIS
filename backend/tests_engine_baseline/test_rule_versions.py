@@ -70,10 +70,11 @@ def test_rule_0004_fssai_food_business(engine):
 
 def test_rule_0005_and_0006_direct(engine, dataset):
     from iris_engine.rules import evaluate_rule_version
-    rv5 = evaluate_rule_version("RULE-0005-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 60000, "project.dairy_milk_solids_capacity": 1000}, NP)
+    dairy_facts = {"project.food_subsector": "DAIRY",
+                   "project.dairy_liquid_milk_capacity": 60000,
+                   "project.dairy_milk_solids_capacity": 1000}
+    rv5 = evaluate_rule_version("RULE-0005-V1", dataset, dairy_facts, NP)
     assert rv5.final_state == "APPLICABLE"
 
-    rv6 = evaluate_rule_version("RULE-0006-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 60000, "project.dairy_milk_solids_capacity": 1000}, NP)
+    rv6 = evaluate_rule_version("RULE-0006-V1", dataset, dairy_facts, NP)
     assert rv6.final_state == "APPLICABLE"

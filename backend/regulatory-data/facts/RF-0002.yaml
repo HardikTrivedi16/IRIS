@@ -1,0 +1,11 @@
+regulatory_fact_id: RF-0002
+statement: >
+  A person must obtain the previous consent of the State Pollution Control
+  Board before establishing or operating an industrial plant in an air
+  pollution control area (Air Act, 1981, s.21(1)); the whole of
+  Maharashtra has been an Air Pollution Control Area since 06/11/1996 per
+  MPCB's own RTI s.4 disclosures (date corroborated, not gazette-verified).
+evidence_ids: [EVID-MPCB-02]
+authority_id: AUTH-MoEFCC
+instrument_id: INST-AIR-81
+verification_status: UNVERIFIED

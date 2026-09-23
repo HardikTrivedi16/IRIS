@@ -84,7 +84,74 @@ review_items:
     next_phase: "Phase 3, then Phase 4, then a future Phase 5 pass."
     blocks: "Any Rule concerning Fire NOC applicability."
 
+  - review_id: RULE-REV-0006
+    subject: "FD-01/FD-02 currentness — Schedule 1 entry V / Reg. 2.1.2(3)(4) installed-capacity criterion vs. 2026 turnover-based supersession"
+    related_regulatory_fact_ids: [RF-0011, RF-0012, RF-0013]
+    related_phase4_review_id: null
+    reason: >
+      During the FD-01/FD-02 source-archival pass (2026-09-23), two primary
+      artifacts were independently retrieved and archived: SRC-011 (FSSAI
+      Order dated 13.03.2026, issued under a Reg. 2.1.2(6)-type power the
+      amendment regulations reportedly inserted, which states it
+      "supersedes all other earlier orders and regulations with respect to
+      turnover thresholds or criteria... for categorisation of Food
+      Businesses," replacing them with Registration <=Rs.1.5Cr / State
+      >1.5Cr-50Cr / Central >50Cr, effective 01.04.2026); and SRC-012
+      (FSSAI's own FoSCoS operative eligibility table, 02.04.2026), which
+      classifies the entry-V-equivalent "General manufacturing" category
+      (same dairy/oil/slaughter/meat/milling exclusions as Schedule 1
+      entry V) by turnover only, with no installed-capacity criterion. This
+      contradicts the prior (unverified, research-pack-sourced) claim that
+      Schedule 1/Reg. 2.1.2(3)/(4) were unamended and still the operative
+      Central/State discriminator for this category — see the corrected
+      note on INST-FSS-LR-11. The 10.03.2026 gazette notification text
+      itself (the amendment regulation that inserted the delegated power)
+      could not be retrieved — the only located link is dead (SPA-shell
+      fallback, confirmed by direct navigation) — so it is not yet known
+      whether Schedule 1's own text was amended, or whether this is a
+      delegated-order supersession layered on top of unamended text.
+    decision: >
+      RULE-0014-V1 (FD-01) and RULE-0015-V1 (FD-02) were NOT edited in
+      place. UPDATE (2026-09-23, currentness-correction pass): per
+      explicit human instruction, the contradiction has now been resolved
+      IN THE DATA MODEL (not in law — that remains a human question, see
+      below): RULE-0014-V1/RULE-0015-V1 were set to status: SUPERSEDED
+      with effective_end_date "2026-03-31" (the day before the successor
+      regime's effective_start_date, 2026-04-01 — corrected 2026-09-23,
+      see the audit note below), preserved unedited as the
+      historically-evidenced installed-capacity regime. Successor Rule
+      Versions RULE-0014-V2/RULE-0015-V2 (same rule_id, same Requirements
+      REQ-0011/REQ-0012 — no duplicate Requirements) were authored from
+      SRC-011/SRC-012 using a new canonical Project Fact,
+      project.annual_turnover_inr (integer INR, no existing canonical
+      turnover-amount fact was found to reuse — only the unrelated
+      project.export_share_of_turnover_pct existed). A third Requirement,
+      REQ-0013 (RULE-0016/RULE-0016-V1), was added for the Registration
+      band (<=Rs. 1.5 crore) that SRC-011/SRC-012 evidence but no prior
+      Requirement in this dataset covered — modelled as its own
+      Requirement, not folded into REQ-0012, since "Registration only, no
+      licence" is a distinct approval question from "State licence"
+      (mirrors REQ-0011/REQ-0012's own distinct-Requirement precedent).
+      food_subsector's NOT_IN guard (COND-0032) was reused unchanged on
+      all three new condition trees — the dairy guard (FD-04,
+      RULE-0005/RULE-0006) was NOT touched.
+    current_status: REQUIRES_REVIEW
+    what_is_needed: >
+      NOT CLOSED — human verification is still required before any
+      promotion. Outstanding: (1) the actual 10.03.2026 (and 23.06.2026
+      Second Amendment) gazette notification text itself, to determine
+      whether Schedule 1 entry V / Reg. 2.1.2(3)(4) were textually
+      amended versus superseded in practice by the Reg. 2.1.2(6)
+      delegated order; (2) human review/APPROVED VER for RULE-0014-V2,
+      RULE-0015-V2, and RULE-0016-V1 — all three remain status: DRAFT and
+      none has been promoted to ACTIVE; (3) a legal read of whether
+      SRC-012's separate "Fish and Fish products" row narrows FD-01-V2/
+      FD-02-V2's scope versus the historical entry-V text (flagged in
+      RULE-0014-V2's own validation_notes, not resolved).
+    next_phase: "Human legal review of the successor Rule Versions (RULE-0014-V2/RULE-0015-V2/RULE-0016-V1) and the outstanding gazette-text gap, then human verification (APPROVED VER) before any ACTIVE-promotion attempt."
+    blocks: "Promotion of RULE-0014-V1/RULE-0015-V1 (now SUPERSEDED, and in any case historical) to ACTIVE; and promotion of RULE-0014-V2, RULE-0015-V2, or RULE-0016-V1 to ACTIVE, until a human reviewer verifies each and an APPROVED VER record is created."
+
 counts:
-  total_review_items: 5
-  REQUIRES_REVIEW: 2
+  total_review_items: 6
+  REQUIRES_REVIEW: 3
   UNKNOWN: 3

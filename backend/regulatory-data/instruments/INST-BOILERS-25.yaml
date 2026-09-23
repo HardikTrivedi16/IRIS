@@ -1,0 +1,23 @@
+instrument_id: INST-BOILERS-25
+short_title: "Boilers Act, 2025"
+full_citation: "The Boilers Act, 2025 (Act 12 of 2025)"
+issuing_authority_id: AUTH-BOILER-MH
+year: 2025
+currency_status: IN_FORCE
+effective_start_date: "2025-05-01"
+effective_end_date: null
+supersedes_instrument_id: null
+superseded_by_instrument_id: null
+last_currency_check: "2026-09-22"
+notes: >
+  Per MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §4 I-08/I-09: assented
+  04.04.2025; brought into force 01.05.2025 by commencement notification
+  S.O. 1943(E) dt 30.04.2025; repeals the Boilers Act, 1923 (s.45(1)),
+  boilers registered under the 1923 Act deemed registered under this Act
+  (s.45(2)(f)). s.2(c) defines "boiler" excluding capacity < 25 litres,
+  design/working gauge pressure < 1 kg/cm², and water heated below 100°C
+  (temperature exclusion has no corresponding Project Fact in this pass —
+  see SH-04 validation_notes). Maharashtra Boiler Rules, 1962 / Indian
+  Boiler Regulations, 1950 continue transitionally under s.45(2) savings
+  (not separately catalogued as an instrument this pass — procedural colour
+  only, no thresholds taken from them).

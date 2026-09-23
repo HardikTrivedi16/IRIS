@@ -14,7 +14,9 @@ NP = EvaluationMode.NON_PRODUCTION
 
 
 def _facts(liquid=None, solids=None):
-    facts = {"project.industry": "FOOD"}
+    # project.food_subsector: DAIRY — required by the FD-04 guard (see
+    # test_fssai_overlap.py's _facts for the same fix).
+    facts = {"project.industry": "FOOD", "project.food_subsector": "DAIRY"}
     if liquid is not None:
         facts["project.dairy_liquid_milk_capacity"] = liquid
     if solids is not None:

@@ -1,0 +1,22 @@
+source_id: SRC-002
+title: "Air (Prevention and Control of Pollution) Act, 1981 — Section 21, and MPCB RTI s.4 disclosure (statewide Air Pollution Control Area declaration, 06/11/1996)"
+publisher_authority_id: AUTH-MoEFCC
+document_type: INDIA_CODE
+official_url: "https://www.indiacode.nic.in/handle/123456789/1570"
+publication_date: "1981-03-29"
+retrieved_date: "2026-09-22"
+archived_artifact_path: null
+checksum_sha256: null
+source_status: AVAILABLE
+notes: >
+  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
+  (SRC-MH-WATER-S25 lineage / SRC-MH-APCA-RTI) — not independently
+  re-fetched by this pass. Two distinct claims share this one source
+  record: (1) s.21(1) text (India Code); (2) MPCB's own RTI s.4 proactive
+  disclosure that the whole of Maharashtra has been an Air Pollution
+  Control Area since 06/11/1996 (mpcb.gov.in RTI disclosures, versions
+  dated 31.03.2026 and 31.07.2026 per the research pack) — a secondary 2001
+  CAG report states "November 1995" instead; the discrepancy is unresolved
+  and flagged in EVID-MPCB-02. The 1996 gazette notification itself (the
+  ideal primary source for claim 2) has not been located. Neither claim has
+  been independently archived — verification_status: UNVERIFIED throughout.

@@ -1,0 +1,28 @@
+source_id: SRC-004
+title: "FSS (Licensing and Registration of Food Businesses) Regulations, 2011 — Schedule 1 (entries I and V) and Regulation 2.1.2"
+publisher_authority_id: AUTH-FSSAI
+document_type: OFFICIAL_WEBSITE
+official_url: "https://fssai.gov.in/upload/uploadfiles/files/Compendium_Licensing_Regulations_04_08_2021.pdf"
+publication_date: "2011-08-01"
+retrieved_date: "2026-09-23"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-004_Compendium_Licensing_Regulations_04_08_2021.pdf"
+checksum_sha256: "041ef7e7d3a4b6d11c084182217e0d7d9d73488490b6ff1484a4a41a5d906fd8"
+source_status: ARCHIVED
+notes: >
+  Independently re-fetched and archived on 2026-09-23 directly from
+  https://fssai.gov.in/upload/uploadfiles/files/Compendium_Licensing_Regulations_04_08_2021.pdf
+  (HTTP 200, genuine 101-page PDF; SHA-256 above computed from the saved
+  file — see archive/README.md). Schedule 1 entry V wording (PDF page 10)
+  and Regulation 2.1.2 (PDF page 4) were confirmed against this file to
+  match EVID-FSS-04's and EVID-FSS-06's excerpts verbatim. Covers Schedule
+  1 entry I (dairy, RULE-0005/RULE-0006), Schedule 1 entry V (FD-01), and
+  Reg. 2.1.2(3)/(4) (FD-02).
+
+  CURRENTNESS CAVEAT (2026-09-23): this archival does NOT establish that
+  Schedule 1 entry V / Reg. 2.1.2(3)/(4) remain the operative Central-vs-
+  State discriminator today. See SRC-011, SRC-012, the corrected notes on
+  INST-FSS-LR-11, and rule_review_register.yaml RULE-REV-0006 — a primary-
+  source FSSAI Order (SRC-011) issued under the 2026-amendment-inserted
+  Reg. 2.1.2(6) power appears to have superseded the installed-capacity
+  criterion for this category with a turnover-based one. Do not treat this
+  record's ARCHIVED status as resolving that open question.

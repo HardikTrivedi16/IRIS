@@ -1,0 +1,27 @@
+condition_id: COND-0022
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.boiler_volumetric_capacity_litres
+operator: ">="
+comparison_value: 25
+unit: litres
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-BOILER-01
+
+grounding_regulatory_fact_ids:
+  - RF-0016
+
+description: >
+  True if volumetric capacity (feed check valve to main steam stop valve)
+  is 25 litres or more (Boilers Act, 2025, s.2(c)(i)).
+
+normalization_notes: >
+  Boundary discipline: the Act excludes "< 25 L", so the inclusion test is
+  ">= 25", never "> 25" — a strict ">" would wrongly exclude a boiler at
+  exactly 25 L. Capture unit is litres only; never TPH (an evaporation
+  rate, not the statutory volumetric measure) and never bar (see
+  COND-0023). ANDed with COND-0023 as SH-04's composite root, COND-0024.

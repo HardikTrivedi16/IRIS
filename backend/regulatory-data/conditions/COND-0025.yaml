@@ -1,0 +1,30 @@
+condition_id: COND-0025
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.holds_boiler_certificate
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-BOILER-02
+
+grounding_regulatory_fact_ids:
+  - RF-0017
+
+description: >
+  SH-05 root: true if the project currently holds a boiler certificate —
+  the continuing-obligation gate for certificate lifecycle/renewal/
+  event-based cessation duties (Boilers Act, 2025, ss.12(6), 13, 15, 23).
+
+normalization_notes: >
+  Single-leaf root, no composite needed. This condition only gates whether
+  the renewal/lifecycle obligation applies; it does not itself model the
+  event-based cessation triggers (expiry/accident/movement/structural
+  alteration/prohibition order) as separate executable conditions — those
+  remain descriptive in RULE-0010's outcome text, per the research pack's
+  own framing ("renewal calendar must model event-based lapse, not dates
+  alone") pending a dedicated renewal-calendar mechanism.

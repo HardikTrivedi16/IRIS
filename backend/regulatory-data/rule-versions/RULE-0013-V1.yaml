@@ -1,0 +1,66 @@
+rule_version_id: RULE-0013-V1
+rule_id: RULE-0013
+version_number: 1
+
+condition_expression_root_id: COND-0030
+logic: "COND-0030 = (generates_or_handles_scheduled_hazardous_waste == true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — a Form 2 hazardous-waste authorisation (5-year validity) is
+  required (HOWM Rules, 2016, r.6(1)-(2)); Form 4 annual return by 30 June,
+  renewal 3 months prior to expiry.
+false_outcome: >
+  NOT_APPLICABLE on this trigger — the project does not, on current
+  information, generate or handle Schedule-listed hazardous or other
+  waste.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine authorisation applicability
+  until whether the project generates/handles Schedule-listed hazardous
+  waste is known.
+
+required_project_facts:
+  - project.generates_or_handles_scheduled_hazardous_waste
+
+regulatory_fact_ids:
+  - RF-0021
+evidence_ids:
+  - EVID-HW-01
+source_ids:
+  - SRC-010
+authority_id: AUTH-MPCB
+instrument_id: INST-HW-16
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: [PRE_OPERATION, OPERATION]
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0013-V1
+  regulatory_fact_ids: [RF-0021]
+  evidence_ids: [EVID-HW-01]
+  source_ids: [SRC-010]
+  authority_id: AUTH-MPCB
+  instrument_id: INST-HW-16
+
+validation_notes: >
+  Boolean trigger verbatim from r.6(1) — never inferred from sector (a DG
+  set's used oil is Schedule-listed even for a plant with no other
+  hazardous process; the fact must be captured honestly, not assumed).
+  Cannot be promoted to ACTIVE without archived SRC-010 + a human VER
+  record.

@@ -1,0 +1,31 @@
+requirement_id: REQ-0008
+code: CGWA_GROUNDWATER_NOC
+title: "CGWA groundwater abstraction NOC"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-CGWA
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_ESTABLISHMENT
+  - OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0011
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0018
+  - RF-0019
+evidence_ids:
+  - EVID-CGWA-01
+  - EVID-CGWA-02
+
+requirement_notes: >
+  SH-07 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). Maharashtra is
+  CGWA-regulated (S.O. 3289(E) Annexure VIII item 11). See RULE-0011-V1's
+  validation_notes for a known, deliberately-preserved limitation in the
+  exemption composite (COND-0028) inherited from the research pack's own
+  predicate formula.

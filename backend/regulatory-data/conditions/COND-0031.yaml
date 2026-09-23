@@ -1,0 +1,26 @@
+condition_id: COND-0031
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.food_processing_installed_capacity_mt_per_day
+operator: ">"
+comparison_value: 2
+unit: MT/day
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-04
+
+grounding_regulatory_fact_ids:
+  - RF-0011
+
+description: >
+  True if installed capacity is strictly more than 2 MT/day — Schedule 1
+  entry V's own words, "more than 2 MT/day" (FSS (L&R) Regulations, 2011).
+
+normalization_notes: >
+  Operator is strictly ">", confirmed against the entry V text ("more
+  than"), never ">=" — at exactly 2 MT/day this leaf is FALSE, so FD-01
+  (Central) must not fire at the boundary. ANDed with COND-0032 (subsector
+  guard) as FD-01's composite root, COND-0033.

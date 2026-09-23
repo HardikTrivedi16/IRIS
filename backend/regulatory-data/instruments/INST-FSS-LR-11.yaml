@@ -1,0 +1,44 @@
+instrument_id: INST-FSS-LR-11
+short_title: "FSS (Licensing and Registration of Food Businesses) Regulations, 2011"
+full_citation: "Food Safety and Standards (Licensing and Registration of Food Businesses) Regulations, 2011, as amended"
+issuing_authority_id: AUTH-FSSAI
+year: 2011
+currency_status: IN_FORCE
+effective_start_date: "2011-08-05"
+effective_end_date: null
+supersedes_instrument_id: null
+superseded_by_instrument_id: null
+last_currency_check: "2026-09-22"
+notes: >
+  Currency confirmed per MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §4 I-04:
+  amended 2014/2016/2017, then by the Amendment Regulations, 2026 and Second
+  Amendment Regulations, 2026 (both notified 10.03.2026). The 2026
+  amendments touch the petty-FBO definition (1.2.1(4)), insert 2.1.1(8) /
+  2.1.2(6), and SUBSTITUTE Reg. 2.1.7 (licence validity/deemed-suspension
+  regime — see FD-03, KEEP_DRAFT, not integrated this pass) and insert
+  2.1.17.
+
+  CORRECTION (2026-09-23, archival pass — see SRC-011, SRC-012,
+  rule_review_register.yaml RULE-REV-0006): the prior version of this note
+  claimed "Schedule 1 and Reg. 2.1.2(3)/(4) are unamended by either 2026
+  gazette... this is what keeps FD-01/FD-02 currently citable." That claim
+  was carried from the research pack and was NOT independently verified
+  against a primary source at the time. It is now contradicted by two
+  independently retrieved and archived primary artifacts: (1) SRC-011, an
+  FSSAI Order dated 13.03.2026 which — exercising the newly-inserted Reg.
+  2.1.2(6) power — states it "supersedes all other earlier orders and
+  regulations with respect to turnover thresholds or criteria... for
+  categorisation of Food Businesses," replacing them with a pure
+  turnover scheme (Registration <=Rs.1.5Cr / State >1.5Cr-50Cr / Central
+  >50Cr, effective 01.04.2026); and (2) SRC-012, FSSAI's own FoSCoS
+  operative eligibility table (02.04.2026), which shows the entry-V-
+  equivalent "General manufacturing" category (same dairy/oil/slaughter/
+  meat/milling exclusions as Schedule 1 entry V) classified by turnover
+  only, with no installed-capacity criterion at all. Whether Schedule 1's
+  TEXT was itself amended, or the Central/State outcome for this category
+  has instead been superseded IN PRACTICE by a delegated-power order, is
+  not resolved here — this note only corrects the unverified currentness
+  claim; it does not conclude that FD-01/FD-02 are wrong, only that their
+  currentness is now an open, human-review question. The underlying
+  10.03.2026 gazette notification text itself could not be retrieved this
+  pass (dead link, see SRC-011 notes) — that remains a genuine blocker.

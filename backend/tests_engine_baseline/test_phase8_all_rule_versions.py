@@ -68,31 +68,50 @@ def test_rule_0004_v1_all_three_paths(dataset):
 
 
 def test_rule_0005_v1_all_three_paths(dataset):
+    # project.food_subsector: DAIRY required by the FD-04 guard
+    # (COND-0037, above the pre-existing COND-0007) — see
+    # regulatory-data/conditions/COND-0037.yaml.
     r = evaluate_rule_version("RULE-0005-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 60000, "project.dairy_milk_solids_capacity": 100}, NP)
+        {"project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 60000, "project.dairy_milk_solids_capacity": 100}, NP)
     assert r.final_state == "APPLICABLE"
     r = evaluate_rule_version("RULE-0005-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 100, "project.dairy_milk_solids_capacity": 100}, NP)
+        {"project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 100, "project.dairy_milk_solids_capacity": 100}, NP)
     assert r.final_state == "NOT_APPLICABLE"
     r = evaluate_rule_version("RULE-0005-V1", dataset, {}, NP)
     assert r.final_state == "REQUIRES_INFORMATION"
     # partial info: one criterion known TRUE means the other need not be
     # collected (per the Rule Version's own engine_note) -> still APPLICABLE
     r = evaluate_rule_version("RULE-0005-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 60000}, NP)
+        {"project.food_subsector": "DAIRY", "project.dairy_liquid_milk_capacity": 60000}, NP)
     assert r.final_state == "APPLICABLE"
     assert r.missing_fact_keys == []
+    # a non-dairy project must never evaluate against these capacity bands,
+    # even when capacity facts happen to be present (the defect FD-04 fixes)
+    r = evaluate_rule_version("RULE-0005-V1", dataset,
+        {"project.food_subsector": "OTHER_FOOD_PROCESSING",
+         "project.dairy_liquid_milk_capacity": 60000, "project.dairy_milk_solids_capacity": 100}, NP)
+    assert r.final_state == "NOT_APPLICABLE"
 
 
 def test_rule_0006_v1_all_three_paths(dataset):
+    # project.food_subsector: DAIRY required by the FD-04 guard
+    # (COND-0038, above the pre-existing COND-0014).
     r = evaluate_rule_version("RULE-0006-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 25000, "project.dairy_milk_solids_capacity": 1}, NP)
+        {"project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 25000, "project.dairy_milk_solids_capacity": 1}, NP)
     assert r.final_state == "APPLICABLE"
     r = evaluate_rule_version("RULE-0006-V1", dataset,
-        {"project.dairy_liquid_milk_capacity": 100, "project.dairy_milk_solids_capacity": 0.1}, NP)
+        {"project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 100, "project.dairy_milk_solids_capacity": 0.1}, NP)
     assert r.final_state == "NOT_APPLICABLE"
     r = evaluate_rule_version("RULE-0006-V1", dataset, {}, NP)
     assert r.final_state == "REQUIRES_INFORMATION"
+    r = evaluate_rule_version("RULE-0006-V1", dataset,
+        {"project.food_subsector": "OTHER_FOOD_PROCESSING",
+         "project.dairy_liquid_milk_capacity": 25000, "project.dairy_milk_solids_capacity": 1}, NP)
+    assert r.final_state == "NOT_APPLICABLE"
 
 
 def test_output_mapping_is_read_from_yaml_not_hardcoded(dataset):
@@ -112,15 +131,18 @@ def test_output_mapping_is_read_from_yaml_not_hardcoded(dataset):
         dataset.rule_versions["RULE-0001-V1"] = original
 
 
-def test_all_six_rule_versions_exist_and_have_status_draft(dataset):
-    expected = {f"RULE-{i:04d}-V1" for i in range(1, 7)}
+def test_all_fifteen_rule_versions_exist_and_have_status_draft(dataset):
+    # RULE-0001..0006 (Phase 5/6) + RULE-0007..0015 (Shared+Food
+    # integration pass: SH-03 applicability/licence-detail, SH-04, SH-05,
+    # SH-07, SH-08, SH-10, FD-01, FD-02).
+    expected = {f"RULE-{i:04d}-V1" for i in range(1, 16)}
     assert expected == set(dataset.rule_versions.keys())
     for rv_id in expected:
         assert dataset.rule_versions[rv_id]["status"] == "DRAFT"
 
 
 def test_rule_version_provenance_fields_populated(dataset):
-    for rv_id in [f"RULE-{i:04d}-V1" for i in range(1, 7)]:
+    for rv_id in [f"RULE-{i:04d}-V1" for i in range(1, 16)]:
         rv = dataset.rule_versions[rv_id]
         assert rv.get("regulatory_fact_ids")
         assert rv.get("authority_id")

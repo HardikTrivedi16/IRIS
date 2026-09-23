@@ -1,0 +1,76 @@
+rule_version_id: RULE-0007-V1
+rule_id: RULE-0007
+version_number: 1
+
+condition_expression_root_id: COND-0021
+logic: "COND-0021 = OR(AND(worker_count>=20, uses_power==true), AND(worker_count>=40, uses_power==false))"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — the establishment is a "factory" under the OSH Code, 2020,
+  s.2(1)(w); registration under OSH Code Ch. II (and, transitionally, the
+  Maharashtra Factories Rules 1963 plan-approval/licence machinery — see
+  RULE-0008) is required.
+false_outcome: >
+  NOT_APPLICABLE on the 20/40-worker test as currently known — SUBJECT TO
+  the caveat that Maharashtra's state notification powers may extend
+  factory coverage to certain smaller/notified activities (e.g. powerlooms,
+  solvent processes) regardless of headcount (DISH FAQ; RF-0015). This
+  caveat must always accompany a FALSE/NOT_APPLICABLE presentation of this
+  rule — it is never resolved to TRUE automatically, since no Project Fact
+  for "is a notified activity" exists in this dataset.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine factory status until worker count
+  and whether the manufacturing process uses power are known.
+
+required_project_facts:
+  - project.worker_count
+  - project.manufacturing_process_uses_power
+
+regulatory_fact_ids:
+  - RF-0014
+  - RF-0015
+evidence_ids:
+  - EVID-OSH-01
+  - EVID-OSH-02
+source_ids:
+  - SRC-006
+authority_id: AUTH-DISH-MH
+instrument_id: INST-OSH-20
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_ESTABLISHMENT
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0007-V1
+  regulatory_fact_ids: [RF-0014, RF-0015]
+  evidence_ids: [EVID-OSH-01, EVID-OSH-02]
+  source_ids: [SRC-006]
+  authority_id: AUTH-DISH-MH
+  instrument_id: INST-OSH-20
+
+validation_notes: >
+  Corrects the obsolete >=10 threshold from an earlier research pass — the
+  OSH Code's (and Maharashtra's own, unchanged) statutory number is 20 with
+  power / 40 without. This Rule Version answers only the headcount/power
+  applicability test; it does not itself model the transitional licence/
+  plan-approval machinery (RULE-0008) or the notified-activity extension
+  (FALSE-branch caveat only, no executable condition). Cannot be promoted
+  to ACTIVE without archived SRC-006 + a human VER record — neither exists
+  as of this pass.

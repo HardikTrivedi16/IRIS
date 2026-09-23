@@ -1,0 +1,9 @@
+regulatory_fact_id: RF-0018
+statement: >
+  An industry abstracting groundwater must obtain a CGWA No Objection
+  Certificate unless exempt under the guidelines (S.O. 3289(E),
+  24.09.2020); Maharashtra is a CGWA-regulated State.
+evidence_ids: [EVID-CGWA-01]
+authority_id: AUTH-CGWA
+instrument_id: INST-CGWA-20
+verification_status: UNVERIFIED

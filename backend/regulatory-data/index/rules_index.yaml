@@ -56,6 +56,106 @@ rules:
     latest_status: DRAFT
     latest_confidence: VERIFIED
 
+  # --- Shared+Food regulatory-data integration pass (SH-03/04/05/07/08/10, FD-01/FD-02) ---
+
+  - rule_id: RULE-0007
+    code: OSH_FACTORY_APPLICABILITY_TEST
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0014, RF-0015]
+    latest_rule_version_id: RULE-0007-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0008
+    code: OSH_FACTORY_LICENCE_DETAIL_TRANSITIONAL
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0014, RF-0015]
+    latest_rule_version_id: RULE-0008-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+
+  - rule_id: RULE-0009
+    code: BOILER_REGISTRATION_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0016]
+    latest_rule_version_id: RULE-0009-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0010
+    code: BOILER_CERTIFICATE_LIFECYCLE_GATE
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0017]
+    latest_rule_version_id: RULE-0010-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0011
+    code: CGWA_NOC_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0018, RF-0019]
+    latest_rule_version_id: RULE-0011-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0012
+    code: LM_PACKER_REGISTRATION_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0020]
+    latest_rule_version_id: RULE-0012-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0013
+    code: HAZARDOUS_WASTE_AUTHORISATION_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0021]
+    latest_rule_version_id: RULE-0013-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+
+  - rule_id: RULE-0014
+    code: FSSAI_CENTRAL_ENTRY_V_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0011, RF-0013, RF-0022]
+    latest_rule_version_id: RULE-0014-V2
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # RULE-0014-V1 (installed-capacity, ">2 MT/day") is now status: SUPERSEDED,
+    # effective_end_date 2026-03-31 (day before the successor regime starts,
+    # 2026-04-01) — see RULE-REV-0006. Preserved unedited.
+
+  - rule_id: RULE-0015
+    code: FSSAI_STATE_ENTRY_V_RESIDUAL_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0012, RF-0013, RF-0023]
+    latest_rule_version_id: RULE-0015-V2
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # RULE-0015-V1 (installed-capacity, "<=2 MT/day") is now status: SUPERSEDED,
+    # effective_end_date 2026-03-31 (day before the successor regime starts,
+    # 2026-04-01) — see RULE-REV-0006. Preserved unedited.
+
+  - rule_id: RULE-0016
+    code: FSSAI_REGISTRATION_RESIDUAL_TURNOVER_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0024, RF-0013]
+    latest_rule_version_id: RULE-0016-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # New (2026-09-23) — FSSAI Registration, residual/general-manufacturing
+    # category, turnover <=Rs. 1.5 crore. See RULE-REV-0006.
+
 known_conflicts:
   - conflict_id: OVERLAP-0001
     involved_rules: [RULE-0005, RULE-0006]
@@ -67,12 +167,25 @@ facts_with_no_rule:
     reason: "See RULE-REV-0001 in the Rule Review Register."
 
 counts:
-  total_rules: 6
-  total_rule_versions: 6
-  status_DRAFT: 6
+  total_rules: 16
+  total_rule_versions: 18
+  status_DRAFT: 16
+  status_SUPERSEDED: 2
   status_ACTIVE: 0
-  confidence_VERIFIED: 4
-  confidence_REQUIRES_REVIEW: 2
-  regulatory_facts_converted: 9    # RF-0001, RF-0002, RF-0004, RF-0005, RF-0006, RF-0007, RF-0008, RF-0009, RF-0010
+  confidence_VERIFIED: 15
+  confidence_REQUIRES_REVIEW: 3
+  regulatory_facts_converted: 24   # +RF-0011..RF-0021 (Shared+Food) + RF-0022..RF-0024 (currentness pass)
   regulatory_facts_not_converted: 1   # RF-0003
   known_conflicts: 1   # OVERLAP-0001 — see rule_conflict_register.yaml
+
+# NOTE (Shared+Food regulatory-data integration pass): RULE-0007..RULE-0015
+# (+ RULE-0007-V1..RULE-0015-V1) added for SH-03/04/05/07/08/10/FD-01/FD-02;
+# RULE-0005-V1/RULE-0006-V1 corrected in place (dairy guard, FD-04) — see
+# requirements/rules/rule-versions/conditions of the same pass. Detailed
+# per-rule listing above this counts block was not extended item-by-item;
+# the rule/rule-version files themselves are authoritative.
+#
+# NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): RULE-0014-V1/
+# RULE-0015-V1 set to status: SUPERSEDED (effective_end_date 2026-03-31);
+# RULE-0014-V2/RULE-0015-V2 (successors) and RULE-0016/RULE-0016-V1 (new
+# Registration rule) added — see rule_review_register.yaml RULE-REV-0006.

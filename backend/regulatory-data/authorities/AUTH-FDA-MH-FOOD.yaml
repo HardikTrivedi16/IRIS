@@ -1,0 +1,12 @@
+authority_id: AUTH-FDA-MH-FOOD
+name: "Commissioner of Food Safety, Maharashtra (State Licensing Authority / Designated Officer, Food and Drug Administration Maharashtra — Food wing)"
+level: STATE_REGULATOR
+jurisdiction: MAHARASHTRA
+parent_authority_id: null
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.1). State
+  Licensing Authority for FSSAI State licences (FD-02) and the dairy-guard
+  correction (FD-04) — distinct from AUTH-FDA-MH (FDA Maharashtra's Drugs
+  Control wing, used for Pharma REQ-0003 candidates, out of scope for this
+  pass). Not to be confused with or merged into AUTH-FSSAI (the Central
+  Licensing Authority) or AUTH-FDA-MH.

@@ -1,0 +1,13 @@
+authority_id: AUTH-MPCB
+name: "Maharashtra Pollution Control Board"
+level: STATE_REGULATOR
+jurisdiction: MAHARASHTRA
+parent_authority_id: null
+notes: >
+  Practical enforcing/issuing authority for Water Act and Air Act consents
+  in Maharashtra (Requirement-level authority — see REQ-0001/REQ-0002's own
+  authority_attribution_note; the instrument-level authority for the
+  central Acts themselves is AUTH-MoEFCC). Already referenced by
+  REQ-0001/REQ-0002/requirements_index.yaml prior to this record's
+  creation — this file materializes that existing reference; the id was
+  not changed or renamed (see authorities/README.md).

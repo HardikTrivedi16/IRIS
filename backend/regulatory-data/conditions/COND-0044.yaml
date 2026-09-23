@@ -1,0 +1,29 @@
+condition_id: COND-0044
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.annual_turnover_inr
+operator: "<="
+comparison_value: 15000000
+unit: INR
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+
+grounding_regulatory_fact_ids:
+  - RF-0024
+
+description: >
+  True if annual turnover is Rs. 1.5 crore (15,000,000 INR) or less — the
+  FSSAI Registration band ("Turnover up to Rs. 1.5 crore", SRC-011/
+  SRC-012), the exact complement of COND-0041's State ">1.5 crore" lower
+  bound.
+
+normalization_notes: >
+  ANDed with COND-0032 (subsector guard) as RULE-0016-V1's composite
+  root, COND-0045. At exactly 1.5 crore this leaf is TRUE (Registration)
+  and COND-0041 is FALSE (State does not fire) — mutually exclusive at
+  the boundary.

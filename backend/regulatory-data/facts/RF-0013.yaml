@@ -1,0 +1,12 @@
+regulatory_fact_id: RF-0013
+statement: >
+  Schedule 1's dairy band (entry I, "Dairy units including milk chilling
+  units") and residual food-processing band (entry V, "other than
+  mentioned under (I) to (IV)") are mutually exclusive by their own text —
+  a project's food subsector must be established as DAIRY before entry I's
+  capacity bands may be evaluated, and a DAIRY project's capacity must
+  never be evaluated against entry V (or vice versa).
+evidence_ids: [EVID-FSS-06]
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+verification_status: UNVERIFIED

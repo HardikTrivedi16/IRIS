@@ -1,0 +1,30 @@
+condition_id: COND-0042
+predicate_type: THRESHOLD_COMPARISON
+
+target_variable_key: project.annual_turnover_inr
+operator: "<="
+comparison_value: 500000000
+unit: INR
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+
+grounding_regulatory_fact_ids:
+  - RF-0023
+
+description: >
+  True if annual turnover is Rs. 50 crore (500,000,000 INR) or less — the
+  upper bound of the current State-licence turnover band ("...up to
+  Rs. 50 crore", SRC-011/SRC-012), the exact complement of COND-0039's
+  Central ">50 crore" leaf.
+
+normalization_notes: >
+  ANDed with COND-0041 (lower bound) and COND-0032 (subsector guard) as
+  RULE-0015-V2's composite root, COND-0043. At exactly 50 crore this leaf
+  is TRUE (State) and COND-0039 is FALSE (not Central) — mutually
+  exclusive at the boundary for any known turnover value, mirroring how
+  RULE-0014-V1/RULE-0015-V1 were bounded on the capacity axis.

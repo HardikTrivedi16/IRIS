@@ -1,0 +1,30 @@
+condition_id: COND-0040
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0039
+  - COND-0032
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0022
+
+description: >
+  FD-01-V2 root (current, turnover-based): annual_turnover_inr > 500000000
+  AND food_subsector NOT_IN {DAIRY, VEGETABLE_OIL, SLAUGHTER,
+  MEAT_PROCESSING, GRAIN_CEREAL_PULSE_MILLING} — the current successor to
+  COND-0033 (RULE-0014-V1's now-superseded root). Reuses COND-0032
+  unchanged: the subsector exclusions are the same in the current FoSCoS
+  table (SRC-012) as in the historical Schedule 1 entry V text, so the
+  guard leaf itself did not need to change, only the capacity leaf.
+
+normalization_notes: >
+  RULE-0014-V2's condition_expression_root_id. See
+  rule_review_register.yaml RULE-REV-0006 for why a successor Rule
+  Version was authored rather than editing RULE-0014-V1 in place.

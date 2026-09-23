@@ -1,0 +1,38 @@
+requirement_id: REQ-0013
+code: FSSAI_REGISTRATION_RESIDUAL_TURNOVER
+title: "FSSAI Registration — residual/general-manufacturing category, turnover up to Rs. 1.5 crore"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-FSSAI
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0016
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0024
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+
+requirement_notes: >
+  New Requirement, added during the FD-01/FD-02 currentness-correction
+  pass (2026-09-23) — see rule_review_register.yaml RULE-REV-0006. Not a
+  Rule Version of REQ-0011 (FD-01, Central) or REQ-0012 (FD-02, State):
+  "does this business need only a Registration (not a licence at all)"
+  is a genuinely distinct approval question from either licence question,
+  under the same "one Requirement per distinct approval question"
+  contract those two Requirements themselves follow (see REQ-0011's own
+  requirement_notes). FSSAI's Order dated 13.03.2026 (SRC-011) and its
+  own live FoSCoS eligibility table (SRC-012) are the first evidence this
+  dataset has collected for this band on the entry-V-equivalent category
+  — the analogous historical gap for dairy is recorded at
+  rule_review_register.yaml RULE-REV-0003 and remains unresolved (out of
+  scope here; dairy was not touched).

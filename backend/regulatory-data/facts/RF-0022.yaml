@@ -1,0 +1,17 @@
+regulatory_fact_id: RF-0022
+statement: >
+  Effective 01.04.2026, a food processing unit within the residual/general-
+  manufacturing category (the current operative successor to Schedule 1
+  entry V — same dairy/vegetable-oil/slaughter/meat-processing/grains-
+  cereals-pulses-milling exclusions) with annual turnover more than Rs. 50
+  crore requires a Central FSSAI licence, per an FSSAI Order dated
+  13.03.2026 that supersedes the prior turnover thresholds/criteria for
+  Food Business categorisation. This is the current (turnover-based)
+  successor to RF-0011's historical (installed-capacity-based) Central
+  criterion — see rule_review_register.yaml RULE-REV-0006 for how the two
+  relate; RF-0011 is NOT retracted, it grounds the now-superseded
+  RULE-0014-V1.
+evidence_ids: [EVID-FSS-07, EVID-FSS-08]
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+verification_status: UNVERIFIED

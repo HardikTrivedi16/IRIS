@@ -1,0 +1,27 @@
+condition_id: COND-0024
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0022
+  - COND-0023
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0016
+
+description: >
+  SH-04 root: boiler_volumetric_capacity_litres >= 25 AND
+  boiler_design_gauge_pressure_kg_cm2 >= 1 (Boilers Act, 2025, s.2(c)).
+
+normalization_notes: >
+  Does not represent the Act's third exclusion leg (water heated below
+  100°C) — no Project Fact for temperature exists in this dataset. This is
+  a known, documented limitation (RF-0016, COND-0023), not an oversight;
+  it must be preserved in the Rule Version's validation_notes and never
+  silently presented as a complete capture of every statutory exclusion.

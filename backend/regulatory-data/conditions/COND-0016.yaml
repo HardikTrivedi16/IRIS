@@ -1,0 +1,25 @@
+condition_id: COND-0016
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.manufacturing_process_uses_power
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-OSH-01
+
+grounding_regulatory_fact_ids:
+  - RF-0014
+
+description: >
+  True if the manufacturing process is carried on with the aid of power —
+  the statute's own with/without-power distinction (OSH Code, 2020,
+  s.2(1)(w)).
+
+normalization_notes: >
+  ANDed with COND-0015 (worker_count >= 20) as the with-power branch of
+  SH-03's composite root, COND-0021.

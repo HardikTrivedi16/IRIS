@@ -4,7 +4,11 @@ NP = EvaluationMode.NON_PRODUCTION
 
 
 def _facts(liquid=None, solids=None):
-    facts = {"project.industry": "FOOD"}
+    # project.food_subsector: DAIRY — required by the FD-04 guard added
+    # above RULE-0005/RULE-0006's condition roots (COND-0037/COND-0038) so
+    # a non-dairy project can never accidentally evaluate against dairy
+    # capacity bands. These tests are specifically about dairy behavior.
+    facts = {"project.industry": "FOOD", "project.food_subsector": "DAIRY"}
     if liquid is not None:
         facts["project.dairy_liquid_milk_capacity"] = liquid
     if solids is not None:

@@ -1,0 +1,22 @@
+instrument_id: INST-OSH-20
+short_title: "Occupational Safety, Health and Working Conditions Code, 2020"
+full_citation: "The Occupational Safety, Health and Working Conditions Code, 2020 (Code 37 of 2020)"
+issuing_authority_id: AUTH-DISH-MH
+year: 2020
+currency_status: IN_FORCE
+effective_start_date: "2025-11-21"
+effective_end_date: null
+supersedes_instrument_id: null
+superseded_by_instrument_id: null
+last_currency_check: "2026-09-22"
+notes: >
+  Per MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §4 I-05/I-06: assented
+  28.09.2020, brought into force 21.11.2025 (repealing the Factories Act,
+  1948, s.143, savings apply). s.2(1)(w) defines "factory" at 20+ workers
+  with power / 40+ without, subject to a State-number proviso; Maharashtra's
+  own number (Factories (Maharashtra Amendment) Act, 2015, wef 01.02.2016)
+  is the same 20/40 (DISH-Maharashtra FAQ). Central OSH Rules notified
+  08.05.2026; **Maharashtra's own state OSH rules remain DRAFT** as of this
+  pass — this is what keeps SH-03's licence/renewal detail (RULE-0008) DRAFT
+  independently of provenance archival (see SH-03 applicability vs licence-
+  detail split, H2.1 of the research pack).

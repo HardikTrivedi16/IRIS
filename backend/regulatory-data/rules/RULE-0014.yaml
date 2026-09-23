@@ -1,0 +1,13 @@
+rule_id: RULE-0014
+code: FSSAI_CENTRAL_ENTRY_V_APPLICABILITY
+requirement_id: REQ-0011
+title: "FSSAI Schedule 1 entry V — Central licence threshold (>2 MT/day, non-milling residual food)"
+output_type: APPLICABILITY
+
+description: >
+  Determines whether a residual food-processing unit (not dairy/vegetable-
+  oil/slaughter/meat/milling) with installed capacity strictly more than
+  2 MT/day requires a Central FSSAI licence under Schedule 1 entry V.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

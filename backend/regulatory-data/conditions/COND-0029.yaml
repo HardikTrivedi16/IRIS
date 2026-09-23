@@ -1,0 +1,25 @@
+condition_id: COND-0029
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.prepacks_commodities_for_retail_sale
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-LM-01
+
+grounding_regulatory_fact_ids:
+  - RF-0020
+
+description: >
+  SH-08 root: true if the project pre-packs commodities for retail sale —
+  the manufacturer/packer registration trigger verbatim (Legal Metrology
+  (Packaged Commodities) Rules, 2011, r.27(1)).
+
+normalization_notes: >
+  Boolean trigger only, never inferred from sector (e.g. Food).
+  Single-leaf root, no composite needed.

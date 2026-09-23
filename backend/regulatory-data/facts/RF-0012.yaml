@@ -1,0 +1,12 @@
+regulatory_fact_id: RF-0012
+statement: >
+  A food processing unit within the same Schedule 1 entry V subsector
+  (residual food processing, other than dairy/vegetable-oil/slaughter/meat/
+  milling) that does not meet the Central-licence installed-capacity
+  criterion (i.e. installed capacity at or below 2 MT/day) is licensed by
+  the State Licensing Authority under Reg. 2.1.2(4), FSS (L&R) Regulations,
+  2011.
+evidence_ids: [EVID-FSS-05]
+authority_id: AUTH-FDA-MH-FOOD
+instrument_id: INST-FSS-LR-11
+verification_status: UNVERIFIED

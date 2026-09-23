@@ -1,0 +1,61 @@
+rule_version_id: RULE-0012-V1
+rule_id: RULE-0012
+version_number: 1
+
+condition_expression_root_id: COND-0029
+logic: "COND-0029 = (prepacks_commodities_for_retail_sale == true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — manufacturer/packer registration under LM(PC) Rules, 2011,
+  r.27(1) is required within 90 days of commencing pre-packing (fee ₹500).
+false_outcome: >
+  NOT_APPLICABLE — the project does not pre-pack commodities for retail
+  sale on current information.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine registration applicability until
+  whether the project pre-packs commodities for retail sale is known.
+
+required_project_facts:
+  - project.prepacks_commodities_for_retail_sale
+
+regulatory_fact_ids:
+  - RF-0020
+evidence_ids:
+  - EVID-LM-01
+source_ids:
+  - SRC-009
+authority_id: AUTH-LMO-MH
+instrument_id: INST-LMPC-11
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0012-V1
+  regulatory_fact_ids: [RF-0020]
+  evidence_ids: [EVID-LM-01]
+  source_ids: [SRC-009]
+  authority_id: AUTH-LMO-MH
+  instrument_id: INST-LMPC-11
+
+validation_notes: >
+  Boolean trigger verbatim from r.27(1) — never inferred from sector.
+  Cannot be promoted to ACTIVE without archived SRC-009 + a human VER
+  record.

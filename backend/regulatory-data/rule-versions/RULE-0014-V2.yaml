@@ -1,0 +1,96 @@
+rule_version_id: RULE-0014-V2
+rule_id: RULE-0014
+version_number: 2
+
+condition_expression_root_id: COND-0040
+logic: "COND-0040 = AND(annual_turnover_inr>500000000, food_subsector NOT_IN [DAIRY,VEGETABLE_OIL,SLAUGHTER,MEAT_PROCESSING,GRAIN_CEREAL_PULSE_MILLING])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — a Central FSSAI licence is required (residual/general-
+  manufacturing category, annual turnover more than Rs. 50 crore),
+  effective 01.04.2026 per FSSAI Order dated 13.03.2026.
+false_outcome: >
+  NOT_APPLICABLE on this trigger — either annual turnover is Rs. 50 crore
+  or less (see RULE-0015-V2/State or RULE-0016-V1/Registration), or the
+  project's food subsector is dairy/vegetable-oil/slaughter/meat/milling
+  (which have their own distinct categories, not this one).
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine Central-licence applicability
+  until annual turnover and food subsector are known.
+
+required_project_facts:
+  - project.annual_turnover_inr
+  - project.food_subsector
+
+regulatory_fact_ids:
+  - RF-0022
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+source_ids:
+  - SRC-011
+  - SRC-012
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: "2026-04-01"
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: RULE-0014-V1
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0014-V2
+  regulatory_fact_ids: [RF-0022, RF-0013]
+  evidence_ids: [EVID-FSS-07, EVID-FSS-08]
+  source_ids: [SRC-011, SRC-012]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  Successor to RULE-0014-V1 (installed-capacity ">2 MT/day" test), per
+  rule_review_register.yaml RULE-REV-0006: an FSSAI Order dated
+  13.03.2026 (SRC-011), corroborated by FSSAI's own live FoSCoS
+  eligibility table (SRC-012), supersedes the turnover/eligibility
+  criteria for this category with a pure turnover scheme effective
+  01.04.2026. RULE-0014-V1 was NOT deleted or edited in place — it is
+  preserved as status: SUPERSEDED with effective_end_date "2026-03-31"
+  (the day before this successor's effective_start_date),
+  the repository's existing lifecycle mechanism for exactly this case
+  (see iris_engine/validate.py's ACTIVE-promotion-gate docstring on
+  "Historical knowledge belongs on a SUPERSEDED/RETIRED Rule Version").
+
+  STILL DRAFT, STILL BLOCKED FROM ACTIVE: this Rule Version was authored
+  from genuinely archived official material (SRC-011, SRC-012), but (1)
+  the underlying 10.03.2026 gazette notification text itself could not be
+  retrieved (dead link — see SRC-011 notes), so it is not established
+  whether Schedule 1's own text was textually amended versus superseded
+  in practice by a delegated order; and (2) no human has verified this
+  Rule Version yet — no APPROVED VER record exists. Cannot be promoted to
+  ACTIVE until both are resolved by a human reviewer.
+
+  SCOPE CAVEAT (not resolved here): SRC-012's table lists "Fish and Fish
+  products" as its own separate category with its own thresholds,
+  distinct from "General manufacturing" — a split that did not exist
+  under the historical Schedule 1 text (fish fell under entry V's
+  residual bucket). This dataset has no food_subsector enum value for
+  fish, so a fish-processing project would still (arguably incorrectly,
+  post-2026) evaluate through this general-manufacturing rule rather than
+  a fish-specific one. Flagged, not fixed — no evidence was collected for
+  a fish-specific threshold, and inventing a food_subsector value without
+  it would be exactly the kind of fabrication this dataset must avoid.

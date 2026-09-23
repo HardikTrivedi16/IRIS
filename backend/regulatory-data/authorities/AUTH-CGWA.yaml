@@ -1,0 +1,9 @@
+authority_id: AUTH-CGWA
+name: "Central Ground Water Authority"
+level: CENTRAL
+jurisdiction: INDIA
+parent_authority_id: null
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.1). Issues NOC for
+  groundwater abstraction (SH-07); Maharashtra is CGWA-regulated (S.O.
+  3289(E) Annexure VIII item 11).

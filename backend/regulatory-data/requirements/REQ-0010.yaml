@@ -1,0 +1,30 @@
+requirement_id: REQ-0010
+code: HAZARDOUS_WASTE_AUTHORISATION
+title: "Hazardous waste authorisation — HOWM Rules, 2016, r.6"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-MPCB
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+  - OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0013
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0021
+evidence_ids:
+  - EVID-HW-01
+
+requirement_notes: >
+  SH-10 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). Previously listed in
+  requirements_index.yaml's requirements_not_catalogued ("MPCB Hazardous
+  Waste Authorization — no Regulatory Fact was ever collected", DEP-REV-
+  0003). This Requirement resolves that gap. Fact-triggered only — never
+  inferred from sector (Food, Pharma, Chemicals, EV, Electronics all
+  possible triggers per the research pack).

@@ -47,7 +47,8 @@ def test_unknown_state_shows_exactly_which_facts_are_missing(engine):
 def test_requires_review_shows_reason_and_no_invented_precedence(engine):
     d = engine.evaluate_requirement(
         "P", "REQ-0004",
-        {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+        {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+         "project.dairy_liquid_milk_capacity": 60000,
          "project.dairy_milk_solids_capacity": 1000},
         NP,
     )

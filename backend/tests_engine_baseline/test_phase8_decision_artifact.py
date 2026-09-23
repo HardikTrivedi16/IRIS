@@ -28,7 +28,7 @@ def test_decision_contains_all_required_fields(engine):
 
 def test_decision_contains_all_required_fields_for_classification_requirement(engine):
     d = engine.evaluate_requirement("P", "REQ-0004",
-        {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+        {"project.industry": "FOOD", "project.food_subsector": "DAIRY", "project.dairy_liquid_milk_capacity": 60000,
          "project.dairy_milk_solids_capacity": 1000}, NP)
     assert REQUIRED_FIELDS.issubset(d.keys())
     assert d["classification"] is not None
@@ -57,7 +57,7 @@ def test_decision_json_serializable_when_blocked_draft(engine):
 
 
 def test_decision_deterministic_ignoring_timestamp(engine):
-    facts = {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+    facts = {"project.industry": "FOOD", "project.food_subsector": "DAIRY", "project.dairy_liquid_milk_capacity": 60000,
              "project.dairy_milk_solids_capacity": 1000}
     d1 = engine.evaluate_requirement("P", "REQ-0004", facts, NP, evaluated_at="2026-01-01T00:00:00Z")
     d2 = engine.evaluate_requirement("P", "REQ-0004", facts, NP, evaluated_at="2026-01-01T00:00:00Z")
@@ -80,7 +80,7 @@ def test_decision_repeated_evaluation_stable(engine):
 
 def test_conditions_evaluated_is_a_flat_list_of_dicts(engine):
     d = engine.evaluate_requirement("P", "REQ-0004",
-        {"project.industry": "FOOD", "project.dairy_liquid_milk_capacity": 60000,
+        {"project.industry": "FOOD", "project.food_subsector": "DAIRY", "project.dairy_liquid_milk_capacity": 60000,
          "project.dairy_milk_solids_capacity": 1000}, NP)
     for c in d["conditions_evaluated"]:
         assert set(c.keys()) == {"condition_id", "result", "input_project_fact_keys",

@@ -1,0 +1,11 @@
+authority_id: AUTH-FSSAI
+name: "Food Safety and Standards Authority of India (Central Licensing Authority)"
+level: CENTRAL
+jurisdiction: INDIA
+parent_authority_id: null
+notes: >
+  Central Licensing Authority under the FSS Act, 2006 / FSS (Licensing &
+  Registration of Food Businesses) Regulations, 2011 — issues Central
+  licences (Schedule 1, incl. entry V, FD-01) and administers the L&R
+  Regulations generally (REQ-0004, RULE-0004). Already referenced by
+  REQ-0004/RULE-0004/RULE-0005/RULE-0006 prior to this record's creation.

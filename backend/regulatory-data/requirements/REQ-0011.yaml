@@ -1,0 +1,37 @@
+requirement_id: REQ-0011
+code: FSSAI_CENTRAL_LICENCE_SCHEDULE1_ENTRY_V
+title: "FSSAI Central licence — Schedule 1 entry V (residual food processing)"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-FSSAI
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_OPERATION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0014
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0011
+  - RF-0013
+evidence_ids:
+  - EVID-FSS-04
+  - EVID-FSS-06
+
+requirement_notes: >
+  FD-01 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2). Modelled as a
+  standalone Requirement, not a Rule Version of REQ-0004 (the generic
+  industry==FOOD applicability proxy) — H2.2 classifies FD-01/FD-02 as
+  their own REQUIREMENT nodes, distinct from REQ-0004 and from the dairy
+  pair (RULE-0005/RULE-0006, which remain classification_rule_ids of
+  REQ-0004). REQ-0004 itself is unchanged; it continues to answer only the
+  coarse industry==FOOD applicability proxy question, not which FSSAI
+  licence tier applies — see REQ-0004's own requirement_notes and RULE-0004's
+  KEEP disposition. No contract conflict found requiring escalation: the
+  repository's existing Requirement/Rule model (one Requirement per
+  distinct approval question) accommodates FD-01/FD-02 as siblings of
+  REQ-0004 cleanly, exactly as the normalized research pack specifies.
