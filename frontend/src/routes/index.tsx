@@ -3,22 +3,17 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 import { useProject } from "@/lib/iris/project-context";
-import {
-  readiness,
-  byAuthority,
-  deriveDeadlines,
-  lastEvaluated,
-} from "@/lib/iris/derive";
-import {
-  useProjectRequirements,
-  useProjectActivity,
-} from "@/lib/iris/use-project-data";
+import { lastEvaluated } from "@/lib/iris/derive";
+import { useProjectActivity } from "@/lib/iris/use-project-data";
 import { useDatasetRequirementTitles } from "@/lib/iris/facts";
-import { useEngineEvaluation } from "@/components/iris/engine-evaluation-panel";
+import { useEngineEvaluation } from "@/lib/iris/use-engine-evaluation";
+import { useRegulatoryItems } from "@/lib/iris/use-regulatory-items";
+import { rollupByAuthority, summarizeItems } from "@/lib/iris/regulatory-items";
 import {
   attentionFromApplications,
   attentionFromDependencyGraph,
   attentionFromEngineDecisions,
+  attentionFromRegulatoryItems,
   orderAttentionItems,
   ATTENTION_CATEGORY_LABEL,
   type AttentionItem,
@@ -31,7 +26,7 @@ import {
   DataField,
   StatLine,
 } from "@/components/iris/page";
-import { StatusDot, Meter, Tag } from "@/components/iris/status";
+import { Tag } from "@/components/iris/status";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -56,11 +51,12 @@ export const Route = createFileRoute("/")({
 
 function Overview() {
   const { activeProject } = useProject();
-  const { data: reqs = [] } = useProjectRequirements(activeProject.id);
   const { data: activity = [] } = useProjectActivity(activeProject.id);
-  const summary = readiness(reqs);
-  const authorities = byAuthority(reqs);
-  const deadlines = deriveDeadlines(reqs);
+  // Regulatory intelligence comes from the engine (shared adapter), not the
+  // operational project_requirements tracking table.
+  const regulatory = useRegulatoryItems(activeProject.id);
+  const summary = useMemo(() => summarizeItems(regulatory.items), [regulatory.items]);
+  const authorities = useMemo(() => rollupByAuthority(regulatory.items), [regulatory.items]);
 
   // REGULATORY ATTENTION — every source below reads the project's STORED
   // state only (evaluateAll takes no ad-hoc fact overrides; the applications
@@ -85,17 +81,22 @@ function Overview() {
     const titleFor = (id: string) => titles[id] ?? id;
     return orderAttentionItems([
       ...attentionFromEngineDecisions(evaluationQuery.data ?? [], titleFor),
+      ...attentionFromRegulatoryItems(regulatory.items),
       ...attentionFromApplications(applicationsQuery.data ?? []),
       ...attentionFromDependencyGraph(dependencyGraphQuery.data),
     ]);
   }, [
     titlesQuery.data,
     evaluationQuery.data,
+    regulatory.items,
     applicationsQuery.data,
     dependencyGraphQuery.data,
   ]);
   const attentionLoading =
-    evaluationQuery.isLoading || applicationsQuery.isLoading || dependencyGraphQuery.isLoading;
+    evaluationQuery.isLoading ||
+    regulatory.isLoading ||
+    applicationsQuery.isLoading ||
+    dependencyGraphQuery.isLoading;
 
   return (
     <PageShell wide>
@@ -123,19 +124,18 @@ function Overview() {
           <StatLine
             items={[
               {
-                value: `${summary.readinessPct}%`,
-                label: "ready",
-                tone: summary.blocked ? "warning" : "success",
-              },
-              {
-                value: summary.ready,
-                label: `of ${summary.applicable.length} applicable`,
-              },
-              { value: summary.blocked, label: "blocked", tone: "danger" },
-              {
-                value: summary.attention,
-                label: "need action",
+                value: summary.diagnosticApplicable,
+                label: "diagnostically applicable",
                 tone: "warning",
+              },
+              {
+                value: summary.needsInformation + summary.needsReview,
+                label: "need information or review",
+                tone: "warning",
+              },
+              {
+                value: summary.authoritative,
+                label: `authoritative of ${summary.total}`,
               },
               {
                 value: <span className="tabular">{lastEvaluated}</span>,
@@ -198,43 +198,32 @@ function Overview() {
           </div>
         </div>
 
-        {/* Readiness strip */}
+        {/* Regulatory position — deterministic counts, not a compliance score */}
         <div className="grid divide-y divide-border md:grid-cols-4 md:divide-x md:divide-y-0">
-          <div className="px-5 py-4 md:px-6">
-            <div className="label-meta">Regulatory readiness</div>
-            <div className="mt-2 flex items-baseline gap-2">
-              <span className="tabular text-[28px] font-semibold leading-none tracking-[-0.02em]">
-                {summary.readinessPct}%
-              </span>
-              <span className="text-[12px] text-muted-foreground">
-                {summary.ready}/{summary.applicable.length} ready
-              </span>
-            </div>
-            <Meter
-              value={summary.ready}
-              total={summary.applicable.length}
-              tone={summary.blocked ? "warning" : "success"}
-              className="mt-3"
-            />
-          </div>
           {[
             {
-              label: "Active blockers",
-              value: summary.blocked,
-              tone: "danger" as const,
-              note: "Halting downstream approvals",
-            },
-            {
-              label: "Action required",
-              value: summary.attention,
-              tone: "warning" as const,
-              note: "Documents or clarifications pending",
-            },
-            {
-              label: "Not applicable",
-              value: summary.notApplicable,
+              label: "Production determinations",
+              value: `${summary.authoritative}/${summary.total}`,
               tone: "neutral" as const,
-              note: "Excluded at current scale",
+              note: `${summary.awaitingVerifiedKnowledge} awaiting verified regulatory knowledge (DRAFT rules)`,
+            },
+            {
+              label: "Diagnostic: applicable",
+              value: `${summary.diagnosticApplicable}`,
+              tone: "warning" as const,
+              note: "Non-authoritative — the DRAFT rules match this project's facts",
+            },
+            {
+              label: "Needs information or review",
+              value: `${summary.needsInformation + summary.needsReview}`,
+              tone: "warning" as const,
+              note: `${summary.unresolvedTriggers} more not yet evaluable (diagnostic result: requires information)`,
+            },
+            {
+              label: "Diagnostic: not applicable",
+              value: `${summary.diagnosticNotApplicable}`,
+              tone: "neutral" as const,
+              note: "Non-authoritative — excluded by the recorded facts",
             },
           ].map((m) => (
             <div key={m.label} className="px-5 py-4 md:px-6">
@@ -243,7 +232,6 @@ function Overview() {
                 <span
                   className={cn(
                     "tabular text-[28px] font-semibold leading-none tracking-[-0.02em]",
-                    m.tone === "danger" && "text-destructive",
                     m.tone === "warning" && "text-warning",
                   )}
                 >
@@ -300,6 +288,11 @@ function Overview() {
                         <span className="label-meta shrink-0">
                           {ATTENTION_CATEGORY_LABEL[item.category]}
                         </span>
+                        {item.diagnostic && (
+                          <Tag tone="info" className="shrink-0">
+                            Diagnostic — non-authoritative
+                          </Tag>
+                        )}
                         <h3 className="text-[13.5px] font-medium">{item.title}</h3>
                       </div>
                       <Link
@@ -328,93 +321,63 @@ function Overview() {
             )}
           </section>
 
-          {/* Requirements by authority */}
+          {/* Requirements by authority — engine requirements this project is matched to */}
           <section>
             <SectionHeading
               title="Requirements by authority"
-              hint="Applicable requirements only."
+              hint="Diagnostic matches and information gaps, grouped by the authority in the regulatory dataset."
             />
-            <table className="mt-3 w-full border border-border bg-surface text-left">
-              <thead>
-                <tr className="border-b border-border bg-surface-sunken">
-                  <th className="label-meta px-5 py-2.5 font-semibold">
-                    Authority
-                  </th>
-                  <th className="label-meta px-5 py-2.5 text-right font-semibold">
-                    Requirements
-                  </th>
-                  <th className="label-meta px-5 py-2.5 text-right font-semibold">
-                    Complete
-                  </th>
-                  <th className="label-meta px-5 py-2.5 text-right font-semibold">
-                    Open
-                  </th>
-                  <th className="label-meta w-[140px] px-5 py-2.5 font-semibold">
-                    Progress
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {authorities.map((a) => (
-                  <tr
-                    key={a.authority}
-                    className="row-hover hover:bg-surface-sunken"
-                  >
-                    <td className="px-5 py-3 text-[13px] font-medium">
-                      {a.authority}
-                    </td>
-                    <td className="tabular px-5 py-3 text-right text-[13px]">
-                      {a.total}
-                    </td>
-                    <td className="tabular px-5 py-3 text-right text-[13px] text-success">
-                      {a.ready}
-                    </td>
-                    <td className="tabular px-5 py-3 text-right text-[13px] text-muted-foreground">
-                      {a.open}
-                    </td>
-                    <td className="px-5 py-3">
-                      <Meter
-                        value={a.ready}
-                        total={a.total}
-                        tone={a.open ? "warning" : "success"}
-                      />
-                    </td>
+            {authorities.length === 0 ? (
+              <p className="mt-3 border border-dashed border-border bg-surface px-5 py-6 text-[12.5px] text-muted-foreground">
+                {regulatory.isLoading
+                  ? "Evaluating requirements…"
+                  : "No requirement is matched to this project's recorded facts yet."}
+              </p>
+            ) : (
+              <table className="mt-3 w-full border border-border bg-surface text-left">
+                <thead>
+                  <tr className="border-b border-border bg-surface-sunken">
+                    <th className="label-meta px-5 py-2.5 font-semibold">Authority</th>
+                    <th className="label-meta px-5 py-2.5 text-right font-semibold">
+                      Diagnostic applicable
+                    </th>
+                    <th className="label-meta px-5 py-2.5 text-right font-semibold">
+                      Needs information
+                    </th>
+                    <th className="label-meta px-5 py-2.5 text-right font-semibold">
+                      Authoritative
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {authorities.map((a) => (
+                    <tr key={a.authorityName} className="row-hover hover:bg-surface-sunken">
+                      <td className="px-5 py-3 text-[13px] font-medium">{a.authorityName}</td>
+                      <td className="tabular px-5 py-3 text-right text-[13px]">
+                        {a.diagnosticApplicable}
+                      </td>
+                      <td className="tabular px-5 py-3 text-right text-[13px] text-muted-foreground">
+                        {a.needsInformation}
+                      </td>
+                      <td className="tabular px-5 py-3 text-right text-[13px] text-muted-foreground">
+                        {a.authoritative}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </section>
         </div>
 
         <div className="space-y-8">
-          {/* Deadlines */}
+          {/* Deadlines — no statutory deadline is derived from engine rules */}
           <section>
             <SectionHeading title="Upcoming deadlines" hint="Next 60 days." />
-            <ul className="mt-3 divide-y divide-border border border-border bg-surface">
-              {deadlines.map((d) => (
-                <li
-                  key={d.label}
-                  className="row-hover px-4 py-3.5 hover:bg-surface-sunken"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex items-start gap-2">
-                        <StatusDot status={d.severity} className="mt-[6px]" />
-                        <p className="text-[13px] font-medium leading-snug">
-                          {d.label}
-                        </p>
-                      </div>
-                      <p className="mt-1 pl-3.5 text-[11.5px] text-muted-foreground">
-                        {d.authority} · {d.note}
-                      </p>
-                    </div>
-                    <span className="tabular shrink-0 text-[11.5px] text-muted-foreground">
-                      {d.date}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <p className="mt-3 border border-dashed border-border bg-surface px-5 py-6 text-[12.5px] leading-relaxed text-muted-foreground">
+              No deadlines on record. IRIS does not derive statutory dates from regulatory rules;
+              deadlines appear here only when they come from recorded project tracking data.
+            </p>
           </section>
 
           {/* Activity */}

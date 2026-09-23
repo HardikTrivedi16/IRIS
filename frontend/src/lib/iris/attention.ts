@@ -17,6 +17,7 @@
  * Five distinct meanings are kept apart — see each builder's docstring.
  * None of them is "compliant"/"non-compliant"/a severity/a probability.
  */
+import type { RegulatoryItem } from "./regulatory-items";
 import type {
   ApplicantApplication,
   DependencyGraphResponse,
@@ -28,7 +29,8 @@ export type AttentionCategory =
   | "NEEDS_REVIEW"
   | "PROCESS_ATTENTION"
   | "DEPENDENCY_BLOCKED"
-  | "UNVERIFIED_REGULATORY_KNOWLEDGE";
+  | "UNVERIFIED_REGULATORY_KNOWLEDGE"
+  | "DIAGNOSTIC_MATCH";
 
 export interface AttentionAction {
   label: string;
@@ -45,6 +47,10 @@ export interface AttentionItem {
   requirementId?: string;
   missingFactKeys?: string[];
   action: AttentionAction;
+  /** True when derived from the NON_PRODUCTION (DRAFT-rule) evaluation. Such
+   * an item is a prototype analysis signal and is never an authoritative
+   * determination or a legal blocker. */
+  diagnostic?: boolean;
 }
 
 export const ATTENTION_CATEGORY_LABEL: Record<AttentionCategory, string> = {
@@ -53,12 +59,14 @@ export const ATTENTION_CATEGORY_LABEL: Record<AttentionCategory, string> = {
   PROCESS_ATTENTION: "Process attention",
   DEPENDENCY_BLOCKED: "Dependency blocked",
   UNVERIFIED_REGULATORY_KNOWLEDGE: "Regulatory knowledge",
+  DIAGNOSTIC_MATCH: "Diagnostic match",
 };
 
 /** Presentation order only — not a risk ranking. */
 const CATEGORY_ORDER: AttentionCategory[] = [
   "NEEDS_INFORMATION",
   "NEEDS_REVIEW",
+  "DIAGNOSTIC_MATCH",
   "PROCESS_ATTENTION",
   "DEPENDENCY_BLOCKED",
   "UNVERIFIED_REGULATORY_KNOWLEDGE",
@@ -128,6 +136,89 @@ export function attentionFromEngineDecisions(
   }
 
   return items;
+}
+
+const DIAGNOSTIC_PREFIX = "Diagnostic — non-authoritative: ";
+
+/**
+ * Attention derived from the NON_PRODUCTION (diagnostic) evaluation, so the
+ * dashboard differs by project even while every production result is
+ * withheld for DRAFT knowledge. Every item is flagged `diagnostic` and its
+ * wording says so; none is a legal blocker or a determination.
+ *  - requirements the project's facts diagnostically match (APPLICABLE)
+ *  - review flags and information gaps in rule families the project has
+ *    largely answered (relevance NEEDS_INFORMATION)
+ *  - ONE aggregated item for the remaining REQUIRES_INFORMATION requirements
+ *    (relevance OTHER — used only to avoid flooding the panel), pointing to
+ *    Evaluation for each requirement's missing facts. Every statement is taken
+ *    directly from the engine decision, never from the relevance grouping.
+ */
+export function attentionFromRegulatoryItems(items: RegulatoryItem[]): AttentionItem[] {
+  const out: AttentionItem[] = [];
+  const unresolved: RegulatoryItem[] = [];
+  for (const i of items) {
+    const d = i.diagnostic;
+    if (!d) continue;
+    if (d.finalState === "REQUIRES_REVIEW") {
+      out.push({
+        id: `diag-review-${i.requirementId}`,
+        source: "ENGINE",
+        category: "NEEDS_REVIEW",
+        title: i.title,
+        reason: DIAGNOSTIC_PREFIX + (d.reviewReason ?? d.reasonText ?? "the rules need human review for this requirement."),
+        requirementId: i.requirementId,
+        action: { label: "View evaluation", route: "/evaluation" },
+        diagnostic: true,
+      });
+    } else if (d.finalState === "REQUIRES_INFORMATION") {
+      if (i.relevance === "NEEDS_INFORMATION") {
+        out.push({
+          id: `diag-info-${i.requirementId}`,
+          source: "ENGINE",
+          category: "NEEDS_INFORMATION",
+          title: i.title,
+          reason:
+            DIAGNOSTIC_PREFIX +
+            "IRIS cannot evaluate this requirement until the facts below are provided.",
+          requirementId: i.requirementId,
+          missingFactKeys: d.missingFactKeys,
+          action: { label: "Provide facts", route: "/evaluation" },
+          diagnostic: true,
+        });
+      } else {
+        unresolved.push(i);
+      }
+    } else if (d.finalState === "APPLICABLE") {
+      out.push({
+        id: `diag-match-${i.requirementId}`,
+        source: "ENGINE",
+        category: "DIAGNOSTIC_MATCH",
+        title: i.title,
+        reason:
+          DIAGNOSTIC_PREFIX +
+          `the deterministic evaluation of the ${i.ruleVersionStatus ?? "unverified"} rule finds this applicable to the recorded facts (${i.authorityName}).`,
+        requirementId: i.requirementId,
+        action: { label: "View evaluation", route: "/evaluation" },
+        diagnostic: true,
+      });
+    }
+  }
+
+  if (unresolved.length > 0) {
+    const n = unresolved.length;
+    out.push({
+      id: "diag-unresolved-triggers",
+      source: "ENGINE",
+      category: "NEEDS_INFORMATION",
+      title: `${n} requirement${n === 1 ? "" : "s"} require more information`,
+      reason:
+        DIAGNOSTIC_PREFIX +
+        "the diagnostic evaluation returned REQUIRES_INFORMATION for these requirements. Each one's missing facts are listed under Evaluation.",
+      action: { label: "Provide facts", route: "/evaluation" },
+      diagnostic: true,
+    });
+  }
+  return out;
 }
 
 /**

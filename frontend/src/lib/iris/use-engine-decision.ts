@@ -4,10 +4,7 @@ import {
   BackendUnavailableError,
   type EvaluationMode,
 } from "@/lib/iris/api-client";
-import {
-  deriveEngineProjectFacts,
-  engineRequirementIdFor,
-} from "@/lib/iris/engine-mapping";
+import { engineRequirementIdFor } from "@/lib/iris/engine-mapping";
 import type { Project } from "@/lib/iris/types";
 
 /** Live health/version info about the backend + regulatory engine. Used to
@@ -44,13 +41,15 @@ export function useEngineDecision(
     ],
     queryFn: async () => {
       if (!engineRequirementId) throw new Error("not engine-backed");
-      const facts = deriveEngineProjectFacts(project);
+      // READ-ONLY view: never persist a Decision merely because a page was
+      // opened, and never send derived "facts" — they would be merged over the
+      // project's stored Project Facts (request body wins) and silently change
+      // the evaluated basis. The engine reads the stored facts itself.
       const { decision } = await irisApi.evaluate({
         projectId: project.id,
         requirementId: engineRequirementId,
         evaluationMode,
-        facts,
-        persist: true,
+        persist: false,
       });
       return decision;
     },

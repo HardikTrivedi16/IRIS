@@ -57,6 +57,7 @@ def list_requirements() -> list[dict]:
         rv = ds.rule_versions.get(latest_rv_id) if latest_rv_id else None
         rec["latest_rule_version_id"] = latest_rv_id
         rec["latest_rule_version_status"] = (rv or {}).get("status")
+        rec["authority_name"] = (ds.authorities.get(rec.get("authority_id")) or {}).get("name")
         out.append(rec)
     out.sort(key=lambda r: r.get("requirement_id", ""))
     return out
@@ -73,6 +74,7 @@ def get_requirement(requirement_id: str) -> dict | None:
     rv = ds.rule_versions.get(latest_rv_id) if latest_rv_id else None
     rec["latest_rule_version_id"] = latest_rv_id
     rec["latest_rule_version_status"] = (rv or {}).get("status")
+    rec["authority_name"] = (ds.authorities.get(rec.get("authority_id")) or {}).get("name")
     return rec
 
 

@@ -135,6 +135,7 @@ export function DependencyGraph({
   focusIds,
   highlightPath,
   className,
+  legend,
 }: {
   nodes: GraphNode[];
   edges: GraphEdge[];
@@ -143,6 +144,9 @@ export function DependencyGraph({
   focusIds?: Set<string> | null;
   highlightPath?: Set<string> | null;
   className?: string;
+  /** Overrides the default status legend (colour + label pairs). Used when
+   * node colours encode something other than a completion status. */
+  legend?: { status: Status; label: string }[];
 }) {
   const layout = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -356,28 +360,23 @@ export function DependencyGraph({
 
       <div className="absolute bottom-3 left-3 flex flex-wrap items-center gap-x-3.5 gap-y-1.5 rounded-sm border border-border bg-surface px-3 py-2">
         {(
-          [
-            "ready",
-            "attention",
-            "blocked",
-            "not-ready",
-            "not-applicable",
-          ] as Status[]
-        )
-          .filter((s, i, arr) => arr.indexOf(s) === i)
-          .map((s) => (
+          legend ??
+          (["ready", "attention", "blocked", "not-ready", "not-applicable"] as Status[]).map(
+            (s) => ({ status: s, label: statusMeta[s].label }),
+          )
+        ).map((l) => (
+          <span
+            key={l.status}
+            className="flex items-center gap-1.5 text-[11px] text-muted-foreground"
+          >
             <span
-              key={s}
-              className="flex items-center gap-1.5 text-[11px] text-muted-foreground"
-            >
-              <span
-                className="h-[6px] w-[6px] rounded-full"
-                style={{ background: statusStroke[s] }}
-                aria-hidden
-              />
-              {statusMeta[s].label}
-            </span>
-          ))}
+              className="h-[6px] w-[6px] rounded-full"
+              style={{ background: statusStroke[l.status] }}
+              aria-hidden
+            />
+            {l.label}
+          </span>
+        ))}
       </div>
     </div>
   );
