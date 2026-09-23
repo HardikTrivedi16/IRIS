@@ -24,3 +24,11 @@ PyMuPDF text-extraction dependency (no OCR/Ollama needed — these are
 born-digital PDFs with a real text layer), not copied from `scenarios.json`
 alone — `scenarios.json`'s claims were independently confirmed against the
 actual PDF content before anything was wired into the app.
+
+## Legacy / historical status (portfolio decision, 2026-09-23)
+
+These documents are **synthetic LEGACY evidence of SwaadHarvest's prior Haridwar, Uttarakhand facility**.
+The IRIS demo portfolio treats SwaadHarvest as a *current Maharashtra* project (Pune district MIDC area); that
+current location is a **SYNTHETIC_DEMO_FACT**, not something extracted from these PDFs. The PDFs are unmodified.
+Evidence Consistency may therefore legitimately flag the old Haridwar address against the current project
+location as a conflict requiring human review.
