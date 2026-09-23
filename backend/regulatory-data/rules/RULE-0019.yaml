@@ -1,0 +1,17 @@
+rule_id: RULE-0019
+code: DRUGS_SCHEDULE_X_PATHWAY_APPLICABILITY
+requirement_id: REQ-0003
+title: "Drugs Rules, 1945 — Schedule X pathways (Form 24-F -> 25-F; Form 27-B -> 28-B)"
+output_type: APPLICABILITY
+
+description: >
+  PH-03. Determines whether a Schedule-X-related licence-application
+  pathway applies: the project manufactures drugs for sale/distribution
+  (not repacking), and the drug's schedule classification is
+  SCHEDULE_X_ONLY (Form 24-F -> 25-F) or SCHEDULE_C_OR_C1_AND_X (combined
+  Form 27-B -> 28-B). KEEP_DRAFT — Schedule X is outside the IRIS MVP
+  (Phase 0 §3); deprioritised by product priority, not by legal
+  readiness.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

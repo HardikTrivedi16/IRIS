@@ -11,3 +11,10 @@ notes: >
   authority rather than the state enforcing body (see REQ-0001's
   authority_attribution_note). Already referenced by
   RULE-0001-V1/RULE-0002-V1 prior to this record's creation.
+
+  PHARMA TRANCHE (2026-09-23): also used by PH-04 (REQ-0014, RULE-0020 —
+  Category A, outside a notified industrial area/estate) for
+  Environmental Clearance under EIA 2006 Schedule item 5(f). Creatable
+  now per the normalized research's H2.2 even though PH-04's Regulatory
+  Fact is blocked (consolidated 5(f) text not assembled) — an authority
+  record carries no evidentiary claim about the rule's own readiness.

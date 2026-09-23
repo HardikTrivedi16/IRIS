@@ -1,0 +1,26 @@
+condition_id: COND-0054
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0052
+  - COND-0053
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0027
+
+description: >
+  True if drug_schedule_classification is SCHEDULE_X_ONLY OR
+  SCHEDULE_C_OR_C1_AND_X — i.e. the product involves Schedule X in
+  either its pure or C/C1-combined form. The two values are mutually
+  exclusive (an ENUM fact takes exactly one value), so this OR never
+  double-counts.
+
+normalization_notes: >
+  ANDed with COND-0003 (coarse gate) as PH-03's root, COND-0055.

@@ -1,0 +1,12 @@
+regulatory_fact_id: RF-0025
+statement: >
+  A project that manufactures drugs for sale or distribution (excluding
+  repacking), where the drug's schedule classification is NONE (outside
+  Schedule C, Schedule C(1), and Schedule X), must apply for a
+  manufacturing licence in Form 24 (Rule 69(1)(c), Drugs Rules, 1945) to
+  the State Licensing Authority (FDA Maharashtra); the licence is issued
+  in Form 25. (PH-01.)
+evidence_ids: [EVID-DRUGS-01]
+authority_id: AUTH-FDA-MH
+instrument_id: INST-DRUGS-RULES-1945
+verification_status: UNVERIFIED

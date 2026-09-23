@@ -90,14 +90,20 @@ conditions:
     child_condition_ids: [COND-0010, COND-0013]
 
 counts:
-  total_conditions: 45
-  leaf_conditions: 29
-  composite_conditions: 16
+  total_conditions: 61
+  leaf_conditions: 38
+  composite_conditions: 23
 
 # NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): COND-0039..
 # COND-0045 (7 new conditions: turnover-based Central/State/Registration
 # trees, reusing COND-0032's subsector guard unchanged) added — see
 # rule_review_register.yaml RULE-REV-0006.
+
+# NOTE (Pharma tranche, 2026-09-23): COND-0003 reshaped from a leaf
+# (drug_schedule_classification NOT_IN [...]) to a COMPOSITE coarse gate;
+# COND-0046..COND-0061 (16 new conditions: PH-01/02/03 schedule branches
+# and PH-04 Category A/B, PH-05) added — see
+# rule_review_register.yaml RULE-REV-0002.
 
 # NOTE (Shared+Food regulatory-data integration pass): COND-0015..COND-0038
 # (24 new conditions, for SH-03/04/05/07/08/10/FD-01/FD-02/FD-04 — see

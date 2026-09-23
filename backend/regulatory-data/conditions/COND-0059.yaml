@@ -1,0 +1,22 @@
+condition_id: COND-0059
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.located_in_notified_industrial_area
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: []
+
+description: >
+  True if the project IS located in a notified industrial area/estate —
+  the EIA 5(f) Category B (inside) split (SEIAA-MH), the exact
+  complement of COND-0057.
+
+normalization_notes: >
+  ANDed with COND-0056 (PH-04 gate) as Category B's root, COND-0060. No
+  RF/EVID this pass — see COND-0056's notes (PH-04 RF blocked).

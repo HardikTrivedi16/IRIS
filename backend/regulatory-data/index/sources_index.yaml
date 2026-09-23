@@ -13,6 +13,8 @@ sources:
   - SRC-010
   - SRC-011
   - SRC-012
+  - SRC-013
+  - SRC-014
 
 counts:
-  total_sources: 10
+  total_sources: 12

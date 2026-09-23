@@ -1,0 +1,16 @@
+regulatory_fact_id: RF-0027
+statement: >
+  A project that manufactures drugs for sale or distribution (excluding
+  repacking), where the drug's schedule classification is
+  SCHEDULE_X_ONLY, must apply in Form 24-F (Rule 69(1)(b)) for a licence
+  issued in Form 25-F; where the classification is
+  SCHEDULE_C_OR_C1_AND_X (Schedule C/C(1) combined with Schedule X), the
+  application is made in the combined Form 27-B for a licence issued in
+  Form 28-B. Both to the State Licensing Authority (FDA Maharashtra).
+  (PH-03 — Schedule X is outside the IRIS MVP per Phase 0 §3; KEEP_DRAFT
+  is a scope/priority decision, not a legal gap — confidence remains
+  VERIFIED_OFFICIAL.)
+evidence_ids: [EVID-DRUGS-03]
+authority_id: AUTH-FDA-MH
+instrument_id: INST-DRUGS-RULES-1945
+verification_status: UNVERIFIED

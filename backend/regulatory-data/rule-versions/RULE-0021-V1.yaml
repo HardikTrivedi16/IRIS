@@ -1,0 +1,71 @@
+rule_version_id: RULE-0021-V1
+rule_id: RULE-0021
+version_number: 1
+
+condition_expression_root_id: COND-0058
+logic: "COND-0058 = AND(COND-0056, located_in_notified_industrial_area==false)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — Environmental Clearance under EIA 2006 Schedule item 5(f)
+  applies, Category A (outside a notified industrial area/estate):
+  appraised by MoEFCC.
+false_outcome: >
+  NOT_APPLICABLE on this Category-A route — either the coarse gate does
+  not clear (RULE-0020), or the project IS located in a notified
+  industrial area/estate (see RULE-0022, Category B).
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine Category-A applicability until
+  pharma_activity_type and located_in_notified_industrial_area are known.
+
+required_project_facts:
+  - project.pharma_activity_type
+  - project.located_in_notified_industrial_area
+
+regulatory_fact_ids: []
+evidence_ids: []
+source_ids: []
+authority_id: AUTH-MoEFCC
+instrument_id: INST-EIA-2006
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_CONSTRUCTION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0021-V1
+  regulatory_fact_ids: []
+  evidence_ids: []
+  source_ids: []
+  authority_id: AUTH-MoEFCC
+  instrument_id: INST-EIA-2006
+
+validation_notes: >
+  New Rule (2026-09-23). KEEP_DRAFT per the normalized research H2.2 —
+  "RF blocked: Consolidated 5(f) text (2006 + S.O. 1599(E) 2014 +
+  S.O. 1223(E) 2020) not assembled — the B/B2 sub-route outcome depends
+  on it (H5 #6)." No Regulatory Fact/Evidence/Source authored this pass
+  — fields deliberately empty, not fabricated.
+
+  ENGINEERING NOTE: aggregated under REQ-0014 via `classification_rule_ids`
+  alongside RULE-0022 (Category B), with REQ-0014.evaluated_by_rule_id
+  pointing at RULE-0020 (the coarse gate, activity-only, COND-0056) —
+  see REQ-0014's validation_notes. This coarse-gate/classification split
+  is required for the same reason RULE-0017/0018/0019 needed it under
+  REQ-0003 (see RULE-0017's validation_notes) — a general property of
+  `iris_engine.classification`'s combine logic, not Pharma-specific.

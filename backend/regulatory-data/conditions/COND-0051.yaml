@@ -1,0 +1,25 @@
+condition_id: COND-0051
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0003
+  - COND-0050
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0026
+
+description: >
+  PH-02 root: coarse drug-manufacturing gate (COND-0003) AND
+  drug_schedule_classification == SCHEDULE_C_OR_C1 (COND-0050) — Drugs
+  Rules 1945 r.75, Form 27 -> Form 28, FDA Maharashtra.
+
+normalization_notes: >
+  RULE-0018-V1's condition_expression_root_id. Resolves RULE-REV-0002's
+  Schedule C/C(1) leg — see the rule review register entry.

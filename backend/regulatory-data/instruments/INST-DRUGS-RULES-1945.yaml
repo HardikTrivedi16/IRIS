@@ -1,0 +1,28 @@
+instrument_id: INST-DRUGS-RULES-1945
+short_title: "Drugs Rules, 1945"
+full_citation: "Drugs Rules, 1945 (made under the Drugs and Cosmetics Act, 1940), as amended"
+issuing_authority_id: AUTH-CDSCO
+year: 1945
+currency_status: IN_FORCE
+effective_start_date: "1945-01-01"
+effective_end_date: null
+supersedes_instrument_id: null
+superseded_by_instrument_id: null
+last_currency_check: "2026-09-23"
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.2). Used by
+  PH-01 (RULE-0017, r.69(1)(c)/Form 24-25), PH-02 (RULE-0018, r.75/Form
+  27-28), PH-03 (RULE-0019, r.69(1)(b) Form 24-F/25-F and the Form 27-B/
+  28-B combined pathway), and PH-05 (REQ-0015, the perpetual-validity +
+  5-yearly-retention-fee condition substituted into Forms 25/25-A/25-F/
+  28/28-B/28-D etc. by the G.S.R. 1337(E) series, 2017). Revised Schedule
+  M (G.S.R. 922(E), 28.12.2023) is a licence-condition/inspection-standard
+  amendment, not a separate approval — recorded as context only, no
+  standalone rule authored for it this pass, per the research's own
+  scoping note. `issuing_authority_id` is the Central instrument's own
+  issuing authority (AUTH-CDSCO) — the STATE licensing authority that
+  actually administers PH-01/02/03/05 in Maharashtra is AUTH-FDA-MH,
+  correctly set on each Rule Version's own `authority_id`, matching the
+  same Instrument/Authority attribution split already used for
+  INST-FSS-LR-11 (issuer AUTH-FSSAI) vs FD-02's practical
+  AUTH-FDA-MH-FOOD.

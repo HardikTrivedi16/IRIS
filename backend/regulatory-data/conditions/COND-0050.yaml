@@ -1,0 +1,28 @@
+condition_id: COND-0050
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.drug_schedule_classification
+operator: "=="
+comparison_value: "SCHEDULE_C_OR_C1"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-02
+
+grounding_regulatory_fact_ids:
+  - RF-0026
+
+description: >
+  True if the drug schedule classification ENUM is SCHEDULE_C_OR_C1 (and
+  not also X) — Rule 75, Form 27 -> Form 28, FDA Maharashtra (CDSCO joint
+  inspection for certain categories, per the research).
+
+normalization_notes: >
+  ANDed with COND-0003 (coarse gate) as PH-02's root, COND-0051.
+  Deliberately excludes the combined Schedule C/C1 + X case
+  (SCHEDULE_C_OR_C1_AND_X), which is PH-03's Form 27-B pathway, not this
+  one — the ENUM's four values are mutually exclusive by construction, so
+  no overlap logic is needed here.

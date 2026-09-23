@@ -1,0 +1,15 @@
+rule_id: RULE-0017
+code: DRUGS_RULE_69_1_C_FORM_24_SCHEDULE_NONE_APPLICABILITY
+requirement_id: REQ-0003
+title: "Drugs Rules, 1945 — Rule 69(1)(c), Form 24 -> 25 pathway (drug schedule classification NONE)"
+output_type: APPLICABILITY
+
+description: >
+  PH-01. Determines whether the Rule 69(1)(c) licence-application
+  pathway (Form 24, licence issued in Form 25) applies: the project
+  manufactures drugs for sale/distribution (not repacking), and the
+  drug's schedule classification is NONE (outside Schedule C, C(1), and
+  X).
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

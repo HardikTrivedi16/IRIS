@@ -86,11 +86,21 @@ def test_text_renderer_does_not_crash_on_none_tree():
 
 
 def test_text_renderer_produces_readable_ascii(engine, dataset):
-    facts = {"project.drug_schedule_classification": "SCHEDULE_C"}
+    # COND-0003 is now the REQ-0003 coarse gate (manufactures_drugs +
+    # activity NOT_IN [REPACKING]) — supply REPACKING so the gate itself
+    # resolves FALSE, independent of drug_schedule_classification.
+    facts = {
+        "project.manufactures_drugs_for_sale_or_distribution": True,
+        "project.pharma_activity_type": "REPACKING",
+    }
     d = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
     tree = d["explanation"]["condition_evaluation_tree"]
     text = render_condition_tree_text(tree)
-    assert "COND-0003" in text
+    # The composite root's own condition_id (COND-0003) is not printed by
+    # the text renderer (only leaf condition_ids and the AND/OR operator
+    # are) -- confirmed by inspection, not assumed. COND-0047 is the leaf
+    # that actually resolves FALSE (pharma_activity_type == REPACKING).
+    assert "COND-0047" in text
     assert "FALSE" in text
 
 

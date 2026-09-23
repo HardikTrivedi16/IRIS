@@ -66,7 +66,9 @@ def test_states_are_never_collapsed_into_each_other(engine):
         ("REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP),
         ("REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": False}, NP),
         ("REQ-0001", {}, NP),
-        ("REQ-0003", {"project.drug_schedule_classification": "SCHEDULE_C"}, NP),
+        ("REQ-0004", {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
+                       "project.dairy_liquid_milk_capacity": 60000,
+                       "project.dairy_milk_solids_capacity": 1000}, NP),
         ("REQ-0001", {}, PROD),
     ]
     for req_id, facts, mode in cases:

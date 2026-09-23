@@ -151,6 +151,7 @@ def test_case7_fssai_overlap_conflict_is_surfaced_not_invented(client):
             "evaluation_mode": "NON_PRODUCTION",
             "facts": {
                 "project.industry": "FOOD",
+                "project.food_subsector": "DAIRY",
                 "project.dairy_liquid_milk_capacity": 60000,
                 "project.dairy_milk_solids_capacity": 1000,
             },
@@ -167,13 +168,21 @@ def test_case7_fssai_overlap_conflict_is_surfaced_not_invented(client):
 
 
 def test_evaluate_all_returns_one_decision_per_dataset_requirement(client):
+    from app import engine_service
+
     r = client.post(
         "/api/v1/evaluate/all",
         json={"project_id": "mahapharm", "evaluation_mode": "NON_PRODUCTION", "persist": False},
     )
     assert r.status_code == 200
     decisions = r.json()["decisions"]
-    assert sorted(d["requirement_id"] for d in decisions) == ["REQ-0001", "REQ-0002", "REQ-0003", "REQ-0004"]
+    # Compare against the live dataset's own requirement list rather than
+    # a hardcoded count, so this test does not go stale the next time a
+    # Requirement is added (as happened silently between the original
+    # 4-Requirement Phase 5/6 package and the later Shared+Food/Pharma
+    # tranches, only caught now that this file is run again).
+    expected_ids = sorted(engine_service.get_dataset().requirements.keys())
+    assert sorted(d["requirement_id"] for d in decisions) == expected_ids
 
 
 def test_evaluate_unknown_requirement_fails_safe(client):

@@ -1,0 +1,31 @@
+condition_id: COND-0052
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.drug_schedule_classification
+operator: "=="
+comparison_value: "SCHEDULE_X_ONLY"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0027
+
+description: >
+  True if the drug schedule classification ENUM is SCHEDULE_X_ONLY
+  (Schedule X, excluding C/C1) — Rule 69(1)(b), Form 24-F -> Form 25-F.
+
+normalization_notes: >
+  ORed with COND-0053 (the combined C/C1+X case) as COND-0054, then ANDed
+  with COND-0003 (coarse gate) as PH-03's root, COND-0055. This engine
+  supports only {"==", ">", ">=", "<=", "NOT_IN"} leaf operators (no
+  "IN") — see iris_engine/conditions.py SUPPORTED_LEAF_OPERATORS — so "is
+  one of these two ENUM values" is expressed as an OR of two "==" leaves
+  rather than a single IN comparison. This is a mechanical decomposition
+  of PH-03's own single research candidate (which itself already groups
+  both Schedule-X form-pairs under one candidate, §12), not an invented
+  legal combination.

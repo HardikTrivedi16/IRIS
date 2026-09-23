@@ -1,0 +1,12 @@
+authority_id: AUTH-SEIAA-MH
+name: "State Environment Impact Assessment Authority, Maharashtra"
+level: STATE_REGULATOR
+jurisdiction: MAHARASHTRA
+parent_authority_id: null
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.1). Used by PH-04
+  (REQ-0014, RULE-0021 — Category B, inside a notified industrial
+  area/estate) for Environmental Clearance under EIA 2006 Schedule item
+  5(f). Creatable now per H2.2 even though PH-04's Regulatory Fact is
+  blocked (consolidated 5(f) text not assembled) — an authority record
+  carries no evidentiary claim about the rule's own readiness.

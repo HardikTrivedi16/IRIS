@@ -11,6 +11,9 @@ authorities:
   - AUTH-BOILER-MH
   - AUTH-CGWA
   - AUTH-LMO-MH
+  - AUTH-FDA-MH
+  - AUTH-CDSCO
+  - AUTH-SEIAA-MH
 
 counts:
-  total_authorities: 8
+  total_authorities: 11

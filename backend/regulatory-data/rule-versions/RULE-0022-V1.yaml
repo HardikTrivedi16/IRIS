@@ -1,0 +1,61 @@
+rule_version_id: RULE-0022-V1
+rule_id: RULE-0022
+version_number: 1
+
+condition_expression_root_id: COND-0060
+logic: "COND-0060 = AND(COND-0056, located_in_notified_industrial_area==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — Environmental Clearance under EIA 2006 Schedule item 5(f)
+  applies, Category B (inside a notified industrial area/estate):
+  appraised by SEIAA-MH.
+false_outcome: >
+  NOT_APPLICABLE on this Category-B route — either the coarse gate does
+  not clear (RULE-0020), or the project is NOT located in a notified
+  industrial area/estate (see RULE-0021, Category A).
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine Category-B applicability until
+  pharma_activity_type and located_in_notified_industrial_area are known.
+
+required_project_facts:
+  - project.pharma_activity_type
+  - project.located_in_notified_industrial_area
+
+regulatory_fact_ids: []
+evidence_ids: []
+source_ids: []
+authority_id: AUTH-SEIAA-MH
+instrument_id: INST-EIA-2006
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_CONSTRUCTION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0022-V1
+  regulatory_fact_ids: []
+  evidence_ids: []
+  source_ids: []
+  authority_id: AUTH-SEIAA-MH
+  instrument_id: INST-EIA-2006
+
+validation_notes: >
+  New Rule (2026-09-23). KEEP_DRAFT — see RULE-0021's validation_notes
+  (same blocker, same engineering rationale). No Regulatory Fact/
+  Evidence/Source authored this pass.

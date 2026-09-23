@@ -28,22 +28,29 @@ review_items:
 
   - review_id: RULE-REV-0002
     subject: "Drugs Rules — licence-application provision governing Schedule C / Schedule C(1) / Schedule X"
-    related_regulatory_fact_ids: [RF-0007]
+    related_regulatory_fact_ids: [RF-0007, RF-0025, RF-0026, RF-0027]
     related_phase4_review_id: REV-0005
     reason: >
       RF-0007 confirms the Rule 69(1)/Form 24 pathway (RULE-0003) explicitly excludes Schedule C,
       Schedule C(1), and Schedule X drugs, but no evidence was collected for what provision instead
       governs manufacturing-licence applications for those schedules.
     decision: >
-      RULE-0003-V1's FALSE branch is mapped to REQUIRES_REVIEW rather than NOT_APPLICABLE or a
-      guessed alternate pathway, precisely to surface this gap rather than mask it. Schedule X is
-      already outside the IRIS MVP (Phase 0 §3); Schedule C/Schedule C(1) are not separately excluded
-      by Phase 0, so this gap is potentially reachable within current MVP scope and is not purely
-      academic.
-    current_status: UNKNOWN
-    what_is_needed: "Primary-source evidence for the Schedule C / Schedule C(1) / Schedule X manufacturing-licence provisions."
-    next_phase: "Phase 3 (further evidence collection)."
-    blocks: "Any Rule asserting a specific licence pathway (form, authority, or fee) for Schedule C, Schedule C(1), or Schedule X drug manufacturing."
+      RESOLVED (2026-09-23, Pharma tranche — MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §7/§12/H1).
+      Primary-source evidence for both excluded schedules is now collected: PH-02 (RULE-0018,
+      RF-0026) covers Schedule C/C(1) via Rule 75/Form 27-28; PH-03 (RULE-0019, RF-0027, KEEP_DRAFT)
+      covers Schedule X and the combined C/C1+X case via Rule 69(1)(b)/Form 24-F-25-F and Form
+      27-B-28-B. RULE-0003 was repurposed from the schedule-specific NONE test to a coarse
+      drug-manufacturing gate (RF-0025); PH-01 (RULE-0017, the former RULE-0003 test) is now its own
+      Rule. All three (RULE-0017/0018/0019) are aggregated under REQ-0003 via
+      `classification_rule_ids` — see RULE-0017's validation_notes for why this required splitting
+      the coarse gate from the schedule-specific test (an `iris_engine.classification` combine-logic
+      constraint, verified by tracing the actual code, not assumed). RULE-0003-V1's FALSE branch no
+      longer maps to REQUIRES_REVIEW — it now correctly maps to NOT_APPLICABLE on the coarse gate
+      itself, with the schedule-specific answer available via classification.
+    current_status: RESOLVED
+    what_is_needed: "None for PH-01/PH-02. PH-03 remains KEEP_DRAFT (MVP scope/priority decision per Phase 0 §3, not a legal gap) — human verification (APPROVED VER) still required before any of RULE-0017/0018/0019 can promote to ACTIVE; none was created this pass."
+    next_phase: "Human verification of RULE-0017/0018/0019, then ACTIVE promotion consideration for PH-01/PH-02 (PH-03 stays DRAFT by scope choice)."
+    blocks: "ACTIVE promotion of RULE-0017, RULE-0018, or RULE-0019 pending human verification (APPROVED VER) — not blocked on any further evidence collection."
 
   - review_id: RULE-REV-0003
     subject: "FSSAI dairy registration-tier threshold (below 501 L/day and/or below 2.5 MT/annum)"
@@ -154,4 +161,5 @@ review_items:
 counts:
   total_review_items: 6
   REQUIRES_REVIEW: 3
-  UNKNOWN: 3
+  UNKNOWN: 2
+  RESOLVED: 1   # RULE-REV-0002, Pharma tranche 2026-09-23

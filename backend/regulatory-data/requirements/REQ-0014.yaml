@@ -1,0 +1,48 @@
+requirement_id: REQ-0014
+code: PHARMA_ENVIRONMENTAL_CLEARANCE_EIA_5F
+title: "Environmental Clearance — EIA 2006 Schedule item 5(f) (bulk drugs/intermediates; formulations excluded)"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-MoEFCC
+category: CORE_APPROVAL
+lifecycle_stage_ids:
+  - PRE_CONSTRUCTION
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0020
+classification_rule_ids: [RULE-0021, RULE-0022]
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids: []
+evidence_ids: []
+
+requirement_notes: >
+  PH-04 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2) — modelled as a
+  standalone Requirement per H2.2 ("REQUIREMENT, Environmental Clearance,
+  shared node instance per §17.1"), NOT folded into REQ-0003 merely
+  because it concerns Pharma. `evaluated_by_rule_id` (RULE-0020) is a
+  coarse gate (pharma_activity_type == BULK_DRUG_OR_INTERMEDIATE only);
+  `classification_rule_ids` (RULE-0021 Category A/MoEFCC,
+  RULE-0022 Category B/SEIAA-MH) resolve which authority/category
+  applies once the coarse gate clears — the same coarse-gate +
+  classification split REQ-0003 uses for PH-01/02/03, required by
+  `iris_engine.classification`'s combine mechanics (see RULE-0017's
+  validation_notes for the detailed trace).
+
+  KEEP_DRAFT — per H2.2, "ACTIVE after archival? NO — Consolidated 5(f)
+  text (2006 + S.O. 1599(E) 2014 + S.O. 1223(E) 2020) not assembled — the
+  B/B2 sub-route outcome depends on it (H5 #6)." No Regulatory Fact or
+  Evidence record is authored against this Requirement or its Rules this
+  pass — `grounding_regulatory_fact_ids`/`evidence_ids` are deliberately
+  empty, matching the SHARED-sector precedent for a research-gap-blocked
+  candidate (e.g. SH-06's "authority record creatable now; no RF
+  possible"). Only AUTH-MoEFCC/AUTH-SEIAA-MH and INST-EIA-2006 were
+  created (authority/instrument identity, not evidentiary claims).
+
+  This Requirement is designed as a §17.1 "shared node instance" — a
+  future Chemicals pass (CH-01, explicitly out of scope for this task)
+  is expected to reuse the same EIA-5(f) engineering pattern rather than
+  duplicating it, though no CH-01 objects were created this pass.

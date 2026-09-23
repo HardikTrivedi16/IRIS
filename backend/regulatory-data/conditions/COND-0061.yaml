@@ -1,0 +1,26 @@
+condition_id: COND-0061
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.holds_drug_manufacturing_licence
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-04
+
+grounding_regulatory_fact_ids:
+  - RF-0028
+
+description: >
+  True if the project holds a drug manufacturing licence — the retention
+  fee/perpetual-validity duty (G.S.R. 1337(E) series, 2017) attaches to
+  licence holders, not to applicants generally.
+
+normalization_notes: >
+  RULE-0022-V1's condition_expression_root_id — single leaf, no composite
+  needed (matches the existing single-leaf-root pattern, e.g. RULE-0001's
+  "single condition — no composite expression required").

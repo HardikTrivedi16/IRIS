@@ -21,13 +21,13 @@ rules:
     latest_confidence: VERIFIED
 
   - rule_id: RULE-0003
-    code: DRUGS_RULE_69_FORM_24_PATHWAY_APPLICABILITY
+    code: DRUGS_MANUFACTURING_LICENCE_COARSE_GATE   # REPURPOSED 2026-09-23 — see RULE-REV-0002
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
-    regulatory_fact_ids: [RF-0004, RF-0005, RF-0006, RF-0007]
+    regulatory_fact_ids: [RF-0025]
     latest_rule_version_id: RULE-0003-V1
     latest_status: DRAFT
-    latest_confidence: REQUIRES_REVIEW
+    latest_confidence: VERIFIED
 
   - rule_id: RULE-0004
     code: FSSAI_FOOD_BUSINESS_LICENCE_APPLICABILITY
@@ -156,6 +156,76 @@ rules:
     # New (2026-09-23) — FSSAI Registration, residual/general-manufacturing
     # category, turnover <=Rs. 1.5 crore. See RULE-REV-0006.
 
+  - rule_id: RULE-0017
+    code: DRUGS_RULE_69_1_C_FORM_24_SCHEDULE_NONE_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0025]
+    latest_rule_version_id: RULE-0017-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # PH-01 — Pharma tranche, 2026-09-23. classification_rule_id of REQ-0003.
+
+  - rule_id: RULE-0018
+    code: DRUGS_RULE_75_FORM_27_SCHEDULE_C_C1_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0026]
+    latest_rule_version_id: RULE-0018-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # PH-02 — resolves RULE-REV-0002's Schedule C/C(1) leg.
+
+  - rule_id: RULE-0019
+    code: DRUGS_SCHEDULE_X_PATHWAY_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0027]
+    latest_rule_version_id: RULE-0019-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # PH-03 — KEEP_DRAFT (MVP scope decision, not a legal gap).
+
+  - rule_id: RULE-0020
+    code: EIA_5F_BULK_DRUG_COARSE_GATE
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: []
+    latest_rule_version_id: RULE-0020-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+    # PH-04 coarse gate — evaluated_by_rule_id of REQ-0014. RF blocked (H5 #6).
+
+  - rule_id: RULE-0021
+    code: EIA_5F_BULK_DRUG_CATEGORY_A_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: []
+    latest_rule_version_id: RULE-0021-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+    # PH-04 Category A (MoEFCC) — classification_rule_id of REQ-0014.
+
+  - rule_id: RULE-0022
+    code: EIA_5F_BULK_DRUG_CATEGORY_B_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: []
+    latest_rule_version_id: RULE-0022-V1
+    latest_status: DRAFT
+    latest_confidence: REQUIRES_REVIEW
+    # PH-04 Category B (SEIAA-MH) — classification_rule_id of REQ-0014.
+
+  - rule_id: RULE-0023
+    code: DRUGS_LICENCE_RETENTION_FEE_APPLICABILITY
+    rule_type: APPLICABILITY_RULE
+    output_type: APPLICABILITY
+    regulatory_fact_ids: [RF-0028]
+    latest_rule_version_id: RULE-0023-V1
+    latest_status: DRAFT
+    latest_confidence: VERIFIED
+    # PH-05 — evaluated_by_rule_id of REQ-0015.
+
 known_conflicts:
   - conflict_id: OVERLAP-0001
     involved_rules: [RULE-0005, RULE-0006]
@@ -167,14 +237,15 @@ facts_with_no_rule:
     reason: "See RULE-REV-0001 in the Rule Review Register."
 
 counts:
-  total_rules: 16
-  total_rule_versions: 18
-  status_DRAFT: 16
+  total_rules: 23
+  total_rule_versions: 25
+  status_DRAFT: 23
   status_SUPERSEDED: 2
   status_ACTIVE: 0
-  confidence_VERIFIED: 15
-  confidence_REQUIRES_REVIEW: 3
-  regulatory_facts_converted: 24   # +RF-0011..RF-0021 (Shared+Food) + RF-0022..RF-0024 (currentness pass)
+  confidence_VERIFIED: 20
+  confidence_REQUIRES_REVIEW: 5
+  regulatory_facts_converted: 28   # +RF-0011..RF-0021 (Shared+Food) + RF-0022..RF-0024 (FSSAI
+                                     # currentness pass) + RF-0025..RF-0028 (Pharma tranche)
   regulatory_facts_not_converted: 1   # RF-0003
   known_conflicts: 1   # OVERLAP-0001 — see rule_conflict_register.yaml
 
@@ -189,3 +260,9 @@ counts:
 # RULE-0015-V1 set to status: SUPERSEDED (effective_end_date 2026-03-31);
 # RULE-0014-V2/RULE-0015-V2 (successors) and RULE-0016/RULE-0016-V1 (new
 # Registration rule) added — see rule_review_register.yaml RULE-REV-0006.
+#
+# NOTE (Pharma tranche, 2026-09-23): RULE-0003 repurposed to a coarse gate
+# (was the Form-24/NONE-schedule test); RULE-0017/0018/0019 (PH-01/02/03)
+# added as REQ-0003 classification_rule_ids. RULE-0020/0021/0022 (PH-04
+# coarse gate + Category A/B, KEEP_DRAFT) and RULE-0023 (PH-05) added
+# under new REQ-0014/REQ-0015. See rule_review_register.yaml RULE-REV-0002.

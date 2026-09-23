@@ -1,0 +1,24 @@
+condition_id: COND-0058
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0056
+  - COND-0057
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: []
+
+description: >
+  PH-04 Category A root: pharma_activity_type == BULK_DRUG_OR_INTERMEDIATE
+  AND NOT located_in_notified_industrial_area — EIA 5(f) Category A
+  (MoEFCC), outside a notified industrial area/estate.
+
+normalization_notes: >
+  RULE-0020-V1's condition_expression_root_id (REQ-0014 classification
+  member). KEEP_DRAFT — see REQ-0014's validation_notes.

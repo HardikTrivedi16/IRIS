@@ -1,0 +1,24 @@
+condition_id: COND-0049
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0003
+  - COND-0048
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0025
+
+description: >
+  PH-01 root: coarse drug-manufacturing gate (COND-0003) AND
+  drug_schedule_classification == NONE (COND-0048) — Drugs Rules 1945
+  r.69(1)(c), Form 24 -> Form 25, FDA Maharashtra.
+
+normalization_notes: >
+  RULE-0017-V1's condition_expression_root_id.

@@ -1,0 +1,71 @@
+rule_version_id: RULE-0023-V1
+rule_id: RULE-0023
+version_number: 1
+
+condition_expression_root_id: COND-0061
+logic: "COND-0061 = (holds_drug_manufacturing_licence==true)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — the licence remains valid perpetually unless sooner
+  suspended or cancelled, subject to (a) compliance/GMP assessment not
+  less than once every three years or as needed on a risk-based
+  approach, and (b) a retention fee payable before the expiry of every
+  succeeding five years from the date of issue (G.S.R. 1337(E) series,
+  2017). This is a continuing obligation, not periodic renewal — non-
+  payment carries its own suspension/cancellation consequence, not mere
+  lapse.
+false_outcome: >
+  NOT_APPLICABLE — the project does not hold a drug manufacturing
+  licence, so the retention-fee duty does not attach.
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine retention-duty applicability
+  until holds_drug_manufacturing_licence is known.
+
+required_project_facts:
+  - project.holds_drug_manufacturing_licence
+
+regulatory_fact_ids:
+  - RF-0028
+evidence_ids:
+  - EVID-DRUGS-04
+source_ids:
+  - SRC-014
+authority_id: AUTH-FDA-MH
+instrument_id: INST-DRUGS-RULES-1945
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: OPERATIONAL
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0023-V1
+  regulatory_fact_ids: [RF-0028]
+  evidence_ids: [EVID-DRUGS-04]
+  source_ids: [SRC-014]
+  authority_id: AUTH-FDA-MH
+  instrument_id: INST-DRUGS-RULES-1945
+
+validation_notes: >
+  New Rule (2026-09-23). Deliberately does NOT model a rupee amount,
+  cadence beyond "every succeeding five years," suspension mechanics, or
+  a form number — none of these are present in the normalized research
+  pack, and none are invented here. Modelled as a continuing obligation
+  (REQ-0015's own category), not renewal metadata, per H2.2's explicit
+  instruction ("not renewal metadata, because non-payment has its own
+  suspension/cancellation consequence").

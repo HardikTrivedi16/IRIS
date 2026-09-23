@@ -26,11 +26,16 @@ EXPECTED = {
         "facts": {"project.plant_located_in_air_pollution_control_area": True},
     },
     "REQ-0003": {
+        # REPURPOSED 2026-09-23 (Pharma tranche, RULE-REV-0002): RULE-0003
+        # is now the coarse drug-manufacturing gate.
         "rule_id": "RULE-0003", "rule_version_id": "RULE-0003-V1",
-        "regulatory_fact_ids": ["RF-0004", "RF-0005", "RF-0006", "RF-0007"],
-        "evidence_ids": ["EVID-FDA-01"],
-        "authority_id": "AUTH-CDSCO", "instrument_id": "INST-DRUG-45",
-        "facts": {"project.drug_schedule_classification": "GENERAL_SCHEDULE"},
+        "regulatory_fact_ids": ["RF-0025"],
+        "evidence_ids": ["EVID-DRUGS-01"],
+        "authority_id": "AUTH-FDA-MH", "instrument_id": "INST-DRUGS-RULES-1945",
+        "facts": {
+            "project.manufactures_drugs_for_sale_or_distribution": True,
+            "project.pharma_activity_type": "FORMULATIONS",
+        },
     },
     "REQ-0004": {
         "rule_id": "RULE-0004", "rule_version_id": "RULE-0004-V1",

@@ -19,6 +19,10 @@ facts:
   - RF-0022
   - RF-0023
   - RF-0024
+  - RF-0025
+  - RF-0026
+  - RF-0027
+  - RF-0028
 
 counts:
-  total_regulatory_facts: 16
+  total_regulatory_facts: 20

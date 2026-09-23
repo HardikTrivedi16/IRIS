@@ -29,29 +29,35 @@ def test_rule_0002_air_act(engine):
     assert d["final_state"] == "REQUIRES_INFORMATION"
 
 
-def test_rule_0003_drugs_normal_schedule(engine):
-    d = engine.evaluate_requirement("P", "REQ-0003",
-        {"project.drug_schedule_classification": "GENERAL_SCHEDULE"}, NP)
+_PHARMA_GATE = {
+    "project.manufactures_drugs_for_sale_or_distribution": True,
+    "project.pharma_activity_type": "FORMULATIONS",
+}
+
+
+def test_rule_0003_drugs_schedule_none(engine):
+    facts = dict(_PHARMA_GATE, **{"project.drug_schedule_classification": "NONE"})
+    d = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
     assert d["final_state"] == "APPLICABLE"
 
 
-def test_rule_0003_schedule_c_requires_review_not_not_applicable(engine):
-    d = engine.evaluate_requirement("P", "REQ-0003",
-        {"project.drug_schedule_classification": "SCHEDULE_C"}, NP)
-    assert d["final_state"] == "REQUIRES_REVIEW"
+def test_rule_0003_schedule_c_or_c1_applicable_not_not_applicable(engine):
+    facts = dict(_PHARMA_GATE, **{"project.drug_schedule_classification": "SCHEDULE_C_OR_C1"})
+    d = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
+    assert d["final_state"] == "APPLICABLE"
     assert d["final_state"] != "NOT_APPLICABLE"
 
 
-def test_rule_0003_schedule_c1_requires_review(engine):
-    d = engine.evaluate_requirement("P", "REQ-0003",
-        {"project.drug_schedule_classification": "SCHEDULE_C1"}, NP)
-    assert d["final_state"] == "REQUIRES_REVIEW"
+def test_rule_0003_schedule_x_only_applicable(engine):
+    facts = dict(_PHARMA_GATE, **{"project.drug_schedule_classification": "SCHEDULE_X_ONLY"})
+    d = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
+    assert d["final_state"] == "APPLICABLE"
 
 
-def test_rule_0003_schedule_x_requires_review(engine):
-    d = engine.evaluate_requirement("P", "REQ-0003",
-        {"project.drug_schedule_classification": "SCHEDULE_X"}, NP)
-    assert d["final_state"] == "REQUIRES_REVIEW"
+def test_rule_0003_schedule_c_or_c1_and_x_applicable(engine):
+    facts = dict(_PHARMA_GATE, **{"project.drug_schedule_classification": "SCHEDULE_C_OR_C1_AND_X"})
+    d = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
+    assert d["final_state"] == "APPLICABLE"
 
 
 def test_rule_0003_missing_schedule_requires_information(engine):

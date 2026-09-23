@@ -1,0 +1,19 @@
+authority_id: AUTH-CDSCO
+name: "Central Drugs Standard Control Organisation"
+level: CENTRAL_REGULATOR
+jurisdiction: INDIA
+parent_authority_id: null
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.1) — retained
+  per the research's explicit instruction ("Preserve CDSCO only where the
+  research actually identifies a Central role"). Used only as
+  INST-DRUGS-RULES-1945's issuing_authority_id (the Central instrument's
+  own issuer) — NOT as any PH-01/02/03/05 Rule Version's practical
+  `authority_id`, which is AUTH-FDA-MH (the Maharashtra State Licensing
+  Authority that actually administers these pathways). This corrects the
+  prior gap where REQ-0003 fell back to AUTH-CDSCO as its practical
+  authority for lack of a state-level record — see AUTH-FDA-MH's notes
+  and REQ-0003's own authority_attribution_note. CDSCO's genuine Central
+  roles (new drugs/NDCT-2019, imports, biologics/vaccines/blood products,
+  Schedule M joint oversight for certain categories) are out of scope for
+  this pass — no rule invokes them.

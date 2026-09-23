@@ -21,11 +21,15 @@ REQUIRED_AUDIT_FIELDS = {
 
 
 def test_audit_record_has_all_required_fields(engine):
-    facts = {"project.drug_schedule_classification": "SCHEDULE_C"}
+    facts = {
+        "project.manufactures_drugs_for_sale_or_distribution": True,
+        "project.pharma_activity_type": "FORMULATIONS",
+        "project.drug_schedule_classification": "SCHEDULE_C_OR_C1",
+    }
     d = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
     record = build_audit_record(d)
     assert REQUIRED_AUDIT_FIELDS.issubset(record.keys())
-    assert record["decision_produced"] == "REQUIRES_REVIEW"
+    assert record["decision_produced"] == "APPLICABLE"
     assert record["why"]
 
 

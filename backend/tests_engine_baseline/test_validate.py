@@ -15,22 +15,19 @@ def test_dataset_validates_cleanly(dataset):
     assert report.passed
 
 
-def test_163_files_inspected(dataset):
-    # 38 Phase 5/6 files + 6 provenance substrate index files (Tranche 1) +
-    # 50 provenance records (8 AUTH + 8 INST + 8 SRC + 13 EVID + 13 RF) +
-    # 50 new regulatory objects (8 REQUIREMENT + 9 RULE + 9 RULE-VERSION +
-    # 24 CONDITION) added by the Shared+Food regulatory-data integration
-    # pass (SH-03/04/05/07/08/10, FD-01/02/04) = 144, + 2 SRC records
-    # (SRC-011, SRC-012) added by the FD-01/FD-02 source-archival pass
-    # (2026-09-23) = 146, + 17 records added by the FD-01/FD-02
-    # currentness-correction pass (2026-09-23): 2 EVID (FSS-07/08) + 3 RF
-    # (0022-0024) + 7 CONDITION (0039-0045) + 2 RULE-VERSION (RULE-0014-V2,
-    # RULE-0015-V2) + 1 REQUIREMENT (REQ-0013) + 1 RULE (RULE-0016) + 1
-    # RULE-VERSION (RULE-0016-V1) = 163. See regulatory-data/index/
-    # *_index.yaml and regulatory-data/registers/rule_review_register.yaml
-    # RULE-REV-0006.
+def test_210_files_inspected(dataset):
+    # 144 (Shared+Food) + 2 SRC (FD-01/FD-02 archival pass) = 146 +
+    # 17 (FD-01/FD-02 currentness-correction pass, RULE-REV-0006) = 163,
+    # + 47 records added by the Pharma tranche (2026-09-23,
+    # RULE-REV-0002): 3 AUTH (FDA-MH, CDSCO, SEIAA-MH) + 2 INST
+    # (DRUGS-RULES-1945, EIA-2006) + 2 SRC (013, 014) + 4 EVID (DRUGS-
+    # 01..04) + 4 RF (0025..0028) + 16 CONDITION (0046..0061) +
+    # 2 REQUIREMENT (0014 PH-04, 0015 PH-05) + 7 RULE (0017..0023) +
+    # 7 RULE-VERSION (each new rule's -V1) = 210. See
+    # regulatory-data/index/*_index.yaml and
+    # regulatory-data/registers/rule_review_register.yaml RULE-REV-0002.
     report = validate_dataset(DATA_ROOT, dataset)
-    assert len(report.files_inspected) == 163
+    assert len(report.files_inspected) == 210
 
 
 def test_broken_reference_is_detected(dataset):

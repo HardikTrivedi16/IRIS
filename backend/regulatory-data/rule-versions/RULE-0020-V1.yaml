@@ -1,0 +1,65 @@
+rule_version_id: RULE-0020-V1
+rule_id: RULE-0020
+version_number: 1
+
+condition_expression_root_id: COND-0056
+logic: "COND-0056 = (pharma_activity_type==BULK_DRUG_OR_INTERMEDIATE)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — Environmental Clearance under EIA 2006 Schedule item 5(f)
+  could apply. Which category (A/MoEFCC outside, or B/SEIAA-MH inside a
+  notified industrial area/estate) governs is answered by RULE-0021
+  (Category A) / RULE-0022 (Category B), evaluated as this
+  Requirement's classification members.
+false_outcome: >
+  NOT_APPLICABLE — the project's pharma activity is not
+  BULK_DRUG_OR_INTERMEDIATE (e.g. FORMULATIONS is explicitly excluded by
+  5(f)'s own words, "excluding drug formulations").
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine whether 5(f) could apply until
+  pharma_activity_type is known.
+
+required_project_facts:
+  - project.pharma_activity_type
+
+regulatory_fact_ids: []
+evidence_ids: []
+source_ids: []
+authority_id: AUTH-MoEFCC
+instrument_id: INST-EIA-2006
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_CONSTRUCTION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0020-V1
+  regulatory_fact_ids: []
+  evidence_ids: []
+  source_ids: []
+  authority_id: AUTH-MoEFCC
+  instrument_id: INST-EIA-2006
+
+validation_notes: >
+  New Rule (2026-09-23). KEEP_DRAFT per the normalized research H2.2 —
+  consolidated 5(f) text not assembled (H5 #6). No Regulatory Fact/
+  Evidence/Source authored for this pass — fields deliberately empty,
+  not fabricated. `authority_id: AUTH-MoEFCC` is nominal here (the gate
+  itself doesn't distinguish A/B); the real per-category authority is on
+  RULE-0021 (MoEFCC) and RULE-0022 (SEIAA-MH).

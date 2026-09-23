@@ -1,0 +1,71 @@
+rule_version_id: RULE-0019-V1
+rule_id: RULE-0019
+version_number: 1
+
+condition_expression_root_id: COND-0055
+logic: "COND-0055 = AND(COND-0003, OR(drug_schedule_classification==SCHEDULE_X_ONLY, drug_schedule_classification==SCHEDULE_C_OR_C1_AND_X))"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE — a Schedule-X-related licence-application pathway applies.
+  If the drug schedule classification is SCHEDULE_X_ONLY: application in
+  Form 24-F to the State Licensing Authority (FDA Maharashtra), licence
+  issued in Form 25-F (Rule 69(1)(b)). If SCHEDULE_C_OR_C1_AND_X: the
+  combined application is made in Form 27-B, licence issued in Form
+  28-B.
+false_outcome: >
+  NOT_APPLICABLE on this pathway — either the coarse drug-manufacturing
+  gate does not clear (RULE-0003), or the drug schedule classification is
+  NONE (RULE-0017/PH-01) or SCHEDULE_C_OR_C1 without X (RULE-0018/PH-02).
+unknown_outcome: >
+  REQUIRES_INFORMATION — cannot determine this pathway's applicability
+  until manufactures_drugs_for_sale_or_distribution, pharma_activity_type,
+  and drug_schedule_classification are known.
+
+required_project_facts:
+  - project.manufactures_drugs_for_sale_or_distribution
+  - project.pharma_activity_type
+  - project.drug_schedule_classification
+
+regulatory_fact_ids:
+  - RF-0027
+evidence_ids:
+  - EVID-DRUGS-03
+source_ids:
+  - SRC-013
+authority_id: AUTH-FDA-MH
+instrument_id: INST-DRUGS-RULES-1945
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: VERIFIED
+
+supersedes_rule_version_id: null
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0019-V1
+  regulatory_fact_ids: [RF-0027]
+  evidence_ids: [EVID-DRUGS-03]
+  source_ids: [SRC-013]
+  authority_id: AUTH-FDA-MH
+  instrument_id: INST-DRUGS-RULES-1945
+
+validation_notes: >
+  New Rule (2026-09-23). KEEP_DRAFT per the normalized research —
+  Schedule X is outside the IRIS MVP (Phase 0 §3), a scope/priority
+  decision, not a legal gap (confidence remains VERIFIED, same as PH-01/
+  PH-02). Aggregated under REQ-0003 via `classification_rule_ids`; see
+  RULE-0017's validation_notes for the engine-mechanics reasoning.

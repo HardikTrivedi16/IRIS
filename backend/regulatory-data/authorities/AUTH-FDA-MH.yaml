@@ -1,0 +1,18 @@
+authority_id: AUTH-FDA-MH
+name: "Food and Drug Administration, Maharashtra (Drugs Control — State Licensing Authority)"
+level: STATE_REGULATOR
+jurisdiction: MAHARASHTRA
+parent_authority_id: null
+notes: >
+  New record (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.1) — resolves the
+  REQ-0003 AUTH-CDSCO fallback gap the original Requirement's own
+  authority_attribution_note flagged ("no such state-level authority... is
+  catalogued... falls back to AUTH-CDSCO... a known gap, not a considered
+  choice"). Used by PH-01 (RULE-0017), PH-02 (RULE-0018), PH-03
+  (RULE-0019), PH-05 (REQ-0015) — the State Licensing Authority for Form
+  24/25, 27/28, 24-F/25-F, 27-B/28-B drug manufacturing licences and their
+  perpetual-validity/retention-fee regime. Distinct from AUTH-FDA-MH-FOOD
+  (the same FDA Maharashtra's Food wing, used by FD-02/FD-04) and from
+  AUTH-CDSCO (retained separately for genuinely Central roles — new drugs,
+  imports, biologics — none of which this pass's PH-01/02/03/05 candidates
+  invoke).

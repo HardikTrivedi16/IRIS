@@ -1,0 +1,30 @@
+condition_id: COND-0056
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.pharma_activity_type
+operator: "=="
+comparison_value: "BULK_DRUG_OR_INTERMEDIATE"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: []
+
+description: >
+  True if the project manufactures bulk drugs/intermediates — the EIA
+  2006 Schedule item 5(f) trigger ("...bulk drugs and intermediates
+  excluding drug formulations..."). FORMULATIONS activity is excluded
+  from 5(f) by the clause's own words; this leaf is FALSE for it.
+
+normalization_notes: >
+  PH-04 coarse gate — reused as a child of both COND-0058 (Category A,
+  outside notified industrial area) and COND-0060 (Category B, inside),
+  exactly mirroring how COND-0003 gates PH-01/02/03. evidence_ids/
+  grounding_regulatory_fact_ids left empty: per the normalized research
+  H2.2, PH-04's RF is "blocked" — the consolidated 5(f) text (2006 +
+  S.O. 1599(E) 2014 + S.O. 1223(E) 2020) has not been assembled, so no
+  Regulatory Fact or Evidence record is authored for this condition this
+  pass (not fabricated to look complete). See REQ-0014's validation_notes
+  and rule_review_register.yaml for the open blocker.

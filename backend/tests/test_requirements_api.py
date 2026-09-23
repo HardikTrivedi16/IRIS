@@ -1,8 +1,13 @@
-def test_list_requirements_returns_exactly_the_four_engine_requirements(client):
+def test_list_requirements_returns_exactly_the_dataset_requirements(client):
+    from app import engine_service
+
     r = client.get("/api/v1/requirements")
     assert r.status_code == 200
     ids = sorted(req["requirement_id"] for req in r.json())
-    assert ids == ["REQ-0001", "REQ-0002", "REQ-0003", "REQ-0004"]
+    # Compare against the live dataset rather than a hardcoded 4-item
+    # list, which had already gone stale (Shared+Food/Pharma tranches
+    # added 11 more Requirements) without this test catching it.
+    assert ids == sorted(engine_service.get_dataset().requirements.keys())
 
 
 def test_requirement_never_leaks_source_file_path(client):

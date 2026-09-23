@@ -189,5 +189,12 @@ def test_api_other_facility_question_gets_scope_answer_without_llm(client, monke
     assert body["insufficient_information"] is True
     assert body["citations"] == []
     assert "FreshBite" in body["answer"]
-    # The project's own engine context is still reported, unaltered.
-    assert len(body["authoritative_context"]["decisions"]) == 4
+    # The project's own engine context is still reported, unaltered --
+    # one decision per dataset Requirement (not a hardcoded count, which
+    # had already gone stale after the Shared+Food/Pharma tranches added
+    # 11 more Requirements without this test catching it).
+    from app import engine_service
+
+    assert len(body["authoritative_context"]["decisions"]) == len(
+        engine_service.get_dataset().requirements
+    )

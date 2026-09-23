@@ -5,9 +5,12 @@ NP = EvaluationMode.NON_PRODUCTION
 
 
 def test_draft_rule_cannot_be_production_decision(engine, dataset):
-    # all 6 rule versions are currently DRAFT
+    # No rule version is ACTIVE (some are SUPERSEDED since the FSSAI
+    # currentness-correction pass — see rule_review_register.yaml
+    # RULE-REV-0006 — but none has ever been promoted).
     for rv_id, rv in dataset.rule_versions.items():
-        assert rv.get("status") == "DRAFT"
+        assert rv.get("status") in ("DRAFT", "SUPERSEDED")
+        assert rv.get("status") != "ACTIVE"
 
     d = engine.evaluate_requirement("P", "REQ-0001",
         {"project.likely_to_discharge_sewage_or_trade_effluent": True}, PROD)

@@ -1,0 +1,13 @@
+rule_id: RULE-0023
+code: DRUGS_LICENCE_RETENTION_FEE_APPLICABILITY
+requirement_id: REQ-0015
+title: "Drug manufacturing licence retention — perpetual validity + 5-yearly retention fee"
+output_type: APPLICABILITY
+
+description: >
+  PH-05. Determines whether the perpetual-validity + 5-yearly-retention-
+  fee continuing obligation (G.S.R. 1337(E) series, 2017) attaches: the
+  project holds a drug manufacturing licence.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

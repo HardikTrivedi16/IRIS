@@ -1,0 +1,28 @@
+condition_id: COND-0048
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.drug_schedule_classification
+operator: "=="
+comparison_value: "NONE"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-01
+
+grounding_regulatory_fact_ids:
+  - RF-0025
+
+description: >
+  True if the drug schedule classification ENUM is NONE — the product
+  falls outside Schedule C, C(1), and X, so the Rule 69(1)(c)/Form 24
+  pathway (PH-01) applies.
+
+normalization_notes: >
+  ANDed with COND-0003 (coarse gate) as PH-01's root, COND-0049.
+  `project.drug_schedule_classification` is now the ENUM
+  {NONE, SCHEDULE_C_OR_C1, SCHEDULE_X_ONLY, SCHEDULE_C_OR_C1_AND_X} per
+  the normalized research §11.1 — replacing the old free-form
+  NOT_IN-list shape this dataset previously used (see COND-0003).

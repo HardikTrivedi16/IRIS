@@ -28,9 +28,22 @@ def test_invariant_missing_data_never_becomes_false(dataset):
 
 
 def test_invariant_draft_never_becomes_production(dataset):
-    for rv_id in [f"RULE-{i:04d}-V1" for i in range(1, 16)]:
+    for rv_id, rv in dataset.rule_versions.items():
+        if rv["status"] != "DRAFT":
+            continue  # SUPERSEDED versions (RULE-0014-V1/RULE-0015-V1) are
+                      # covered by test_invariant_superseded_never_becomes_production
         r = evaluate_rule_version(rv_id, dataset, {}, PROD)
         assert r.final_state == "BLOCKED_DRAFT_NOT_PRODUCTION"
+
+
+def test_invariant_superseded_never_becomes_production(dataset):
+    for rv_id, rv in dataset.rule_versions.items():
+        if rv["status"] != "SUPERSEDED":
+            continue
+        r = evaluate_rule_version(rv_id, dataset, {}, PROD)
+        assert r.final_state != "APPLICABLE"
+        assert r.final_state != "NOT_APPLICABLE"
+        assert r.blocked
 
 
 def test_invariant_unresolved_conflict_never_resolved(engine):
@@ -53,10 +66,13 @@ def test_invariant_review_candidate_never_becomes_dependency(dataset):
 def test_invariant_regulatory_data_never_changes_during_a_test_run(dataset):
     # This is the in-memory analog of the on-disk SHA256 check performed by
     # test_phase8_data_immutability.py -- confirms nothing in this process
-    # mutated the loaded dataset's core dicts by identity/content.
+    # mutated the loaded dataset's core dicts by identity/content. The
+    # real invariant is "nothing is ACTIVE" -- DRAFT is not the only
+    # legitimate non-authoritative status any more (SUPERSEDED exists
+    # since the FSSAI currentness-correction pass).
     assert len(dataset.conditions) >= 14
     assert len(dataset.rule_versions) >= 6
-    assert all(rv["status"] == "DRAFT" for k, rv in dataset.rule_versions.items()
+    assert all(rv["status"] != "ACTIVE" for k, rv in dataset.rule_versions.items()
                if k.startswith("RULE-0"))
 
 
@@ -175,27 +191,47 @@ def test_mutation_unknown_to_false_is_detected():
     assert mutated != real.result  # proves the coercion is detectable as a divergence
 
 
-def test_mutation_rule0003_false_to_not_applicable_is_detected(dataset):
-    """Prove that if RULE-0003-V1's FALSE branch were (incorrectly) mapped
-    to NOT_APPLICABLE instead of REQUIRES_REVIEW, our RULE-0003 safety test
-    would catch it."""
-    mutated_rv = copy.deepcopy(dataset.rule_versions["RULE-0003-V1"])
-    mutated_rv["output_mapping"]["FALSE"] = "NOT_APPLICABLE"  # the dangerous mutation
+def test_mutation_rule0018_true_to_not_applicable_is_detected(engine, dataset):
+    """Pharma tranche (2026-09-23, RULE-REV-0002): prove a mutation to
+    RULE-0018 (PH-02)'s own output_mapping is detectable in the
+    classification breakdown, even though — verified by tracing the
+    actual behavior, not assumed — REQ-0003's top-level final_state does
+    NOT change (it stays at RULE-0003's own coarse-gate APPLICABLE
+    either way, since the gate never tests the schedule value; with all
+    three classification members NOT_APPLICABLE the combine logic has
+    nothing to promote or override). This documents a real, narrow
+    property of this design: the top-level final_state alone does not
+    prove which specific pathway fired — decision["classification"] is
+    the authoritative breakdown, exactly as REQ-0003's own
+    requirement_notes KNOWN LIMITATION section says. See also
+    test_phase8_rule0003_safety.py's unrecognized-schedule-value test for
+    the same property from a different angle."""
+    mutated_rv = copy.deepcopy(dataset.rule_versions["RULE-0018-V1"])
+    mutated_rv["output_mapping"]["TRUE"] = "NOT_APPLICABLE"  # the dangerous mutation
 
-    original = dataset.rule_versions["RULE-0003-V1"]
-    dataset.rule_versions["RULE-0003-V1"] = mutated_rv
+    facts = {
+        "project.manufactures_drugs_for_sale_or_distribution": True,
+        "project.pharma_activity_type": "FORMULATIONS",
+        "project.drug_schedule_classification": "SCHEDULE_C_OR_C1",
+    }
+
+    original = dataset.rule_versions["RULE-0018-V1"]
+    dataset.rule_versions["RULE-0018-V1"] = mutated_rv
     try:
-        mutant_result = evaluate_rule_version("RULE-0003-V1", dataset,
-            {"project.drug_schedule_classification": "SCHEDULE_C"}, NP)
-        assert mutant_result.final_state == "NOT_APPLICABLE"  # the mutant's dangerous output
+        mutant_result = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
+        # Top-level stays APPLICABLE (the gate's own answer) -- the
+        # mutation is masked there.
+        assert mutant_result["final_state"] == "APPLICABLE"
+        # But the classification breakdown shows the dangerous divergence:
+        assert mutant_result["classification"]["rule_results"]["RULE-0018"] == "NOT_APPLICABLE"
     finally:
-        dataset.rule_versions["RULE-0003-V1"] = original
+        dataset.rule_versions["RULE-0018-V1"] = original
 
-    # Confirm reverted and the REAL dataset produces the correct, safe result:
-    real_result = evaluate_rule_version("RULE-0003-V1", dataset,
-        {"project.drug_schedule_classification": "SCHEDULE_C"}, NP)
-    assert real_result.final_state == "REQUIRES_REVIEW"
-    assert real_result.final_state != "NOT_APPLICABLE"
+    # Confirm reverted and the REAL dataset produces the correct result,
+    # including the classification breakdown:
+    real_result = engine.evaluate_requirement("P", "REQ-0003", facts, NP)
+    assert real_result["final_state"] == "APPLICABLE"
+    assert real_result["classification"]["rule_results"]["RULE-0018"] == "APPLICABLE"
 
 
 def test_mutation_dependency_review_candidate_executed_is_detected(dataset):

@@ -1,0 +1,23 @@
+source_id: SRC-013
+title: "Drugs Rules, 1945 — rr. 69, 75; Forms 24/24-B/24-F/25/25-B/25-F, 27/27-A/27-B/28/28-A/28-B"
+publisher_authority_id: AUTH-CDSCO
+document_type: INDIA_CODE
+official_url: "https://www.indiacode.nic.in"
+publication_date: "1945-01-01"
+retrieved_date: "2026-09-22"
+archived_artifact_path: null
+checksum_sha256: null
+source_status: AVAILABLE
+notes: >
+  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
+  (SRC-MH-DRUGS-R69-75 lineage) — NOT independently retrieved or archived
+  by this pass (this pass is data integration only, per explicit
+  instruction; no source archival was attempted).
+  `retrieved_date` reproduces the research pack's own stated retrieval
+  date for its §13.3 rows ("22 September 2026") — not an independent
+  verification. `official_url` is the general India Code portal (the
+  research pack itself only says "India Code (Drugs Rules consolidated)"
+  without a pinned handle/URL — no specific URL is fabricated here).
+  Covers PH-01 (r.69(1)(c), Form 24 -> 25),
+  PH-02 (r.75, Form 27 -> 28), and PH-03 (r.69(1)(b) Form 24-F -> 25-F;
+  Form 27-B -> 28-B combined pathway).

@@ -1,12 +1,12 @@
 requirement_id: REQ-0003
 code: DRUG_MANUFACTURING_LICENCE_RULE69
-title: "Drug Manufacturing Licence — Drugs Rules, 1945, Rule 69(1) / Form 24 pathway"
+title: "Drug Manufacturing Licence — Drugs Rules, 1945 (Rule 69/75 pathways)"
 catalog_status: PROVISIONAL_BRIDGING   # NOT a complete or final Requirement catalog — populated
                                         # only as a minimal prerequisite for Phase 6 dependency
                                         # modeling to have real REQ-### identities to reference.
                                         # See requirement_notes below and Phase6.md §2-3.
-authority_id: AUTH-CDSCO   # NOTE: this is a known limitation, not a deliberate practical-authority
-                            # choice — see authority_attribution_note below
+authority_id: AUTH-FDA-MH   # CORRECTED 2026-09-23 — was AUTH-CDSCO (known fallback gap); see
+                             # authority_attribution_note below
 category: CONDITIONAL_PATHWAY   # Task 2 R10 "Drug Manufacturing Licensing Pathway" — 🟡 Conditional
                                  # pathway
 lifecycle_stage_ids:
@@ -16,6 +16,8 @@ lifecycle_stage_ids:
 default_applicability: REQUIRES_REVIEW
 
 evaluated_by_rule_id: RULE-0003
+classification_rule_ids: [RULE-0017, RULE-0018, RULE-0019]   # PH-01/PH-02/PH-03 — added 2026-09-23,
+                                                                # see requirement_notes
 document_ids: []
 
 dependencies_as_target: []
@@ -26,8 +28,14 @@ grounding_regulatory_fact_ids:
   - RF-0005
   - RF-0006
   - RF-0007
+  - RF-0025
+  - RF-0026
+  - RF-0027
 evidence_ids:
   - EVID-FDA-01
+  - EVID-DRUGS-01
+  - EVID-DRUGS-02
+  - EVID-DRUGS-03
 
 requirement_notes: >
   Same bridging-population rationale as REQ-0001. Task 2 §12 (R10) references a different provision
@@ -41,15 +49,32 @@ requirement_notes: >
   project's evidence hierarchy). Flagged here so a future phase does not silently assume Task 2's
   Rule 70/Form 25 framing was independently confirmed.
 
+  PHARMA TRANCHE (2026-09-23, MH_MULTI_SECTOR_REGULATORY_RESEARCH.md H1/H2.2/H6 — see
+  rule_review_register.yaml RULE-REV-0002): `project.drug_schedule_classification` reshaped from a
+  3-value NOT_IN list to the ENUM {NONE, SCHEDULE_C_OR_C1, SCHEDULE_X_ONLY,
+  SCHEDULE_C_OR_C1_AND_X}. RULE-0003 (this Requirement's `evaluated_by_rule_id`) is now a coarse
+  drug-manufacturing gate (schedule-independent); PH-01 (RULE-0017, ENUM==NONE), PH-02 (RULE-0018,
+  ENUM==SCHEDULE_C_OR_C1), and PH-03 (RULE-0019, ENUM==SCHEDULE_X_ONLY or
+  SCHEDULE_C_OR_C1_AND_X — KEEP_DRAFT) are new Rules added as `classification_rule_ids` under this
+  SAME Requirement — per the research's explicit instruction, they are RULE_VERSION branches of
+  REQ-0003, not new Requirements, and REQ-0003 was not duplicated.
+
+  KNOWN LIMITATION (do not silently rely on REQ-0003's top-level `final_state` alone for a
+  Schedule-C/C1 or Schedule-X product): `iris_engine.classification.evaluate_classification_group`'s
+  combine logic only promotes a classification result into the top-level Decision when
+  `evaluated_by_rule_id` (RULE-0003, the coarse gate) is ITSELF already APPLICABLE — which it is,
+  for any project that clears the coarse gate, regardless of schedule. So for a genuine
+  manufactures_drugs_for_sale_or_distribution==true project, RULE-0003 IS APPLICABLE and the
+  classification override correctly surfaces PH-02/PH-03's specific result when relevant (see
+  RULE-0017's validation_notes for the full trace). This note exists to record that the fix was
+  verified by tracing the actual combine logic, not assumed — see the focused tests added this pass
+  (test_pharma_tranche.py) which exercise exactly this path end-to-end.
+
 authority_attribution_note: >
-  Per Phase 2 §9's convention (see REQ-0001's authority_attribution_note), a Requirement's
-  `authority_id` should ideally be the practical issuing authority. RF-0005 establishes only that
-  the Rule 69(1) licensing authority is "appointed by the State Government" without naming that body
-  — in Maharashtra this would practically be the Maharashtra Food and Drug Administration, but no
-  such state-level authority (e.g. an "AUTH-FDA-MH") is catalogued in Phase 3's Authority Index
-  (which lists only AUTH-MPCB, AUTH-FSSAI, AUTH-CDSCO, AUTH-DGFASLI, AUTH-DISH-MH, AUTH-MoEFCC,
-  AUTH-MIDC). Populating a new Authority record was out of scope for this Requirement-bridging pass
-  (it would require new evidence, not just identity population), so `authority_id` falls back to
-  `AUTH-CDSCO` (the central instrument's issuing authority, matching RF-0004's attribution) rather
-  than inventing an unverified state authority record. This is a known gap, not a considered choice
-  — flagged for whichever future pass expands the Authority Index.
+  RESOLVED 2026-09-23. Previously `authority_id` fell back to `AUTH-CDSCO` for lack of a
+  Maharashtra-specific state Drugs Control authority record. The normalized research (§13.1) now
+  provides one: **AUTH-FDA-MH** (Food and Drug Administration, Maharashtra — Drugs Control/State
+  Licensing Authority), created this pass and set as this Requirement's `authority_id`. AUTH-CDSCO
+  is retained separately (also created this pass) as the issuing authority of the Central
+  instrument (INST-DRUGS-RULES-1945) and for genuinely Central roles (new drugs, imports,
+  biologics) — none of which PH-01/02/03/05 invoke.

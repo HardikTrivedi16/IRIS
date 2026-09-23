@@ -1,0 +1,28 @@
+condition_id: COND-0053
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.drug_schedule_classification
+operator: "=="
+comparison_value: "SCHEDULE_C_OR_C1_AND_X"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-03
+
+grounding_regulatory_fact_ids:
+  - RF-0027
+
+description: >
+  True if the drug schedule classification ENUM is
+  SCHEDULE_C_OR_C1_AND_X (the combined Schedule C/C1 + Schedule X case)
+  — Form 27-B -> Form 28-B, the combined-pathway form the normalized
+  research names explicitly (not an invented AND-combination — the
+  ENUM value and the Form 27-B pathway are both named verbatim in the
+  research pack).
+
+normalization_notes: >
+  ORed with COND-0052 as COND-0054 — see COND-0052's own notes on why an
+  OR-of-two-equalities is used instead of an unsupported "IN" operator.

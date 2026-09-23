@@ -18,6 +18,10 @@ evidence:
   - EVID-HW-01
   - EVID-FSS-07
   - EVID-FSS-08
+  - EVID-DRUGS-01
+  - EVID-DRUGS-02
+  - EVID-DRUGS-03
+  - EVID-DRUGS-04
 
 counts:
-  total_evidence: 15
+  total_evidence: 19

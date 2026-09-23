@@ -1,0 +1,32 @@
+condition_id: COND-0047
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.pharma_activity_type
+operator: NOT_IN
+comparison_value: ["REPACKING"]
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-01
+
+grounding_regulatory_fact_ids:
+  - RF-0025
+
+description: >
+  True unless the project's pharma activity is REPACKING — Rule 69(1)(a)
+  treats repacking as its own separate pathway (Form 24-B/25-B, not
+  modelled this pass — out of scope, not fabricated), distinct from the
+  manufacture pathways PH-01/PH-02/PH-03 cover.
+
+normalization_notes: >
+  Shared coarse gate leaf, reused unchanged as a child of COND-0003.
+  REPACKING is the only pharma_activity_type value excluded here — the
+  ENUM's other values (FORMULATIONS, BULK_DRUG_OR_INTERMEDIATE,
+  LOAN_LICENCE_APPLICANT) are not addressed by NOT_IN exclusion here
+  because none of PH-01/02/03's evidence excludes them; LOAN_LICENCE_
+  APPLICANT has its own distinct forms (24-A/25-A, 27-A/28-A) not modelled
+  this pass (F-22's own note), but is not affirmatively excluded from this
+  gate absent evidence saying so — flagged, not resolved, here.

@@ -1,0 +1,18 @@
+rule_id: RULE-0020
+code: EIA_5F_BULK_DRUG_COARSE_GATE
+requirement_id: REQ-0014
+title: "EIA 2006 Schedule item 5(f) — coarse applicability gate (bulk drugs/intermediates)"
+output_type: APPLICABILITY
+
+description: >
+  PH-04 coarse gate. Determines only whether Environmental Clearance
+  under EIA 2006 Schedule item 5(f) could apply at all
+  (pharma_activity_type == BULK_DRUG_OR_INTERMEDIATE), independent of
+  location. Which category (A outside / B inside a notified industrial
+  area/estate) applies is answered by RULE-0021/RULE-0022, this
+  Requirement's classification members. Mirrors RULE-0003's coarse-gate
+  role under REQ-0003 — see RULE-0021's validation_notes for why this
+  split is required.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

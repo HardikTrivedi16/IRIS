@@ -1,0 +1,39 @@
+requirement_id: REQ-0015
+code: PHARMA_LICENCE_RETENTION_OBLIGATION
+title: "Drug manufacturing licence retention — perpetual validity + 5-yearly retention fee"
+catalog_status: PROVISIONAL_BRIDGING
+authority_id: AUTH-FDA-MH
+category: CONTINUING_OBLIGATION
+lifecycle_stage_ids:
+  - OPERATIONAL
+
+default_applicability: REQUIRES_REVIEW
+
+evaluated_by_rule_id: RULE-0023
+document_ids: []
+
+dependencies_as_target: []
+dependencies_as_source: []
+
+grounding_regulatory_fact_ids:
+  - RF-0028
+evidence_ids:
+  - EVID-DRUGS-04
+
+requirement_notes: >
+  PH-05 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2) — standalone
+  Requirement per H2.2 ("REQUIREMENT (continuing retention-fee
+  obligation; not renewal metadata, because non-payment has its own
+  suspension/cancellation consequence)"), category CONTINUING_OBLIGATION
+  (matching SH-05's precedent for the same reason). VERIFICATION:
+  VERIFIED_READY_FOR_PROVENANCE per the research — provenance created
+  this pass (RF-0028/EVID-DRUGS-04/SRC-014, source_status: AVAILABLE, not
+  archived). Not promoted to ACTIVE this pass (no source archival or
+  human VER attempted, per explicit instruction).
+
+  Important normalized finding faithfully preserved: the relevant
+  manufacturing licences (Forms 25/25-A/25-F/28/28-A/28-B/28-D etc.) are
+  now PERPETUAL, subject only to the retention-fee regime — this
+  Requirement does NOT model ordinary periodic licence renewal (no such
+  obsolete UI/data semantics were carried over from any prior pharma
+  work, since none existed for retention before this pass).

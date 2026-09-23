@@ -34,13 +34,18 @@ def test_cond_0002_boolean_leaf(dataset):
     assert evaluate_condition("COND-0002", c, {}).result is U
 
 
-def test_cond_0003_not_in_schedule(dataset):
+def test_cond_0003_coarse_pharma_gate(dataset):
+    # REPURPOSED 2026-09-23 (Pharma tranche, RULE-REV-0002): COND-0003 is
+    # now the REQ-0003 coarse gate (COMPOSITE AND of COND-0046/COND-0047),
+    # independent of drug_schedule_classification.
     c = dataset.conditions
-    # outside the exclusion set -> TRUE
-    assert evaluate_condition("COND-0003", c, {"project.drug_schedule_classification": "GENERAL_SCHEDULE"}).result is T
-    # inside the exclusion set -> FALSE (individually; RULE-0003 remaps FALSE->REQUIRES_REVIEW later)
-    for sched in ("SCHEDULE_C", "SCHEDULE_C1", "SCHEDULE_X"):
-        assert evaluate_condition("COND-0003", c, {"project.drug_schedule_classification": sched}).result is F
+    gate_true = {
+        "project.manufactures_drugs_for_sale_or_distribution": True,
+        "project.pharma_activity_type": "FORMULATIONS",
+    }
+    assert evaluate_condition("COND-0003", c, gate_true).result is T
+    gate_false = dict(gate_true, **{"project.pharma_activity_type": "REPACKING"})
+    assert evaluate_condition("COND-0003", c, gate_false).result is F
     assert evaluate_condition("COND-0003", c, {}).result is U
 
 
@@ -143,11 +148,11 @@ def test_cond_0014_or_state_root(dataset):
     assert evaluate_condition("COND-0014", c, {}).result is U
 
 
-def test_all_38_conditions_are_present_and_individually_evaluable(dataset):
-    # 14 Phase 5/6 conditions + 24 added by the Shared+Food regulatory-data
-    # integration pass (COND-0015..COND-0038 — SH-03/04/05/07/08/10/FD-01/
-    # FD-02/FD-04; see regulatory-data/conditions/*.yaml).
-    ids = [f"COND-{i:04d}" for i in range(1, 39)]
+def test_all_61_conditions_are_present_and_individually_evaluable(dataset):
+    # 14 Phase 5/6 + 24 Shared+Food (COND-0015..0038) + 7 FSSAI
+    # currentness-correction (COND-0039..0045) + 16 Pharma tranche
+    # (COND-0046..0061) — see regulatory-data/conditions/*.yaml.
+    ids = [f"COND-{i:04d}" for i in range(1, 62)]
     assert set(ids) == set(dataset.conditions.keys())
     for cid in ids:
         # every condition must be evaluable against an empty fact set without raising

@@ -1,0 +1,15 @@
+rule_id: RULE-0021
+code: EIA_5F_BULK_DRUG_CATEGORY_A_APPLICABILITY
+requirement_id: REQ-0014
+title: "EIA 2006 Schedule item 5(f) — Category A (outside notified industrial area/estate)"
+output_type: APPLICABILITY
+
+description: >
+  PH-04 (Category A). Determines whether Environmental Clearance under
+  EIA 2006 Schedule item 5(f) applies via the Category A route (MoEFCC):
+  the project's pharma activity is BULK_DRUG_OR_INTERMEDIATE, and it is
+  NOT located in a notified industrial area/estate. KEEP_DRAFT — the
+  consolidated 5(f) text has not been assembled.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

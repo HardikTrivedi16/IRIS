@@ -27,9 +27,10 @@ requirements:
 
   - requirement_id: REQ-0003
     code: DRUG_MANUFACTURING_LICENCE_RULE69
-    authority_id: AUTH-CDSCO
+    authority_id: AUTH-FDA-MH   # CORRECTED 2026-09-23 — was AUTH-CDSCO
     category: CONDITIONAL_PATHWAY
     evaluated_by_rule_id: RULE-0003
+    classification_rule_ids: [RULE-0017, RULE-0018, RULE-0019]   # PH-01/02/03, added 2026-09-23
     lifecycle_stage_ids: [UNKNOWN]
     default_applicability: REQUIRES_REVIEW
 
@@ -56,13 +57,13 @@ requirements_not_catalogued:
     reason: "See Phase 4 REV-0002 / Phase 5 RULE-REV-0003 — no primary evidence exists; not a distinct Requirement in any case, but flagged here for completeness."
 
 counts:
-  total_requirements: 13
+  total_requirements: 15
   by_category:
-    CORE_APPROVAL: 11
+    CORE_APPROVAL: 12
     CONDITIONAL_PATHWAY: 1
-    CONTINUING_OBLIGATION: 1
+    CONTINUING_OBLIGATION: 2
   by_default_applicability:
-    REQUIRES_REVIEW: 13
+    REQUIRES_REVIEW: 15
 
 # NOTE (Shared+Food regulatory-data integration pass): REQ-0005..REQ-0012
 # added (SH-03/04/05/07/08/10, FD-01, FD-02) — see requirements/*.yaml.
@@ -73,3 +74,9 @@ counts:
 # NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): REQ-0013
 # added (FSSAI Registration, residual/general-manufacturing category) —
 # see rule_review_register.yaml RULE-REV-0006.
+#
+# NOTE (Pharma tranche, 2026-09-23): REQ-0014 (PH-04, Environmental
+# Clearance EIA 5(f), KEEP_DRAFT) and REQ-0015 (PH-05, licence retention)
+# added; REQ-0003 corrected (authority AUTH-CDSCO -> AUTH-FDA-MH,
+# classification_rule_ids added for PH-01/02/03) — see
+# rule_review_register.yaml RULE-REV-0002 and requirements/REQ-0003.yaml.

@@ -1,0 +1,23 @@
+source_id: SRC-014
+title: "G.S.R. 1337(E) series (2017) — Drugs Rules 1945 amendment: perpetual licence validity + 5-yearly retention fee"
+publisher_authority_id: AUTH-CDSCO
+document_type: GAZETTE
+official_url: "https://cdsco.gov.in"
+publication_date: "2017-01-01"
+retrieved_date: "2026-09-22"
+archived_artifact_path: null
+checksum_sha256: null
+source_status: AVAILABLE
+notes: >
+  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
+  (SRC-MH-DRUGS-PERPETUAL lineage) — NOT independently retrieved or
+  archived by this pass. `retrieved_date` reproduces the research pack's
+  own stated retrieval date, not an independent verification.
+  `official_url` is the general CDSCO portal — the research pack itself
+  only says "cdsco.gov.in gazette copies" without a pinned URL. Covers
+  PH-05 (REQ-0015): condition text substituted into Forms
+  25/25-A/25-F/28/28-B/28-D etc. — "The licence, unless sooner suspended
+  or cancelled, shall remain valid perpetually. However, compliance...
+  shall be assessed not less than once in three years or as needed as
+  per risk based approach", subject to a retention fee before the expiry
+  of every succeeding five years from issue.

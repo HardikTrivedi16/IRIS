@@ -42,18 +42,24 @@ def test_rule_0002_v1_all_three_paths(dataset):
     assert r.final_state == "REQUIRES_INFORMATION"
 
 
-def test_rule_0003_v1_asymmetric_semantics(dataset):
-    # TRUE path
-    r = evaluate_rule_version("RULE-0003-V1", dataset,
-        {"project.drug_schedule_classification": "GENERAL_SCHEDULE"}, NP)
+def test_rule_0003_v1_coarse_gate_semantics(dataset):
+    # REPURPOSED 2026-09-23 (Pharma tranche, RULE-REV-0002): RULE-0003-V1
+    # is now the REQ-0003 coarse gate, symmetric TRUE->APPLICABLE/
+    # FALSE->NOT_APPLICABLE/UNKNOWN->REQUIRES_INFORMATION (the old
+    # asymmetric FALSE->REQUIRES_REVIEW mapping was the documented
+    # RULE-REV-0002 gap this tranche resolves — see RULE-0017/0018/0019
+    # for where the schedule-specific answer now lives).
+    gate_true = {
+        "project.manufactures_drugs_for_sale_or_distribution": True,
+        "project.pharma_activity_type": "FORMULATIONS",
+    }
+    r = evaluate_rule_version("RULE-0003-V1", dataset, gate_true, NP)
     assert r.final_state == "APPLICABLE"
-    # FALSE path -> REQUIRES_REVIEW (NOT NOT_APPLICABLE) -- this rule differs
-    # from RULE-0001/0002/0004/0005/0006's FALSE->NOT_APPLICABLE mapping.
-    r = evaluate_rule_version("RULE-0003-V1", dataset,
-        {"project.drug_schedule_classification": "SCHEDULE_C"}, NP)
-    assert r.final_state == "REQUIRES_REVIEW"
-    assert r.final_state != "NOT_APPLICABLE"
-    # UNKNOWN path
+
+    gate_false = dict(gate_true, **{"project.pharma_activity_type": "REPACKING"})
+    r = evaluate_rule_version("RULE-0003-V1", dataset, gate_false, NP)
+    assert r.final_state == "NOT_APPLICABLE"
+
     r = evaluate_rule_version("RULE-0003-V1", dataset, {}, NP)
     assert r.final_state == "REQUIRES_INFORMATION"
 
@@ -131,14 +137,17 @@ def test_output_mapping_is_read_from_yaml_not_hardcoded(dataset):
         dataset.rule_versions["RULE-0001-V1"] = original
 
 
-def test_all_fifteen_rule_versions_exist_and_have_status_draft(dataset):
-    # RULE-0001..0006 (Phase 5/6) + RULE-0007..0015 (Shared+Food
-    # integration pass: SH-03 applicability/licence-detail, SH-04, SH-05,
-    # SH-07, SH-08, SH-10, FD-01, FD-02).
-    expected = {f"RULE-{i:04d}-V1" for i in range(1, 16)}
-    assert expected == set(dataset.rule_versions.keys())
-    for rv_id in expected:
-        assert dataset.rule_versions[rv_id]["status"] == "DRAFT"
+def test_all_twentyfive_rule_versions_exist_and_none_is_active(dataset):
+    # RULE-0001..0006 (Phase 5/6) + RULE-0007..0016 (Shared+Food +
+    # FSSAI currentness-correction passes) + RULE-0014-V2/0015-V2 (FSSAI
+    # successors) + RULE-0017..0023 (Pharma tranche) = 25 rule versions.
+    # Not all are status DRAFT any more: RULE-0014-V1/RULE-0015-V1 are
+    # SUPERSEDED (FSSAI currentness correction) — the invariant this test
+    # actually protects is "nothing is ACTIVE", not "everything is DRAFT".
+    assert len(dataset.rule_versions) == 25
+    for rv_id, rv in dataset.rule_versions.items():
+        assert rv["status"] in ("DRAFT", "SUPERSEDED"), rv_id
+        assert rv["status"] != "ACTIVE", rv_id
 
 
 def test_rule_version_provenance_fields_populated(dataset):

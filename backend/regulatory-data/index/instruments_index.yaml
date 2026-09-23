@@ -11,6 +11,8 @@ instruments:
   - INST-CGWA-20
   - INST-LMPC-11
   - INST-HW-16
+  - INST-DRUGS-RULES-1945
+  - INST-EIA-2006
 
 counts:
-  total_instruments: 8
+  total_instruments: 10

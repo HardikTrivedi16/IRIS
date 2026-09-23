@@ -1,0 +1,28 @@
+condition_id: COND-0055
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0003
+  - COND-0054
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0027
+
+description: >
+  PH-03 root: coarse drug-manufacturing gate (COND-0003) AND
+  (drug_schedule_classification is SCHEDULE_X_ONLY or
+  SCHEDULE_C_OR_C1_AND_X) (COND-0054) — Drugs Rules 1945 r.69(1)(b)
+  (Form 24-F -> 25-F) or the Form 27-B -> 28-B combined pathway.
+
+normalization_notes: >
+  RULE-0019-V1's condition_expression_root_id. KEEP_DRAFT — Schedule X is
+  outside the IRIS MVP (Phase 0 §3); deprioritised by product priority,
+  not by legal readiness (the confidence is VERIFIED_OFFICIAL per the
+  research, same as PH-01/PH-02).

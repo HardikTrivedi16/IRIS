@@ -1,0 +1,14 @@
+rule_id: RULE-0018
+code: DRUGS_RULE_75_FORM_27_SCHEDULE_C_C1_APPLICABILITY
+requirement_id: REQ-0003
+title: "Drugs Rules, 1945 — Rule 75, Form 27 -> 28 pathway (Schedule C / C(1))"
+output_type: APPLICABILITY
+
+description: >
+  PH-02. Determines whether the Rule 75 licence-application pathway
+  (Form 27, licence issued in Form 28) applies: the project manufactures
+  drugs for sale/distribution (not repacking), and the drug's schedule
+  classification is SCHEDULE_C_OR_C1.
+
+rule_type: APPLICABILITY_RULE
+current_active_rule_version_id: null

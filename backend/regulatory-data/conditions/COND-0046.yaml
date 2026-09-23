@@ -1,0 +1,28 @@
+condition_id: COND-0046
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.manufactures_drugs_for_sale_or_distribution
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-DRUGS-01
+
+grounding_regulatory_fact_ids:
+  - RF-0025
+
+description: >
+  True if the project manufactures drug(s) for sale or distribution — the
+  Rule 69(1)/75 scope phrase (Drugs Rules, 1945). Excludes captive test
+  batches (Form 29/30 regime, out of scope for this pass) per the
+  normalized research's F-21.
+
+normalization_notes: >
+  Shared coarse gate leaf, reused unchanged as a child of COND-0003 (the
+  REQ-0003 gate root) — every PH-01/PH-02/PH-03 branch is AND-ed above
+  this same gate via COND-0003, mirroring how COND-0032 is reused as a
+  shared subsector guard for FD-01/FD-02.
