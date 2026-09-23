@@ -48,8 +48,11 @@ from .department_store import (
     _BOTTLENECK_W_BREACH,
 )
 from ..department_schemas import ApplicationStage, SlaState, ALLOWED_TRANSITIONS
+from ..legacy_evidence import legacy_operational_info
 
 logger = logging.getLogger("iris.store.supabase_department")
+
+_SLA_REASON = {SlaState.AT_RISK.value: "SLA at risk", SlaState.BREACHED.value: "SLA breached"}
 
 
 class SupabaseDepartmentStore:
@@ -162,6 +165,30 @@ class SupabaseDepartmentStore:
     # -----------------------------------------------------------------------
     # Applications
     # -----------------------------------------------------------------------
+    # -----------------------------------------------------------------------
+    # Presentation hydration (read-only; nothing is persisted)
+    # -----------------------------------------------------------------------
+    def _decorate_applications(self, rows: list[dict]) -> None:
+        """Add assigned_officer_name (from department_users), project_name (from projects)
+        and legacy_operational (explicit demo metadata) to application rows, in place."""
+        if not rows:
+            return
+        officer_ids = sorted({r["assigned_officer_id"] for r in rows if r.get("assigned_officer_id")})
+        names: dict[str, str] = {}
+        if officer_ids:
+            for u in self._get("/department_users", {"select": "id,name", "id": f"in.({','.join(officer_ids)})"}):
+                names[u["id"]] = u.get("name")
+        project_ids = sorted({r["project_id"] for r in rows if r.get("project_id")})
+        projects: dict[str, str] = {}
+        if project_ids:
+            quoted = ",".join('"' + p.replace('"', "") + '"' for p in project_ids)
+            for p in self._get("/projects", {"select": "id,name", "id": f"in.({quoted})"}):
+                projects[p["id"]] = p.get("name")
+        for r in rows:
+            r["assigned_officer_name"] = names.get(r.get("assigned_officer_id"))
+            r["project_name"] = projects.get(r.get("project_id"))
+            r["legacy_operational"] = legacy_operational_info(r.get("project_id"), r.get("application_id"))
+
     def list_applications(
         self,
         department_id: Optional[str] = None,
@@ -225,6 +252,7 @@ class SupabaseDepartmentStore:
             )
             r["sla"] = sla_info
             enriched.append(r)
+        self._decorate_applications(enriched)
 
         if sla_state:
             enriched = [r for r in enriched if r["sla"]["state"] == sla_state]
@@ -257,6 +285,7 @@ class SupabaseDepartmentStore:
             app.get("completed_at"),
         )
         app["sla_instance"] = sla_inst
+        self._decorate_applications([app])
 
         # Stage history
         app["stage_history"] = self._get(
@@ -448,7 +477,11 @@ class SupabaseDepartmentStore:
     # Dashboard & SLA Intelligence
     # -----------------------------------------------------------------------
     def get_dashboard_stats(self, department_id: Optional[str] = None) -> dict:
-        apps = self.list_applications(department_id=department_id, limit=500)["items"]
+        all_apps = self.list_applications(department_id=department_id, limit=500)["items"]
+        # CURRENT workload excludes explicitly-named legacy operational records (still listed and
+        # retained in full; only these summary metrics leave them out).
+        apps = [a for a in all_apps if not a.get("legacy_operational")]
+        legacy_excluded = len(all_apps) - len(apps)
         now = datetime.now(timezone.utc)
 
         total = len(apps)
@@ -468,11 +501,14 @@ class SupabaseDepartmentStore:
             pipeline[stage.value] = sum(1 for a in apps if a["current_stage"] == stage.value)
 
         recent = []
-        for a in apps[:10]:
+        for a in all_apps[:10]:
             recent.append({
                 "id": a["id"],
                 "application_id": a.get("application_id"),
                 "project_id": a.get("project_id"),
+                "project_name": a.get("project_name"),
+                "assigned_officer_name": a.get("assigned_officer_name"),
+                "legacy_operational": a.get("legacy_operational"),
                 "requirement_id": a.get("requirement_id"),
                 "title": a.get("title"),
                 "current_stage": a.get("current_stage"),
@@ -490,11 +526,12 @@ class SupabaseDepartmentStore:
                 reasons.append("Awaiting information")
             sla_st = a.get("sla", {}).get("state")
             if sla_st in (SlaState.AT_RISK.value, SlaState.BREACHED.value):
-                reasons.append(f"SLA {sla_st}")
+                reasons.append(_SLA_REASON[getattr(sla_st, "value", sla_st)])
             if reasons:
                 attention.append({
                     "id": a["id"],
                     "application_id": a.get("application_id"),
+                    "project_name": a.get("project_name"),
                     "title": a.get("title"),
                     "current_stage": a.get("current_stage"),
                     "reasons": reasons,
@@ -509,6 +546,7 @@ class SupabaseDepartmentStore:
                 "completed": completed,
                 "sla_at_risk": at_risk,
                 "sla_breached": breached,
+                "legacy_records_excluded": legacy_excluded,
             },
             "pipeline": [{"stage": k, "count": v} for k, v in pipeline.items()],
             "recent_applications": recent,
@@ -537,6 +575,10 @@ class SupabaseDepartmentStore:
                 "department_id": a.get("department_id"),
                 "requirement_id": a.get("requirement_id"),
                 "assigned_officer_id": a.get("assigned_officer_id"),
+                "assigned_officer_name": a.get("assigned_officer_name"),
+                "project_id": a.get("project_id"),
+                "project_name": a.get("project_name"),
+                "legacy_operational": a.get("legacy_operational"),
                 "sla_state": sla_info.get("state"),
                 "due_at": sla_info.get("due_at"),
                 "warning_at": sla_info.get("warning_at"),

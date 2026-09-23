@@ -115,10 +115,19 @@ export interface SlaInfo {
   elapsed_pct: number;
 }
 
+export interface LegacyOperationalLabel {
+  label: string;
+  prior_facility?: string | null;
+}
+
 export interface Application {
   id: string;
   application_id: string;
   project_id: string;
+  /** Human company/project name, hydrated server-side from projects. */
+  project_name?: string | null;
+  /** Explicit demo metadata: this record is historical (prior facility). Not a DB field. */
+  legacy_operational?: LegacyOperationalLabel | null;
   requirement_id: string;
   department_id: string;
   title: string | null;
@@ -200,6 +209,9 @@ export interface SlaApplicationSummary {
   department_id: string;
   requirement_id: string;
   assigned_officer_name: string | null;
+  project_id?: string | null;
+  project_name?: string | null;
+  legacy_operational?: LegacyOperationalLabel | null;
   sla_state: SlaState;
   due_at: string | null;
   warning_at: string | null;
@@ -304,6 +316,8 @@ export interface DashboardRecentApplication {
   id: string;
   application_id: string;
   project_id: string;
+  project_name?: string | null;
+  legacy_operational?: LegacyOperationalLabel | null;
   requirement_id: string;
   title: string | null;
   current_stage: ApplicationStage;
@@ -320,12 +334,15 @@ export interface DashboardData {
     completed: number;
     sla_at_risk: number;
     sla_breached: number;
+    /** Legacy operational records left out of the current-workload metrics above. */
+    legacy_records_excluded?: number;
   };
   pipeline: { stage: string; count: number }[];
   recent_applications: DashboardRecentApplication[];
   attention_required: {
     id: string;
     application_id: string;
+    project_name?: string | null;
     title: string | null;
     current_stage: ApplicationStage;
     reasons: string[];

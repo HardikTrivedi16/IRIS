@@ -676,7 +676,7 @@ class DepartmentStore:
             policy = self._sla_policies.get(instance.get("policy_id", "")) if instance else None
             sla_info = _compute_sla_state(policy, a.get("created_at"), a.get("completed_at"), now)
             if sla_info["state"] in (SlaState.AT_RISK.value, SlaState.BREACHED.value):
-                reasons.append(f"SLA {sla_info['state']}")
+                reasons.append("SLA " + str(getattr(sla_info["state"], "value", sla_info["state"])).replace("_", " ").lower())
             if reasons:
                 attention.append({
                     "id": a["id"],

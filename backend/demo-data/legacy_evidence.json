@@ -46,5 +46,13 @@
         "DOC-REG-011"
       ]
     }
+  },
+  "operational_records": {
+    "_description": "Explicit legacy OPERATIONAL records (applications), asserted by exact application_id only - never inferred from title text. Persisted workflow rows are untouched; they are labelled and left out of CURRENT Government workload metrics.",
+    "aarav-lifesciences": {
+      "label": "Legacy operational record — prior facility",
+      "prior_facility": "Selaqui Formulations Plant, Dehradun, Uttarakhand",
+      "application_ids": ["APP-AARAV-REQ-0001", "APP-AARAV-REQ-0002"]
+    }
   }
 }

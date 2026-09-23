@@ -252,7 +252,7 @@ function ApplicationDetailPage() {
 
       <PageHeader
         title={app.title ?? app.application_id}
-        description={`${app.application_id} · Project: ${app.project_id} · Submitted ${applicationAge(app.created_at)} ago`}
+        description={`${app.application_id} · Project: ${app.project_name ?? app.project_id} · Submitted ${applicationAge(app.created_at)} ago`}
         trail={[
           { label: "Department", to: "/department" },
           { label: "Applications", to: "/department/applications" },
@@ -312,12 +312,18 @@ function ApplicationDetailPage() {
               <DataField label="Application ID" value={app.application_id} />
               <DataField label="Requirement" value={app.requirement_id} />
               <DataField label="Department" value={app.department_id} />
+              {app.legacy_operational && (
+                <DataField
+                  label="Record status"
+                  value={app.legacy_operational.label}
+                />
+              )}
               <DataField label="Applicant" value={app.applicant_name ?? "—"} />
               <DataField
                 label="Project"
                 value={
                   <Link to="/projects" className="text-info hover:underline">
-                    {app.project_id}
+                    {app.project_name ?? app.project_id}
                   </Link>
                 }
               />

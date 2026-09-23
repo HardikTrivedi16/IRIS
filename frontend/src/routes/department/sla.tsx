@@ -370,6 +370,14 @@ function SlaDashboardPage() {
                         <div className="text-[11.5px] text-muted-foreground truncate max-w-[200px]">
                           {app.title || app.requirement_id}
                         </div>
+                        {(app.project_name || app.legacy_operational) && (
+                          <div className="text-[11px] text-muted-foreground truncate max-w-[200px]">
+                            {app.project_name}
+                            {app.legacy_operational
+                              ? ` · ${app.legacy_operational.label}`
+                              : ""}
+                          </div>
+                        )}
                       </td>
                       <td className="px-4 py-3 text-muted-foreground">
                         {STAGE_LABELS[app.current_stage as ApplicationStage] ??

@@ -75,3 +75,20 @@ def is_legacy_metadata_row(project_id: str, row: dict[str, Any]) -> bool:
     if not cfg or cfg.get("match") != "external_document_id":
         return False
     return row.get("document_id") in set(cfg.get("external_document_ids") or [])
+
+
+@lru_cache(maxsize=1)
+def _operational_config() -> dict:
+    try:
+        with open(_PATH, encoding="utf-8") as f:
+            return json.load(f).get("operational_records") or {}
+    except (OSError, ValueError):
+        return {}
+
+
+def legacy_operational_info(project_id: Optional[str], application_id: Optional[str]) -> Optional[dict]:
+    """Label for an explicitly named legacy application, else None. Exact application_id match only."""
+    cfg = _operational_config().get(project_id or "")
+    if not isinstance(cfg, dict) or application_id not in set(cfg.get("application_ids") or []):
+        return None
+    return {"label": cfg.get("label"), "prior_facility": cfg.get("prior_facility")}

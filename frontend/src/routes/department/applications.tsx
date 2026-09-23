@@ -424,8 +424,13 @@ function ApplicationsPage() {
                       {app.title}
                     </div>
                     <div className="truncate text-[11px] text-muted-foreground">
-                      {app.project_id}
+                      {app.project_name ?? app.project_id}
                     </div>
+                    {app.legacy_operational && (
+                      <span className="mt-0.5 inline-flex items-center whitespace-nowrap rounded-sm border border-border px-1.5 py-[2px] text-[10px] font-medium text-muted-foreground">
+                        {app.legacy_operational.label}
+                      </span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-[12.5px] text-muted-foreground">
                     {app.requirement_id}

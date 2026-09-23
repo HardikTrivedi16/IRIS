@@ -201,6 +201,13 @@ function DepartmentDashboard() {
       />
 
       {/* KPI Cards */}
+      {(kpis.legacy_records_excluded ?? 0) > 0 && (
+        <p className="mt-4 text-[11.5px] text-muted-foreground">
+          Current workload metrics exclude {kpis.legacy_records_excluded} legacy
+          operational record{kpis.legacy_records_excluded === 1 ? "" : "s"}{" "}
+          (prior facility); they remain in the Applications list.
+        </p>
+      )}
       <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
         <KpiCard
           label="Total Applications"
@@ -362,8 +369,13 @@ function DepartmentDashboard() {
                             {app.application_id}
                           </Link>
                           <p className="text-[11px] text-muted-foreground">
-                            {app.project_id}
+                            {app.project_name ?? app.project_id}
                           </p>
+                          {app.legacy_operational && (
+                            <span className="mt-0.5 inline-flex items-center whitespace-nowrap rounded-sm border border-border px-1.5 py-[2px] text-[10px] font-medium text-muted-foreground">
+                              {app.legacy_operational.label}
+                            </span>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-[12.5px] text-muted-foreground">
                           {app.requirement_id}
@@ -457,6 +469,7 @@ function DepartmentDashboard() {
                         </span>
                       </div>
                       <p className="mt-1 truncate text-[11.5px] text-muted-foreground">
+                        {item.project_name ? `${item.project_name} · ` : ""}
                         {item.title}
                       </p>
                       <div className="mt-1.5 flex flex-wrap gap-1.5">
