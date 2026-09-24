@@ -41,6 +41,23 @@ def legacy_info(project_id: str) -> Optional[dict]:
     return _project(project_id)
 
 
+DOCUMENT_FACT_LABEL = "Legacy confirmed document record — prior facility"
+
+
+def legacy_document_facts_info(project_id: Optional[str]) -> Optional[dict]:
+    """Label for a project whose confirmed ``document.*`` Project Facts are explicitly declared (in
+    legacy_evidence.json, ``document_facts_legacy: true``) to describe the PRIOR facility. Never inferred
+    from a location mismatch; nothing is written or overwritten."""
+    cfg = _project(project_id or "")
+    if not cfg or cfg.get("document_facts_legacy") is not True:
+        return None
+    return {
+        "label": DOCUMENT_FACT_LABEL,
+        "prior_facility": cfg.get("prior_facility"),
+        "current_facility": cfg.get("current_facility"),
+    }
+
+
 def is_legacy_document(project_id: str, doc: dict) -> bool:
     cfg = _project(project_id)
     if not cfg:

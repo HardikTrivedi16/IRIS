@@ -88,7 +88,7 @@ function SchemeRow({ r }: { r: SchemeMatch }) {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {!r.is_authoritative_catalogue_entry && <Tag tone="warning">Draft / unverified record</Tag>}
+          {!r.is_authoritative_catalogue_entry && <Tag tone="warning">Diagnostic — unverified catalogue record</Tag>}
           <button type="button" onClick={() => setOpen((v) => !v)} className="text-[12px] font-medium text-info hover:opacity-80">
             {open ? "Hide" : "Why?"}
           </button>
@@ -136,16 +136,37 @@ function SchemeRow({ r }: { r: SchemeMatch }) {
           {r.missing_facts.length > 0 && (
             <p className="text-warning">Missing: <span className="font-mono">{r.missing_facts.join(", ")}</span></p>
           )}
-          <ul className="space-y-0.5">
+          <ul className="space-y-1">
             {r.why.map((w) => (
               <li key={w.scheme_condition_id}>
                 <span className="font-mono">{w.fact_key} {w.operator} {formatFactValue(w.expected_value)}{w.unit ? ` ${w.unit}` : ""}</span>
                 {" — project value "}
                 <span className="tabular">{formatFactValue(w.project_value)}</span> → {w.result}
                 {w.source_reference?.clause ? ` (cl. ${w.source_reference.clause})` : ""}
+                {w.description && <span className="block text-[11.5px] text-muted-foreground">{w.description}</span>}
               </li>
             ))}
           </ul>
+          {(r.composite_notes ?? []).some((c) => c.description) && (
+            <div className="border-l-2 border-warning pl-3">
+              <p className="label-meta">Stated limitations of this record</p>
+              {(r.composite_notes ?? []).filter((c) => c.description).map((c) => (
+                <p key={c.scheme_condition_id} className="mt-0.5 text-[11.5px] text-muted-foreground">{c.description}</p>
+              ))}
+            </div>
+          )}
+          {r.benefits_summary && (
+            <p className="text-[11.5px] text-muted-foreground">
+              <span className="label-meta">Benefit as published (no amount is computed)</span>
+              <span className="block">{r.benefits_summary}</span>
+            </p>
+          )}
+          {!r.is_authoritative_catalogue_entry && r.notes && (
+            <p className="text-[11.5px] text-muted-foreground">
+              <span className="label-meta">Record notes (draft)</span>
+              <span className="block">{r.notes}</span>
+            </p>
+          )}
           {r.official_source?.url && (
             <p>
               Source:{" "}
@@ -175,8 +196,32 @@ function SchemesPage() {
       <PageHeader
         trail={[{ label: "Oversight" }, { label: "Schemes" }]}
         title="Scheme Matching"
-        description={`${activeProject.name} · deterministic matching against a verified catalogue`}
+        description={`${activeProject.name} · deterministic matching against ${diagnostic ? "the diagnostic catalogue (includes unverified records)" : "the verified catalogue"}`}
       />
+
+      <div role="group" aria-label="Catalogue mode" className="mt-4 inline-flex overflow-hidden rounded-sm border border-border text-[12px] font-medium">
+        {([
+          [false, "Verified catalogue"],
+          [true, "Diagnostic catalogue"],
+        ] as const).map(([isDiag, label]) => (
+          <button
+            key={label}
+            type="button"
+            aria-pressed={diagnostic === isDiag}
+            onClick={() => setDiagnostic(isDiag)}
+            className={`focus-ring px-3 py-[7px] transition-colors ${diagnostic === isDiag ? "bg-primary text-primary-foreground" : "bg-surface text-muted-foreground hover:bg-secondary"}`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {diagnostic && (
+        <p className="mt-3 border border-warning/40 bg-warning-surface px-4 py-2.5 text-[12.5px] leading-relaxed">
+          <span className="font-semibold uppercase tracking-[0.05em] text-warning">Diagnostic — non-authoritative.</span>{" "}
+          This view also evaluates DRAFT / unverified catalogue records with the same deterministic matcher. They are not
+          verified against archived official sources; eligibility and application status are separate claims.
+        </p>
+      )}
 
       {q.isLoading ? (
         <p className="mt-6 text-[12.5px] text-muted-foreground">Loading…</p>
@@ -198,9 +243,9 @@ function SchemesPage() {
             description="IRIS matches schemes only against official, verified scheme records, and none are loaded yet. No eligibility is shown rather than an unverified guess. The matching framework is in place and will use the catalogue as soon as verified records are added."
           />
           {data.counts && data.counts.total > 0 && (
-            <button type="button" onClick={() => setDiagnostic(true)} className="mt-3 text-[12px] font-medium text-info hover:opacity-80">
-              View {data.counts.total} draft record{data.counts.total === 1 ? "" : "s"} in diagnostic mode →
-            </button>
+            <p className="mt-3 text-[12px] text-muted-foreground">
+              {data.counts.total} draft record{data.counts.total === 1 ? "" : "s"} available in the Diagnostic catalogue.
+            </p>
           )}
         </div>
       ) : (
@@ -216,10 +261,10 @@ function SchemesPage() {
               {data.results.map((r) => <SchemeRow key={r.scheme_id} r={r} />)}
             </ul>
           )}
-          {diagnostic && (
-            <button type="button" onClick={() => setDiagnostic(false)} className="mt-3 text-[12px] text-muted-foreground hover:text-foreground">
-              ← Back to verified results
-            </button>
+          {!diagnostic && data.counts && data.counts.total > data.counts.active_verified && (
+            <p className="mt-3 text-[12px] text-muted-foreground">
+              {data.counts.total - data.counts.active_verified} further record{data.counts.total - data.counts.active_verified === 1 ? " is" : "s are"} DRAFT / unverified and only shown in the Diagnostic catalogue.
+            </p>
           )}
         </section>
       )}

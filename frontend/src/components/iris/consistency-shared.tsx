@@ -25,7 +25,9 @@ export function ObservationBlock({
       <p className="mt-0.5 break-words text-[13px] font-medium">{fmt(obs.raw_value, obs.unit)}</p>
       <p className="mt-0.5 text-[11px] text-muted-foreground">
         {src.kind === "PROJECT_RECORD"
-          ? `Confirmed project record (${src.fact_key ?? "document.*"})`
+          ? src.legacy_evidence
+            ? `${src.legacy_evidence.label} (${src.fact_key ?? "document.*"})`
+            : `Confirmed project record (${src.fact_key ?? "document.*"})`
           : `${src.document_name ?? "Unnamed source"}${src.page ? ` · p.${src.page}` : ""}`}
         {typeof obs.confidence === "number" && ` · ${(obs.confidence * 100).toFixed(0)}% extraction confidence`}
       </p>
@@ -56,7 +58,13 @@ export function IssueCard({ check }: { check: ConsistencyCheck }) {
       </div>
       <div className="mt-2.5 grid gap-4 sm:grid-cols-2">
         <ObservationBlock
-          heading={check.reference_basis ? BASIS_LABEL[check.reference_basis] ?? "Reference" : "Reference"}
+          heading={
+            check.reference?.source.legacy_evidence
+              ? "Legacy confirmed document record"
+              : check.reference_basis
+                ? BASIS_LABEL[check.reference_basis] ?? "Reference"
+                : "Reference"
+          }
           obs={check.reference}
         />
         <ObservationBlock heading={check.reference ? "Compared with" : "Source"} obs={check.candidate} />

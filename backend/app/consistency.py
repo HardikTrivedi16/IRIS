@@ -546,9 +546,17 @@ _PROJECT_RECORD_FACTS: dict[str, str] = {
 }
 
 
-def project_record_observations(stored_facts: dict[str, Any]) -> list[dict]:
+def project_record_observations(stored_facts: dict[str, Any], project_id: str | None = None) -> list[dict]:
     """Human-confirmed values already in the project's record, as reference
-    observations. Only exact, same-meaning mappings — nothing inferred."""
+    observations. Only exact, same-meaning mappings — nothing inferred.
+
+    When the project is EXPLICITLY declared (legacy_evidence.json) to hold document.* facts describing a
+    prior facility, each automatic observation is labelled as a legacy document record. The values, the
+    comparison and the resulting statuses are untouched."""
+    from .legacy_evidence import legacy_document_facts_info
+
+    legacy = legacy_document_facts_info(project_id)
+    name = legacy["label"] if legacy else "Confirmed project record"
     out: list[dict] = []
     for fact_key, field in _PROJECT_RECORD_FACTS.items():
         value = stored_facts.get(fact_key)
@@ -556,7 +564,7 @@ def project_record_observations(stored_facts: dict[str, Any]) -> list[dict]:
             out.append({
                 "field": field, "value": value, "observation_id": f"REC-{field}",
                 "source": {"kind": SOURCE_PROJECT_RECORD, "fact_key": fact_key,
-                           "document_name": "Confirmed project record"},
+                           "document_name": name, **({"legacy_evidence": legacy} if legacy else {})},
             })
     cap_v = stored_facts.get("document.capacity_value")
     cap_u = stored_facts.get("document.capacity_unit")
@@ -566,6 +574,6 @@ def project_record_observations(stored_facts: dict[str, Any]) -> list[dict]:
             "observation_id": "REC-production_capacity",
             "source": {"kind": SOURCE_PROJECT_RECORD,
                        "fact_key": "document.capacity_value",
-                       "document_name": "Confirmed project record"},
+                       "document_name": name, **({"legacy_evidence": legacy} if legacy else {})},
         })
     return out

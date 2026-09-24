@@ -275,6 +275,16 @@ def match_scheme(scheme: dict, conditions: dict, facts: dict[str, Any], as_of: _
             "description": c.get("description"),
         })
 
+    # Catalogue-authored explanation text that applies to the whole tree (e.g. "thresholds are not
+    # encoded"), passed through verbatim so a client can surface a record's stated limitations without
+    # inventing any text. Read-only; never influences `outcome`.
+    composite_notes = [
+        {"scheme_condition_id": n.condition_id, "description": conditions.get(n.condition_id, {}).get("description")}
+        for n in _walk(cr)
+        if conditions.get(n.condition_id, {}).get("predicate_type") == "COMPOSITE"
+        and conditions.get(n.condition_id, {}).get("description")
+    ]
+
     return {
         "scheme_id": scheme.get("scheme_id"),
         "name": scheme.get("name"),
@@ -286,6 +296,8 @@ def match_scheme(scheme: dict, conditions: dict, facts: dict[str, Any], as_of: _
         "not_in_force_reason": _in_force(scheme, as_of),
         "official_source": scheme.get("official_source"),
         "benefits_summary": scheme.get("benefits_summary"),
+        "notes": scheme.get("notes"),
+        "composite_notes": composite_notes,
         "status": scheme.get("status"),
         "confidence": scheme.get("confidence"),
         "last_verified": scheme.get("last_verified"),

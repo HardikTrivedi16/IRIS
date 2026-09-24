@@ -6,6 +6,7 @@
       "prior_facility": "Plot No. 18, Sector 11, IIE SIDCUL, Haridwar, Uttarakhand",
       "current_facility": "Supa MIDC, Pune district, Maharashtra (synthetic demo fact)",
       "basis": "reference-data/swaadharvest-evidence/README.md, section 'Legacy / historical status'",
+      "document_facts_legacy": true,
       "match": "storage_path",
       "storage_paths": [
         "reference-data/swaadharvest-evidence/documents/FOOD-ENT-003.pdf",
@@ -20,6 +21,7 @@
       "prior_facility": "Selaqui Formulations Plant, Dehradun, Uttarakhand",
       "current_facility": "Waluj MIDC, Chhatrapati Sambhajinagar, Maharashtra (synthetic demo fact)",
       "basis": "backend/scripts/seed_five_project_portfolio.py, module docstring 'LEGACY EVIDENCE'",
+      "document_facts_legacy": true,
       "match": "external_document_id",
       "external_document_ids": [
         "DOC-ENT-001",

@@ -254,6 +254,9 @@ function EvidenceConsistency() {
 
       <section className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border border-border bg-surface px-5 py-3.5">
         <DataField label="Current project" value={activeProject.name} />
+        {activeProject.location && (
+          <DataField label="Current location" value={activeProject.location} />
+        )}
         {hasRun && (
           <span className="text-[11.5px] text-muted-foreground">
             As of {result!.as_of_date} · {result!.checks_performed} check

@@ -91,7 +91,7 @@ def post_consistency_check(
     observations: list[dict] = []
     if body.include_project_record:
         try:
-            observations.extend(project_record_observations(get_store().get_project_facts(project_id)))
+            observations.extend(project_record_observations(get_store().get_project_facts(project_id), project_id))
         except StoreError as exc:
             logger.error("Persistence error loading facts for %s: %s", project_id, exc)
             raise HTTPException(status_code=502, detail="Persistence backend is unavailable") from exc

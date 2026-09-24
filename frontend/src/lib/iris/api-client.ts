@@ -566,6 +566,9 @@ export interface ConsistencyObservationView {
     page?: number | null;
     evidence_text?: string | null;
     fact_key?: string;
+    /** Set server-side only when legacy_evidence.json explicitly declares this project's document.*
+     * facts to describe a prior facility. */
+    legacy_evidence?: { label: string; prior_facility?: string | null; current_facility?: string | null } | null;
   };
 }
 
@@ -737,6 +740,11 @@ export interface SchemeMatch {
   not_in_force_reason: string | null;
   official_source: { url?: string; document_title?: string } | null;
   benefits_summary: string | null;
+  /** Catalogue-authored record notes (provenance / source state / stated limitations), verbatim. */
+  notes?: string | null;
+  /** Catalogue-authored descriptions of the eligibility tree's composite nodes, verbatim — where a
+   * record states what is NOT encoded/evaluated (e.g. thresholds). */
+  composite_notes?: { scheme_condition_id: string; description: string | null }[];
   status: string;
   confidence: string;
   last_verified: { date?: string } | null;

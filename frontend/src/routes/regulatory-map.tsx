@@ -41,14 +41,14 @@ export const Route = createFileRoute("/regulatory-map")({
   component: RegulatoryMap,
 });
 
-type StateFilter = "matched" | "applicable" | "not-applicable" | "needs" | "all";
+type StateFilter = "relevant" | "applicable" | "not-applicable" | "needs" | "all";
 
 const stateFilters: { key: StateFilter; label: string }[] = [
-  { key: "matched", label: "Matched to project" },
-  { key: "applicable", label: "Diagnostic: applicable" },
-  { key: "not-applicable", label: "Diagnostic: not applicable" },
-  { key: "needs", label: "Needs information or review" },
-  { key: "all", label: "All, incl. not yet evaluable" },
+  { key: "relevant", label: "Relevant: applicable + needs information/review" },
+  { key: "applicable", label: "Applicable" },
+  { key: "needs", label: "Needs information / review" },
+  { key: "not-applicable", label: "Not applicable" },
+  { key: "all", label: "All requirements" },
 ];
 
 const legend = [
@@ -60,8 +60,10 @@ const legend = [
 function matchesState(i: RegulatoryItem, f: StateFilter): boolean {
   const s = i.diagnostic?.finalState;
   switch (f) {
-    case "matched":
-      return i.relevance !== "OTHER";
+    case "relevant":
+      // Default map: diagnostically applicable, or the project's own information/review gaps.
+      // Diagnostic NOT_APPLICABLE requirements stay in the full catalogue (Not applicable / All).
+      return s === "APPLICABLE" || i.relevance === "NEEDS_INFORMATION";
     case "applicable":
       return s === "APPLICABLE";
     case "not-applicable":
@@ -80,7 +82,7 @@ function RegulatoryMap() {
 
   const [stage, setStage] = useState("all");
   const [authority, setAuthority] = useState("all");
-  const [state, setState] = useState<StateFilter>("matched");
+  const [state, setState] = useState<StateFilter>("relevant");
   const [selected, setSelected] = useState<GraphNode | null>(null);
 
   const authorities = useMemo(
@@ -109,7 +111,7 @@ function RegulatoryMap() {
   const edges: GraphEdge[] = [];
 
   const item = selected ? items.find((i) => i.requirementId === selected.id) : undefined;
-  const filtersActive = stage !== "all" || authority !== "all" || state !== "matched";
+  const filtersActive = stage !== "all" || authority !== "all" || state !== "relevant";
 
   return (
     <PageShell wide className="pb-0">
@@ -216,7 +218,7 @@ function RegulatoryMap() {
             onClick={() => {
               setStage("all");
               setAuthority("all");
-              setState("matched");
+              setState("relevant");
             }}
             className="text-[12px] font-medium text-info transition-opacity hover:opacity-80"
           >

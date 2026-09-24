@@ -410,7 +410,6 @@ function ChangeImpact() {
   const [draft, setDraft] = useState<DraftValues>({});
   const [showUnchanged, setShowUnchanged] = useState(false);
   const [resetCount, setResetCount] = useState(0);
-  const [diagnostic, setDiagnostic] = useState(false);
   const [result, setResult] = useState<ChangeImpactResponse | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [proof, setProof] = useState<ProofTarget | null>(null);
@@ -451,7 +450,10 @@ function ChangeImpact() {
     mutationFn: (proposedFacts: Record<string, unknown>) =>
       irisApi.analyseChangeImpact(activeProject.id, {
         proposedFacts,
-        evaluationMode: diagnostic ? "NON_PRODUCTION" : "PRODUCTION",
+        // Scenario Lab is hypothetical by definition: it always uses the diagnostic (NON_PRODUCTION)
+        // engine semantics, so DRAFT rule versions are evaluated instead of every requirement being
+        // lifecycle-blocked. Normal Evaluation keeps PRODUCTION as its authoritative default.
+        evaluationMode: "NON_PRODUCTION",
       }),
     onSuccess: (data) => {
       setResult(data);
@@ -540,15 +542,9 @@ function ChangeImpact() {
                 ` ${editedCount} fact${editedCount === 1 ? "" : "s"} edited.`}
             </p>
           </div>
-          <label className="flex items-center gap-2 text-[12px] text-muted-foreground">
-            <input
-              type="checkbox"
-              checked={diagnostic}
-              onChange={(e) => setDiagnostic(e.target.checked)}
-              className="accent-[var(--info)]"
-            />
-            Diagnostic (non-production) mode
-          </label>
+          <span className="text-[12px] font-medium uppercase tracking-[0.05em] text-warning">
+            Diagnostic — non-authoritative
+          </span>
         </div>
 
         {registryQuery.isLoading || factsQuery.isLoading ? (
@@ -624,11 +620,12 @@ function ChangeImpact() {
           {!result.authoritative && (
             <section className="mt-6 border border-warning/40 bg-warning-surface px-5 py-3.5">
               <p className="text-[12.5px] font-semibold uppercase tracking-[0.05em] text-warning">
-                Diagnostic scenario
+                Diagnostic — non-authoritative
               </p>
               <p className="mt-1 text-[12.5px] leading-relaxed">
                 Uses unverified/DRAFT regulatory rules and is not an
-                authoritative regulatory determination.
+                authoritative regulatory determination. The hypothetical
+                facts above are never saved to this project.
               </p>
             </section>
           )}
