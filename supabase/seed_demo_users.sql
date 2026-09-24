@@ -8,9 +8,14 @@
 --   2. DEPARTMENT_ADMIN -> linked to dept-mpcb, sees the 2 applications
 --      filed against that department (APP-AARAV-REQ-0001/0002).
 --
--- CHANGE THE PASSWORDS BELOW before running (or rotate them afterwards in
--- Supabase Dashboard -> Authentication -> Users). email_confirmed_at is set
--- directly so both accounts can sign in immediately with no email delivery.
+-- CREDENTIALS ARE SUPPLIED OUT-OF-BAND. Never commit real passwords.
+-- The password values below are intentionally NON-FUNCTIONAL placeholders, and this
+-- script refuses to run until both are replaced. Before running it, edit the two
+-- v_*_password values IN YOUR LOCAL SQL Editor SESSION ONLY (do not save the edited
+-- copy into this repository), or rotate the accounts afterwards in Supabase
+-- Dashboard -> Authentication -> Users. email_confirmed_at is set directly so both
+-- accounts can sign in immediately with no email delivery. The DO block cannot read
+-- psql variables, so the values are typed into the editor session, never into git.
 --
 -- CAVEAT: this writes directly to Supabase-internal auth.users/auth.identities
 -- tables (a common seeding pattern, mirroring GoTrue's own bcrypt hashing via
@@ -31,10 +36,14 @@ declare
   v_industry_user_id  uuid;
   v_govt_user_id      uuid;
   v_industry_email    text := 'industry@gmail.com';  -- CHANGE ME
-  v_industry_password text := 'REPLACE_WITH_PASSWORD_SUPPLIED_OUT_OF_BAND';                        -- CHANGE ME
+  v_industry_password text := 'REPLACE_WITH_PASSWORD_SUPPLIED_OUT_OF_BAND';  -- placeholder: supply out-of-band, never commit
   v_govt_email        text := 'department@gmail.com';             -- CHANGE ME
-  v_govt_password     text := 'REPLACE_WITH_PASSWORD_SUPPLIED_OUT_OF_BAND';                         -- CHANGE ME
+  v_govt_password     text := 'REPLACE_WITH_PASSWORD_SUPPLIED_OUT_OF_BAND';  -- placeholder: supply out-of-band, never commit
 begin
+  if v_industry_password like 'REPLACE_WITH_%' or v_govt_password like 'REPLACE_WITH_%' then
+    raise exception 'Demo passwords must be supplied out-of-band: replace both REPLACE_WITH_* placeholders in your local editor session (never commit real passwords).';
+  end if;
+
   select coalesce(
     (select instance_id from auth.users limit 1),
     '00000000-0000-0000-0000-000000000000'::uuid
