@@ -17,7 +17,7 @@ official_source:
   retrieved_date: "2026-09-23"
   retrieved_by: null   # AUTOMATED RETRIEVAL ONLY — pending human verifier name, see review pack
 
-effective_start_date: null   # UNRESOLVED — "GUIDELINES 2022" is the only date evidence found; see review pack
+effective_start_date: "2022-04-28"   # launch date shown on the official ZED portal ("Launch of MSME Sustainable (ZED) Certification Scheme on April 28, 2022"; archived homepage snapshot); Guidelines 2022 carry no day/month
 effective_end_date: null
 
 jurisdiction: "INDIA"
@@ -30,19 +30,26 @@ required_project_facts:
   - project.udyam_registered
 
 benefits_summary: >
-  Certification-cost subsidy on ZED Bronze/Silver/Gold certification: Micro
-  80%, Small 60%, Medium 50% of certification cost. Additional subsidy of
-  10% for MSMEs owned by Women/SC/ST entrepreneurs, or MSMEs in NER/
-  Himalayan/LWE/Island territories/aspirational districts; a further
-  additional 5% for MSMEs also part of SFURTI or the MSE-Cluster
-  Development Programme (MSE-CDP). A one-time, limited-purpose joining
-  reward of Rs. 10,000 is offered to each MSME on taking the ZED Pledge,
-  usable only once toward a ZED Certification application.
+  Subsidy on the cost of ZED certification (Bronze/Silver/Gold): Micro 80%, Small 60%, Medium 50%.
+  Per the Ministry addendum effective 11.11.2023 (SRC-SCH-005 addendum), MSMEs owned by women
+  entrepreneurs get a 100% subsidy (the additional 10%/5% tiers do not apply to them); an additional
+  10% applies to MSMEs owned by SC/ST entrepreneurs or located in NER/Himalayan/LWE/Island
+  territories/aspirational districts, and a further 5% to MSMEs that are also part of SFURTI or
+  MSE-CDP (other than women-owned). A one-time Rs. 10,000 joining reward is offered on taking the
+  ZED Pledge. Rates are stated for orientation only; IRIS computes no entitlement.
 
 required_documents: []   # none explicitly listed as a standalone checklist in the guideline text located
 
-status: DRAFT
-confidence: UNVERIFIED
+status: ACTIVE
+confidence: VERIFIED
+
+last_verified:
+  date: "2026-09-26"
+  verified_by: "Hardik Trivedi"
+  method: >
+    Human review of the Scheme Verification Batch 1 Human Review Pack (archived official artifacts under
+    reference-data/scheme-evidence/, real URLs and SHA-256 in each MANIFEST.md), approved via explicit
+    project-chat verification event on 2026-09-26. Covers the limited encoded scope only.
 
 # last_verified intentionally OMITTED.
 # application_status / application_window intentionally OMITTED — genuinely
@@ -52,12 +59,30 @@ confidence: UNVERIFIED
 # point of time"), and the portal itself was live/functioning at retrieval
 # time — see review pack.
 
+application_status: UNRESOLVED_CURRENT_STATUS
+application_window:
+  mode: UNKNOWN
+  opens: null
+  closes: null
+  as_of_date: "2026-09-26"
+  source_reference:
+    document_title: "MSME Sustainable (ZED) Certification Scheme Guidelines 2022 - Scheme Validity (p.3); ZED portal homepage snapshot 2026-09-26"
+    clause: "Scheme Validity / portal registration"
+    page_number: 3
+    quoted_text: >
+      "Scheme Validity: ... provisions contained in the scheme herein will be valid till March 31, 2026." The official portal still shows REGISTER NOW and a live dashboard on 2026-09-26, and the Ministry Annual Report 2025-26 describes the scheme in the present tense, but no extension notice was located.
+
 notes: >
+  ACTIVE / VERIFIED 2026-09-26 (human-verified by Hardik Trivedi) for the LIMITED ENCODED SCOPE ONLY - this is not
+  final Government eligibility. Limitations that remain in force: ZED: eligibility model verified for the encoded scope (Udyam-registered MSME, scope-level potential match) - application availability is NOT verified: application_status stays UNRESOLVED_CURRENT_STATUS (Guidelines validity stated through 31.03.2026, portal still live, no extension notice located). Phase 1 manufacturing-MSME scope, benefit tiers and ZED Pledge requirements are not evaluated; the 11.11.2023 women-owned subsidy addendum is reflected. The paragraphs below record the pre-verification
+  DRAFT history and the Batch-1 verification findings; where they say DRAFT/UNVERIFIED, this approval supersedes that
+  wording, and their limitations still apply.
   DRAFT — automated document retrieval only, prepared by Claude (AI agent).
   The +10%/+5% additional-subsidy wording differs slightly from the
   research pack's "+10% for women/SC-ST/NER/SFURTI" — the archived
   guideline places SFURTI/MSE-CDP membership in the SEPARATE +5% tier, not
   the +10% tier. See review pack.
+  SCHEME VERIFICATION BATCH 1 (2026-09-26) - still DRAFT / UNVERIFIED. ELIGIBILITY MODEL: SCHC-0006 (msme_classification not NOT_MSME AND udyam_registered) matches Guidelines s.2.4 ("All MSMEs registered with the UDYAM registration portal ... will be eligible") and is a SCOPE-LEVEL potential match only: Phase 1 of the guidelines (and the Ministry Annual Report 2025-26) target Udyam-registered MANUFACTURING MSMEs, which the tree does not test; benefit tiers, the ZED Pledge and certification steps are not modelled. APPLICATION STATUS (independent): UNRESOLVED_CURRENT_STATUS - the archived Guidelines state validity "till March 31, 2026" and no extension notice was found, although the official portal remained live for registration on 2026-09-26; effective_end_date is left null because no end has been officially announced. The Ministry addendum (wef 11.11.2023) supersedes the women-owned subsidy wording quoted earlier in this record.
 
 supersedes: null
 superseded_by: null

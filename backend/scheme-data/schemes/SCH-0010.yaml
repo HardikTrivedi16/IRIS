@@ -3,11 +3,11 @@ name: "PLI Scheme for Pharmaceuticals - scope-level record (selection completed)
 administering_authority_id: null   # no AUTH-#### scheme-authority provenance records exist - do not invent one
 administering_authority_name: "Department of Pharmaceuticals, Government of India"
 official_source:
-  url: "https://pharmaceuticals.gov.in"   # domain-level pointer from the research pack; exact path to be confirmed at archival
-  document_title: "Production Linked Incentive Scheme for Pharmaceuticals - notification and selection lists"
+  url: "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2081491"
+  document_title: "PIB release 06.12.2024 - Measures to encourage domestic manufacturing in the pharmaceutical sector (PLI Scheme for Pharmaceuticals: Rs. 15,000 crore, FY 2022-23 to FY 2027-28, 55 selected applicants)"
   reference_number: null
-  published_date: "2021"
-  retrieved_date: "2026-09-22"   # research-pass date; NOT an archived-artifact download
+  published_date: "2024-12-06"
+  retrieved_date: "2026-09-26"   # archived: reference-data/scheme-evidence/SRC-SCH-014/
   retrieved_by: null
 effective_start_date: null
 effective_end_date: null
@@ -21,8 +21,16 @@ benefits_summary: >
   FY2027-28, in groups by global manufacturing revenue. Only previously selected beneficiaries
   receive incentives; a new project cannot apply. IRIS computes no entitlement.
 required_documents: []   # not established by the research pack
-status: DRAFT
-confidence: UNVERIFIED
+status: ACTIVE
+confidence: VERIFIED
+
+last_verified:
+  date: "2026-09-26"
+  verified_by: "Hardik Trivedi"
+  method: >
+    Human review of the Scheme Verification Batch 1 Human Review Pack (archived official artifacts under
+    reference-data/scheme-evidence/, real URLs and SHA-256 in each MANIFEST.md), approved via explicit
+    project-chat verification event on 2026-09-26. Covers the limited encoded scope only.
 
 # last_verified intentionally OMITTED - no human has verified this record. No verification metadata is fabricated.
 application_status: SELECTION_COMPLETED
@@ -30,13 +38,19 @@ application_window:
   mode: SELECTION_COMPLETED
   opens: null
   closes: null
-  as_of_date: "2026-09-22"
+  as_of_date: "2026-09-26"
   source_reference:
-    document_title: "PLI Pharmaceuticals notification and selection lists (Department of Pharmaceuticals)"
-    clause: "Selection completed; 55 selectees (research pack sections 5, 16)"
+    document_title: "PIB release dated 06.12.2024 (Government of India), archived snapshot"
+    clause: "PLI Scheme for Pharmaceuticals paragraph"
     page_number: null
-    quoted_text: null   # PENDING ARCHIVAL
+    quoted_text: >
+      "PLI Scheme for Pharmaceuticals, with a financial outlay Rs. 15,000 crores and the production tenure from FY 2022-2023 to FY 2027-28, provides for financial incentive to 55 selected applicants for manufacturing of identified products under three categories for a period of six years." (latest official statement located; no new application round was found)
+
 notes: >
+  ACTIVE / VERIFIED 2026-09-26 (human-verified by Hardik Trivedi) for the LIMITED ENCODED SCOPE ONLY - this is not
+  final Government eligibility. Limitations that remain in force: PLI Pharma: PHARMACEUTICAL industry gives only a sector/scope-level potential match. Selection is completed (SELECTION_COMPLETED): applications are NOT open, and no project is implied to be one of the 55 selected applicants or to satisfy full PLI Pharma eligibility. Categories, revenue groups, product lists and complete selection criteria are outside the encoded model. The paragraphs below record the pre-verification
+  DRAFT history and the Batch-1 verification findings; where they say DRAFT/UNVERIFIED, this approval supersedes that
+  wording, and their limitations still apply.
   DRAFT / UNVERIFIED. Built from the research pack MH_MULTI_SECTOR_SCHEME_RESEARCH.md only.
   SOURCE_STATE=NOT_ARCHIVED for SRC-SCH-014: no official artifact is archived in this repository,
   the url below is the research pack's domain-level pointer (exact document path to be confirmed at
@@ -48,5 +62,7 @@ notes: >
   is a scope match only and is never full eligibility; the selection process is already complete.
   Bulk-drug PLI and Bulk Drug Parks are separate and not implemented. Blocks ACTIVE: archive SRC-
   SCH-014, read and encode the real criteria, human verification.
+  SCHEME VERIFICATION BATCH 1 (2026-09-26) - still DRAFT / UNVERIFIED. Archived: the official PIB release of 06.12.2024. It supports: scope (manufacture of identified high-value pharmaceutical products - patented/off-patented drugs, biopharmaceuticals, complex generics, anti-cancer, auto-immune, orphan drugs - under three categories), outlay Rs. 15,000 crore, production tenure FY 2022-23 to FY 2027-28, and that incentives go to 55 SELECTED applicants, i.e. the selection is complete. ELIGIBILITY MODEL: SCHC-0026 (project.industry == PHARMACEUTICAL) is a truthful SECTOR-SCOPE match only - it is not a claim of PLI eligibility, of membership in the 55, or of product/category/revenue-group fit, and the record states that a new project cannot apply. The DoP guidelines and selection lists are not archived and are not needed for this scope-level claim; effective_start_date stays null because no archived artifact gives the scheme's approval date.
+
 supersedes: null
 superseded_by: null

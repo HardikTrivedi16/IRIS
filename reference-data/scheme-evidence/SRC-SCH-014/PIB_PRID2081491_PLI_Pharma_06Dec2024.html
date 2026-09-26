@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" /><link id="pibA11yCss" rel="stylesheet" href="/css/accessibility.css?v=3" type="text/css" />
+      <script type="text/javascript">
+        /* Stamps the saved theme on <html> before the page paints. The
+           switcher in js/accessibility.js settles the rest, but on inner
+           pages it does not run until the end of the body and inside the
+           release frame it is a separate download - either way the reader
+           would otherwise watch a light page turn dark in front of them. */
+        (function (d) {
+            var t = "";
+            try {
+                t = window.localStorage.getItem("pibStyle") || "";
+            } catch (e) {
+                t = "";
+            }
+            if (t === "orange") {
+                t = "yellow";
+            }
+            var c = t === "change" ? " pib-hc"
+                : t === "green" ? " pib-theme-green"
+                : t === "yellow" ? " pib-theme-yellow" : "";
+            d.documentElement.className += c + " pib-a11y-content";
+        }(document));
+      </script>
+
+
+      <script src="js/jquery.min.js" type="text/javascript"></script>
+      <script type="text/javascript" src="/js/accessibility.js?v=7"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" />
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  // Get the IDs from the current page's URL
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+
+            });
+      </script>
+      <style type="text/css">
+            .table-responsive {
+                  width: 100%;
+                  overflow-x: auto;
+            }
+
+            .banner {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  background-color: #000;
+                  color: #fff;
+                  padding: 20px;
+            }
+
+            full-width {
+                  width: 100%;
+            }
+
+            .logo-left, .logo-center, .countdown {
+                  display: flex;
+                  align-items: center;
+            }
+
+                  .logo-left img, .logo-center img {
+                        height: 70px;
+                  }
+
+            .countdown {
+                  text-align: center;
+                  background-color: #444;
+                  border-radius: 10px;
+                  padding: 10px;
+                  border: 2px solid grey;
+            }
+
+            .firstnumber {
+                  color: #000000;
+                  position: absolute;
+                  top: 50px;
+                  right: 90px;
+                  font-size: 30px;
+            }
+
+            .secondnumber {
+                  position: absolute;
+                  color: #000000;
+                  right: 45px;
+                  top: 50px;
+                  font-size: 30px;
+            }
+
+            .countdown .days {
+                  font-size: 35px;
+                  color: gold;
+            }
+
+            .countdown p {
+                  margin: 0;
+            }
+
+            .countdown .text {
+                  font-size: 16px;
+            }
+
+            a {
+                  word-break: break-all;
+            }
+
+            iframe, img {
+                  max-width: 100%;
+            }
+
+            @media(max-width:1199px) {
+                  .firstnumber {
+                        top: 40px;
+                        right: 72px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 35px;
+                        top: 40px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:990px) {
+                  .firstnumber {
+                        top: 25px;
+                        right: 54px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 25px;
+                        top: 25px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:768px) {
+                  .countdown, .days {
+                        font-size: 12px !important;
+                  }
+
+
+                  .firstnumber {
+                        top: 25%;
+                        right: 8%;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 4.5%;
+                        top: 25%;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:475px) {
+                  .countdown, .days {
+                        font-size: 10px !important;
+                        top: 20%;
+                  }
+
+                  .bannerimgdiv {
+                        padding: 0 !important;
+                  }
+
+                  .bannerimg {
+                        width: 108% !important;
+                  }
+            }
+      </style>
+      <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112591026-1"></script>
+      <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', 'UA-112591026-1');
+
+      </script>
+
+<meta property="og:title" content="Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2081491" /><meta property="og:description" content="The Government of India has taken several measures to encourage domestic manufacturing in Pharmaceut" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="37uuxbyx37zyg2vxxhha-f-542f08ea2-clientnsv4-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":18,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"14be8f8d","ak.r":38574,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":12330,"ak.gh":"23.223.243.127","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1790425550","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==Xjqj+eTcHYZ3iHryQeAKO5mBv/t7zs1UrJA2P0Ya4RnOSI/aRpg5SOPCoDXC7ua4oOzt3gcRX+ZD1UQdxoogrlwRX6vA/X8EecJ0UNBuBTLgHAKFc1AkYG9YKQDP0YO9vnVGlVatY77VRjpwAM1FpCgEByUgmJp9XQCzdyrwXSb9dygxdWE91/GJSc+a65dRtkiJhoXAkw5ufcNUnRvKB5wJEL+rllVjI8/b9O9y1IY4ORsTJSs8oOvCB1iJ/RaidSTeLRDj8KTWntDSCBVgnc5k8/f/b8avMlHEzj4brnCpEPF8XUj/h89/IAleoVFBhli2/ikbWKWRuDY3VD6vmzH7+b+JTU+zedoQ9b6jtvNYky5TxcLyfdNDBASPdHJyEBaHIJu3ZWhTlMZqRF2Lm8l5RuCGA4Q4byLcpZx0N24=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+      <form method="post" action="./PressReleasePage.aspx?PRID=2081491&amp;reg=48&amp;lang=2" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZPQet1wIx1Q48y3xJY2k25Y7qxH5RrQ9qQcN-OiTC9guZtri9w2&amp;t=639246315009809930" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=x6wALODbMJK5e0eRC_p1LdIxBJXt0U_WW5GWfJqHAqo6frgCmGRfEywglicTersO2OKrFhK1gAIp0Wk2al2YrpdR3uWqH6f4nfjBsCyRUfTUUVmb0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=P5lTttoqSeZXoYRLQMIScH645UK3RD852IErF2548Wz9Ssv0rLjB4fhVKnHcMpqkaMHpNAGOeWY02Lf4aBYN9-dVBme_SNK5KJwmFQNpMixYDZ7M0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a8613aea7%3af9cec9bc%3a3202a5a2%3aab09e3fe%3a87104b7c%3a720a52bf%3a589eaa30%3aa67c2700%3abe6fb298" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="d3NfhFCa72xCp+ZzdBXb87ZTlvxafJbztw4bByrdZNN5hVV5OZS8f2mtRajgv+djnzqCS74XKv9kS3HTjUjzjdbbZPy8p7jneHPjVZ7aK0T23OoXxOY/kM5YugVt/x/MXmgPSNXvIXq/Oqpv3WXG/od1Qc79cl+B5Zcb3usn53LlOYUnF4Zk5ADzqHP0dYxN0n7BdVg+lgZnCqEfJ0A7QGW49hgNbOsJkMegoxmi2HO57xacO4dlgTVbL0LR89oab/Xf+WJ6GP24SiDQZXUJGLLQHfg=" />
+</div>
+                              
+            <div id="templateCss"></div>
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('sc', 'form1', ['tupdate12','update12'], [], [], 90, '');
+//]]>
+</script>
+
+            <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+            <div class="container" style='margin-bottom: 50px;'>
+                  <div id="accessories">
+
+                        
+                        <div class="pull-right" style="display: flex">
+                              <div id="voll"></div>
+                              <div id="vollDT"></div>
+                              
+                              
+<div class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</div>
+                        </div>
+                  </div>
+                  <input type="hidden" name="hydpermid" id="hydpermid" value="2081491" />
+                  
+
+
+
+                  <div class="innner-page-main-about-us-content-right-part">
+
+                        <div id="MinistryName" class="MinistryNameSubhead text-center">
+                              Ministry of Chemicals and Fertilizers
+                        </div>
+                        
+                        <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2026/sep/ph_9768_20260902_10000501.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+
+
+
+
+                        <div class="text-center event-heading-background">
+                              
+                              <h2 id="Titleh2">
+                                    Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments
+                              </h2>
+                              <h3 id="Subtitleh3">
+                                    <span id="ltrSubtitle"><br/>The financial outlay for the PLI Scheme for Pharmaceuticals is Rs 15,000 crore over the scheme production tenure of FY 2022-23 to FY 2027-28<br/> <br/>Under the PLI scheme for Bulk Drugs, a total of 48 projects have been selected under the scheme, of which 34 projects have been commissioned for 25 bulk drugs</span>
+                              </h3>
+                        </div>
+
+                        <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                              Posted On:
+                06 DEC 2024 4:09PM by PIB Delhi
+                        </div>
+                        
+                        <div class='pt20'>
+                        </div>
+                        <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                        
+                        <p style="margin-left:1cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">The Government of India has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments. The schematic interventions are as follows:</span></span></span></p>
+
+<ul style="margin-left:40px">
+	<li style="text-align: justify;"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">The Production Linked Incentive (PLI) Scheme for promotion of domestic manufacturing of critical Key Starting Materials (KSMs)/ Drug Intermediates (DIs) and Active Pharmaceutical Ingredients (APIs) in India (also known as PLI scheme for Bulk Drugs), with a financial outlay of Rs. 6,940 crores and the production tenure from FY 2022-2023 to FY 2028-29. The scheme provides financial incentive for manufacturing of notified products.</span></span></span></li>
+	<li style="text-align: justify;"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">PLI Scheme for Pharmaceuticals, with a financial outlay Rs. 15,000 crores and the production tenure from FY 2022- 2023 to FY 2027-28, provides for financial incentive to 55 selected applicants for manufacturing of identified products under three categories for a period of six years. Under this scheme, high value pharmaceutical products such as Patented/Off-Patented drugs, Biopharmaceuticals, Complex Generics, Anti-cancer drugs, Auto-immune drugs, Orphan Drugs etc. are manufactured.</span></span></span></li>
+	<li style="text-align: justify;"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">PLI Scheme for Promoting Domestic Manufacturing of Medical Devices with total financial outlay of Rs. 3,420 crore and production tenure from FY 2022-2023 to FY 2026-27, provides incentive to selected companies at the rate of 5% on incremental sales of medical devices manufactured in India and covered under the four Target segments of the scheme, for a period of five (5) years. Under this scheme high value Medical Devices such as Linear Accelerator, MRI machines, CT-Scans, Mammograms, C- Arms, Ultrasound machines etc are manufactured, which were previously imported into the country.</span></span></span></li>
+</ul>
+
+<p style="margin-left:1cm; text-align:justify"><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">The scheme allows for investment in new plant &amp; machinery, R&amp;D, Product registration, new Building. As of October 2024, total investment of Rs 33,534 cr has been realised under the scheme and has surpassed original projected investment of Rs 17,275 cr. An incentive amount of Rs.3,215 Cr has been released under the scheme to 45 companies.</span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">The financial outlay for the PLI Scheme for Pharmaceuticals is Rs 15,000 crore over the scheme production tenure of FY 2022-23 to FY 2027-28. The details of categories of products that are being supported, target groups and selection criteria under the PLI schemes implemented by Department of Pharmaceuticals are available on the Department website at </span><a href="https://pharmaceuticals.gov.in/%20schemes" style="font-size: 16px; font-family: &quot;Times New Roman&quot;, Times, serif;" target="_blank"><span style="color:#0563c1">https://pharmaceuticals.gov.in/ schemes</span></a><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px"> under the respective PLI scheme.</span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Under the PLI scheme for Bulk Drugs, a total of 48 projects have been selected under the scheme, of which 34 projects have been commissioned for 25 bulk drugs. Against committed investment of Rs.3,938 crores, investment worth Rs. 4,155.77 crores have been realised under the scheme. The cumulative sales made by the applicants under the scheme is Rs. 1,330.82 crores (which includes exports worth Rs.389.82 crores) and employment has been generated for 4,241 persons. </span></span></span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Under the PLI scheme for Medical Devices, a total of 32 applicants have been selected under the scheme, of which 19 greenfield projects have been commissioned for 44 products including high end medical devices such as Linear Accelerator, MRI machines, CT-Scans, Mammograms, C- Arms, Ultrasound machines etc. Against committed investment of Rs. 1356.94 crores, investment worth Rs 1057.47 crores have been realized. The cumulative sales made by the applicants under the scheme is Rs 8,039.63 crores (which includes exports worth Rs 3,844.01 crores).</span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">This information was given by the Union Minister of State for Chemicals and Fertilizers Smt Anupriya Patel in Lok Sabha in a written reply to a question today.</span></span></span></p>
+
+<p style="margin-left:1cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">*****</span></span></p>
+
+<p style="margin-left:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify"><strong><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">MV/AKS</span></span></strong></p>
+
+
+                        
+                        <div id="reel_pic">
+                        </div>
+
+
+
+                        
+                        <br />
+                        <span id="ReleaseId">(Release ID: 2081491)</span>
+                        <span id="lblViews">Visitor Counter : 3880</span>
+                        <div>
+                              
+                        </div>
+                        
+
+                        <span id="lblRefPhoto"></span>
+
+                        <div class="BackgroundRelease">
+                              
+                        </div>
+                        <div>
+                              
+                        </div>
+                        <div class="ReleaseLang">Read this release in: 
+                        
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2082365' target="_blank">
+                                          Urdu </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2081694' target="_blank">
+                                          हिन्दी </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2081744' target="_blank">
+                                          Tamil </a>
+                              
+                        </div>
+
+                        <div class="RelTag">
+                              <ul>
+                                    
+                              </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="RelLink" class="RelLink">
+                              <ul>
+                                    
+                                    
+                              </ul>
+                        </div>
+                        <center>
+                              
+                        </center>
+                  </div>
+
+                  <div id="update12">
+	
+                              
+                              <input type="hidden" name="Hidden" id="Hidden" />
+                              <div id="P_CategoryManagement" class="ModalWindow" style="border-width:0px;height:60%;width:60%;overflow:auto;display: none">
+		
+                                    <div>
+                                          <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                                    </div>
+                                    <div id="description">
+                                    </div>
+                                    <div class="text-center">
+                                          <h2>
+                                                
+                                                <br>
+                                                
+                                          </h2>
+                                    </div>
+                                    <br />
+                                    <div class="clear">
+                                    </div>
+                                    
+                              
+	</div>
+                        
+</div>
+            </div>
+            
+            <div id="PdfDiv" style="display: none;">
+                  <table width="100%">
+                        <tr>
+                              <td style="font-weight: 200; text-align: center">
+                                    Ministry of Chemicals and Fertilizers
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          <div style='height:30px;width:100%;'></div>The financial outlay for the PLI Scheme for Pharmaceuticals is Rs 15,000 crore over the scheme production tenure of FY 2022-23 to FY 2027-28<div style='height:30px;width:100%;'></div> <div style='height:30px;width:100%;'></div>Under the PLI scheme for Bulk Drugs, a total of 48 projects have been selected under the scheme, of which 34 projects have been commissioned for 25 bulk drugs
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="text-align: center; font-size: 14px;">
+                                          Posted On:
+                        06 DEC 2024 4:09PM by PIB Delhi
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                                          <p style="margin-left:1cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">The Government of India has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments. The schematic interventions are as follows:</span></span></span></p>
+
+<ul style="margin-left:40px">
+	<li style="text-align: justify;"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">The Production Linked Incentive (PLI) Scheme for promotion of domestic manufacturing of critical Key Starting Materials (KSMs)/ Drug Intermediates (DIs) and Active Pharmaceutical Ingredients (APIs) in India (also known as PLI scheme for Bulk Drugs), with a financial outlay of Rs. 6,940 crores and the production tenure from FY 2022-2023 to FY 2028-29. The scheme provides financial incentive for manufacturing of notified products.</span></span></span></li>
+	<li style="text-align: justify;"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">PLI Scheme for Pharmaceuticals, with a financial outlay Rs. 15,000 crores and the production tenure from FY 2022- 2023 to FY 2027-28, provides for financial incentive to 55 selected applicants for manufacturing of identified products under three categories for a period of six years. Under this scheme, high value pharmaceutical products such as Patented/Off-Patented drugs, Biopharmaceuticals, Complex Generics, Anti-cancer drugs, Auto-immune drugs, Orphan Drugs etc. are manufactured.</span></span></span></li>
+	<li style="text-align: justify;"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">PLI Scheme for Promoting Domestic Manufacturing of Medical Devices with total financial outlay of Rs. 3,420 crore and production tenure from FY 2022-2023 to FY 2026-27, provides incentive to selected companies at the rate of 5% on incremental sales of medical devices manufactured in India and covered under the four Target segments of the scheme, for a period of five (5) years. Under this scheme high value Medical Devices such as Linear Accelerator, MRI machines, CT-Scans, Mammograms, C- Arms, Ultrasound machines etc are manufactured, which were previously imported into the country.</span></span></span></li>
+</ul>
+
+<p style="margin-left:1cm; text-align:justify"><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">The scheme allows for investment in new plant &amp; machinery, R&amp;D, Product registration, new Building. As of October 2024, total investment of Rs 33,534 cr has been realised under the scheme and has surpassed original projected investment of Rs 17,275 cr. An incentive amount of Rs.3,215 Cr has been released under the scheme to 45 companies.</span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">The financial outlay for the PLI Scheme for Pharmaceuticals is Rs 15,000 crore over the scheme production tenure of FY 2022-23 to FY 2027-28. The details of categories of products that are being supported, target groups and selection criteria under the PLI schemes implemented by Department of Pharmaceuticals are available on the Department website at </span><a href="https://pharmaceuticals.gov.in/%20schemes" style="font-size: 16px; font-family: &quot;Times New Roman&quot;, Times, serif;" target="_blank"><span style="color:#0563c1">https://pharmaceuticals.gov.in/ schemes</span></a><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px"> under the respective PLI scheme.</span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Under the PLI scheme for Bulk Drugs, a total of 48 projects have been selected under the scheme, of which 34 projects have been commissioned for 25 bulk drugs. Against committed investment of Rs.3,938 crores, investment worth Rs. 4,155.77 crores have been realised under the scheme. The cumulative sales made by the applicants under the scheme is Rs. 1,330.82 crores (which includes exports worth Rs.389.82 crores) and employment has been generated for 4,241 persons. </span></span></span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="color:black; font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">Under the PLI scheme for Medical Devices, a total of 32 applicants have been selected under the scheme, of which 19 greenfield projects have been commissioned for 44 products including high end medical devices such as Linear Accelerator, MRI machines, CT-Scans, Mammograms, C- Arms, Ultrasound machines etc. Against committed investment of Rs. 1356.94 crores, investment worth Rs 1057.47 crores have been realized. The cumulative sales made by the applicants under the scheme is Rs 8,039.63 crores (which includes exports worth Rs 3,844.01 crores).</span></p>
+
+<p style="margin-left:1cm; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">This information was given by the Union Minister of State for Chemicals and Fertilizers Smt Anupriya Patel in Lok Sabha in a written reply to a question today.</span></span></span></p>
+
+<p style="margin-left:1cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">*****</span></span></p>
+
+<p style="margin-left:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify"><strong><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">MV/AKS</span></span></strong></p>
+
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                                          (Release ID: 2081491)
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                        </tr>
+                  </table>
+            </div>
+            <div class="clearfix">
+            </div>
+
+            
+
+            <div class="section1">
+                  <div id="frst_t">
+                        <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='40' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491&text=Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='40' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='40' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='40' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491&title=Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='40' /></li></a></ul></div></div>
+                  </div>
+                  <div id="second_t">
+                        <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='35' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491&text=Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='35' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='35' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='35' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2081491&title=Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='35' /></li></a></ul></div></div>
+                  </div>
+            </div>
+            <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="Government has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments" />
+            <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" value="&lt;br/>The financial outlay for the PLI Scheme for Pharmaceuticals is Rs 15,000 crore over the scheme production tenure of FY 2022-23 to FY 2027-28&lt;br/> &lt;br/>Under the PLI scheme for Bulk Drugs, a total of 48 projects have been selected under the scheme, of which 34 projects have been commissioned for 25 bulk drugs" />
+            <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>The Government of India has taken several measures to encourage domestic manufacturing in Pharmaceutical Sector including Bulk Drugs and Medical Devices to reduce import dependence, boost domestic manufacturing and attract large investments. The schematic interventions are as follows:&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;ul style=&quot;margin-left:40px&quot;>
+	&lt;li style=&quot;text-align: justify;&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>The Production Linked Incentive (PLI) Scheme for promotion of domestic manufacturing of critical Key Starting Materials (KSMs)/ Drug Intermediates (DIs) and Active Pharmaceutical Ingredients (APIs) in India (also known as PLI scheme for Bulk Drugs), with a financial outlay of Rs. 6,940 crores and the production tenure from FY 2022-2023 to FY 2028-29. The scheme provides financial incentive for manufacturing of notified products.&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align: justify;&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>PLI Scheme for Pharmaceuticals, with a financial outlay Rs. 15,000 crores and the production tenure from FY 2022- 2023 to FY 2027-28, provides for financial incentive to 55 selected applicants for manufacturing of identified products under three categories for a period of six years. Under this scheme, high value pharmaceutical products such as Patented/Off-Patented drugs, Biopharmaceuticals, Complex Generics, Anti-cancer drugs, Auto-immune drugs, Orphan Drugs etc. are manufactured.&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align: justify;&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>PLI Scheme for Promoting Domestic Manufacturing of Medical Devices with total financial outlay of Rs. 3,420 crore and production tenure from FY 2022-2023 to FY 2026-27, provides incentive to selected companies at the rate of 5% on incremental sales of medical devices manufactured in India and covered under the four Target segments of the scheme, for a period of five (5) years. Under this scheme high value Medical Devices such as Linear Accelerator, MRI machines, CT-Scans, Mammograms, C- Arms, Ultrasound machines etc are manufactured, which were previously imported into the country.&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&lt;span style=&quot;color:black; font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>The scheme allows for investment in new plant &amp;amp; machinery, R&amp;amp;D, Product registration, new Building. As of October 2024, total investment of Rs 33,534 cr has been realised under the scheme and has surpassed original projected investment of Rs 17,275 cr. An incentive amount of Rs.3,215 Cr has been released under the scheme to 45 companies.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&lt;span style=&quot;color:black; font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>The financial outlay for the PLI Scheme for Pharmaceuticals is Rs 15,000 crore over the scheme production tenure of FY 2022-23 to FY 2027-28. The details of categories of products that are being supported, target groups and selection criteria under the PLI schemes implemented by Department of Pharmaceuticals are available on the Department website at &lt;/span>&lt;a href=&quot;https://pharmaceuticals.gov.in/%20schemes&quot; style=&quot;font-size: 16px; font-family: &amp;quot;Times New Roman&amp;quot;, Times, serif;&quot; target=&quot;_blank&quot;>&lt;span style=&quot;color:#0563c1&quot;>https://pharmaceuticals.gov.in/ schemes&lt;/span>&lt;/a>&lt;span style=&quot;color:black; font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;> under the respective PLI scheme.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Under the PLI scheme for Bulk Drugs, a total of 48 projects have been selected under the scheme, of which 34 projects have been commissioned for 25 bulk drugs. Against committed investment of Rs.3,938 crores, investment worth Rs. 4,155.77 crores have been realised under the scheme. The cumulative sales made by the applicants under the scheme is Rs. 1,330.82 crores (which includes exports worth Rs.389.82 crores) and employment has been generated for 4,241 persons. &lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&lt;span style=&quot;color:black; font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>Under the PLI scheme for Medical Devices, a total of 32 applicants have been selected under the scheme, of which 19 greenfield projects have been commissioned for 44 products including high end medical devices such as Linear Accelerator, MRI machines, CT-Scans, Mammograms, C- Arms, Ultrasound machines etc. Against committed investment of Rs. 1356.94 crores, investment worth Rs 1057.47 crores have been realized. The cumulative sales made by the applicants under the scheme is Rs 8,039.63 crores (which includes exports worth Rs 3,844.01 crores).&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>This information was given by the Union Minister of State for Chemicals and Fertilizers Smt Anupriya Patel in Lok Sabha in a written reply to a question today.&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:1cm; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;margin-left:0cm; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>*****&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:0cm; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;margin-left:0cm; margin-right:0cm; text-align:justify&quot;>&lt;strong>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>MV/AKS&lt;/span>&lt;/span>&lt;/strong>&lt;/p>
+" />
+            <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+                  //function HandleAudio() {
+                  //    if (isPlaying == true) {
+                  //        //Playing already Pause it
+                  //        pauseAudio();
+                  //    } else {
+                  //        //Play the music
+                  //        playAudio();
+                  //    }
+                  //}
+            </script>
+            <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+            
+                  function CleanHtml(html) {
+
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        //for responsive tables
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            
+            <style type="text/css">
+                  @media print {
+                        .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                              display: none !important;
+                        }
+                  }
+
+                  .f_vl {
+                        padding-right: 30px;
+                        font-size: 17px;
+                        cursor: pointer;
+                  }
+
+                  .log_oo {
+                        // width: 20%;
+                        display: flex;
+                        justify-content: space-between;
+                  }
+
+                        .log_oo img {
+                              width: 150px;
+                              /*width: 100%;
+                    height: auto;*/
+                        }
+
+                  .sticky-social_mb {
+                        position: fixed;
+                        bottom: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                        width: 100%;
+                  }
+
+                  .social_mb {
+                        list-style: none;
+                        display: flex;
+                        width: 100%;
+                        margin-bottom: -8px;
+                  }
+
+                        .social_mb a {
+                              padding: 8px 0px;
+                              font-size: 30px;
+                              transition: all 0.8s ease-in-out;
+                              width: 20% !important;
+                              text-align: center;
+                        }
+            </style>
+            <style type="text/css">
+                  .section1 {
+                        position: relative;
+                        padding: 10px 0px;
+                        width: 100%;
+                  }
+
+
+
+                  .sticky-social {
+                        position: fixed;
+                        top: 20px;
+                        left: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                  }
+
+                  .social {
+                        list-style: none;
+                  }
+
+                        .social a li {
+                              padding: 8px 12px;
+                              font-size: 25px;
+                              transition: all 0.8s ease-in-out;
+                        }
+
+                              .social a li:hover {
+                                    margin-right: -30px;
+                                    box-shadow: 2px 5px 10px grey;
+                              }
+
+                                    .social a li:hover .fa {
+                                          margin-left: 20px;
+                                    }
+
+                  .fb_b {
+                        /* background-color: rgb(59, 89, 152);*/
+                        background-color: rgba(65,103,178,255);
+                  }
+
+                  .twitter_r {
+                        /* background-color: rgb(29, 161, 242);*/
+                        background-color: #000000;
+                  }
+
+                  .whatsapp_r {
+                        /* background-color: rgb(77, 194, 71);*/
+                        background-color: rgba(13,191,67,255);
+                  }
+
+                  .fa-envelope_r {
+                        /* background-color: rgb(219, 68, 55);*/
+                        background-color: #e2123d;
+                  }
+
+                  .fa-linkedin_r {
+                        background-color: rgb(0, 119, 181);
+                  }
+            </style>
+            <style type="text/css">
+                  @media only screen and (max-device-width: 767px) {
+                        p span img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        p img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        h2 {
+                              font-size: 20px !important;
+                              font-weight: 600 !important;
+                        }
+
+                        h3 {
+                              font-size: 18px !important;
+                              font-weight: 600 !important;
+                        }
+                  }
+            </style>
+            <style type="text/css">
+                  /* === Film Roll Badge Styling(IFFI2025 countdown) === */
+                  .film-roll-badge {
+                        position: absolute;
+                        top:82%;
+                        right: 20px;
+                        width: 230px;
+                        height: 70px;
+                        background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 18px, #6e2b8b 18px, #6e2b8b 36px );
+                        border-top: 8px solid #9a2375;
+                        border-bottom: 8px solid #9a2375;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                        animation: moveFilm 8s linear infinite;
+                        z-index: 10;
+                  }
+
+                        /* film sprocket holes */
+                        .film-roll-badge::before,
+                        .film-roll-badge::after {
+                              content: "";
+                              position: absolute;
+                              width: 100%;
+                              height: 10px;
+                              background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 10px, #fff 10px, #fff 20px );
+                              left: 0;
+                              z-index: 2;
+                        }
+
+                        .film-roll-badge::before {
+                              top: -4px;
+                        }
+
+                        .film-roll-badge::after {
+                              bottom: -4px;
+                        }
+
+                  .film-roll-inner {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: flicker 2s infinite ease-in-out;
+                  }
+
+                  .countdown-text {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #fff;
+                        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                        white-space: nowrap;
+                  }
+
+                  /* === Animations === */
+                  @keyframes moveFilm {
+                        0% {
+                              background-position: 0 0;
+                        }
+
+                        100% {
+                              background-position: 120px 0;
+                        }
+                  }
+
+                  @keyframes flicker {
+                        0%, 100% {
+                              opacity: 1;
+                        }
+
+                        50% {
+                              opacity: 0.9;
+                        }
+
+                        25% {
+                              opacity: 0.95;
+                        }
+
+                        75% {
+                              opacity: 0.85;
+                        }
+                  }
+
+                  /* === Responsive Adjustments === */
+                  @media (max-width: 1500px) {
+                        .film-roll-badge {
+                              top: 68%;
+                              right: 18px;
+                              /* width: 220px; */
+                              height: 65px;
+                              font-size: 0.85rem;
+                        }
+
+                        .press-section {
+                              margin-top: 35px;
+                        }
+                  }
+
+                  @media (max-width: 992px) {
+                        .film-roll-badge {
+                              top: 52%;
+                              right: 10px;
+                               width: 200px; 
+                              height: 60px;
+                        }
+                  }
+
+                  @media (max-width: 768px) {
+                        .film-roll-badge {
+                              top: 56%;
+                              right: 10px;
+                               width: 124px; 
+                              height: 55px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.9rem;
+                        }
+                  }
+
+                  @media (max-width: 576px) {
+                        .film-roll-badge {
+                              top: 59%;
+                              right: 5px;
+                              /* width: 160px; */
+                              height: 50px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.85rem;
+                        }
+                  }
+            </style>
+          <script type="text/javascript">
+                const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+
+                const countdownElement = document.getElementById("countdown");
+
+                const interval = setInterval(() => {
+                      const now = new Date().getTime();
+
+                      // BEFORE FESTIVAL — show days + hours left
+                      if (now < festivalStart) {
+                            const diff = festivalStart - now;
+                            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                            countdownElement.innerHTML = `
+              ${days} Day${days !== 1 ? 's' : ''} 
+              ${hours} Hour${hours !== 1 ? 's' : ''} to go
+          `;
+
+                      }
+
+                      // DURING FESTIVAL — show 56th IFFI - Day X
+                      else if (now >= festivalStart && now <= festivalEnd) {
+                            const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                            countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                      }
+
+                      // AFTER FESTIVAL — new message
+                      else {
+                            countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+
+                            // Width change logic
+                            const elements = document.querySelectorAll('.film-roll-badge');
+                            elements.forEach(el => el.style.width = "350px");
+
+                            clearInterval(interval);
+                      }
+
+                }, 1000);
+          </script>
+ <script type="text/javascript">
+
+               const miffStart = new Date("2026-06-15T00:00:00").getTime();
+               const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+
+               const miffElement = document.getElementById("miff");
+
+               if (miffElement) {
+
+                   const miffInterval = setInterval(() => {
+
+                       const now = new Date().getTime();
+
+                       // Before MIFF
+                       if (now < miffStart) {
+
+                           const diff = miffStart - now;
+                           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        
+
+                   /*  miffElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to MIFF`;*/
+                           miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+
+
+                     }
+
+                       // During MIFF
+                       else if (now >= miffStart && now <= miffEnd) {
+
+                           const dayNumber =
+                               Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+
+                           miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                       }
+
+                       // After MIFF
+                       else {
+
+                           miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+
+                           document.querySelectorAll('.film-roll-badge')
+                               .forEach(el => el.style.width = "350px");
+
+                           clearInterval(miffInterval);
+                       }
+
+                   }, 1000);
+               }
+
+</script>
+
+      
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="cveL0gBBYZDOH68QloQxsRtlua55f1vaVTrNUwSAUqafre-q6LIy3fmS_H4bCgBlBdLKX0nVaPunN_Li0IA9RmFMvsZMLk9_G40mjbrSzGOmziS60qJeDA=="/></form>
+</body>
+</html>
+

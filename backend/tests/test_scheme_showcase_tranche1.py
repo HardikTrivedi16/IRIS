@@ -32,11 +32,15 @@ def test_catalogue_valid_and_new_records_are_draft_unverified_without_verificati
     assert CAT.errors == []
     for sid in NEW:
         s = CAT.schemes[sid]
+        if sid in ("SCH-0005", "SCH-0008", "SCH-0010"):   # promoted in Scheme Verification Batch 1
+            assert s["status"] == "ACTIVE" and s["confidence"] == "VERIFIED", sid
+            assert s["last_verified"]["verified_by"] == "Hardik Trivedi" and str(s["last_verified"]["date"]) == "2026-09-26", sid
+            continue
         assert s["status"] == "DRAFT" and s["confidence"] == "UNVERIFIED", sid
         assert "last_verified" not in s, sid
         assert "SOURCE_STATE=NOT_ARCHIVED" in " ".join(s["notes"].split()), sid
     assert "SCH-0003" not in CAT.schemes
-    assert [s["scheme_id"] for s in CAT.usable] == ["SCH-0002"]
+    assert [s["scheme_id"] for s in CAT.usable] == ["SCH-0001", "SCH-0002", "SCH-0005", "SCH-0008", "SCH-0010"]
 
 
 def test_application_status_vocabulary_and_windows():
@@ -52,7 +56,9 @@ def test_application_status_vocabulary_and_windows():
         s = CAT.schemes[sid]
         assert s["application_status"] == status and s["application_window"]["mode"] == mode, sid
         assert str(s["application_window"].get("closes") or "") == (closes or ""), sid
-        assert str(s["application_window"]["as_of_date"]) == "2026-09-22", sid
+        # SCH-0005/0008/0010 were re-checked against archived official artifacts in Scheme Verification Batch 1.
+        expected_asof = "2026-09-26" if sid in ("SCH-0005", "SCH-0008", "SCH-0010") else "2026-09-22"
+        assert str(s["application_window"]["as_of_date"]) == expected_asof, sid
 
 
 def test_showcase_acceptance_outcomes():

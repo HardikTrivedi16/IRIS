@@ -126,13 +126,17 @@ def test_shipped_catalogue_has_no_errors_and_exactly_one_authoritative_scheme():
     from app.engine_service import BACKEND_DIR
     shipped = load_catalogue(os.path.join(BACKEND_DIR, "scheme-data"))
     assert shipped.errors == []
-    # Scheme Catalogue Tranche 1 (2026-09-24) added SCH-0005..SCH-0010, all DRAFT/UNVERIFIED —
-    # lifecycle gating still admits exactly one authoritative record.
+    # Scheme Catalogue Tranche 1 (2026-09-24) added SCH-0005..SCH-0010, all DRAFT/UNVERIFIED. Scheme
+    # Verification Batch 1 (2026-09-26) promoted SCH-0001/0005/0008/0010 (limited encoded scope); the
+    # lifecycle gate now admits exactly those four plus SCH-0002.
     assert set(shipped.schemes) == {"SCH-0001", "SCH-0002", "SCH-0004", "SCH-0005", "SCH-0006", "SCH-0007", "SCH-0008", "SCH-0009", "SCH-0010"}
-    assert [s["scheme_id"] for s in shipped.usable] == ["SCH-0002"]
+    assert [s["scheme_id"] for s in shipped.usable] == ["SCH-0001", "SCH-0002", "SCH-0005", "SCH-0008", "SCH-0010"]
     assert shipped.schemes["SCH-0002"]["status"] == "ACTIVE"
     assert shipped.schemes["SCH-0002"]["confidence"] == "VERIFIED"
-    for sid in ("SCH-0001", "SCH-0004", "SCH-0005", "SCH-0006", "SCH-0007", "SCH-0008", "SCH-0009", "SCH-0010"):
+    for sid in ("SCH-0001", "SCH-0005", "SCH-0008", "SCH-0010"):   # Scheme Verification Batch 1
+        assert shipped.schemes[sid]["status"] == "ACTIVE"
+        assert shipped.schemes[sid]["confidence"] == "VERIFIED"
+    for sid in ("SCH-0004", "SCH-0006", "SCH-0007", "SCH-0009"):
         assert shipped.schemes[sid]["status"] == "DRAFT"
         assert shipped.schemes[sid]["confidence"] == "UNVERIFIED"
 
@@ -142,11 +146,12 @@ def test_shipped_catalogue_has_no_errors_and_exactly_one_authoritative_scheme():
 def test_api_shipped_state_ready_with_one_authoritative_scheme(client):
     catalogue = client.get("/api/v1/schemes/catalogue").json()
     assert catalogue["catalogue_state"] == "READY"
-    assert catalogue["counts"] == {"total": 9, "active_verified": 1}
+    assert catalogue["counts"] == {"total": 9, "active_verified": 5}
     by_id = {s["scheme_id"]: s for s in catalogue["schemes"]}
-    assert by_id["SCH-0002"]["is_authoritative_catalogue_entry"] is True
-    assert by_id["SCH-0001"]["is_authoritative_catalogue_entry"] is False
-    assert by_id["SCH-0004"]["is_authoritative_catalogue_entry"] is False
+    for sid in ("SCH-0001", "SCH-0002", "SCH-0005", "SCH-0008", "SCH-0010"):
+        assert by_id[sid]["is_authoritative_catalogue_entry"] is True, sid
+    for sid in ("SCH-0004", "SCH-0006", "SCH-0007", "SCH-0009"):
+        assert by_id[sid]["is_authoritative_catalogue_entry"] is False, sid
 
     # PRODUCTION-mode project matching: DRAFT records (SCH-0001, SCH-0004)
     # never appear in results at all — only the one authoritative record
@@ -154,7 +159,7 @@ def test_api_shipped_state_ready_with_one_authoritative_scheme(client):
     # back NEEDS_INFORMATION rather than being silently omitted).
     body = client.get("/api/v1/projects/freshbite/schemes").json()
     assert body["catalogue_state"] == "READY"
-    assert [r["scheme_id"] for r in body["results"]] == ["SCH-0002"]
+    assert [r["scheme_id"] for r in body["results"]] == ["SCH-0001", "SCH-0002", "SCH-0005", "SCH-0008", "SCH-0010"]
     assert body["results"][0]["outcome"] == NEEDS_INFORMATION
 
 
@@ -346,8 +351,8 @@ def test_L_production_catalogue_is_ready_with_tranche1_records():
     assert cat.errors == []
     out = match_catalogue(cat, {"project.industry": "FOOD"}, as_of=AS_OF)
     assert out["catalogue_state"] == "READY"
-    assert out["counts"] == {"total": 9, "active_verified": 1}
-    assert [r["scheme_id"] for r in out["results"]] == ["SCH-0002"]
+    assert out["counts"] == {"total": 9, "active_verified": 5}
+    assert [r["scheme_id"] for r in out["results"]] == ["SCH-0001", "SCH-0002", "SCH-0005", "SCH-0008", "SCH-0010"]
     # freshbite-style facts above don't touch project.msme_classification,
     # so the one authoritative record comes back NEEDS_INFORMATION, not
     # ELIGIBLE/APPROVED/GUARANTEED and not silently dropped.

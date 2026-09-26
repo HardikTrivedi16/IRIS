@@ -1,0 +1,1046 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" /><link id="pibA11yCss" rel="stylesheet" href="/css/accessibility.css?v=3" type="text/css" />
+      <script type="text/javascript">
+        /* Stamps the saved theme on <html> before the page paints. The
+           switcher in js/accessibility.js settles the rest, but on inner
+           pages it does not run until the end of the body and inside the
+           release frame it is a separate download - either way the reader
+           would otherwise watch a light page turn dark in front of them. */
+        (function (d) {
+            var t = "";
+            try {
+                t = window.localStorage.getItem("pibStyle") || "";
+            } catch (e) {
+                t = "";
+            }
+            if (t === "orange") {
+                t = "yellow";
+            }
+            var c = t === "change" ? " pib-hc"
+                : t === "green" ? " pib-theme-green"
+                : t === "yellow" ? " pib-theme-yellow" : "";
+            d.documentElement.className += c + " pib-a11y-content";
+        }(document));
+      </script>
+
+
+      <script src="js/jquery.min.js" type="text/javascript"></script>
+      <script type="text/javascript" src="/js/accessibility.js?v=7"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" />
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  // Get the IDs from the current page's URL
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+
+            });
+      </script>
+      <style type="text/css">
+            .table-responsive {
+                  width: 100%;
+                  overflow-x: auto;
+            }
+
+            .banner {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  background-color: #000;
+                  color: #fff;
+                  padding: 20px;
+            }
+
+            full-width {
+                  width: 100%;
+            }
+
+            .logo-left, .logo-center, .countdown {
+                  display: flex;
+                  align-items: center;
+            }
+
+                  .logo-left img, .logo-center img {
+                        height: 70px;
+                  }
+
+            .countdown {
+                  text-align: center;
+                  background-color: #444;
+                  border-radius: 10px;
+                  padding: 10px;
+                  border: 2px solid grey;
+            }
+
+            .firstnumber {
+                  color: #000000;
+                  position: absolute;
+                  top: 50px;
+                  right: 90px;
+                  font-size: 30px;
+            }
+
+            .secondnumber {
+                  position: absolute;
+                  color: #000000;
+                  right: 45px;
+                  top: 50px;
+                  font-size: 30px;
+            }
+
+            .countdown .days {
+                  font-size: 35px;
+                  color: gold;
+            }
+
+            .countdown p {
+                  margin: 0;
+            }
+
+            .countdown .text {
+                  font-size: 16px;
+            }
+
+            a {
+                  word-break: break-all;
+            }
+
+            iframe, img {
+                  max-width: 100%;
+            }
+
+            @media(max-width:1199px) {
+                  .firstnumber {
+                        top: 40px;
+                        right: 72px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 35px;
+                        top: 40px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:990px) {
+                  .firstnumber {
+                        top: 25px;
+                        right: 54px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 25px;
+                        top: 25px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:768px) {
+                  .countdown, .days {
+                        font-size: 12px !important;
+                  }
+
+
+                  .firstnumber {
+                        top: 25%;
+                        right: 8%;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 4.5%;
+                        top: 25%;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:475px) {
+                  .countdown, .days {
+                        font-size: 10px !important;
+                        top: 20%;
+                  }
+
+                  .bannerimgdiv {
+                        padding: 0 !important;
+                  }
+
+                  .bannerimg {
+                        width: 108% !important;
+                  }
+            }
+      </style>
+      <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112591026-1"></script>
+      <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', 'UA-112591026-1');
+
+      </script>
+
+<meta property="og:title" content="Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2097455" /><meta property="og:description" content="GoI has approved introduction of Mutual Credit Guarantee Scheme for MSMEs (MCGS- MSME) for providing" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="37uuxbyx37zyg2vxxhha-f-542f08ea2-clientnsv4-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":17,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"14be8f48","ak.r":38574,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":2997,"ak.gh":"23.223.243.127","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1790425550","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==CWvKkpWEKZGX5pmT2S1FPB0oRP72Mp8+qF55r5GbYY9f9VpERapoazq0qqEIGIoJQ4V/DakB/Gq7sOK/dDDedeHwKP2HLbjNYSD9JWyKEDUxo8Jw3uBfBqXy3ktfuL8+TQVylwACkO03k4GAubiY1sDfvtjBIDWl8lz+bCmkDAnTpgFkWUsoSXoyIhwdC1wbW96hCVC1c3WUKRvvqs5nvoLWTe8r8XggUbfVR1gXac9/m0Vr+1XdvnmHRSAYz0KBGQ0Yx+YlEpukyu7NsI6fnqZAbUocrQ2Q0FCVTVBVV75Qn/K3c5TTbjm1Ink/YjY2WH3irHqBJHOPZT3H4zt9OFPkebQFougu95IMQdHIWoGFOTvUrNqNgq0uDT+JWRUTMlCpVoW0Ojp6pw4F3D/rsWAttiL1/fr7Vo5dBwLJkYs=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+      <form method="post" action="./PressReleasePage.aspx?PRID=2097455&amp;reg=48&amp;lang=2" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZPQet1wIx1Q48y3xJY2k25Y7qxH5RrQ9qQcN-OiTC9guZtri9w2&amp;t=639246310055090729" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=x6wALODbMJK5e0eRC_p1LdIxBJXt0U_WW5GWfJqHAqo6frgCmGRfEywglicTersO2OKrFhK1gAIp0Wk2al2YrpdR3uWqH6f4nfjBsCyRUfTUUVmb0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=P5lTttoqSeZXoYRLQMIScH645UK3RD852IErF2548Wz9Ssv0rLjB4fhVKnHcMpqkaMHpNAGOeWY02Lf4aBYN9-dVBme_SNK5KJwmFQNpMixYDZ7M0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a8613aea7%3af9cec9bc%3a3202a5a2%3aab09e3fe%3a87104b7c%3a720a52bf%3a589eaa30%3aa67c2700%3abe6fb298" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="q7V34ejxACkzYtT6TdI0uS0EdfpZJQjLvPa5ll0B1a5yPNHBBQaTX6UxDihjrE3BCt+7WkW/HHRXsGJ3Y79aLWBToXHYo44jU7qNG2zxKFE1z03MO9savjTGxqNBWKIWTDhGcySk1tW6rxvJbubSCvsESJbOVQY+R98XW/7USiDEzXNaQiiPvMIRq8sWtp1xhWwSb6F29SOpRqs8CHPmvOGHDOizXZfA20U/hogWZ3kpghPhC+Cb5hNONyq2SkmuirjxIKDVlz8XNgNjNIzFejXTDOI=" />
+</div>
+                              
+            <div id="templateCss"></div>
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('sc', 'form1', ['tupdate12','update12'], [], [], 90, '');
+//]]>
+</script>
+
+            <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+            <div class="container" style='margin-bottom: 50px;'>
+                  <div id="accessories">
+
+                        
+                        <div class="pull-right" style="display: flex">
+                              <div id="voll"></div>
+                              <div id="vollDT"></div>
+                              
+                              
+<div class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</div>
+                        </div>
+                  </div>
+                  <input type="hidden" name="hydpermid" id="hydpermid" value="2097455" />
+                  
+
+
+
+                  <div class="innner-page-main-about-us-content-right-part">
+
+                        <div id="MinistryName" class="MinistryNameSubhead text-center">
+                              Ministry of Finance
+                        </div>
+                        
+                        <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2026/sep/ph_9768_20260902_10000501.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+
+
+
+
+                        <div class="text-center event-heading-background">
+                              
+                              <h2 id="Titleh2">
+                                    Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25
+                              </h2>
+                              <h3 id="Subtitleh3">
+                                    <span id="ltrSubtitle"><br/>Loans upto Rs. 100 crore for purchase of Plant and Machinery / Equipment are eligible for guarantee coverage giving a boost to manufacturing sector<br/><br/>Scheme offers 60% guarantee coverage to Member Lending Institutions (MLIs*) for credit facility upto Rs.100 crore sanctioned to eligible MSMEs</span>
+                              </h3>
+                        </div>
+
+                        <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                              Posted On:
+                29 JAN 2025 8:35PM by PIB Delhi
+                        </div>
+                        
+                        <div class='pt20'>
+                        </div>
+                        <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                        
+                        <p style="margin-left:0cm; margin-right:-2.3pt; text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">GoI has approved introduction of Mutual Credit Guarantee Scheme for MSMEs (MCGS- MSME) for providing 60% guarantee coverage by National Credit Guarantee Trustee Company Limited (NCGTC) to Member Lending Institutions (MLIs*) for credit facility upto Rs.100 crore sanctioned to eligible MSMEs under MCGS-MSME for purchase of equipment / machinery.</span></p>
+
+<p style="margin-right:-2.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Salient Features of The Scheme</u></strong></span></span></p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Borrower should be an MSME with valid Udyam Registration Number;</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Loan amount guaranteed shall not exceed Rs.100 crore</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Project Cost could be of higher amounts also</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Minimum cost of equipment /machinery is 75% of project cost</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Loan upto Rs.50 crore under the Scheme shall have repayment period of upto 8 years with upto 2 years moratorium period on principal instalments. For loans above Rs.50 crore, higher repayment schedule and moratorium period on principal instalments can be considered.</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Upfront (initial) contribution of 5% of the loan amount shall be deposited at the time of application of guarantee cover</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Annual Guarantee Fee on loan under the Scheme shall be Nil during the year of sanction. During the next 3 years, it shall be 1.5% p.a. of loan outstanding as on March 31 of previous year. Thereafter, Annual Guarantee Fee shall be 1% p.a. of loan outstanding as on March 31 of previous year</span></span></span></li>
+</ul>
+
+<p style="margin-left:0cm; margin-right:-2.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">The Scheme will be applicable to all loans sanctioned under MCGS-MSME during the period of 4 years from the date of issue of operational guidelines of the scheme or till cumulative guarantee of Rs. 7 lakh crore are issued, whichever is earlier. </span></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Major Impact</u></strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">Manufacturing sector currently comprises 17% of the nation&rsquo;s GDP and over 27.3 million workers. Hon&rsquo;ble Prime Minister&rsquo;s has given a call for &lsquo;Make in India, Make for the World&rsquo; and has signalled that India is ready and keen to increase the share of manufacturing to 25% of GDP. The Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME) is expected to facilitate the availability of credit for purchase of Plant and Machinery / Equipment by MSMEs and give a major boost to manufacturing and thereby to Make in India.</span></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u><span style="color:#0f0f0f">Background</span></u></strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">Global supply chains are realigning. India is emerging as an alternative supply source given its raw materials, low labour costs, growing manufacturing knowhow, and entrepreneurial ability. One of the major costs involved in manufacturing is the fixed cost of Plant and Machinery (P&amp;M)/ Equipment&rsquo;s. With availability of credit to expand the installed capacity of manufacturing units, it can be expected that the manufacturing will grow at a faster pace. Also, the need for a credit guarantee scheme for the manufacturing units, particularly for the enterprises in the medium category has been raised by industry associations from time to time. So, to give a boost to manufacturing by facilitating the availability of credit for purchase of Plant and Machinery / Equipment, &lsquo;Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME) is being introduced. The scheme will facilitate collateral free loans by banks and financial institutions to MSMEs who are in need of debt capital for their expansion and growth.</span></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">*</span>MLIs - All Scheduled Commercial Banks (SCBs), Non-Banking Financial Companies (NBFCs) and All India Financial institutions (AIFIs), who register with NCGTC under the Scheme.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>******</strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>NB/AD</strong></span></span></p>
+
+
+                        
+                        <div id="reel_pic">
+                        </div>
+
+
+
+                        
+                        <br />
+                        <span id="ReleaseId">(Release ID: 2097455)</span>
+                        <span id="lblViews">Visitor Counter : 20623</span>
+                        <div>
+                              
+                        </div>
+                        
+
+                        <span id="lblRefPhoto"></span>
+
+                        <div class="BackgroundRelease">
+                              
+                        </div>
+                        <div>
+                              
+                        </div>
+                        <div class="ReleaseLang">Read this release in: 
+                        
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2097476' target="_blank">
+                                          Kannada </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2097538' target="_blank">
+                                          Urdu </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2097530' target="_blank">
+                                          हिन्दी </a>
+                              
+                        </div>
+
+                        <div class="RelTag">
+                              <ul>
+                                    
+                              </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="RelLink" class="RelLink">
+                              <ul>
+                                    
+                                    
+                              </ul>
+                        </div>
+                        <center>
+                              
+                        </center>
+                  </div>
+
+                  <div id="update12">
+	
+                              
+                              <input type="hidden" name="Hidden" id="Hidden" />
+                              <div id="P_CategoryManagement" class="ModalWindow" style="border-width:0px;height:60%;width:60%;overflow:auto;display: none">
+		
+                                    <div>
+                                          <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                                    </div>
+                                    <div id="description">
+                                    </div>
+                                    <div class="text-center">
+                                          <h2>
+                                                
+                                                <br>
+                                                
+                                          </h2>
+                                    </div>
+                                    <br />
+                                    <div class="clear">
+                                    </div>
+                                    
+                              
+	</div>
+                        
+</div>
+            </div>
+            
+            <div id="PdfDiv" style="display: none;">
+                  <table width="100%">
+                        <tr>
+                              <td style="font-weight: 200; text-align: center">
+                                    Ministry of Finance
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          <div style='height:30px;width:100%;'></div>Loans upto Rs. 100 crore for purchase of Plant and Machinery / Equipment are eligible for guarantee coverage giving a boost to manufacturing sector<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>Scheme offers 60% guarantee coverage to Member Lending Institutions (MLIs*) for credit facility upto Rs.100 crore sanctioned to eligible MSMEs
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="text-align: center; font-size: 14px;">
+                                          Posted On:
+                        29 JAN 2025 8:35PM by PIB Delhi
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                                          <p style="margin-left:0cm; margin-right:-2.3pt; text-align:justify"><span style="font-family:&quot;Times New Roman&quot;,Times,serif; font-size:16px">GoI has approved introduction of Mutual Credit Guarantee Scheme for MSMEs (MCGS- MSME) for providing 60% guarantee coverage by National Credit Guarantee Trustee Company Limited (NCGTC) to Member Lending Institutions (MLIs*) for credit facility upto Rs.100 crore sanctioned to eligible MSMEs under MCGS-MSME for purchase of equipment / machinery.</span></p>
+
+<p style="margin-right:-2.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Salient Features of The Scheme</u></strong></span></span></p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Borrower should be an MSME with valid Udyam Registration Number;</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Loan amount guaranteed shall not exceed Rs.100 crore</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Project Cost could be of higher amounts also</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Minimum cost of equipment /machinery is 75% of project cost</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Loan upto Rs.50 crore under the Scheme shall have repayment period of upto 8 years with upto 2 years moratorium period on principal instalments. For loans above Rs.50 crore, higher repayment schedule and moratorium period on principal instalments can be considered.</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Upfront (initial) contribution of 5% of the loan amount shall be deposited at the time of application of guarantee cover</span></span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">Annual Guarantee Fee on loan under the Scheme shall be Nil during the year of sanction. During the next 3 years, it shall be 1.5% p.a. of loan outstanding as on March 31 of previous year. Thereafter, Annual Guarantee Fee shall be 1% p.a. of loan outstanding as on March 31 of previous year</span></span></span></li>
+</ul>
+
+<p style="margin-left:0cm; margin-right:-2.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">The Scheme will be applicable to all loans sanctioned under MCGS-MSME during the period of 4 years from the date of issue of operational guidelines of the scheme or till cumulative guarantee of Rs. 7 lakh crore are issued, whichever is earlier. </span></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Major Impact</u></strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">Manufacturing sector currently comprises 17% of the nation&rsquo;s GDP and over 27.3 million workers. Hon&rsquo;ble Prime Minister&rsquo;s has given a call for &lsquo;Make in India, Make for the World&rsquo; and has signalled that India is ready and keen to increase the share of manufacturing to 25% of GDP. The Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME) is expected to facilitate the availability of credit for purchase of Plant and Machinery / Equipment by MSMEs and give a major boost to manufacturing and thereby to Make in India.</span></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u><span style="color:#0f0f0f">Background</span></u></strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">Global supply chains are realigning. India is emerging as an alternative supply source given its raw materials, low labour costs, growing manufacturing knowhow, and entrepreneurial ability. One of the major costs involved in manufacturing is the fixed cost of Plant and Machinery (P&amp;M)/ Equipment&rsquo;s. With availability of credit to expand the installed capacity of manufacturing units, it can be expected that the manufacturing will grow at a faster pace. Also, the need for a credit guarantee scheme for the manufacturing units, particularly for the enterprises in the medium category has been raised by industry associations from time to time. So, to give a boost to manufacturing by facilitating the availability of credit for purchase of Plant and Machinery / Equipment, &lsquo;Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME) is being introduced. The scheme will facilitate collateral free loans by banks and financial institutions to MSMEs who are in need of debt capital for their expansion and growth.</span></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:#0f0f0f">*</span>MLIs - All Scheduled Commercial Banks (SCBs), Non-Banking Financial Companies (NBFCs) and All India Financial institutions (AIFIs), who register with NCGTC under the Scheme.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>******</strong></span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>NB/AD</strong></span></span></p>
+
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                                          (Release ID: 2097455)
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                        </tr>
+                  </table>
+            </div>
+            <div class="clearfix">
+            </div>
+
+            
+
+            <div class="section1">
+                  <div id="frst_t">
+                        <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='40' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455&text=Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='40' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='40' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='40' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455&title=Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='40' /></li></a></ul></div></div>
+                  </div>
+                  <div id="second_t">
+                        <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='35' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455&text=Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='35' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='35' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='35' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2097455&title=Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='35' /></li></a></ul></div></div>
+                  </div>
+            </div>
+            <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="Government Approves Mutual Credit Guarantee Scheme to Strengthen MSME Manufacturing Sector, fulfilling the budget announcement of 2024-25" />
+            <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" value="&lt;br/>Loans upto Rs. 100 crore for purchase of Plant and Machinery / Equipment are eligible for guarantee coverage giving a boost to manufacturing sector&lt;br/>&lt;br/>Scheme offers 60% guarantee coverage to Member Lending Institutions (MLIs*) for credit facility upto Rs.100 crore sanctioned to eligible MSMEs" />
+            <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;margin-left:0cm; margin-right:-2.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:&amp;quot;Times New Roman&amp;quot;,Times,serif; font-size:16px&quot;>GoI has approved introduction of Mutual Credit Guarantee Scheme for MSMEs (MCGS- MSME) for providing 60% guarantee coverage by National Credit Guarantee Trustee Company Limited (NCGTC) to Member Lending Institutions (MLIs*) for credit facility upto Rs.100 crore sanctioned to eligible MSMEs under MCGS-MSME for purchase of equipment / machinery.&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-right:-2.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;u>Salient Features of The Scheme&lt;/u>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;ul>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Borrower should be an MSME with valid Udyam Registration Number;&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Loan amount guaranteed shall not exceed Rs.100 crore&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Project Cost could be of higher amounts also&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Minimum cost of equipment /machinery is 75% of project cost&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Loan upto Rs.50 crore under the Scheme shall have repayment period of upto 8 years with upto 2 years moratorium period on principal instalments. For loans above Rs.50 crore, higher repayment schedule and moratorium period on principal instalments can be considered.&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Upfront (initial) contribution of 5% of the loan amount shall be deposited at the time of application of guarantee cover&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>Annual Guarantee Fee on loan under the Scheme shall be Nil during the year of sanction. During the next 3 years, it shall be 1.5% p.a. of loan outstanding as on March 31 of previous year. Thereafter, Annual Guarantee Fee shall be 1% p.a. of loan outstanding as on March 31 of previous year&lt;/span>&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:0cm; margin-right:-2.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:#0f0f0f&quot;>The Scheme will be applicable to all loans sanctioned under MCGS-MSME during the period of 4 years from the date of issue of operational guidelines of the scheme or till cumulative guarantee of Rs. 7 lakh crore are issued, whichever is earlier. &lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;u>Major Impact&lt;/u>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:#0f0f0f&quot;>Manufacturing sector currently comprises 17% of the nation&amp;rsquo;s GDP and over 27.3 million workers. Hon&amp;rsquo;ble Prime Minister&amp;rsquo;s has given a call for &amp;lsquo;Make in India, Make for the World&amp;rsquo; and has signalled that India is ready and keen to increase the share of manufacturing to 25% of GDP. The Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME) is expected to facilitate the availability of credit for purchase of Plant and Machinery / Equipment by MSMEs and give a major boost to manufacturing and thereby to Make in India.&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;u>&lt;span style=&quot;color:#0f0f0f&quot;>Background&lt;/span>&lt;/u>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:#0f0f0f&quot;>Global supply chains are realigning. India is emerging as an alternative supply source given its raw materials, low labour costs, growing manufacturing knowhow, and entrepreneurial ability. One of the major costs involved in manufacturing is the fixed cost of Plant and Machinery (P&amp;amp;M)/ Equipment&amp;rsquo;s. With availability of credit to expand the installed capacity of manufacturing units, it can be expected that the manufacturing will grow at a faster pace. Also, the need for a credit guarantee scheme for the manufacturing units, particularly for the enterprises in the medium category has been raised by industry associations from time to time. So, to give a boost to manufacturing by facilitating the availability of credit for purchase of Plant and Machinery / Equipment, &amp;lsquo;Mutual Credit Guarantee Scheme for MSMEs (MCGS-MSME) is being introduced. The scheme will facilitate collateral free loans by banks and financial institutions to MSMEs who are in need of debt capital for their expansion and growth.&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:#0f0f0f&quot;>*&lt;/span>MLIs - All Scheduled Commercial Banks (SCBs), Non-Banking Financial Companies (NBFCs) and All India Financial institutions (AIFIs), who register with NCGTC under the Scheme.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>******&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>NB/AD&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+" />
+            <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+                  //function HandleAudio() {
+                  //    if (isPlaying == true) {
+                  //        //Playing already Pause it
+                  //        pauseAudio();
+                  //    } else {
+                  //        //Play the music
+                  //        playAudio();
+                  //    }
+                  //}
+            </script>
+            <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+            
+                  function CleanHtml(html) {
+
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        //for responsive tables
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            
+            <style type="text/css">
+                  @media print {
+                        .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                              display: none !important;
+                        }
+                  }
+
+                  .f_vl {
+                        padding-right: 30px;
+                        font-size: 17px;
+                        cursor: pointer;
+                  }
+
+                  .log_oo {
+                        // width: 20%;
+                        display: flex;
+                        justify-content: space-between;
+                  }
+
+                        .log_oo img {
+                              width: 150px;
+                              /*width: 100%;
+                    height: auto;*/
+                        }
+
+                  .sticky-social_mb {
+                        position: fixed;
+                        bottom: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                        width: 100%;
+                  }
+
+                  .social_mb {
+                        list-style: none;
+                        display: flex;
+                        width: 100%;
+                        margin-bottom: -8px;
+                  }
+
+                        .social_mb a {
+                              padding: 8px 0px;
+                              font-size: 30px;
+                              transition: all 0.8s ease-in-out;
+                              width: 20% !important;
+                              text-align: center;
+                        }
+            </style>
+            <style type="text/css">
+                  .section1 {
+                        position: relative;
+                        padding: 10px 0px;
+                        width: 100%;
+                  }
+
+
+
+                  .sticky-social {
+                        position: fixed;
+                        top: 20px;
+                        left: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                  }
+
+                  .social {
+                        list-style: none;
+                  }
+
+                        .social a li {
+                              padding: 8px 12px;
+                              font-size: 25px;
+                              transition: all 0.8s ease-in-out;
+                        }
+
+                              .social a li:hover {
+                                    margin-right: -30px;
+                                    box-shadow: 2px 5px 10px grey;
+                              }
+
+                                    .social a li:hover .fa {
+                                          margin-left: 20px;
+                                    }
+
+                  .fb_b {
+                        /* background-color: rgb(59, 89, 152);*/
+                        background-color: rgba(65,103,178,255);
+                  }
+
+                  .twitter_r {
+                        /* background-color: rgb(29, 161, 242);*/
+                        background-color: #000000;
+                  }
+
+                  .whatsapp_r {
+                        /* background-color: rgb(77, 194, 71);*/
+                        background-color: rgba(13,191,67,255);
+                  }
+
+                  .fa-envelope_r {
+                        /* background-color: rgb(219, 68, 55);*/
+                        background-color: #e2123d;
+                  }
+
+                  .fa-linkedin_r {
+                        background-color: rgb(0, 119, 181);
+                  }
+            </style>
+            <style type="text/css">
+                  @media only screen and (max-device-width: 767px) {
+                        p span img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        p img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        h2 {
+                              font-size: 20px !important;
+                              font-weight: 600 !important;
+                        }
+
+                        h3 {
+                              font-size: 18px !important;
+                              font-weight: 600 !important;
+                        }
+                  }
+            </style>
+            <style type="text/css">
+                  /* === Film Roll Badge Styling(IFFI2025 countdown) === */
+                  .film-roll-badge {
+                        position: absolute;
+                        top:82%;
+                        right: 20px;
+                        width: 230px;
+                        height: 70px;
+                        background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 18px, #6e2b8b 18px, #6e2b8b 36px );
+                        border-top: 8px solid #9a2375;
+                        border-bottom: 8px solid #9a2375;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                        animation: moveFilm 8s linear infinite;
+                        z-index: 10;
+                  }
+
+                        /* film sprocket holes */
+                        .film-roll-badge::before,
+                        .film-roll-badge::after {
+                              content: "";
+                              position: absolute;
+                              width: 100%;
+                              height: 10px;
+                              background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 10px, #fff 10px, #fff 20px );
+                              left: 0;
+                              z-index: 2;
+                        }
+
+                        .film-roll-badge::before {
+                              top: -4px;
+                        }
+
+                        .film-roll-badge::after {
+                              bottom: -4px;
+                        }
+
+                  .film-roll-inner {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: flicker 2s infinite ease-in-out;
+                  }
+
+                  .countdown-text {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #fff;
+                        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                        white-space: nowrap;
+                  }
+
+                  /* === Animations === */
+                  @keyframes moveFilm {
+                        0% {
+                              background-position: 0 0;
+                        }
+
+                        100% {
+                              background-position: 120px 0;
+                        }
+                  }
+
+                  @keyframes flicker {
+                        0%, 100% {
+                              opacity: 1;
+                        }
+
+                        50% {
+                              opacity: 0.9;
+                        }
+
+                        25% {
+                              opacity: 0.95;
+                        }
+
+                        75% {
+                              opacity: 0.85;
+                        }
+                  }
+
+                  /* === Responsive Adjustments === */
+                  @media (max-width: 1500px) {
+                        .film-roll-badge {
+                              top: 68%;
+                              right: 18px;
+                              /* width: 220px; */
+                              height: 65px;
+                              font-size: 0.85rem;
+                        }
+
+                        .press-section {
+                              margin-top: 35px;
+                        }
+                  }
+
+                  @media (max-width: 992px) {
+                        .film-roll-badge {
+                              top: 52%;
+                              right: 10px;
+                               width: 200px; 
+                              height: 60px;
+                        }
+                  }
+
+                  @media (max-width: 768px) {
+                        .film-roll-badge {
+                              top: 56%;
+                              right: 10px;
+                               width: 124px; 
+                              height: 55px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.9rem;
+                        }
+                  }
+
+                  @media (max-width: 576px) {
+                        .film-roll-badge {
+                              top: 59%;
+                              right: 5px;
+                              /* width: 160px; */
+                              height: 50px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.85rem;
+                        }
+                  }
+            </style>
+          <script type="text/javascript">
+                const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+
+                const countdownElement = document.getElementById("countdown");
+
+                const interval = setInterval(() => {
+                      const now = new Date().getTime();
+
+                      // BEFORE FESTIVAL — show days + hours left
+                      if (now < festivalStart) {
+                            const diff = festivalStart - now;
+                            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                            countdownElement.innerHTML = `
+              ${days} Day${days !== 1 ? 's' : ''} 
+              ${hours} Hour${hours !== 1 ? 's' : ''} to go
+          `;
+
+                      }
+
+                      // DURING FESTIVAL — show 56th IFFI - Day X
+                      else if (now >= festivalStart && now <= festivalEnd) {
+                            const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                            countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                      }
+
+                      // AFTER FESTIVAL — new message
+                      else {
+                            countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+
+                            // Width change logic
+                            const elements = document.querySelectorAll('.film-roll-badge');
+                            elements.forEach(el => el.style.width = "350px");
+
+                            clearInterval(interval);
+                      }
+
+                }, 1000);
+          </script>
+ <script type="text/javascript">
+
+               const miffStart = new Date("2026-06-15T00:00:00").getTime();
+               const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+
+               const miffElement = document.getElementById("miff");
+
+               if (miffElement) {
+
+                   const miffInterval = setInterval(() => {
+
+                       const now = new Date().getTime();
+
+                       // Before MIFF
+                       if (now < miffStart) {
+
+                           const diff = miffStart - now;
+                           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        
+
+                   /*  miffElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to MIFF`;*/
+                           miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+
+
+                     }
+
+                       // During MIFF
+                       else if (now >= miffStart && now <= miffEnd) {
+
+                           const dayNumber =
+                               Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+
+                           miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                       }
+
+                       // After MIFF
+                       else {
+
+                           miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+
+                           document.querySelectorAll('.film-roll-badge')
+                               .forEach(el => el.style.width = "350px");
+
+                           clearInterval(miffInterval);
+                       }
+
+                   }, 1000);
+               }
+
+</script>
+
+      
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="SnfU6_E3uKYLhvZE6ogtI6fA4fXHkLL8esXBtakuMHxEx0jz6gj2xEvHso93YGucCLtVexRCHyt2NUBy6wYF0JTKDdxt5tDGCL1uwFUFAjUoPVLWPdjnIw=="/></form>
+</body>
+</html>
+

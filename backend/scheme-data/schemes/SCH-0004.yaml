@@ -79,6 +79,7 @@ notes: >
   human review pack for the full source excerpts, the unresolved
   30%-promoter-category-threshold question, and other open questions
   requiring human review before any of this can be promoted.
+  SCHEME VERIFICATION BATCH 1 (2026-09-26) - BLOCKED, record otherwise unchanged. The open threshold question is now GROUNDED in the archived GR (Modalities GR 01.07.2025, p.12, s.2.2 "Special LSI" eligibility, Marathi text): (1) the unit must be established in Maharashtra; (2) FIXED CAPITAL INVESTMENT must lie between the limit fixed under the Central MSME definition (i.e. ABOVE the MSME range) and Rs. 750 crore; (3) the unit must export at least 50% of total turnover, and 30% for agro and aqua-food based units and for women/SC/ST entrepreneurs. The current tree (SCHC-0003 = Maharashtra AND export share >= 50) therefore (a) omits the mandatory investment band, so it would also match ordinary MSMEs, which have a separate track, and (b) omits the 30% alternative. Encoding them needs NEW project facts (fixed capital investment, promoter category, agro/aqua-food basis) and the current Central MSME investment ceiling, which are outside this batch and the demo-fact freeze. Not approximated.
 
 supersedes: null
 superseded_by: null
