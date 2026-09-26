@@ -1,0 +1,15 @@
+verification_id: VER-0018
+target_type: DEPENDENCY_EDGE
+target_id: DEP-0001
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-007, SRC-028]
+evidence_checks: [EVID-BOILER-02, EVID-BOILER-03]
+notes: >
+  Human approval by the project reviewer, recorded in chat on 2026-09-26 (Dependency Tranche 1
+  approval), for the bounded PREREQUISITE claim only: REQ-0007's certificate continuation/renewal/
+  event-cessation obligation presupposes the registration and certificate represented by REQ-0006
+  (Boilers Act 2025 ss.12, 13, 15; commenced 1 May 2025). It does not claim every boiler obligation
+  depends on REQ-0006, that every Act event or the full renewal calendar is modelled, or that
+  registration is merely a practical sequencing convention. EVID-BOILER-01 is not the basis.

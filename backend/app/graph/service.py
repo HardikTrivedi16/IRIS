@@ -65,6 +65,7 @@ def _analysis_to_domain(analysis: GraphAnalysis, adapter: AdapterResult) -> dict
         "critical_path_available": analysis.critical_path_available,
         "excluded_requirements": list(adapter.excluded),
         "dependency_data_note": adapter.dependency_note,
+        "diagnostic_relationships": list(adapter.diagnostic_relationships),
     }
 
 

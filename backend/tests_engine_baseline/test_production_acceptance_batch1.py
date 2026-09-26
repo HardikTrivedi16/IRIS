@@ -119,9 +119,12 @@ def test_ewaste_producer_and_manufacturer_authoritative(engine):
 def test_every_approved_requirement_is_active_and_has_an_approved_ver(dataset):
     approved_targets = {v["target_id"] for v in dataset.verifications.values() if v["result"] == "APPROVED"}
     assert set(APPROVED.values()) <= approved_targets
-    assert len(dataset.verifications) == 17  # 12 (Batch 1) + 5 (Batch 2)
+    rv_vers = [v for v in dataset.verifications.values() if v["target_type"] == "RULE_VERSION"]
+    assert len(rv_vers) == 17  # 12 (Batch 1) + 5 (Batch 2); +2 DEPENDENCY_EDGE VERs (Dependency Tranche 1)
+    assert len(dataset.verifications) == 19
     for v in dataset.verifications.values():
-        assert v["reviewer"] == "Hardik Trivedi" and v["result"] == "APPROVED" and v["target_type"] == "RULE_VERSION"
+        assert v["reviewer"] == "Hardik Trivedi" and v["result"] == "APPROVED"
+        assert v["target_type"] in ("RULE_VERSION", "DEPENDENCY_EDGE")
     active = {k for k, rv in dataset.rule_versions.items() if rv["status"] == "ACTIVE"}
     assert active == set(APPROVED.values()) | {"RULE-0003-V1", "RULE-0017-V1", "RULE-0018-V1", "RULE-0019-V1"} | {'RULE-0002-V2', 'RULE-0007-V1', 'RULE-0014-V3', 'RULE-0015-V3', 'RULE-0016-V2'}
 

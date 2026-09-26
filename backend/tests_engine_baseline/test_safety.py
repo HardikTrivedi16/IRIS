@@ -27,9 +27,13 @@ def test_draft_rule_labelled_non_production_when_evaluated(engine):
     assert d["final_state"] == "APPLICABLE"
 
 
-def test_zero_executable_dependencies(dataset):
-    assert dataset.dependencies_index.get("dependencies", []) == []
-    assert dataset.dependencies_index.get("counts", {}).get("total_dependencies") == 0
+def test_only_two_verified_executable_dependencies(dataset):
+    # Dependency Tranche 1: four authored edges, two human-verified prerequisites.
+    from iris_engine.dependencies import dependency_trust
+    edges = dataset.dependencies_index.get("dependencies", [])
+    assert len(edges) == 4
+    assert dataset.dependencies_index.get("counts", {}).get("total_dependencies") == 4
+    assert sum(dependency_trust(e, dataset) == "VERIFIED" for e in edges) == 2
     # five review candidates exist but must not be executed
     items = dataset.dependency_review_register.get("review_items", [])
     assert len(items) == 5

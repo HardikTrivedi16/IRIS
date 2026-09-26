@@ -20,6 +20,8 @@ verifications:
   - VER-0015
   - VER-0016
   - VER-0017
+  - VER-0018
+  - VER-0019
 
 counts:
-  total_verifications: 17
+  total_verifications: 19

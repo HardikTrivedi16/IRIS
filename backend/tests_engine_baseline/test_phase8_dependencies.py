@@ -11,9 +11,14 @@ import copy
 from iris_engine.dependencies import evaluate_dependencies, DependencyResult
 
 
-def test_zero_verified_dependency_edges_in_real_dataset(dataset):
-    assert dataset.dependencies_index.get("dependencies", []) == []
-    assert dataset.dependencies_index.get("counts", {}).get("total_dependencies") == 0
+def test_two_verified_dependency_edges_in_real_dataset(dataset):
+    from iris_engine.dependencies import dependency_trust
+    edges = dataset.dependencies_index.get("dependencies", [])
+    assert len(edges) == 4
+    assert dataset.dependencies_index.get("counts", {}).get("total_dependencies") == 4
+    trust = {e["dependency_id"]: dependency_trust(e, dataset) for e in edges}
+    assert trust == {"DEP-0001": "VERIFIED", "DEP-0002": "VERIFIED",
+                     "DEP-0003": "DIAGNOSTIC", "DEP-0004": "DIAGNOSTIC"}
 
 
 def test_five_review_candidates_present_and_not_executable(dataset):
@@ -36,8 +41,8 @@ def test_review_candidates_never_executed_by_evaluate_dependencies(dataset):
     # never turned into an executable edge.
     for req_id in dataset.requirements:
         result = evaluate_dependencies(req_id, dataset)
-        assert result.verified_edges_as_target == []
-        assert result.verified_edges_as_source == []
+        ids = {e["dependency_id"] for e in result.verified_edges_as_target + result.verified_edges_as_source}
+        assert ids <= {"DEP-0001", "DEP-0002"}
         assert "NOT executed" in result.note or "not executed" in result.note.lower() or "not be executed" in result.note.lower() or "were NOT executed" in result.note
 
 
@@ -49,13 +54,19 @@ class _SyntheticDepDataset:
     touches the real RegulatoryDataset or persists anything."""
     def __init__(self, edges, review_items=None):
         self.dependencies_index = {"dependencies": edges}
+        # synthetic edges model human-APPROVED DEPENDENCY_EDGE verifications
+        self.verifications = {
+            f"TEST-VER-{i}": {"target_type": "DEPENDENCY_EDGE",
+                              "target_id": e["dependency_id"], "result": "APPROVED"}
+            for i, e in enumerate(edges)
+        }
         self.dependency_review_register = {"review_items": review_items or []}
 
 
 def test_synthetic_prerequisite_edge_reported_as_target():
     ds = _SyntheticDepDataset(edges=[
         {"dependency_id": "TEST-DEP-001", "from_requirement_id": "TEST-REQ-A",
-         "to_requirement_id": "TEST-REQ-B", "dependency_type": "LEGAL_PREREQUISITE"},
+         "to_requirement_id": "TEST-REQ-B", "dependency_type": "PREREQUISITE"},
     ])
     result = evaluate_dependencies("TEST-REQ-B", ds)
     assert len(result.verified_edges_as_target) == 1
@@ -115,9 +126,9 @@ def test_synthetic_conflicting_dependency_pair_both_surface_without_resolution()
     # dependency_conflict_register.yaml is the intended home for it).
     ds = _SyntheticDepDataset(edges=[
         {"dependency_id": "TEST-DEP-C1", "from_requirement_id": "TEST-REQ-A",
-         "to_requirement_id": "TEST-REQ-B", "dependency_type": "LEGAL_PREREQUISITE"},
+         "to_requirement_id": "TEST-REQ-B", "dependency_type": "PREREQUISITE"},
         {"dependency_id": "TEST-DEP-C2", "from_requirement_id": "TEST-REQ-B",
-         "to_requirement_id": "TEST-REQ-A", "dependency_type": "LEGAL_PREREQUISITE"},
+         "to_requirement_id": "TEST-REQ-A", "dependency_type": "PREREQUISITE"},
     ])
     result_a = evaluate_dependencies("TEST-REQ-A", ds)
     result_b = evaluate_dependencies("TEST-REQ-B", ds)
@@ -133,5 +144,5 @@ def test_no_synthetic_fixture_ever_touches_real_dataset(dataset):
     # After running every synthetic test above, the real dataset must be
     # completely unaffected (these tests never mutate `dataset` at all,
     # by construction -- this assertion documents that invariant).
-    assert dataset.dependencies_index.get("dependencies", []) == []
+    assert len(dataset.dependencies_index.get("dependencies", [])) == 4
     assert len(dataset.dependency_review_register.get("review_items", [])) == 5

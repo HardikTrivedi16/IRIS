@@ -212,14 +212,14 @@
   "facts/RF-0038.yaml": "0afc0a549737de88823e6582741eb5934814fdbeda992b586d0eaeffe9e8bb1c",
   "index/authorities_index.yaml": "ff40dbd51318dcdefc3e6779d92eabb2663c8deb9565b1928febfe9494d75fe9",
   "index/conditions_index.yaml": "9d016bf16fea4ccd0517a944c2638395fea232a2bca5eb420e0ae7f6d86a89ae",
-  "index/dependencies_index.yaml": "20772bd3296e3a35fc5b66420cb2dff553b784b4732b92495707698fcc8a3734",
+  "index/dependencies_index.yaml": "02b536500e80b90f990d5cb77b81be77d69cf1e1f84df91f85f7da7cd0baf319",
   "index/evidence_index.yaml": "84364566db58e113090ab88323699f08dd95604b08960ebb33a9bcc6318f64af",
   "index/facts_index.yaml": "3ab688b0f8646cefc742028c1b4132e950fc2028ef16c38ce47e0e86b41dd95c",
   "index/instruments_index.yaml": "31b2765261e88348d089d4ffdddb881b96813e95dae466c3929308c467d450a4",
   "index/requirements_index.yaml": "700a79c97700a9638635977c8e7680a0fff1570e5186ff71cd1c5f13cb88ca1d",
   "index/rules_index.yaml": "32071ff2d8f5a38b25e36401e3ed3c7b365ea5a6ed8b179387c6644aed1a9ce5",
   "index/sources_index.yaml": "90efeed490795fb43367a69cf5bbaf08efbc68263747c6c8bd0eb4c4cd5e6e74",
-  "index/verifications_index.yaml": "8479de6a868673b037699e826ebe14cfa5bb0e6c553219c0613bde32db49ed71",
+  "index/verifications_index.yaml": "6e0351ccded5ccd57c38d82b4fc5d5f2a0e1f0ef548eb5663b62e09bfe374222",
   "instruments/INST-AIR-81.yaml": "86443d4a4927d717d48b96b1a3d2c538196290210961a962856ff927df14228f",
   "instruments/INST-BOILERS-25.yaml": "67705a0185ef099c161a0c2f41d9c3e57ceec01c5a79753ee55114b961e0b0b1",
   "instruments/INST-BWM-2022.yaml": "b9a0c1c3df748417a1cec0538d8179a8ff76c82e910527839f11b81089efebd2",
@@ -380,5 +380,7 @@
   "verifications/VER-0014.yaml": "ddd28b2dc0ad19006c57fe6aad5db3beb9fd10dba74fb512feeb23cc76573dd3",
   "verifications/VER-0015.yaml": "67cd26a604daad61655e62457c17aa828f8bfd8af7fab4728ec05cac43e315ad",
   "verifications/VER-0016.yaml": "44d42468c7035703de7e4c71e84c9c1f18e17a3d869c1fc9e78eaabebd26ef86",
-  "verifications/VER-0017.yaml": "8ab8b2354fb3ab98c58031416e14db69fdff5698352a49043a76b93596197d8d"
+  "verifications/VER-0017.yaml": "8ab8b2354fb3ab98c58031416e14db69fdff5698352a49043a76b93596197d8d",
+  "verifications/VER-0018.yaml": "8942d545322eb9b98d14055a52faa1a35c62910d4bf00b93a36eb7054e3b369f",
+  "verifications/VER-0019.yaml": "8bbc6bf69f4db7e3aa826ce21611a1d6f365ebbb51811e1c6cac435aad4b31e5"
 }

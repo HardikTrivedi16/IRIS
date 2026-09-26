@@ -37,7 +37,13 @@ from typing import Any
 from dependency_engine import ApplicableRequirement, DependencyEdge, RelationshipType
 from dependency_engine.exceptions import InvalidRequirementError
 
-from iris_engine.dependencies import evaluate_dependencies
+from iris_engine.dependencies import (
+    EXECUTABLE_DEPENDENCY_TYPES,
+    TRUST_DIAGNOSTIC,
+    TRUST_VERIFIED,
+    dependency_trust,
+    evaluate_dependencies,
+)
 
 from .requirement_mapping import RequirementIdMap
 
@@ -61,6 +67,10 @@ class AdapterResult:
     id_map: RequirementIdMap
     excluded: tuple[dict, ...]  # [{requirement_id, final_state}] — not applicable, so not graphed
     dependency_note: str  # verbatim note from iris_engine.dependencies (e.g. "zero verified edges")
+    # Authored edges that are NOT executable/verified (informational
+    # REQUIRES_OUTCOME_OF, or edges lacking an approved DEPENDENCY_EDGE VER).
+    # Reported for transparency only; never part of the executable graph.
+    diagnostic_relationships: tuple[dict, ...] = ()
 
 
 def _duration_for(requirement_id: str) -> int | None:
@@ -157,11 +167,36 @@ def build_graph_inputs(
         if id_map.uuid_for(requirement_id) is None:
             continue  # not an applicable node; an edge touching it would be a phantom node
         dep_result = evaluate_dependencies(requirement_id, dataset)
-        dep_note = dep_result.note  # same note text across all requirements today (index is empty)
         for edge in dep_result.verified_edges_as_source:
-            _maybe_add_edge(edge, id_map, dependency_edges, seen_edge_ids)
+            _maybe_add_edge(edge, id_map, dependency_edges, seen_edge_ids, dataset)
         for edge in dep_result.verified_edges_as_target:
-            _maybe_add_edge(edge, id_map, dependency_edges, seen_edge_ids)
+            _maybe_add_edge(edge, id_map, dependency_edges, seen_edge_ids, dataset)
+
+    if id_map is not None and applicable_reqs:
+        n_v = len(dependency_edges)
+        dep_note = (
+            f"{'Zero' if n_v == 0 else n_v} verified dependency edge(s) apply to this project's graph. "
+            "Diagnostic/informational relationships are reported separately and never executed; "
+            "review-register candidates were NOT executed."
+        )
+    diagnostic_relationships: list[dict] = []
+    for edge in dataset.dependencies_index.get("dependencies", []) or []:
+        if dependency_trust(edge, dataset) == TRUST_VERIFIED:
+            continue
+        a, b = edge.get("from_requirement_id"), edge.get("to_requirement_id")
+        if a not in by_req_id or b not in by_req_id:
+            continue
+        diagnostic_relationships.append({
+            "dependency_id": edge.get("dependency_id"),
+            "from_requirement_id": a,
+            "to_requirement_id": b,
+            "dependency_type": edge.get("dependency_type"),
+            "trust": TRUST_DIAGNOSTIC,
+            "executable": False,
+            "from_final_state": by_req_id[a].get("final_state"),
+            "to_final_state": by_req_id[b].get("final_state"),
+            "note": edge.get("note"),
+        })
 
     return AdapterResult(
         requirements=tuple(applicable_reqs),
@@ -169,6 +204,7 @@ def build_graph_inputs(
         requirement_states=requirement_states,
         id_map=id_map,
         excluded=tuple(excluded),
+        diagnostic_relationships=tuple(diagnostic_relationships),
         dependency_note=dep_note or "No requirements evaluated as applicable; dependency index not consulted.",
     )
 
@@ -178,6 +214,7 @@ def _maybe_add_edge(
     id_map: RequirementIdMap,
     out: list[DependencyEdge],
     seen: set[str],
+    dataset=None,
 ) -> None:
     """Translate one verified DEP-### edge record (dependencies_index.yaml
     schema: from_requirement_id / to_requirement_id) into a DependencyEdge,
@@ -187,6 +224,13 @@ def _maybe_add_edge(
     at this layer) — DependencyService itself also enforces this via
     IgnoredDependency for edges that slip through, so this is
     belt-and-braces, not the only safeguard."""
+    # Only executable relationship types with an approved human
+    # DEPENDENCY_EDGE verification enter the graph. Informational
+    # (REQUIRES_OUTCOME_OF) and unverified/DIAGNOSTIC edges never do.
+    if edge.get("dependency_type") not in EXECUTABLE_DEPENDENCY_TYPES:
+        return
+    if dataset is None or dependency_trust(edge, dataset) != TRUST_VERIFIED:
+        return
     from_id = edge.get("from_requirement_id")
     to_id = edge.get("to_requirement_id")
     if not from_id or not to_id:

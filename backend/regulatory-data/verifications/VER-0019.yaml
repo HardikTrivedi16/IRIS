@@ -1,0 +1,15 @@
+verification_id: VER-0019
+target_type: DEPENDENCY_EDGE
+target_id: DEP-0002
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-013, SRC-014]
+evidence_checks: [EVID-DRUGS-05]
+notes: >
+  Human approval by the project reviewer, recorded in chat on 2026-09-26 (Dependency Tranche 1
+  approval), for the bounded PREREQUISITE claim only: the encoded retention obligation of REQ-0015
+  presupposes an existing manufacturing licence of the relevant class represented by the approved
+  REQ-0003 pathways (Drugs Rules r.72). It does not claim identical forms across REQ-0003 pathways,
+  universal retention coverage, modelled fee amounts, or Form 28/28B/28D or Form 25A classes beyond
+  the already-approved encoded scope.

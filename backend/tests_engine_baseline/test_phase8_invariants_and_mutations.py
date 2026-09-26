@@ -59,8 +59,8 @@ def test_invariant_review_candidate_never_becomes_dependency(dataset):
     from iris_engine.dependencies import evaluate_dependencies
     for req_id in dataset.requirements:
         result = evaluate_dependencies(req_id, dataset)
-        assert result.verified_edges_as_target == []
-        assert result.verified_edges_as_source == []
+        ids = {e["dependency_id"] for e in result.verified_edges_as_target + result.verified_edges_as_source}
+        assert ids <= {"DEP-0001", "DEP-0002"}  # only the two human-approved edges; never a review candidate
 
 
 def test_invariant_regulatory_data_never_changes_during_a_test_run(dataset):

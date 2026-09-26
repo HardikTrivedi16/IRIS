@@ -3,6 +3,7 @@ from uuid import UUID
 import networkx as nx
 
 from .models import (
+    RelationshipType,
     ApplicableRequirement,
     DependencyEdge,
     IgnoredDependency,
@@ -89,6 +90,13 @@ class DependencyService:
         for dep in dependencies:
             prereq_id = dep.prerequisite_requirement_id
             dep_id = dep.dependent_requirement_id
+
+            if dep.relationship_type != RelationshipType.PREREQUISITE:
+                # Informational relationships never enter the executable graph.
+                ignored_deps.append(
+                    IgnoredDependency(edge=dep, reason="NON_EXECUTABLE_RELATIONSHIP_TYPE")
+                )
+                continue
 
             if prereq_id == dep_id:
                 raise SelfDependencyError(

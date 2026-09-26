@@ -34,7 +34,9 @@ def test_210_files_inspected(dataset):
     # Batch 2b (verification candidates) adds 11 records: 2 SRC (032/033), 2 EVID (OSH-03/04), 4 COND (0082..0085),
     # 3 RULE-VERSION (RULE-0014-V3, RULE-0015-V3, RULE-0016-V2) = 328; final pass +12 COND (0086..0097) +1 SRC-034 = 341.
     # Verification Batch 2 adds 5 VER records (VER-0013..VER-0017) = 346.
-    assert len(report.files_inspected) == 346
+    # Dependency Tranche 1 adds 2 DEPENDENCY_EDGE VER records (VER-0018/0019) = 348
+    # (the DEP-0001..0004 records live in the already-counted dependencies_index.yaml).
+    assert len(report.files_inspected) == 348
 
 
 def test_broken_reference_is_detected(dataset):

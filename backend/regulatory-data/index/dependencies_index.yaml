@@ -1,10 +1,94 @@
-# IRIS — Phase 6 Dependency Index
-# Empty: zero DEP-### edges were authored in this pass. See
-# regulatory-data/registers/dependency_review_register.yaml for the 5 candidate relationships that
-# were considered and why none could be verified.
+# IRIS — Dependency Index (Dependency Tranche 1)
+#
+# Four Requirement->Requirement relationships. DEP-0001/0002 have APPROVED
+# DEPENDENCY_EDGE Verification records (VER-0018/0019); DEP-0003/0004 are
+# informational and DIAGNOSTIC. Trust is DERIVED, never stored here:
+#   PREREQUISITE edge + APPROVED DEPENDENCY_EDGE VER  -> VERIFIED (executable)
+#   anything else                                     -> DIAGNOSTIC
+# `verification_status` below mirrors whether an edge-level human approval
+# exists; it is not a second trust source.
+#
+# dependency_type:
+#   PREREQUISITE        executable: B's obligation presupposes A (critical path).
+#   REQUIRES_OUTCOME_OF informational only: B's applicability depends on the
+#                       legal outcome represented by A. NEVER executed as an
+#                       ordering/prerequisite by the graph engine.
+#
+# Rejected pairs (see registers/dependency_review_register.yaml and the
+# Tranche 1 report) are deliberately NOT edges, e.g. FSSAI REQ-0011/12/13
+# classification alternatives, REQ-0018<->REQ-0019, REQ-0016->REQ-0017,
+# REQ-0005->REQ-0006, REQ-0014->REQ-0001/0002, Water<->Air, REQ-0020->REQ-0021.
 
-dependencies: []
+dependencies:
+
+  - dependency_id: DEP-0001
+    from_requirement_id: REQ-0006
+    to_requirement_id: REQ-0007
+    dependency_type: PREREQUISITE
+    verification_status: VERIFIED
+    evidence_ids: [EVID-BOILER-02, EVID-BOILER-03]
+    source_ids: [SRC-007, SRC-028]
+    description: >
+      Boiler certificate continuation/renewal presupposes the boiler
+      registration/certificate represented by REQ-0006.
+    note: >
+      Bounded claim: only REQ-0007's certificate continuation/renewal/
+      event-based-cessation obligation (Boilers Act 2025 ss.12(6), 13, 15)
+      presupposes the registration/certificate of REQ-0006 (s.12). It does NOT
+      claim every boiler obligation depends on REQ-0006. Human-approved (VER-0018).
+    effective_from: "2025-05-01"  # Act commencement, S.O. 1943(E) (EVID-BOILER-03)
+
+  - dependency_id: DEP-0002
+    from_requirement_id: REQ-0003
+    to_requirement_id: REQ-0015
+    dependency_type: PREREQUISITE
+    verification_status: VERIFIED
+    evidence_ids: [EVID-DRUGS-05]
+    source_ids: [SRC-013, SRC-014]
+    description: >
+      Drug licence retention applies to an existing manufacturing licence
+      granted through the relevant REQ-0003 licensing pathways.
+    note: >
+      Bounded claim: Drugs Rules 1945 r.72(1) keeps a Form 25/25B/25F licence
+      valid on deposit of a five-yearly retention fee; the retention
+      obligation (REQ-0015) attaches to a licence of the kind represented by
+      REQ-0003. It does NOT claim identical forms/conditions across every
+      REQ-0003 pathway. Human-approved (VER-0019).
+
+  - dependency_id: DEP-0003
+    from_requirement_id: REQ-0001
+    to_requirement_id: REQ-0010
+    dependency_type: REQUIRES_OUTCOME_OF
+    verification_status: UNVERIFIED
+    evidence_ids: [EVID-HW-02]
+    source_ids: [SRC-024]
+    description: >
+      Hazardous Waste authorisation applicability under HOWM Rule 6(1A)
+      depends partly on whether Water Act consent is required.
+    note: >
+      DIAGNOSTIC, informational only. NOT a prerequisite: it does not mean
+      "obtain Water consent before Hazardous Waste authorisation". REQ-0001 is
+      itself non-authoritative, and the engine consumes the manually supplied
+      fact state_board_consent_not_required_under_water_and_air_acts; it does
+      not derive that fact from REQ-0001/REQ-0002 Requirement outcomes.
+
+  - dependency_id: DEP-0004
+    from_requirement_id: REQ-0002
+    to_requirement_id: REQ-0010
+    dependency_type: REQUIRES_OUTCOME_OF
+    verification_status: UNVERIFIED
+    evidence_ids: [EVID-HW-02]
+    source_ids: [SRC-024]
+    description: >
+      Hazardous Waste authorisation applicability under HOWM Rule 6(1A)
+      depends partly on whether Air Act consent is required.
+    note: >
+      DIAGNOSTIC, informational only. NOT a prerequisite/ordering edge. REQ-0002
+      alone does not determine the combined Water+Air exemption state, and the
+      engine does not derive that combined fact from Requirement outcomes.
 
 counts:
-  total_dependencies: 0
-  by_type: {}
+  total_dependencies: 4
+  by_type:
+    PREREQUISITE: 2
+    REQUIRES_OUTCOME_OF: 2

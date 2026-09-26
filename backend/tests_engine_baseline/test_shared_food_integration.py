@@ -351,5 +351,9 @@ def test_new_requirements_stay_draft_and_non_authoritative_in_production(engine)
 # --- Zero dependency edges ---------------------------------------------------
 
 def test_dependency_edges_remain_zero(dataset):
+    # Dependency Tranche 1 authored exactly four edges; the FOOD/FSSAI
+    # requirements must stay edge-free (tiers are classification, not deps).
     deps = dataset.dependencies_index.get("dependencies", []) or []
-    assert deps == []
+    assert len(deps) == 4
+    fssai = {"REQ-0004", "REQ-0011", "REQ-0012", "REQ-0013"}
+    assert not any(d["from_requirement_id"] in fssai or d["to_requirement_id"] in fssai for d in deps)

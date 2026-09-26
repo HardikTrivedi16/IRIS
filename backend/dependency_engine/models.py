@@ -8,6 +8,8 @@ from .exceptions import InvalidRequirementError
 
 class RelationshipType(str, Enum):
     PREREQUISITE = "PREREQUISITE"
+    # Informational only: never executed as an ordering/critical-path prerequisite.
+    REQUIRES_OUTCOME_OF = "REQUIRES_OUTCOME_OF"
 
 
 class WorkflowStatus(str, Enum):
