@@ -1,0 +1,25 @@
+condition_id: COND-0075
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0073
+  - COND-0074
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0036]
+
+description: >
+  Rule 6(1A) exemption NOT established: consent under the Water/Air Acts is
+  required (COND-0073) OR the waste is not handed to an authorised destination
+  (COND-0074). By De Morgan this is NOT(consent-not-required AND handover),
+  expressed without a NOT operator (the grammar has only AND/OR).
+
+normalization_notes: >
+  FALSE only when BOTH exemption conditions are affirmatively true; TRUE when
+  either is affirmatively false; otherwise UNKNOWN. Wave 1C, DRAFT.

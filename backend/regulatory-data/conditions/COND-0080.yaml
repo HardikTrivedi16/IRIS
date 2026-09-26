@@ -1,0 +1,23 @@
+condition_id: COND-0080
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0078
+  - COND-0079
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0030, RF-0038]
+
+description: >
+  RULE-0026-V2 root: producer of Schedule-I EEE (COND-0078) AND not a micro
+  enterprise (COND-0079).
+
+normalization_notes: >
+  Successor to COND-0064 as RULE-0026's root; COND-0064 and RULE-0026-V1 are
+  preserved. Batch 2, DRAFT.

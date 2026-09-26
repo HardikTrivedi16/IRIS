@@ -78,3 +78,11 @@ authority_attribution_note: >
   is retained separately (also created this pass) as the issuing authority of the Central
   instrument (INST-DRUGS-RULES-1945) and for genuinely Central roles (new drugs, imports,
   biologics) — none of which PH-01/02/03/05 invoke.
+
+batch2_note: >
+  Batch 2 (2026-09-26): Rules 69(1), 75 and 68A checked against the CDSCO compiled Drugs Rules (SRC-013,
+  as amended to G.S.R. 360(E) 01-07-2024). Pre-existing dangling Requirement-level references (RF-0004..RF-0007,
+  EVID-FDA-01) are unresolved records from an earlier phase and are left untouched; the Rule Version chains
+  (RULE-0003/0017/0018/0019) resolve fully. Classification-group note: the engine's group evaluator does not
+  count a blocked (DRAFT, production) member as REQUIRES_INFORMATION, so all four RULE-0003/0017/0018/0019 should
+  be promoted or held together.

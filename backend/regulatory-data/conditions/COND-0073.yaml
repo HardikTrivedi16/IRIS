@@ -1,0 +1,27 @@
+condition_id: COND-0073
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.state_board_consent_not_required_under_water_and_air_acts
+operator: "=="
+comparison_value: false
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-HW-02]
+
+grounding_regulatory_fact_ids: [RF-0036]
+
+description: >
+  True (the Rule 6(1A) consent-based exemption is NOT established) when
+  project.state_board_consent_not_required_under_water_and_air_acts is false,
+  i.e. consent to establish or to operate is required from the State Board
+  under the Water Act or the Air Act.
+
+normalization_notes: >
+  Negative-polarity leaf; absent fact resolves UNKNOWN. The fact is true only
+  where neither consent to establish nor consent to operate is required under
+  either Act (conservative reading of 'Water Act and Air Act' in r.6(1A)). A
+  White-category plant can be a basis for TRUE; a prior-EC holder alone cannot
+  (consent to operate remains required). No EC-holder exemption is invented.

@@ -9,8 +9,10 @@ def test_draft_rule_cannot_be_production_decision(engine, dataset):
     # currentness-correction pass — see rule_review_register.yaml
     # RULE-REV-0006 — but none has ever been promoted).
     for rv_id, rv in dataset.rule_versions.items():
-        assert rv.get("status") in ("DRAFT", "SUPERSEDED")
-        assert rv.get("status") != "ACTIVE"
+        assert rv.get("status") in ("DRAFT", "SUPERSEDED", "ACTIVE")
+        if rv.get("status") == "ACTIVE":  # only with an APPROVED human VER (Verification Batch 1)
+            assert any(v.get("target_id") == rv_id and v.get("result") == "APPROVED"
+                       for v in dataset.verifications.values()), rv_id
 
     d = engine.evaluate_requirement("P", "REQ-0001",
         {"project.likely_to_discharge_sewage_or_trade_effluent": True}, PROD)
@@ -19,8 +21,7 @@ def test_draft_rule_cannot_be_production_decision(engine, dataset):
 
 
 def test_draft_rule_labelled_non_production_when_evaluated(engine):
-    d = engine.evaluate_requirement("P", "REQ-0001",
-        {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP)
+    d = engine.evaluate_requirement("P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, NP)
     assert d["is_non_production_result"] is True
     assert d["evaluation_mode"] == "NON_PRODUCTION"
     assert d["final_state"] == "APPLICABLE"
@@ -54,14 +55,13 @@ def test_unresolved_overlap_remains_review_never_resolved(engine):
 
 
 def test_provenance_chain_intact(engine, dataset):
-    d = engine.evaluate_requirement("P", "REQ-0001",
-        {"project.likely_to_discharge_sewage_or_trade_effluent": True}, EvaluationMode.NON_PRODUCTION)
+    d = engine.evaluate_requirement("P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, EvaluationMode.NON_PRODUCTION)
     prov = d["provenance"]
     assert prov["requirement_id"] == "REQ-0001"
     assert prov["rule_id"] == "RULE-0001"
-    assert prov["rule_version_id"] == "RULE-0001-V1"
-    assert prov["regulatory_fact_ids"] == ["RF-0001"]
-    assert prov["evidence_ids"] == ["EVID-MPCB-01"]
+    assert prov["rule_version_id"] == "RULE-0001-V2"
+    assert prov["regulatory_fact_ids"] == ["RF-0001", "RF-0034"]
+    assert prov["evidence_ids"] == ["EVID-MPCB-01", "EVID-MPCB-03", "EVID-MPCB-04", "EVID-MPCB-07"]
     assert prov["authority_id"] == "AUTH-MoEFCC"
     assert prov["instrument_id"] == "INST-WATER-74"
     assert "unresolved_note" in prov  # Phase 3/4 records not in this package — never fabricated

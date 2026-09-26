@@ -63,7 +63,8 @@ def test_adapter_includes_applicable_requirement_in_non_production():
     dataset = get_dataset()
     decisions = evaluate_all(
         project_id="test-proj",
-        project_facts={"project.likely_to_discharge_sewage_or_trade_effluent": True},
+        project_facts={"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                       "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False},
         evaluation_mode="NON_PRODUCTION",
     )
     result = build_graph_inputs("test-proj", decisions, dataset)
@@ -85,6 +86,8 @@ def test_adapter_zero_verified_dependency_edges_today():
         project_facts={
             "project.likely_to_discharge_sewage_or_trade_effluent": True,
             "project.plant_located_in_air_pollution_control_area": True,
+            "project.is_white_category_industrial_plant": False,
+            "project.holds_prior_environmental_clearance": False,
         },
         evaluation_mode="NON_PRODUCTION",
     )
@@ -113,7 +116,8 @@ def test_adapter_duration_is_never_fabricated():
     dataset = get_dataset()
     decisions = evaluate_all(
         project_id="test-proj",
-        project_facts={"project.likely_to_discharge_sewage_or_trade_effluent": True},
+        project_facts={"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                       "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False},
         evaluation_mode="NON_PRODUCTION",
     )
     result = build_graph_inputs("test-proj", decisions, dataset)

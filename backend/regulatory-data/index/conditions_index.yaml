@@ -120,9 +120,9 @@ conditions:
     used_by_rule_versions: [RULE-0029-V1]
 
 counts:
-  total_conditions: 67
-  leaf_conditions: 44
-  composite_conditions: 23
+  total_conditions: 81
+  leaf_conditions: 51
+  composite_conditions: 30
 
 # NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): COND-0039..
 # COND-0045 (7 new conditions: turnover-based Central/State/Registration
@@ -146,3 +146,9 @@ counts:
 # this index is a lookup aid.
 
 # NOTE (remaining-sector tranche, 2026-09-23): COND-0062..COND-0067 (6 single-leaf BOOLEAN_EQUALS) added.
+
+# NOTE (Wave 1C, 2026-09-26): COND-0068..COND-0076 (5 leaf + 4 composite) added for the corrected
+# successor Rule Versions RULE-0001-V2/0002-V2/0012-V2/0013-V2 - see RULE-REV-0010.
+
+# NOTE (Batch 2, 2026-09-26): COND-0077..COND-0081 (2 leaf + 3 composite) added for RULE-0026-V2/RULE-0027-V2
+# (E-Waste producer import limbs and micro-enterprise exclusion).

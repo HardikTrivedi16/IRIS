@@ -17,8 +17,10 @@ dependencies_as_source: []
 
 grounding_regulatory_fact_ids:
   - RF-0017
+  - RF-0037
 evidence_ids:
   - EVID-BOILER-02
+  - EVID-BOILER-03
 
 requirement_notes: >
   SH-05 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2). Modelled as a
@@ -26,3 +28,7 @@ requirement_notes: >
   consequence), not RENEWAL_METADATA — its expiry logic (accident/movement/
   structural alteration/prohibition order, not dates alone) is itself the
   substantive rule, per H2.2's classification basis.
+
+wave_1c_note: >
+  Wave 1C (2026-09-26): commencement closed - the Boilers Act, 2025 is in force
+  from 2025-05-01 (S.O. 1943(E), SRC-028). RULE-0010-V1 remains DRAFT.

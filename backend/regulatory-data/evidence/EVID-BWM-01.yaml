@@ -1,13 +1,15 @@
 evidence_id: EVID-BWM-01
 source_id: SRC-015
-section_or_clause: "Battery Waste Management Rules, 2022 - r.4(1) (producer registration)"
-page: null
+section_or_clause: "Battery Waste Management Rules 2022 (original text) - r.3(1)(u) 'Producer' and r.4(4)"
+page: 28-29
 excerpt: >
-  Research-pack summary (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §5.H/§12
-  AU-02) - NOT a verbatim gazette quotation: every producer (manufactures
-  and sells under own brand; sells under own brand made by others; or
-  imports batteries or battery-containing equipment) registers with CPCB
-  in Form 1(A) and carries EPR for collection/recycling; covers portable,
-  automotive, industrial and EV batteries.
-verification_status: UNVERIFIED
-regulatory_fact_id: RF-0029
+  Original 2022 text. r.3(1)(u): "`Producer' means an entity who engages in: (i)
+  manufacture and sale of Battery including refurbished Battery, including in
+  equipment, under its own brand; or (ii) sale of Battery including refurbished
+  Battery, including in equipment, under its own brand produced by other
+  manufacturers or suppliers; or (iii) import of Battery as well as equipment
+  containing Battery;" r.4(4): "The person or an entity involved in manufacturing of
+  Battery shall have to register through the online centralised portal as Producer
+  in Form 1(A). The certificate of registration shall be issued in Form 1(B)."
+  Superseded by the 2023 amendment (EVID-BWM-02).
+verification_status: VERIFIED

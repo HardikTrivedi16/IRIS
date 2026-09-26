@@ -1,0 +1,27 @@
+condition_id: COND-0070
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0001
+  - COND-0068
+  - COND-0069
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0001, RF-0034]
+
+description: >
+  RULE-0001-V2 root (current Water consent-to-establish regime): likely to
+  discharge sewage/trade effluent (COND-0001) AND not a White-category plant
+  (COND-0068) AND not a prior-EC plant (COND-0069).
+
+normalization_notes: >
+  Successor to COND-0001 as RULE-0001's root; COND-0001 is reused unchanged and
+  RULE-0001-V1 (root COND-0001) is preserved. DRAFT: Maharashtra's adoption of
+  the 2024 Water Amendment Act (the source of the proviso G.S.R. 703(E) rests on)
+  is not established by an archived official instrument.

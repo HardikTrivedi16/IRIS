@@ -11,4 +11,4 @@ description: >
   classification is SCHEDULE_C_OR_C1.
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0018-V1

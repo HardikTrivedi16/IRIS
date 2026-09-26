@@ -4,13 +4,28 @@ publisher_authority_id: AUTH-BOILER-MH
 document_type: INDIA_CODE
 official_url: "https://www.indiacode.nic.in/bitstream/123456789/21395/1/A2025-12.pdf"
 publication_date: "2025-04-04"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-007_Boilers_Act_2025_Gazette_CG-DL-E-04042025-262299.pdf"
+checksum_sha256: "2e3d21cdde00c2150d232bebdb091ea1d2a09722b558cf0495ff8e0064e3aff9"
+source_status: ARCHIVED
 notes: >
   Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
   (SRC-MH-BOILER-2025 / SRC-MH-005 lineage) — not independently re-fetched
   by this pass. Covers s.2(c) (boiler definition, SH-04), s.11(1)/s.12
   (registration, SH-04), and ss.12(6)/13/15/23 (certificate lifecycle,
   SH-05).
+  Wave-1 archival (2026-09-26): the exact artifact was downloaded from
+  https://fabkerala.gov.in/eng/images/Acts%20and%20Rules/Acts/Boiler-Act-2025.pdf
+  and its SHA-256 computed from the saved bytes. Gazette of India
+  Extraordinary, Part II Sec. 1, No. 12, 4 April 2025
+  (CG-DL-E-04042025-262299), 18 pages, hosted by the Government of Kerala
+  Department of Factories & Boilers (an identical-text copy was also found on
+  boiler.gujarat.gov.in). The originally listed indiacode.nic.in URL no longer
+  serves files and the migrated India Code item (handle 123456789/601653)
+  exposes no PDF. The commencement notification S.O. 1943(E) of 30.04.2025 was
+  NOT archived at Wave 1 (archived later as SRC-028, see Wave-1C update below). ARCHIVED means only that this artifact is archived; it does
+  not mean the evidence is human-verified (evidence rows remain UNVERIFIED).
+  Wave-1C update (2026-09-26): the commencement notification S.O. 1943(E)
+  of 30.04.2025 IS now archived as SRC-028 (DPIIT-hosted Gazette copy). It
+  appoints 1st May, 2025 as the date on which the provisions of the Act come
+  into force (no section-wise dates).

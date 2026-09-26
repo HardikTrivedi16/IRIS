@@ -1,0 +1,26 @@
+condition_id: COND-0071
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0002
+  - COND-0068
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0002, RF-0035]
+
+description: >
+  RULE-0002-V2 root (current Air consent regime): plant in an air pollution
+  control area (COND-0002) AND not a White-category plant (COND-0068).
+
+normalization_notes: >
+  Successor to COND-0002 as RULE-0002's root; COND-0002 is reused unchanged and
+  RULE-0002-V1 (root COND-0002) is preserved. A prior-EC plant remains
+  APPLICABLE here because consent to operate is not exempted (see COND-0069
+  notes); the CTE/CTO split is documented in RULE-0002-V2, not modelled as a
+  second outcome. DRAFT.

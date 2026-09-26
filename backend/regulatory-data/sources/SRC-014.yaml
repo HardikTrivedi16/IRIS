@@ -1,23 +1,21 @@
 source_id: SRC-014
-title: "G.S.R. 1337(E) series (2017) — Drugs Rules 1945 amendment: perpetual licence validity + 5-yearly retention fee"
+title: "G.S.R. 1337(E) dated 27.10.2017 - Drugs and Cosmetics (Tenth Amendment) Rules, 2017: licence retention fee (rr. 72, 73AA, 77) + perpetual-validity condition text in Forms"
 publisher_authority_id: AUTH-CDSCO
 document_type: GAZETTE
-official_url: "https://cdsco.gov.in"
-publication_date: "2017-01-01"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+official_url: "https://drugscontrol.py.gov.in/sites/default/files/gsr-1337.pdf"
+publication_date: "2017-10-27"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-014_GSR1337E_Drugs_Tenth_Amendment_27Oct2017_Puducherry_copy.pdf"
+checksum_sha256: "ed8feb791aaeeef1d896059ae94148cc348efe510828f1ddb9ba1537c2aeeae9"
+source_status: ARCHIVED
 notes: >
-  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
-  (SRC-MH-DRUGS-PERPETUAL lineage) — NOT independently retrieved or
-  archived by this pass. `retrieved_date` reproduces the research pack's
-  own stated retrieval date, not an independent verification.
-  `official_url` is the general CDSCO portal — the research pack itself
-  only says "cdsco.gov.in gazette copies" without a pinned URL. Covers
-  PH-05 (REQ-0015): condition text substituted into Forms
-  25/25-A/25-F/28/28-B/28-D etc. — "The licence, unless sooner suspended
-  or cancelled, shall remain valid perpetually. However, compliance...
-  shall be assessed not less than once in three years or as needed as
-  per risk based approach", subject to a retention fee before the expiry
-  of every succeeding five years from issue.
+  Batch-2 archival (2026-09-26): downloaded from the Puducherry Drugs Control
+  Department (state government) website, which hosts the Gazette pages (Gazette of
+  India Extraordinary Part II Sec. 3(i), pp. 8-11+, Ministry of Health and Family
+  Welfare notification of 27th October, 2017); SHA-256 computed from the saved
+  bytes. It is a STATE-HOSTED COPY of the central Gazette pages, not the
+  Government of India Press original. Rule 72 (Forms 25/25B/25F) appears on PDF
+  p.3 and the substituted Form condition 'shall remain valid perpetually' on
+  pp.5-6. The CDSCO-hosted compilation (SRC-013) shows the same rules in current
+  form. ARCHIVED means only that this artifact is archived; it is not a human
+  verification of any Evidence or Rule.

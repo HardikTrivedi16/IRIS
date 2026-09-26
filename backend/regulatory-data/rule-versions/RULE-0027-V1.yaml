@@ -32,7 +32,7 @@ lifecycle_stage: PRE_OPERATION
 effective_start_date: null
 effective_end_date: null
 
-status: DRAFT
+status: SUPERSEDED
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -51,3 +51,8 @@ provenance:
 
 validation_notes: >
   EL-02: VERIFIED_READY_FOR_PROVENANCE. Own Requirement alongside EL-01 (one entity may hold both registrations).
+
+superseded_note: >
+  Batch 2 (2026-09-26): superseded by the corrected successor (see the -V2 file). This version
+  omitted the E-Waste Rules r.2(c) micro-enterprise exclusion. Preserved unedited apart from
+  status and this note; no legal transition date applies (encoding defect, not a change in law).

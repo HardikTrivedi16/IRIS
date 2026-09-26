@@ -1,15 +1,22 @@
 evidence_id: EVID-BOILER-02
 source_id: SRC-007
 section_or_clause: "Sections 12(6), 13(1), 13(3)-(4), 15, 23"
-page: null
+page: 8
 excerpt: >
-  s.12(6): a boiler certificate is valid for a period not exceeding 12
-  months (24 months for an economiser or unfired boiler in an oil/asphalt/
-  bitumen plant). s.13(1): a certificate ceases to be in force on (a)
-  expiry, (b) an accident occurring to the boiler, (c) the boiler being
-  moved (except a vertical boiler with heating surface under 20 m²), (d)
-  structural alteration/repair, or (e) a prohibition order. s.13(3)-(4):
-  renewal requires inspection by a competent person within 15 days. s.15:
-  continued use pending renewal is permitted only where renewal was applied
-  for before expiry. s.23: accidents must be reported within 24 hours.
-verification_status: UNVERIFIED
+  s.12(6) (PDF p.8): the Chief Inspector orders a certificate "authorising the
+  use of the boiler for a period not exceeding twelve months"; proviso: an
+  economiser or an unfired boiler forming an integral part of a plant in which
+  steam is generated solely by oil, asphalt or bitumen as heating medium — not
+  exceeding twenty-four months. s.13(1) (p.8): a certificate ceases to be in
+  force (a) on expiry, (b) when any accident occurs to the boiler, (c) when
+  the boiler is moved, except a vertical boiler whose heating surface is less
+  than twenty square metres, or a portable or vehicular boiler, (d) on
+  structural alteration, addition or renewal (save as provided in s.17), (e)
+  if the Chief Inspector so directs, on such change to an attached steam-pipe,
+  (f) on an order prohibiting use as dangerous. s.13(3)-(4) (pp.8-9): the
+  owner may apply for renewal; the competent person shall, within fifteen days
+  of receipt, inspect the boiler. s.15 (p.9): after expiry the owner may use
+  the boiler at the certificate maximum pressure only if renewal was applied
+  for before expiry. s.23(1) (p.11): an accident must be reported in writing
+  to the Inspector within twenty-four hours.
+verification_status: VERIFIED

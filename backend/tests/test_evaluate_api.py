@@ -33,7 +33,8 @@ def test_case1_draft_rule_never_silently_becomes_production_active(client):
             "project_id": "mahapharm",
             "requirement_id": "REQ-0001",
             "evaluation_mode": "NON_PRODUCTION",
-            "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True},
+            "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                      "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False},
             "persist": False,
         },
     )
@@ -82,7 +83,8 @@ def test_case4_explanation_block_present_and_populated(client):
             "project_id": "mahapharm",
             "requirement_id": "REQ-0002",
             "evaluation_mode": "NON_PRODUCTION",
-            "facts": {"project.plant_located_in_air_pollution_control_area": True},
+            "facts": {"project.plant_located_in_air_pollution_control_area": True,
+                      "project.is_white_category_industrial_plant": False},
             "persist": False,
         },
     )
@@ -102,7 +104,8 @@ def test_case5_and_6_decision_can_be_persisted_and_retrieved_with_snapshot_and_a
             "project_id": "mahapharm",
             "requirement_id": "REQ-0002",
             "evaluation_mode": "NON_PRODUCTION",
-            "facts": {"project.plant_located_in_air_pollution_control_area": True},
+            "facts": {"project.plant_located_in_air_pollution_control_area": True,
+                      "project.is_white_category_industrial_plant": False},
             "persist": True,
         },
     )

@@ -4,10 +4,10 @@ publisher_authority_id: AUTH-MoEFCC
 document_type: INDIA_CODE
 official_url: "https://www.indiacode.nic.in/handle/123456789/1608"
 publication_date: "1974-03-23"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-001_Water_Act_1974_CPCB_official_copy.pdf"
+checksum_sha256: "cd83eb5a28b58d2ffbc6613011d792e2c39372bb711cd5a093a7e6d5a24cf076"
+source_status: ARCHIVED
 notes: >
   Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
   (SRC-MH-WATER-S25) — not independently re-fetched/downloaded/hashed by
@@ -16,3 +16,21 @@ notes: >
   evidence). Independent primary-source retrieval remains a human/future
   step before this record's evidence can move to verification_status:
   VERIFIED.
+  Wave-1 archival (2026-09-26): the exact artifact was downloaded from
+  https://cpcb.nic.in/upload/home/water-pollution/WaterAct-1974.pdf and its
+  SHA-256 computed from the saved bytes. Central Pollution Control Board
+  (Government of India) website copy of the Act as amended up to the 1988
+  amendments (30 pages). The indiacode.nic.in URL above no longer serves files
+  (India Code migrated to indiacode.gov.in). CURRENTNESS BLOCKER FOR REQ-0001:
+  this copy does NOT reflect the later Central exemption of categories of
+  industrial plants from s.25 consent (G.S.R. 703(E) dated 12.11.2024,
+  reported on official PIB/PARIVESH pages, not archived here) — see the Wave-1
+  human review pack. ARCHIVED means only that this artifact is archived; it
+  does not mean the evidence is human-verified (evidence rows remain
+  UNVERIFIED).
+  Wave-1B update (2026-09-26): the later Central exemptions ARE now archived —
+  see SRC-018 (G.S.R. 703(E), 12.11.2024), SRC-020 (MoEFCC SOP 14.11.2024),
+  SRC-021 (Water Amendment Act 2024, which supplies the s.25(1) proviso and
+  applies to a State only on adoption under Art. 252) and SRC-023 (MPCB
+  circular 16.06.2025). RULE-0001-V1 does not encode them; see the Wave-1B
+  correction proposal.

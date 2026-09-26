@@ -8,4 +8,4 @@ description: >
   EL-01. Determines whether E-waste producer registration + EPR - E-Waste Rules 2022 r.4 attaches, from project.sells_schedule1_eee_under_own_brand.
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0026-V2

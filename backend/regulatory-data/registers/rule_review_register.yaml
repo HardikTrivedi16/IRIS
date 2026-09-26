@@ -206,8 +206,38 @@ review_items:
     next_phase: "Further primary research; then a future integration pass."
     blocks: "Any Rule asserting PESO licence applicability or thresholds."
 
+  - review_id: RULE-REV-0010
+    subject: "Wave 1C - corrected DRAFT successors RULE-0001-V2 / RULE-0002-V2 / RULE-0012-V2 / RULE-0013-V2 and Boilers commencement"
+    related_regulatory_fact_ids: [RF-0034, RF-0035, RF-0036, RF-0037, RF-0020]
+    related_phase4_review_id: null
+    reason: >
+      2024 White-category / prior-EC exemptions (Water s.25(1), Air s.21(1)), the 2019 HOWM r.6(1A) exemption,
+      and Legal Metrology r.27's 'pre-packs or imports' scope were not reflected in the V1 logic. Successors were
+      authored as DRAFT; V1 records preserved. Boilers Act 2025 commencement (1 May 2025) confirmed from S.O. 1943(E).
+    decision: "Successors DRAFT, no VER, no ACTIVE promotion. Human review packs prepared in the Wave 1C report."
+    current_status: REQUIRES_REVIEW
+    what_is_needed: "Human decision on Maharashtra adoption basis (Water), Jan Vishwas commencement (Air), CTE/CTO Requirement split, r.6(1A) reading, and Rule 27 Gazette confirmation."
+    next_phase: "Human approval, then a VER-creation and selective promotion pass."
+    blocks: "ACTIVE promotion of RULE-0001-V2, RULE-0002-V2, RULE-0013-V2 (and RULE-0012-V2 pending review)."
+    approval_update: "2026-09-26: REQ-0009 (RULE-0012-V2) and REQ-0010 (RULE-0013-V2) were approved (VER-0003, VER-0004) and promoted; the Boilers commencement part (REQ-0006/0007) by VER-0001/VER-0002; REQ-0001/RULE-0001-V2 and REQ-0002/RULE-0002-V2 were NOT approved and remain open."
+
+  - review_id: RULE-REV-0011
+    subject: "Batch 2 - verification-candidate reconciliation: REQ-0003/0015 (Drugs), REQ-0009 (LM r.27), REQ-0010 (HOWM 6(1A)), REQ-0017 (Battery), REQ-0018/0019 (E-Waste)"
+    related_regulatory_fact_ids: [RF-0020, RF-0025, RF-0026, RF-0027, RF-0028, RF-0029, RF-0030, RF-0031, RF-0038]
+    related_phase4_review_id: null
+    reason: >
+      Primary sources archived (SRC-013..016, SRC-029, SRC-030). Findings: Drugs Rule 69(1) no longer has renewal and
+      licence duration is retention-fee based; Rule 75 has a Form 27D pathway; the BWM Producer definition gained
+      sub-clause (iv) in 2023; the E-Waste Rules exclude micro enterprises (r.2(c)) and the producer definition
+      includes import limbs; LM Rule 27(1) is unchanged through 2026-09.
+    decision: "DRAFT successors RULE-0025-V2/0026-V2/0027-V2 authored; text corrections to RULE-0017/0018/0019; no VER, no ACTIVE."
+    current_status: RESOLVED
+    what_is_needed: "None for the approved encoded scope. Documented limitations (Form 27D/Part XB/Rule 68A, fee amounts, EPR targets, Rule 2(2), Schedule-I classification as input, r.6(1A) guideline compliance) remain recorded in the Rule Versions."
+    next_phase: "Resolved 2026-09-26 by human approval (VER-0001..VER-0012, reviewer Hardik Trivedi); Rule Versions promoted to ACTIVE."
+    blocks: "Nothing further within the approved scope."
+
 counts:
-  total_review_items: 9
-  REQUIRES_REVIEW: 4
+  total_review_items: 11
+  REQUIRES_REVIEW: 5
   UNKNOWN: 4
-  RESOLVED: 1   # RULE-REV-0002, Pharma tranche 2026-09-23
+  RESOLVED: 2   # RULE-REV-0002, Pharma tranche 2026-09-23

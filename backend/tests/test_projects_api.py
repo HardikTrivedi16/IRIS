@@ -42,7 +42,8 @@ def test_facts_for_missing_project_is_404(client):
 def test_evaluate_uses_stored_project_facts_when_none_supplied_in_request(client):
     client.post(
         "/api/v1/projects/mahapharm/facts",
-        json={"facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True}},
+        json={"facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                        "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}},
     )
     r = client.post(
         "/api/v1/evaluate",

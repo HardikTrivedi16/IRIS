@@ -1,16 +1,22 @@
 source_id: SRC-016
-title: "E-Waste (Management) Rules, 2022 - gazette notification 02.11.2022 + Schedule I"
+title: "E-Waste (Management) Rules, 2022 - G.S.R. 801(E) dated 02.11.2022 (in force 01.04.2023) incl. Schedule I"
 publisher_authority_id: AUTH-MoEFCC
 document_type: GAZETTE
-official_url: "https://moef.gov.in"
+official_url: "https://cpcb.gov.in/uploads/Projects/E-Waste/e-waste_rules_2022.pdf"
 publication_date: "2022-11-02"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-016_EWaste_Management_Rules_2022_GSR801E_CPCB.pdf"
+checksum_sha256: "d03f8744bc79d67a94b06e1020537e93d15572b0cf1d575cb32b76c89f30a5fb"
+source_status: ARCHIVED
 notes: >
-  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
-  (SRC-MH-EWASTE-2022) - NOT independently retrieved or archived by this
-  pass. `official_url` is the general MoEFCC portal (research: "moef.gov.in
-  / cpcb.nic.in"). Covers EL-01/EL-02 (REQ-0018/REQ-0019), r.4. Schedule I
-  itself is not transcribed here.
+  Batch-2 archival (2026-09-26): downloaded from the Central Pollution Control
+  Board website; SHA-256 computed from the saved bytes. Gazette of India
+  Extraordinary Part II Sec. 3(i), MoEFCC, G.S.R. 801(E). r.1(2): in force from
+  1 April 2023. Used for r.2 (application; excludes micro enterprises, p.21), r.3(1)(p)
+  'manufacturer' and 3(1)(t) 'producer' (pp.22-23) and r.4 registration (p.23).
+  Amendments reviewed but NOT archived (none touches rr.2, 3(1)(p), 3(1)(t) or 4):
+  G.S.R. 61(E) 30.01.2023 (Schedule II entries; SHA-256 1cb74f31762aced8216079a364920268329070d13e77968fae0d6019891c8df3), G.S.R. 534(E)
+  24.07.2023 (r.5/r.7/r.9 refrigerant duties + Schedule additions; SHA-256 e7960c4cccff8a7e69ff7b92dd6be2482b839990c8bc86e78408b72120af0a82),
+  G.S.R. 164(E) 08.03.2024 (dismantler definition, r.9A; SHA-256 e15a599fd195bc4ad69a5d64134d22366228e2dd0a8d0953d7a76aba175689e0). Any
+  amendment after March 2024 is not reconciled. ARCHIVED means only that this
+  artifact is archived; it is not a human verification of any Evidence or Rule.

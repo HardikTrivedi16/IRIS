@@ -179,7 +179,8 @@ def test_ph05_unknown_requires_information(engine):
 # --- G. DRAFT Pharma Rule Versions blocked in PRODUCTION --------------------
 
 def test_new_pharma_requirements_stay_draft_and_non_authoritative_in_production(engine):
-    for req_id in ("REQ-0003", "REQ-0014", "REQ-0015"):
+    # REQ-0003 and REQ-0015 are ACTIVE since Verification Batch 1; REQ-0014 (PH-04) stays DRAFT.
+    for req_id in ("REQ-0014",):
         d = engine.evaluate_requirement("P", req_id, {}, PROD)
         assert d["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION", req_id
 
@@ -195,7 +196,7 @@ def test_repurposed_rule_0003_is_the_latest_and_only_version(dataset):
         rv for rv in dataset.rule_versions.values() if rv.get("rule_id") == "RULE-0003"
     ]
     assert len(versions_for_rule_0003) == 1
-    assert versions_for_rule_0003[0]["status"] == "DRAFT"
+    assert versions_for_rule_0003[0]["status"] == "ACTIVE"  # promoted in Verification Batch 1
 
 
 def test_unrelated_fssai_superseded_versions_still_cannot_surface(engine, dataset):

@@ -4,11 +4,31 @@ publisher_authority_id: AUTH-LMO-MH
 document_type: INDIA_CODE
 official_url: "https://consumeraffairs.nic.in"
 publication_date: "2011-04-01"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-009_LM_PackagedCommodities_Rules_2011_IndiaCode.pdf"
+checksum_sha256: "c2561a8b02ffff14f298ad5c499ab8324e272c931e51c0947d07bb57f7d4e837"
+source_status: ARCHIVED
 notes: >
   Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
   (SRC-MH-LM-R27, reused from a prior pass) — not independently re-fetched
   this pass.
+  Wave-1 archival (2026-09-26): the exact artifact was downloaded from
+  https://indiacode.gov.in/server/api/core/bitstreams/a5dd32ca-93a0-45d4-bf4c-d35f7f776e39/content
+  and its SHA-256 computed from the saved bytes. India Code (new portal,
+  indiacode.gov.in) copy of G.S.R. 101(E) dated 7 March 2011, Ministry of
+  Consumer Affairs (Department of Consumer Affairs), CENTRAL collection, file
+  lm_packaged_commodities_rules_2011.pdf (scanned/OCR). Original 2011 text
+  only: later amendment rules are NOT reconciled. ARCHIVED means only that
+  this artifact is archived; it does not mean the evidence is human-verified
+  (evidence rows remain UNVERIFIED).
+  Wave-1B update (2026-09-26): ten amendment instruments (2011 third-amendment
+  corrigendum through 2017, India Code) were read and none touches Rule 27;
+  amendments after 2017 were not located and remain unreconciled. Chapter II's
+  'retail sale' limit (Rule 3 heading) does not apply to Rule 27, which is
+  worded 'for sale, distribution or delivery' and also covers importers.
+  Wave-1C update (2026-09-26): a narrow Rule-27-only currentness check was made
+  against a state-department consolidation 'with all amendments as on
+  24.12.2024' (archived as SRC-027, secondary/non-Gazette): Rule 27(1)'s trigger
+  wording ('pre-packs or imports any commodity for sale, distribution or
+  delivery') is unchanged and carries no amendment footnote. Gazette amendment
+  instruments after 2017 were still not retrieved individually.

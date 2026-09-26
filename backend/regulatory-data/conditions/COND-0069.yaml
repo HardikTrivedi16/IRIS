@@ -1,0 +1,27 @@
+condition_id: COND-0069
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.holds_prior_environmental_clearance
+operator: "=="
+comparison_value: false
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-MPCB-03]
+
+grounding_regulatory_fact_ids: [RF-0034]
+
+description: >
+  True (the project is NOT within the prior-EC exemption from consent to
+  establish) when project.holds_prior_environmental_clearance is false. The
+  fact is true where the project obtained prior environmental clearance under
+  S.O. 1533(E) of 14.09.2006 in respect of its consent to establish. Used only
+  by the Water consent-to-establish rule (RULE-0001-V2).
+
+normalization_notes: >
+  Negative-polarity leaf (== false); absent fact resolves UNKNOWN. Deliberately
+  NOT used by RULE-0002-V2: G.S.R. 702(E)(b) exempts a prior-EC plant only 'in
+  respect of previous consent to establish', so it does not change whether some
+  Air Act consent (i.e. consent to operate) is required. Wave 1C, DRAFT.

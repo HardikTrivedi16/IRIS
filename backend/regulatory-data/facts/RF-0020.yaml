@@ -1,10 +1,10 @@
 regulatory_fact_id: RF-0020
 statement: >
-  A manufacturer or packer who pre-packs a commodity for sale, distribution
+  A manufacturer, packer or importer who pre-packs or imports a commodity for sale, distribution
   or delivery must register with the Director/Controller of Legal
-  Metrology within 90 days of commencing pre-packing, fee ₹500
+  Metrology within 90 days of commencing pre-packing or importing, fee ₹500
   (Legal Metrology (Packaged Commodities) Rules, 2011, r.27(1)).
-evidence_ids: [EVID-LM-01]
+evidence_ids: [EVID-LM-01, EVID-LM-02, EVID-LM-03]
 authority_id: AUTH-LMO-MH
 instrument_id: INST-LMPC-11
-verification_status: UNVERIFIED
+verification_status: VERIFIED

@@ -1,0 +1,14 @@
+verification_id: VER-0004
+target_type: RULE_VERSION
+target_id: RULE-0013-V2
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-010, SRC-024]
+evidence_checks: [EVID-HW-01, EVID-HW-02]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Verification Batch 1"), for the ENCODED applicability/obligation scope in the final Human
+  Review Pack and currentness sweep only. It does not assert that IRIS models every obligation,
+  exception, form, fee, target, cessation event, technical guideline or downstream requirement
+  in the underlying instruments. Preserved limitation: REQ-0010 - CPCB guideline compliance for the r.6(1A) proviso is outside the encoded applicability scope; 'Water Act and Air Act' read as consent not required under either Act; Gazette text of the 2024-25 EPR amendments not retrieved.

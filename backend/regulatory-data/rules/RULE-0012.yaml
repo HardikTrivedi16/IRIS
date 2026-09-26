@@ -6,8 +6,8 @@ output_type: APPLICABILITY
 
 description: >
   Determines whether the project must register as a manufacturer/packer
-  under LM(PC) Rules, 2011 r.27(1) — triggered by pre-packing commodities
-  for retail sale.
+  under LM(PC) Rules, 2011 r.27(1) — triggered by pre-packing OR importing commodities
+  for sale, distribution or delivery (Wave 1C correction; V1 said 'retail sale').
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0012-V2

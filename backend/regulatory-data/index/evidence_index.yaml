@@ -27,6 +27,18 @@ evidence:
   - EVID-EWASTE-02
   - EVID-MSIHC-01
   - EVID-MSIHC-02
+  - EVID-MPCB-03
+  - EVID-MPCB-04
+  - EVID-MPCB-05
+  - EVID-MPCB-06
+  - EVID-MPCB-07
+  - EVID-HW-02
+  - EVID-LM-02
+  - EVID-BOILER-03
+  - EVID-DRUGS-05
+  - EVID-BWM-02
+  - EVID-EWASTE-03
+  - EVID-LM-03
 
 counts:
-  total_evidence: 24
+  total_evidence: 36

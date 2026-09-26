@@ -25,17 +25,29 @@ CASES = {
 }
 
 
+# Batch 2: RULE-0026-V2/0027-V2 also consume the MSME classification (E-Waste Rules r.2(c) excludes micro
+# enterprises) and RULE-0026-V2 the import-limb fact; supply them so the trigger fact alone decides.
+_EW_IMPORT = "project.sells_imported_schedule1_eee_or_imports_used_schedule1_eee"
+_EXTRA_TRUE = {"REQ-0018": {"project.msme_classification": "SMALL"},
+               "REQ-0019": {"project.msme_classification": "SMALL"}}
+_EXTRA_FALSE = {"REQ-0018": {"project.msme_classification": "SMALL", _EW_IMPORT: False},
+                "REQ-0019": {"project.msme_classification": "SMALL"}}
+
+
 @pytest.mark.parametrize("req_id,fact", sorted(CASES.items()))
 def test_positive_negative_unknown(engine, req_id, fact):
-    assert engine.evaluate_requirement("P", req_id, {fact: True}, NP)["final_state"] == "APPLICABLE"
-    assert engine.evaluate_requirement("P", req_id, {fact: False}, NP)["final_state"] == "NOT_APPLICABLE"
+    assert engine.evaluate_requirement("P", req_id, {fact: True, **_EXTRA_TRUE.get(req_id, {})}, NP)["final_state"] == "APPLICABLE"
+    assert engine.evaluate_requirement("P", req_id, {fact: False, **_EXTRA_FALSE.get(req_id, {})}, NP)["final_state"] == "NOT_APPLICABLE"
     assert engine.evaluate_requirement("P", req_id, {}, NP)["final_state"] == "REQUIRES_INFORMATION"
 
 
 @pytest.mark.parametrize("req_id", sorted(CASES))
 def test_production_is_draft_blocked(engine, req_id):
     d = engine.evaluate_requirement("P", req_id, {CASES[req_id]: True}, PROD)
-    assert d["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION"
+    if req_id in ("REQ-0017", "REQ-0018", "REQ-0019"):  # ACTIVE since Verification Batch 1
+        assert d["final_state"] != "BLOCKED_DRAFT_NOT_PRODUCTION"
+    else:
+        assert d["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION"
 
 
 def test_sector_alone_never_triggers(engine):
@@ -52,10 +64,12 @@ def test_ep_and_ee_are_independent_requirements(engine):
     # producer-only vs manufacturer-only (H2.2: two Requirements, not one)
     d1 = engine.evaluate_requirement(
         "P", "REQ-0018", {"project.sells_schedule1_eee_under_own_brand": True,
-                          "project.manufactures_schedule1_eee": False}, NP)
+                          "project.manufactures_schedule1_eee": False,
+                          "project.msme_classification": "SMALL"}, NP)
     d2 = engine.evaluate_requirement(
         "P", "REQ-0019", {"project.sells_schedule1_eee_under_own_brand": True,
-                          "project.manufactures_schedule1_eee": False}, NP)
+                          "project.manufactures_schedule1_eee": False,
+                          "project.msme_classification": "SMALL"}, NP)
     assert d1["final_state"] == "APPLICABLE"
     assert d2["final_state"] == "NOT_APPLICABLE"
 
@@ -76,8 +90,11 @@ def test_food_and_pharma_projects_unaffected(engine):
 
 def test_all_new_rule_versions_draft_and_unverified(dataset):
     for n in range(24, 30):
-        rv = dataset.rule_versions[f"RULE-{n:04d}-V1"]
-        assert rv["status"] == "DRAFT"
+        # Batch 2: RULE-0025/0026/0027 have DRAFT -V2 successors; their -V1 are SUPERSEDED.
+        latest = dataset.rule_versions[dataset.latest_rule_version_id(f"RULE-{n:04d}")]
+        # RULE-0025-V2/0026-V2/0027-V2 were promoted in Verification Batch 1.
+        assert latest["status"] == ("ACTIVE" if n in (25, 26, 27) else "DRAFT")
+        assert dataset.rule_versions[f"RULE-{n:04d}-V1"]["status"] in ("DRAFT", "SUPERSEDED")
 
 
 def test_au01_has_no_fabricated_grounding(dataset):
@@ -87,10 +104,13 @@ def test_au01_has_no_fabricated_grounding(dataset):
 
 
 def test_new_sources_available_not_archived(dataset):
-    for sid in ("SRC-015", "SRC-016", "SRC-017"):
-        s = dataset.sources[sid]
-        assert s["source_status"] == "AVAILABLE"
-        assert s["archived_artifact_path"] is None and s["checksum_sha256"] is None
+    # Batch 2 archived SRC-015 and SRC-016 (checksums verified in test_batch2_verification_candidates.py);
+    # SRC-017 (MSIHC) is still only AVAILABLE.
+    s = dataset.sources["SRC-017"]
+    assert s["source_status"] == "AVAILABLE"
+    assert s["archived_artifact_path"] is None and s["checksum_sha256"] is None
+    for sid in ("SRC-015", "SRC-016"):
+        assert dataset.sources[sid]["source_status"] == "ARCHIVED"
 
 
 def test_ch01_ch04_ch05_are_not_executable(dataset):

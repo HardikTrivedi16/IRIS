@@ -19,6 +19,7 @@ grounding_regulatory_fact_ids:
   - RF-0028
 evidence_ids:
   - EVID-DRUGS-04
+  - EVID-DRUGS-05
 
 requirement_notes: >
   PH-05 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.2) — standalone
@@ -37,3 +38,6 @@ requirement_notes: >
   Requirement does NOT model ordinary periodic licence renewal (no such
   obsolete UI/data semantics were carried over from any prior pharma
   work, since none existed for retention before this pass).
+
+batch2_note: >
+  Batch 2 (2026-09-26): basis confirmed in Rules 72/73AA/77 (SRC-013) and G.S.R. 1337(E) (SRC-014).

@@ -1,0 +1,109 @@
+rule_version_id: RULE-0002-V2
+rule_id: RULE-0002
+version_number: 2
+
+condition_expression_root_id: COND-0071
+logic: "COND-0071 = AND(plant_located_in_air_pollution_control_area==true, is_white_category_industrial_plant==false)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - some prior consent of the State Board under Air Act, 1981,
+  s.21(1) is required (establish or operate) and the plant is not a
+  White-category plant. If the plant also holds prior environmental clearance
+  in respect of consent to establish (project.holds_prior_environmental_clearance),
+  the CONSENT-TO-ESTABLISH component is exempt (G.S.R. 702(E)(b)) but the
+  CONSENT-TO-OPERATE component still applies - APPLICABLE then means consent to
+  operate only. Prior-EC status is not machine-evaluated by this Rule Version.
+
+false_outcome: >
+  NOT_APPLICABLE on this trigger - the plant is not located in a declared air
+  pollution control area, OR it is a White-category plant (pollution index score
+  up to 20, exempt from s.21(1) on written intimation to the State Board,
+  G.S.R. 702(E)(a)). This does not evaluate any other provision that might
+  independently require MPCB consent, nor MPCB's self-certified consent handling
+  of White category units.
+
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine applicability until the plant's
+  location relative to a declared air pollution control area and its
+  White-category status are known.
+
+
+required_project_facts:
+  - project.plant_located_in_air_pollution_control_area
+  - project.is_white_category_industrial_plant
+
+regulatory_fact_ids:
+  - RF-0002
+  - RF-0035
+evidence_ids:
+  - EVID-MPCB-02
+  - EVID-MPCB-05
+  - EVID-MPCB-06
+  - EVID-MPCB-07
+source_ids:
+  - SRC-002
+  - SRC-019
+  - SRC-022
+  - SRC-023
+authority_id: AUTH-MoEFCC
+instrument_id: INST-AIR-81
+
+jurisdiction: INDIA
+lifecycle_stage: [PRE_ESTABLISHMENT, OPERATION]
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: RULE-0002-V1
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0002-V2
+  regulatory_fact_ids: [RF-0002, RF-0035]
+  evidence_ids: [EVID-MPCB-02, EVID-MPCB-05, EVID-MPCB-06, EVID-MPCB-07]
+  source_ids: [SRC-002, SRC-019, SRC-022, SRC-023]
+  authority_id: AUTH-MoEFCC
+  instrument_id: INST-AIR-81
+
+validation_notes: >
+  Wave 1C (2026-09-26) corrected successor to RULE-0002-V1, which is
+  PRESERVED UNEDITED as the pre-2024-exemption logic. Legal change:
+  G.S.R. 702(E) of 12.11.2024 (SRC-019), issued under the proviso to s.21(1)
+  as substituted by the Jan Vishwas Act, 2023 (SRC-022), exempts White-category
+  plants (from s.21(1) entirely) and prior-EC plants ('in respect of previous
+  consent to establish' only).
+
+  CTE / CTO DISTINCTION - NOT COLLAPSED, NOT MODELLED AS A SECOND OUTCOME: the
+  Requirement REQ-0002 is a single combined establish-or-operate question
+  (see its requirement_notes). A prior-EC plant is CTE-exempt but CTO-required,
+  so its correct Requirement-level answer is still APPLICABLE (consent to
+  operate). Because the engine's output_mapping has only APPLICABLE /
+  NOT_APPLICABLE / REQUIRES_INFORMATION and an unchanged APPLICABLE result is
+  the accurate one, project.holds_prior_environmental_clearance is
+  deliberately NOT consumed here (no unused fact is declared); the nuance
+  lives in true_outcome and in REQ-0002's wave_1c_note. If the reviewer wants
+  the CTE and CTO components decided separately, that requires splitting
+  REQ-0002 into two Requirements - a decision reserved for the human.
+
+  STILL DRAFT / NOT ACTIVE; effective_start_date deliberately null. Open
+  items: (1) the Jan Vishwas Act comes into force on notified dates
+  (s.1(2)) and the commencement notification for the Air Act entries was not
+  located, although G.S.R. 702(E) is itself made under the substituted
+  proviso; (2) the Air Act applies to Maharashtra in its own right, but MPCB's
+  circular of 16.06.2025 (SRC-023) describes White-category consents as
+  self-certified via its portal; (3) the written-intimation condition and the
+  Schedule (pollution index <= 20 / MPCB's additional 222 activities) are not
+  modelled - is_white_category_industrial_plant is human-supplied; (4) the
+  location fact is the unchanged V1 fact. No human VER exists.
+

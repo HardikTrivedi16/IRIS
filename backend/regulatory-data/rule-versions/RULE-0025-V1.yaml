@@ -30,9 +30,9 @@ jurisdiction: INDIA
 lifecycle_stage: PRE_OPERATION
 
 effective_start_date: null
-effective_end_date: null
+effective_end_date: "2023-10-24"
 
-status: DRAFT
+status: SUPERSEDED
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -51,3 +51,9 @@ provenance:
 
 validation_notes: >
   AU-02: VERIFIED_READY_FOR_PROVENANCE. Provenance created (RF-0029/EVID-BWM-01/SRC-015, source_status AVAILABLE, not archived). EPR target percentages, renewal cadence (60 days before expiry) and battery-type targets are deliberately NOT in conditions or outcome semantics beyond this note.
+
+superseded_note: >
+  Batch 2 (2026-09-26): superseded by RULE-0025-V2 as of the S.O. 4669(E) amendment of
+  25.10.2023 (SRC-029), which added Producer sub-clause (iv) (contract manufacture/assembly
+  for an own-brand Producer). This version's false_outcome ('a pure contract assembler')
+  reflects the pre-amendment reading. Preserved unedited apart from status, end date and this note.

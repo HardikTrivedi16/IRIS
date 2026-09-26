@@ -313,8 +313,9 @@ def test_hazardous_waste_never_inferred_from_industry(engine):
 
 
 def test_legal_metrology_boolean_trigger_only(engine):
-    facts_true = {"project.prepacks_commodities_for_retail_sale": True}
-    facts_false = {"project.prepacks_commodities_for_retail_sale": False}
+    # Wave 1C: RULE-0012-V2 uses the corrected pre-packs-OR-imports fact.
+    facts_true = {"project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery": True}
+    facts_false = {"project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery": False}
     assert engine.evaluate_requirement("P", "REQ-0009", facts_true, NP)["final_state"] == "APPLICABLE"
     assert engine.evaluate_requirement("P", "REQ-0009", facts_false, NP)["final_state"] == "NOT_APPLICABLE"
 
@@ -333,7 +334,8 @@ def test_cgwa_msme_exemption_and_unknown_classification(engine):
 # --- DRAFT-not-authoritative-in-PRODUCTION ----------------------------------
 
 def test_new_requirements_stay_draft_and_non_authoritative_in_production(engine):
-    for req_id in ("REQ-0005", "REQ-0006", "REQ-0007", "REQ-0008", "REQ-0009", "REQ-0010", "REQ-0011", "REQ-0012", "REQ-0013"):
+    # REQ-0006/0007/0009/0010 became ACTIVE in Verification Batch 1.
+    for req_id in ("REQ-0005", "REQ-0008", "REQ-0011", "REQ-0012", "REQ-0013"):
         d = engine.evaluate_requirement("P", req_id, {}, PROD)
         assert d["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION", req_id
 

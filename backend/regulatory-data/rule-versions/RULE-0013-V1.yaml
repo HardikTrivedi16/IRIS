@@ -39,9 +39,9 @@ jurisdiction: MAHARASHTRA
 lifecycle_stage: [PRE_OPERATION, OPERATION]
 
 effective_start_date: null
-effective_end_date: null
+effective_end_date: "2019-03-04"
 
-status: DRAFT
+status: SUPERSEDED
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -64,3 +64,9 @@ validation_notes: >
   hazardous process; the fact must be captured honestly, not assumed).
   Cannot be promoted to ACTIVE without archived SRC-010 + a human VER
   record.
+
+superseded_note: >
+  Wave 1C (2026-09-26): superseded by RULE-0013-V2 as of the Rule 6(1A)
+  insertion (HOWM Amendment Rules 2019, Gazette dated 5 March 2019, in force on
+  publication - SRC-024). This version reflects the rule text without the
+  6(1A) exemption; preserved unedited apart from status, end date and this note.

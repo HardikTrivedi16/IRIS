@@ -3,8 +3,9 @@
 Provenance substrate (Tranche 1). One `VER-####.yaml` human Verification
 record per file, loaded by `iris_engine.loader.RegulatoryDataset.load`.
 
-**Intentionally empty.** No Rule Version has been promoted to ACTIVE, so no
-Verification record exists yet — and none should be created automatically.
+**Verification Batch 1 (2026-09-26):** VER-0001..VER-0012 record the project owner's human approval
+(reviewer: Hardik Trivedi) of 12 Rule Versions for their encoded scope. VER records are still never
+created automatically from AI research output.
 
 Minimum record shape:
 

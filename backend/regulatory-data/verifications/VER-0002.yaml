@@ -1,0 +1,14 @@
+verification_id: VER-0002
+target_type: RULE_VERSION
+target_id: RULE-0010-V1
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-007, SRC-028]
+evidence_checks: [EVID-BOILER-02, EVID-BOILER-03]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Verification Batch 1"), for the ENCODED applicability/obligation scope in the final Human
+  Review Pack and currentness sweep only. It does not assert that IRIS models every obligation,
+  exception, form, fee, target, cessation event, technical guideline or downstream requirement
+  in the underlying instruments. Preserved limitation: REQ-0007 - not every event-based certificate-cessation case is modelled.

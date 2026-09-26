@@ -1,0 +1,22 @@
+condition_id: COND-0078
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0064
+  - COND-0077
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0030]
+
+description: >
+  Producer of Schedule-I EEE: sells under its own brand (COND-0064, limbs (i)-(ii))
+  OR sells imported EEE / imports used EEE (COND-0077, limbs (iii)-(iv)).
+
+normalization_notes: >
+  COND-0064 is reused unchanged. Batch 2, DRAFT.

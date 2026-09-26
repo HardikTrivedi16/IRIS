@@ -59,7 +59,7 @@ def test_fact_registry_is_derived_from_dataset(client):
 def test_required_facts_endpoint_matches_rule_version_declarations(client):
     body = client.get("/api/v1/requirements/REQ-0001/required-facts").json()
     keys = [f["key"] for f in body["facts"]]
-    assert keys == ["project.likely_to_discharge_sewage_or_trade_effluent"]
+    assert keys == ["project.holds_prior_environmental_clearance", "project.is_white_category_industrial_plant", "project.likely_to_discharge_sewage_or_trade_effluent"]
 
 
 def test_required_facts_unknown_requirement_404(client):
@@ -214,13 +214,13 @@ def test_draft_rules_remain_blocked_in_production(client, registry):
     key = _a_boolean_fact(registry)
     body = _post(client, {key: True}, mode="PRODUCTION").json()
 
-    assert body["authoritative"] is False
-    assert all(
-        r["after"]["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION"
-        for r in body["requirements"]
-    )
-    assert all(r["category"] == "UNCHANGED" for r in body["requirements"])
-    assert any("zero ACTIVE Rule Versions" in n for n in body["notes"])
+    # Verification Batch 1: the human-approved Requirements are ACTIVE (not blocked); every other
+    # DRAFT Requirement stays blocked in PRODUCTION.
+    approved = {"REQ-0003", "REQ-0006", "REQ-0007", "REQ-0009", "REQ-0010", "REQ-0015", "REQ-0017", "REQ-0018", "REQ-0019"}
+    for r in body["requirements"]:
+        blocked = r["after"]["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION"
+        assert blocked == (r["requirement_id"] not in approved), r["requirement_id"]
+    assert body["authoritative"] is True  # PRODUCTION mode with at least one non-blocked (ACTIVE) requirement
 
 
 def test_non_production_is_labelled_non_authoritative(client, registry):
@@ -272,7 +272,7 @@ def test_clearing_a_fact_is_requires_information_not_no_longer_applicable(client
     """APPLICABLE -> REQUIRES_INFORMATION must not be called 'no longer
     applicable': missing data is not a negative determination."""
     key = "project.likely_to_discharge_sewage_or_trade_effluent"
-    client.post(f"/api/v1/projects/{PROJECT}/facts", json={"facts": {key: True}})
+    client.post(f"/api/v1/projects/{PROJECT}/facts", json={"facts": {key: True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}})
     r = _req(_post(client, {key: None}, mode="NON_PRODUCTION").json(), "REQ-0001")
     assert (r["before"]["final_state"], r["after"]["final_state"]) == ("APPLICABLE", "REQUIRES_INFORMATION")
     assert r["category"] == "REQUIRES_INFORMATION"
@@ -280,14 +280,14 @@ def test_clearing_a_fact_is_requires_information_not_no_longer_applicable(client
 
 def test_not_applicable_to_applicable_is_newly_applicable(client):
     key = "project.likely_to_discharge_sewage_or_trade_effluent"
-    client.post(f"/api/v1/projects/{PROJECT}/facts", json={"facts": {key: False}})
+    client.post(f"/api/v1/projects/{PROJECT}/facts", json={"facts": {key: False, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}})
     r = _req(_post(client, {key: True}, mode="NON_PRODUCTION").json(), "REQ-0001")
     assert r["category"] == "NEWLY_APPLICABLE"
 
 
 def test_applicable_to_not_applicable_is_no_longer_applicable(client):
     key = "project.likely_to_discharge_sewage_or_trade_effluent"
-    client.post(f"/api/v1/projects/{PROJECT}/facts", json={"facts": {key: True}})
+    client.post(f"/api/v1/projects/{PROJECT}/facts", json={"facts": {key: True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}})
     r = _req(_post(client, {key: False}, mode="NON_PRODUCTION").json(), "REQ-0001")
     assert r["category"] == "NO_LONGER_APPLICABLE"
 

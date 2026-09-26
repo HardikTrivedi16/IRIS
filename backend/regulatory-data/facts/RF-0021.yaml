@@ -7,4 +7,4 @@ statement: >
 evidence_ids: [EVID-HW-01]
 authority_id: AUTH-MPCB
 instrument_id: INST-HW-16
-verification_status: UNVERIFIED
+verification_status: VERIFIED

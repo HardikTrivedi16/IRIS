@@ -19,7 +19,19 @@ grounding_regulatory_fact_ids:
   - RF-0020
 evidence_ids:
   - EVID-LM-01
+  - EVID-LM-03
+  - EVID-LM-02
 
 requirement_notes: >
   SH-08 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). No verified validity/
   expiry period exists for this registration — none is captured.
+
+wave_1c_note: >
+  Wave 1C (2026-09-26): RULE-0012-V2 (DRAFT) uses the corrected fact
+  project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery
+  (r.27(1) covers pre-packing OR importing, not only retail-sale pre-packing).
+  RULE-0012-V1 is preserved as SUPERSEDED.
+
+batch2_note: >
+  Batch 2 (2026-09-26): Rule 27(1) currentness established against the Department of Consumer Affairs
+  amendment list (SRC-030); only the Third Amendment Rules 2026 touch Rule 27, and not sub-rule (1).

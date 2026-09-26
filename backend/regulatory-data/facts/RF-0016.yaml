@@ -11,4 +11,4 @@ statement: >
 evidence_ids: [EVID-BOILER-01]
 authority_id: AUTH-BOILER-MH
 instrument_id: INST-BOILERS-25
-verification_status: UNVERIFIED
+verification_status: VERIFIED

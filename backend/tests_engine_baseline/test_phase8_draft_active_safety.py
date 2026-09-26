@@ -19,7 +19,8 @@ from iris_engine.rules import (
 PROD = EvaluationMode.PRODUCTION
 NP = EvaluationMode.NON_PRODUCTION
 
-ALL_RULE_VERSION_IDS = [f"RULE-{i:04d}-V1" for i in range(1, 7)]
+# RULE-0003-V1 was promoted to ACTIVE in Verification Batch 1; the others here are still DRAFT.
+ALL_RULE_VERSION_IDS = [f"RULE-{i:04d}-V1" for i in (1, 2, 4, 5, 6)]
 
 
 @pytest.mark.parametrize("rv_id", ALL_RULE_VERSION_IDS)

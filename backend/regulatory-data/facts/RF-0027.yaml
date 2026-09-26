@@ -13,4 +13,4 @@ statement: >
 evidence_ids: [EVID-DRUGS-03]
 authority_id: AUTH-FDA-MH
 instrument_id: INST-DRUGS-RULES-1945
-verification_status: UNVERIFIED
+verification_status: VERIFIED

@@ -1,0 +1,23 @@
+source_id: SRC-027
+title: "Legal Metrology (Packaged Commodities) Rules, 2011 - consolidated text with all amendments as on 24.12.2024 (Odisha Department of Legal Metrology compilation)"
+publisher_authority_id: AUTH-LMO-MH
+document_type: OFFICIAL_WEBSITE
+official_url: "https://dlm.pdsodisha.gov.in/pdf/FInal-Book-Legal-Metrology-with-amendments.pdf"
+publication_date: "2024-12-24"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-027_LM_PackagedCommodities_Rules_2011_consolidated_Dec2024_Odisha_DLM.pdf"
+checksum_sha256: "7f8c607f5f90f6f6f76d7bb5f2d123866ff83750311ba8f8661ee3af57617735"
+source_status: ARCHIVED
+notes: >
+  Wave-1C archival (2026-09-26): downloaded from the Odisha Department of
+  Food Supplies & Consumer Welfare / Legal Metrology website (state
+  government) and SHA-256 computed from the saved bytes. This is a STATE
+  DEPARTMENT COMPILATION of the central Rules 'with all amendments as on
+  24.12.2024' - a secondary consolidation, NOT a Gazette copy and NOT a
+  Government of India publication. It was used only for a narrow currentness
+  check of Rule 27(1): the consolidated text still reads 'who or which
+  pre-packs or imports any commodity for sale, distribution or delivery' and
+  Rule 27(1) carries no amendment footnote. Nothing else in the compilation
+  was reconciled. The Gazette amendment instruments themselves (post-2017)
+  were not retrieved. ARCHIVED means only that this artifact is archived; it
+  is not a human verification of any Evidence or Rule.

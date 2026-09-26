@@ -36,11 +36,16 @@ def test_diagnostic_scenario_shows_the_real_fssai_pathway_change():
     assert by["REQ-0012"]["before"]["final_state"] == "APPLICABLE" and by["REQ-0012"]["after"]["final_state"] == "NOT_APPLICABLE"
     assert by["REQ-0011"]["category"] == "NEWLY_APPLICABLE"       # Central licence
     assert by["REQ-0011"]["before"]["final_state"] == "NOT_APPLICABLE" and by["REQ-0011"]["after"]["final_state"] == "APPLICABLE"
-    assert all(r["before"]["is_non_production_result"] for r in out["requirements"])
+    # Diagnostic label: DRAFT-backed results are non-production; the 9 ACTIVE (approved) ones are not.
+    approved = {"REQ-0003", "REQ-0006", "REQ-0007", "REQ-0009", "REQ-0010", "REQ-0015", "REQ-0017", "REQ-0018", "REQ-0019"}
+    assert all(r["before"]["is_non_production_result"] == (r["requirement_id"] not in approved)
+               for r in out["requirements"])
 
 
 def test_production_lifecycle_gate_is_unchanged():
     out = _run("PRODUCTION")
-    assert out["authoritative"] is False
+    # Verification Batch 1: approved Requirements are ACTIVE (not blocked); every other DRAFT one stays blocked.
+    approved = {"REQ-0003", "REQ-0006", "REQ-0007", "REQ-0009", "REQ-0010", "REQ-0015", "REQ-0017", "REQ-0018", "REQ-0019"}
     assert out["summary"]["UNCHANGED"] == len(out["requirements"])
-    assert {r["before"]["final_state"] for r in out["requirements"]} == {"BLOCKED_DRAFT_NOT_PRODUCTION"}
+    for r in out["requirements"]:
+        assert (r["before"]["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION") == (r["requirement_id"] not in approved)

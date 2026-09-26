@@ -1,0 +1,23 @@
+condition_id: COND-0081
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0065
+  - COND-0079
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0031, RF-0038]
+
+description: >
+  RULE-0027-V2 root: manufactures Schedule-I EEE (COND-0065) AND not a micro
+  enterprise (COND-0079).
+
+normalization_notes: >
+  Successor to COND-0065 as RULE-0027's root; COND-0065 and RULE-0027-V1 are
+  preserved. Batch 2, DRAFT.

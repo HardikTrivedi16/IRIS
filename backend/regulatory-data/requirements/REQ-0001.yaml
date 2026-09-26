@@ -27,8 +27,12 @@ dependencies_as_source: []
 
 grounding_regulatory_fact_ids:
   - RF-0001
+  - RF-0034
 evidence_ids:
   - EVID-MPCB-01
+  - EVID-MPCB-03
+  - EVID-MPCB-04
+  - EVID-MPCB-07
 
 requirement_notes: >
   This Requirement identity is populated here as a bridging step: Phase 2 §9 assigns "populate the
@@ -56,3 +60,9 @@ authority_attribution_note: >
   State Pollution Control Board — a standard jurisdictional identification, not a new regulatory
   claim, and consistent with Phase 3 having already catalogued AUTH-MPCB in connection with this
   same evidence set even though it wasn't used as the Fact-level `authority_id`.
+
+wave_1c_note: >
+  Wave 1C (2026-09-26): RULE-0001-V2 (DRAFT) now models the 2024 White-category
+  and prior-EC exemptions from s.25(1); RULE-0001-V1 is preserved. Maharashtra
+  adoption of the 2024 Water Amendment Act is not established by an archived
+  official instrument - see RULE-0001-V2 validation_notes.

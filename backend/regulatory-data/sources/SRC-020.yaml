@@ -1,0 +1,20 @@
+source_id: SRC-020
+title: "MoEFCC letter F.No. Q-15012/2/2022-CPW-Part(1)/e-240741 dated 14.11.2024 - Standard Operating Procedure for implementation of G.S.R. 702(E) and 703(E)"
+publisher_authority_id: AUTH-MoEFCC
+document_type: OFFICIAL_WEBSITE
+official_url: "https://cpcb.nic.in/upload/home/water-pollution/SOP_14-11-2024.pdf"
+publication_date: "2024-11-14"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-020_MoEFCC_SOP_14Nov2024_consent_exemption.pdf"
+checksum_sha256: "96e29898be496faea4d90d8233cd5383a354fe21ebe711cd884c8251348079bb"
+source_status: ARCHIVED
+notes: >
+  Wave-1B archival (2026-09-26): downloaded from
+  https://cpcb.nic.in/upload/home/water-pollution/SOP_14-11-2024.pdf; SHA-256
+  computed from the saved bytes. Scanned image PDF (3 pages; read by local OCR
+  for review). SOP para 1: White-category units are exempt from obtaining both
+  CTE and CTO and follow a self-declaration/intimation procedure without
+  consent fee; para 2: projects requiring prior EC under the EIA Notification
+  2006 are exempted from obtaining CTE separately, with CTE conditions
+  integrated into the EC. ARCHIVED means only that this artifact is archived;
+  it is not a human verification of any Evidence or Rule.

@@ -1,12 +1,18 @@
 evidence_id: EVID-EWASTE-01
 source_id: SRC-016
-section_or_clause: "E-Waste (Management) Rules, 2022 - r.4 (producer of Schedule-I EEE)"
-page: null
+section_or_clause: "E-Waste (Management) Rules 2022 - r.3(1)(t) 'producer' and r.4(1)(b), 4(3)"
+page: 22-23
 excerpt: >
-  Research-pack summary (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §5.H/§12
-  EL-01) - NOT a verbatim gazette quotation: the producer of Schedule-I EEE
-  registers on the CPCB EPR portal; EPR recycling targets per Schedules
-  III/IV; no business without registration; deal only with registered
-  entities.
-verification_status: UNVERIFIED
-regulatory_fact_id: RF-0030
+  r.3(1)(t): "`producer' means any person or entity who,- (i) manufactures and offers
+  to sell electrical and electronic equipment and their components or consumables or
+  parts or spares under its own brand; or (ii) offers to sell under its own brand,
+  assembled electrical and electronic equipment and their components or consumables
+  or parts or spares produced by other manufacturers or suppliers; or (iii) offers
+  to sell imported electrical and electronic equipment and their components or
+  consumables or parts or spares; or (iv) who imports used electrical and electronic
+  equipment; irrespective of the selling technique used such as dealer, retailer,
+  e-retailer, etc.;" r.4(1): "The entities shall register on the portal in any of the
+  following category ... (b) producer" and r.4(3): "No entity referred in sub-rule (1)
+  shall carry out any business without registration." The Rules apply to equipment
+  'listed in Schedule I' (r.2).
+verification_status: VERIFIED

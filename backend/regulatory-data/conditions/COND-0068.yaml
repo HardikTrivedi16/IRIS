@@ -1,0 +1,27 @@
+condition_id: COND-0068
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.is_white_category_industrial_plant
+operator: "=="
+comparison_value: false
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-MPCB-03, EVID-MPCB-05]
+
+grounding_regulatory_fact_ids: [RF-0034, RF-0035]
+
+description: >
+  True (the project is NOT within the White-category exemption) when
+  project.is_white_category_industrial_plant is false. The fact is true where
+  the plant has a pollution index score up to 20 and is listed in the Schedule
+  to G.S.R. 703(E)/702(E) of 12.11.2024 (subject to the written-intimation
+  condition). Shared by RULE-0001-V2 (Water) and RULE-0002-V2 (Air).
+
+normalization_notes: >
+  Negative-polarity leaf (== false) because the composite grammar has only
+  AND/OR: 'not White' is expressed as the fact being false. An absent fact
+  resolves UNKNOWN (never FALSE), so an unanswered White-category question
+  yields REQUIRES_INFORMATION rather than a silent exemption. Wave 1C, DRAFT.

@@ -1,14 +1,20 @@
 evidence_id: EVID-HW-01
 source_id: SRC-010
-section_or_clause: "Rule 6(1)-(4)"
-page: null
+section_or_clause: "Rule 6(1) (Form 1; renewal application 3 months before expiry, proviso), Rule 6(2) (Form 2, 5 years, 120 days), Rule 6(5) (Form 3 records; Form 4 by 30 June)"
+page: 57
 excerpt: >
-  Rule 6(1): every occupier engaged in generation, processing, treatment,
-  package, storage, transportation, use, collection, destruction,
-  conversion, offering for sale, or transfer of hazardous and other wastes
-  shall apply in Form 1 to the State Pollution Control Board for grant of
-  authorisation. Rule 6(2): authorisation in Form 2, valid for 5 years,
-  granted within 120 days of site inspection. Rule 6(3): records maintained
-  in Form 3; Form 4 annual return filed by 30 June. Rule 6(4): renewal
-  application 3 months prior to expiry.
-verification_status: UNVERIFIED
+  Original 2016 text (G.S.R. 395(E)). Rule 6(1) (p.57): every occupier of the
+  facility engaged in handling, generation, collection, storage, packaging,
+  transportation, use, treatment, processing, recycling, recovery,
+  pre-processing, co-processing, utilisation, offering for sale, transfer or
+  disposal of the hazardous and other wastes shall apply in Form 1 to the
+  State Pollution Control Board and obtain an authorisation; proviso: an
+  application for renewal may be made three months before expiry. Rule 6(2)
+  (p.57): on a complete application the State Board may, after inquiry and
+  site inspection, grant within one hundred and twenty days an authorisation
+  in Form 2, valid for five years. Rule 6(5) (p.58): every occupier authorised
+  shall maintain a record in Form 3 and submit an annual return in Form 4 on
+  or before the 30th day of June following the financial year. NOTE: later
+  amendments (e.g. the 2019 Fourth Amendment Rules) are not reconciled in this
+  artifact.
+verification_status: VERIFIED

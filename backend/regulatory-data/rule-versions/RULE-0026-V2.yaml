@@ -1,0 +1,85 @@
+rule_version_id: RULE-0026-V2
+rule_id: RULE-0026
+version_number: 2
+
+condition_expression_root_id: COND-0080
+logic: "COND-0080 = AND(OR(sells_schedule1_eee_under_own_brand==true, sells_imported_schedule1_eee_or_imports_used_schedule1_eee==true), msme_classification NOT_IN [MICRO])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - the project is a "producer" of Schedule-I EEE (E-Waste Rules 2022
+  r.3(1)(t): own-brand sale of manufactured or assembled EEE, sale of imported EEE, or
+  import of used EEE) and is not a micro enterprise: it must register on the CPCB EPR
+  e-waste portal (r.4(1)(b)), may not carry on business without registration (r.4(3)),
+  and EPR recycling targets apply per the Schedules.
+
+false_outcome: >
+  NOT_APPLICABLE on this trigger - the project is not a producer of Schedule-I EEE
+  (no own-brand sale and no sale of imported / import of used EEE), OR it is a micro
+  enterprise, to which the Rules do not apply (r.2(c)).
+
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine until the own-brand and import facts and
+  the MSME classification are known.
+
+
+required_project_facts:
+  - project.sells_schedule1_eee_under_own_brand
+  - project.sells_imported_schedule1_eee_or_imports_used_schedule1_eee
+  - project.msme_classification
+
+regulatory_fact_ids:
+  - RF-0030
+  - RF-0038
+evidence_ids:
+  - EVID-EWASTE-01
+  - EVID-EWASTE-03
+source_ids:
+  - SRC-016
+authority_id: AUTH-CPCB
+instrument_id: INST-EWASTE-2022
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: "2023-04-01"
+effective_end_date: null
+
+status: ACTIVE
+confidence: VERIFIED
+
+supersedes_rule_version_id: RULE-0026-V1
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0026-V2
+  regulatory_fact_ids: [RF-0030, RF-0038]
+  evidence_ids: [EVID-EWASTE-01, EVID-EWASTE-03]
+  source_ids: [SRC-016]
+  authority_id: AUTH-CPCB
+  instrument_id: INST-EWASTE-2022
+
+validation_notes: >
+  Batch 2 (2026-09-26) corrected successor to RULE-0026-V1, which (a) omitted limbs
+  (iii)-(iv) of the producer definition (imports) and (b) ignored r.2(c), under which
+  the Rules do not apply to micro enterprises. RULE-0026-V1 is preserved as SUPERSEDED
+  (no dates: an incomplete encoding, not an earlier legal regime). effective_start_date
+  2023-04-01 is the Rules' commencement (r.1(2), SRC-016). Substantive correction to
+  report: projects previously NOT_APPLICABLE because own_brand was false now evaluate
+  REQUIRES_INFORMATION until the import fact and MSME classification are supplied
+  (fail-safe). Not encoded: whether a given item is Schedule-I EEE (human-supplied
+  facts), EPR targets/Schedules III-IV, other categories. No human VER exists.
+  Currentness sweep (2026-09-26): CLEARED through 2026-09-26 on CPCB's live E-Waste rules page (newest
+  instrument: Third Amendment Rules 2024, G.S.R. 164(E), 08.03.2024) and searches finding no later
+  E-Waste amendment; that page is not a statutory register.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0011) for the encoded scope; see the APPROVED VER record for this
+  Rule Version. All documented limitations in this file's notes remain in force.

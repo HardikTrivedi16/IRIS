@@ -72,8 +72,10 @@ def test_invariant_regulatory_data_never_changes_during_a_test_run(dataset):
     # since the FSSAI currentness-correction pass).
     assert len(dataset.conditions) >= 14
     assert len(dataset.rule_versions) >= 6
-    assert all(rv["status"] != "ACTIVE" for k, rv in dataset.rule_versions.items()
-               if k.startswith("RULE-0"))
+    assert all(rv["status"] != "ACTIVE" or any(
+                   v.get("target_id") == k and v.get("result") == "APPROVED"
+                   for v in dataset.verifications.values())
+               for k, rv in dataset.rule_versions.items() if k.startswith("RULE-0"))
 
 
 def test_invariant_unsupported_operator_never_silently_succeeds():

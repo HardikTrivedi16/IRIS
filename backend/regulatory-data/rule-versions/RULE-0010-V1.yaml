@@ -33,20 +33,23 @@ required_project_facts:
 
 regulatory_fact_ids:
   - RF-0017
+  - RF-0037
 evidence_ids:
   - EVID-BOILER-02
+  - EVID-BOILER-03
 source_ids:
   - SRC-007
+  - SRC-028
 authority_id: AUTH-BOILER-MH
 instrument_id: INST-BOILERS-25
 
 jurisdiction: MAHARASHTRA
 lifecycle_stage: OPERATION
 
-effective_start_date: null
+effective_start_date: "2025-05-01"
 effective_end_date: null
 
-status: DRAFT
+status: ACTIVE
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -57,9 +60,9 @@ priority: 1
 
 provenance:
   rule_version_id: RULE-0010-V1
-  regulatory_fact_ids: [RF-0017]
-  evidence_ids: [EVID-BOILER-02]
-  source_ids: [SRC-007]
+  regulatory_fact_ids: [RF-0017, RF-0037]
+  evidence_ids: [EVID-BOILER-02, EVID-BOILER-03]
+  source_ids: [SRC-007, SRC-028]
   authority_id: AUTH-BOILER-MH
   instrument_id: INST-BOILERS-25
 
@@ -72,3 +75,14 @@ validation_notes: >
   Facts — those remain descriptive in true_outcome pending a dedicated
   event/date-tracking mechanism, which this pass does not build. Cannot be
   promoted to ACTIVE without archived SRC-007 + a human VER record.
+  Wave 1C (2026-09-26) commencement check: S.O. 1943(E) dated 30.04.2025
+  (SRC-028, Gazette of India Extraordinary No. 1900, archived from DPIIT)
+  appoints 1st May, 2025 as the date on which the provisions of the Boilers
+  Act, 2025 come into force (all provisions, no section-wise dates), so
+  effective_start_date is 2025-05-01. This closes the commencement gap only:
+  the Rule Version remains DRAFT, no human VER exists, and the limitations
+  above are unchanged.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0002) for the encoded scope; see the APPROVED VER record for this
+  Rule Version. All documented limitations in this file's notes remain in force.

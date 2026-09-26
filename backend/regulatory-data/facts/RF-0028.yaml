@@ -1,7 +1,7 @@
 regulatory_fact_id: RF-0028
 statement: >
-  A drug manufacturing licence (Forms 25/25-A/25-F/28/28-A/28-B/28-D
-  etc.) remains valid perpetually unless sooner suspended or cancelled,
+  A drug manufacturing licence (Forms 25, 25A, 25B, 25F, 28, 28B and 28D
+  per Drugs Rules 72, 73AA and 77) remains valid perpetually unless sooner suspended or cancelled,
   subject to (a) compliance/GMP assessment not less than once every
   three years or as needed on a risk-based approach, and (b) a retention
   fee payable before the expiry of every succeeding five years from the
@@ -9,7 +9,7 @@ statement: >
   Drugs Rules, 1945. This is a continuing retention-fee obligation
   attaching to licence holders, not periodic renewal metadata — non-
   payment carries its own suspension/cancellation consequence. (PH-05.)
-evidence_ids: [EVID-DRUGS-04]
+evidence_ids: [EVID-DRUGS-04, EVID-DRUGS-05]
 authority_id: AUTH-FDA-MH
 instrument_id: INST-DRUGS-RULES-1945
-verification_status: UNVERIFIED
+verification_status: VERIFIED

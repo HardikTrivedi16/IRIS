@@ -4,13 +4,28 @@ publisher_authority_id: AUTH-CGWA
 document_type: GAZETTE
 official_url: "https://cgwa-noc.gov.in"
 publication_date: "2020-09-24"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-008_CGWA_Guidelines_SO3289E_24Sep2020_Gazette.pdf"
+checksum_sha256: "94804575b53154661fcf8be5eb3070ba9e08859c3bc9259a405af6b2a61ec185"
+source_status: ARCHIVED
 notes: >
   Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
   (SRC-MH-CGWA-2020, reusing the SwaadHarvest-pass record lineage) — not
   independently re-fetched by this pass. Covers the preamble (NOC duty),
   Para 1.0(v) (MSE < 10 m³/day exemption), Annexure VIII item 11
   (Maharashtra CGWA-regulated), Para 11.0 (renewal).
+  Wave-1 archival (2026-09-26): the exact artifact was downloaded from
+  https://cgwa.mowr.gov.in/archival/30-NewGuidelinesNotified250920.pdf and its
+  SHA-256 computed from the saved bytes. Gazette of India Extraordinary No.
+  2941, 24 Sep 2020 (CG-DL-E-24092020-221952), S.O. 3289(E), 60 pages, from
+  the Central Ground Water Authority's own site (the originally listed
+  cgwa-noc.gov.in host did not resolve). CURRENTNESS BLOCKER FOR REQ-0008:
+  Annexure VIII in this artifact lists 24 States/UTs (Maharashtra = item 11);
+  a search of official-domain results indicates CGWA now regulates 19
+  States/UTs — the current list is not established by this artifact. ARCHIVED
+  means only that this artifact is archived; it does not mean the evidence is
+  human-verified (evidence rows remain UNVERIFIED).
+  Wave-1B update (2026-09-26): Annexure VIII of this 2020 artifact (24
+  States/UTs) was SUBSTITUTED by S.O. 1509(E) of 29.03.2023 (SRC-026: 19
+  States/UTs, Maharashtra item 10, list stated to be dynamic). Para 1.0(v) is
+  unchanged; paras 1.0(vi)-(vii) were added.

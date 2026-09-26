@@ -1,12 +1,16 @@
 regulatory_fact_id: RF-0029
 statement: >
-  Under the Battery Waste Management Rules, 2022 r.4(1), a "producer" -
-  including one that sells batteries in equipment under its own brand, or
-  imports batteries/battery-containing equipment - must register with
-  CPCB (Form 1(A), centralised portal) and carries EPR collection/recycling
-  obligations. Assembly alone does not make an entity a producer; the
-  trigger is placing batteries on the market. (AU-02.)
-evidence_ids: [EVID-BWM-01]
+  Under the Battery Waste Management Rules, 2022 as amended by S.O. 4669(E) of
+  25.10.2023, every "Producer" must obtain registration from CPCB through the
+  centralised portal in Form 1(A) (r.4(4)) and carries Extended Producer
+  Responsibility for Battery introduced on the market. "Producer" (r.3(1)(u))
+  means an entity that (i) manufactures and sells Battery under its own brand;
+  (ii) sells Battery under its own brand produced by others; (iii) imports
+  Battery or equipment containing Battery; or (iv) manufactures or assembles
+  Battery for sale to a sub-clause (ii) Producer without its own brand name.
+  IRIS fact project.places_batteries_on_market is true where any of (i)-(iv)
+  holds. (AU-02.)
+evidence_ids: [EVID-BWM-01, EVID-BWM-02]
 authority_id: AUTH-CPCB
 instrument_id: INST-BWM-2022
-verification_status: UNVERIFIED
+verification_status: VERIFIED

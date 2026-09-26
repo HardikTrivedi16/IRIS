@@ -1,0 +1,14 @@
+verification_id: VER-0003
+target_type: RULE_VERSION
+target_id: RULE-0012-V2
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-009, SRC-027, SRC-030]
+evidence_checks: [EVID-LM-01, EVID-LM-02, EVID-LM-03]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Verification Batch 1"), for the ENCODED applicability/obligation scope in the final Human
+  Review Pack and currentness sweep only. It does not assert that IRIS models every obligation,
+  exception, form, fee, target, cessation event, technical guideline or downstream requirement
+  in the underlying instruments. Preserved limitation: REQ-0009 - the newer administrative Rule 27 sub-rules (2)(d), (3) proviso and (5) are not modelled; SRC-027 is a secondary consolidation.

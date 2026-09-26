@@ -1,0 +1,22 @@
+condition_id: COND-0077
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.sells_imported_schedule1_eee_or_imports_used_schedule1_eee
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-EWASTE-01]
+grounding_regulatory_fact_ids: [RF-0030]
+
+description: >
+  True if the project offers to sell imported Schedule-I EEE (or its
+  components/parts) or imports used Schedule-I EEE - limbs (iii) and (iv) of the
+  'producer' definition, E-Waste Rules 2022 r.3(1)(t).
+
+normalization_notes: >
+  Boolean, human-supplied; never inferred from sector. Added in Batch 2 because the
+  V1 producer fact (sells_schedule1_eee_under_own_brand) omitted the import limbs.

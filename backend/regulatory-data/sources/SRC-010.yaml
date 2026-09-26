@@ -4,12 +4,25 @@ publisher_authority_id: AUTH-MoEFCC
 document_type: INDIA_CODE
 official_url: "https://www.indiacode.nic.in"
 publication_date: "2016-04-04"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-010_HOWM_Rules_2016_Gazette_GSR395E_CPCB.pdf"
+checksum_sha256: "610d54894d55d9240378adcc396bb11f02e547e86dca365bd4352f97bb406ffb"
+source_status: ARCHIVED
 notes: >
   Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
   (SRC-MH-HW-R6) — not independently re-fetched by this pass. Covers Rule
   6(1)-(4) (Form 1/2/3/4, 5-year validity, 120-day grant, 30 June annual
   return, renewal 3 months prior).
+  Wave-1 archival (2026-09-26): the exact artifact was downloaded from
+  https://cpcb.nic.in/displaypdf.php?id=aHdtZC9IV01fUnVsZXNfMjAxNi5wZGY= and
+  its SHA-256 computed from the saved bytes. Gazette of India Extraordinary
+  No. 244, 4 April 2016, G.S.R. 395(E), 97 pages, CPCB website copy of the
+  ORIGINAL 2016 Rules. CURRENTNESS BLOCKER FOR REQ-0010: this is the original
+  text; the Rules were later amended (e.g. Fourth Amendment Rules 01.03.2019,
+  which exempts industries not requiring Water/Air Act consent from
+  authorisation under stated conditions) and the amendments are not archived
+  here. ARCHIVED means only that this artifact is archived; it does not mean
+  the evidence is human-verified (evidence rows remain UNVERIFIED).
+  Wave-1B update (2026-09-26): Rule 6 was amended by the Fourth Amendment
+  Rules 2019 (SRC-024, inserting Rule 6(1A)) and the Ninth Amendment Rules
+  2024 (SRC-025, Rule 6(1B)-(1C)); RULE-0013-V1 does not encode Rule 6(1A).

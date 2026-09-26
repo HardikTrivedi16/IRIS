@@ -1,23 +1,22 @@
 source_id: SRC-013
-title: "Drugs Rules, 1945 — rr. 69, 75; Forms 24/24-B/24-F/25/25-B/25-F, 27/27-A/27-B/28/28-A/28-B"
+title: "Drugs Rules, 1945 - CDSCO compiled version as amended vide G.S.R. 360(E) dated 01-07-2024 (rr. 69, 72, 75, 77; Forms 24/24B/24F/25/25A/25B/25F, 27/27B/27D/28/28B/28D)"
 publisher_authority_id: AUTH-CDSCO
-document_type: INDIA_CODE
-official_url: "https://www.indiacode.nic.in"
-publication_date: "1945-01-01"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+document_type: OFFICIAL_WEBSITE
+official_url: "https://cdsco.gov.in/opencms/resources/UploadCDSCOWeb/2022/drug_rules/Drugs%20Rules%201945_2024%2009.pdf"
+publication_date: "2024-07-01"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-013_Drugs_Rules_1945_CDSCO_compiled_Jul2024.pdf"
+checksum_sha256: "fb5b7675a9a0e9cb539fa0131875922f1bdd290389a192aa1a67d0b9d871eeb7"
+source_status: ARCHIVED
 notes: >
-  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
-  (SRC-MH-DRUGS-R69-75 lineage) — NOT independently retrieved or archived
-  by this pass (this pass is data integration only, per explicit
-  instruction; no source archival was attempted).
-  `retrieved_date` reproduces the research pack's own stated retrieval
-  date for its §13.3 rows ("22 September 2026") — not an independent
-  verification. `official_url` is the general India Code portal (the
-  research pack itself only says "India Code (Drugs Rules consolidated)"
-  without a pinned handle/URL — no specific URL is fabricated here).
-  Covers PH-01 (r.69(1)(c), Form 24 -> 25),
-  PH-02 (r.75, Form 27 -> 28), and PH-03 (r.69(1)(b) Form 24-F -> 25-F;
-  Form 27-B -> 28-B combined pathway).
+  Batch-2 archival (2026-09-26): downloaded from the CDSCO (Government of India)
+  website; SHA-256 computed from the saved bytes. 963-page compiled version whose
+  own cover states 'As amended vide G.S.R. 360(E) dated 01-07-2024' and whose
+  DISCLAIMER says it is a compilation of Gazette amendments (NOT itself a Gazette
+  copy). Used for Rule 69(1) (PDF p.59), Rule 72 (p.67), Rule 75 (p.75), Rule 77
+  (p.83) and Rule 68A (p.57). Amendments after 01-07-2024 are not reconciled. The
+  earlier citation to the general India Code portal is superseded by this exact
+  artifact. ARCHIVED means only that this artifact is archived; it is not a human
+  verification of any Evidence or Rule.
+  Currentness sweep (2026-09-26): no later final amendment to rr.69/72/75/77 or Forms 24/25/27/28 was found on
+  CDSCO's official Gazette Notifications page (newest entry 2026-09-08); see RULE-0018-V1 note.

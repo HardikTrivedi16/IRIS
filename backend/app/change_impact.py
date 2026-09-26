@@ -248,8 +248,7 @@ def analyse_change_impact(
         notes.append(
             "Every requirement is currently blocked by the Rule Version "
             "lifecycle, so this comparison cannot produce an authoritative "
-            "regulatory result. The dataset contains zero ACTIVE Rule "
-            f"Versions; the blocking state(s) returned were: "
+            "regulatory result. The blocking state(s) returned were: "
             f"{', '.join(sorted(blocked_states))}."
         )
     if evaluation_mode != "PRODUCTION":

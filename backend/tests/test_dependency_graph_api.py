@@ -36,7 +36,8 @@ def test_dependency_graph_empty_in_production_mode(client):
 def test_dependency_graph_non_production_shows_applicable_node(client):
     project_id = _create_project(client)
     client.post(f"/api/v1/projects/{project_id}/facts", json={
-        "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True}
+        "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                  "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}
     })
     resp = client.get(
         f"/api/v1/projects/{project_id}/dependency-graph",
@@ -58,6 +59,8 @@ def test_dependency_graph_zero_edges_reflected_honestly(client):
         "facts": {
             "project.likely_to_discharge_sewage_or_trade_effluent": True,
             "project.plant_located_in_air_pollution_control_area": True,
+            "project.is_white_category_industrial_plant": False,
+            "project.holds_prior_environmental_clearance": False,
         }
     })
     resp = client.get(
@@ -83,7 +86,8 @@ def test_dependency_graph_impact_detects_newly_applicable_requirement(client):
         f"/api/v1/projects/{project_id}/dependency-graph/impact",
         json={
             "old_facts": {},
-            "new_facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True},
+            "new_facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                          "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False},
             "evaluation_mode": "NON_PRODUCTION",
         },
     )

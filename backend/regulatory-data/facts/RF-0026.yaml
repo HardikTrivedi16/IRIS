@@ -3,12 +3,13 @@ statement: >
   A project that manufactures drugs for sale or distribution (excluding
   repacking), where the drug's schedule classification is
   SCHEDULE_C_OR_C1 (Schedule C or C(1), not also Schedule X), must apply
-  for a manufacturing licence in Form 27 (Rule 75, Drugs Rules, 1945,
-  r/w r.75(3) for endorsement of added items) to the State Licensing
+  for a manufacturing licence in Form 27 (Rule 75(1), Drugs Rules, 1945; drugs excluded from Rule 75(1) - Part XB and Schedule X - and the
+  Large Volume Parenterals/Sera/Vaccines/r-DNA category, which uses Form 27D under r.75(3), are outside this
+  Form 27 pathway) to the State Licensing
   Authority (FDA Maharashtra, with CDSCO joint inspection for certain
   categories); the licence is issued in Form 28. (PH-02 — resolves
   RULE-REV-0002's Schedule C/C(1) leg.)
 evidence_ids: [EVID-DRUGS-02]
 authority_id: AUTH-FDA-MH
 instrument_id: INST-DRUGS-RULES-1945
-verification_status: UNVERIFIED
+verification_status: VERIFIED

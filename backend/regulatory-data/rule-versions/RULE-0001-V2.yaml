@@ -1,0 +1,107 @@
+rule_version_id: RULE-0001-V2
+rule_id: RULE-0001
+version_number: 2
+
+condition_expression_root_id: COND-0070
+logic: "COND-0070 = AND(likely_to_discharge_sewage_or_trade_effluent==true, is_white_category_industrial_plant==false, holds_prior_environmental_clearance==false)"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - prior consent of the State Board under Water Act, 1974,
+  s.25(1)(a) is required before establishing (or taking steps to establish) the
+  industry/operation/process, treatment/disposal system, or extension/addition
+  to one: discharge is likely and neither the White-category exemption nor the
+  prior-EC exemption of G.S.R. 703(E) (12.11.2024) applies.
+
+false_outcome: >
+  NOT_APPLICABLE on this trigger - the project is not likely to discharge
+  sewage or trade effluent, OR it is a White-category plant (pollution index
+  score up to 20, exempt from s.25(1) on written intimation to the State Board),
+  OR it holds prior environmental clearance in respect of consent to establish
+  (G.S.R. 703(E)(b)). This does not evaluate any other consent (including
+  consent to operate, or MPCB's self-certified consent handling of White
+  category units) that might independently apply.
+
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine applicability until the project's
+  discharge characteristics, White-category status and prior-EC status are
+  known (a fact that is enough to establish an exemption resolves the result
+  without the others).
+
+
+required_project_facts:
+  - project.likely_to_discharge_sewage_or_trade_effluent
+  - project.is_white_category_industrial_plant
+  - project.holds_prior_environmental_clearance
+
+regulatory_fact_ids:
+  - RF-0001
+  - RF-0034
+evidence_ids:
+  - EVID-MPCB-01
+  - EVID-MPCB-03
+  - EVID-MPCB-04
+  - EVID-MPCB-07
+source_ids:
+  - SRC-001
+  - SRC-018
+  - SRC-021
+  - SRC-023
+authority_id: AUTH-MoEFCC
+instrument_id: INST-WATER-74
+
+jurisdiction: INDIA
+lifecycle_stage: PRE_ESTABLISHMENT
+
+effective_start_date: null
+effective_end_date: null
+
+status: DRAFT
+confidence: REQUIRES_REVIEW
+
+supersedes_rule_version_id: RULE-0001-V1
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0001-V2
+  regulatory_fact_ids: [RF-0001, RF-0034]
+  evidence_ids: [EVID-MPCB-01, EVID-MPCB-03, EVID-MPCB-04, EVID-MPCB-07]
+  source_ids: [SRC-001, SRC-018, SRC-021, SRC-023]
+  authority_id: AUTH-MoEFCC
+  instrument_id: INST-WATER-74
+
+validation_notes: >
+  Wave 1C (2026-09-26) corrected successor to RULE-0001-V1, which is
+  PRESERVED UNEDITED as the pre-2024-exemption logic (still DRAFT: no
+  transition date is set on it because the Maharashtra transition is not
+  established). Legal change: G.S.R. 703(E) of 12.11.2024 (SRC-018) exempts
+  White-category plants and prior-EC plants from s.25(1).
+
+  STILL DRAFT / NOT ACTIVE, and effective_start_date is deliberately null.
+  Open items for the human reviewer: (1) the Central proviso under which
+  G.S.R. 703(E) was issued was substituted by the Water Amendment Act, 2024,
+  which by its own s.1(2)-(3) applies in a State other than Himachal Pradesh,
+  Rajasthan and the UTs only on adoption by that State's resolution;
+  Maharashtra's adoption is reported in secondary sources only and no official
+  adoption instrument (with its date) is archived, so the 2024-11-12 candidate
+  transition date is NOT asserted for Maharashtra; (2) MPCB's circular of
+  16.06.2025 (SRC-023) says White-category consents are granted on
+  self-certification via its portal, so 'NOT_APPLICABLE' for a White plant
+  means exempt from the s.25(1) consent-to-establish requirement, not that no
+  MPCB portal step exists; (3) the White-category exemption is conditional on
+  written intimation to the State Board, which is not modelled; (4) the
+  Schedule (pollution index <= 20) and MPCB's additional 222 listed
+  activities are not encoded - is_white_category_industrial_plant is a
+  human-supplied fact; (5) the MoEFCC SOP of 14.11.2024 (SRC-020, scanned)
+  says prior-EC projects have CTE conditions integrated into the EC. No
+  Project Fact for either new key exists in the showcase data yet, so until
+  supplied the result is REQUIRES_INFORMATION for projects that may discharge.
+  No human VER exists; cannot be promoted to ACTIVE until reviewed.
+

@@ -1,0 +1,114 @@
+rule_version_id: RULE-0013-V2
+rule_id: RULE-0013
+version_number: 2
+
+condition_expression_root_id: COND-0076
+logic: "COND-0076 = AND(generates_or_handles_scheduled_hazardous_waste==true, OR(state_board_consent_not_required_under_water_and_air_acts==false, hands_over_hazardous_waste_to_authorised_actual_user_collector_or_disposal_facility==false))"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - a Form 2 hazardous-waste authorisation (5-year validity) is
+  required (HOWM Rules, 2016, r.6(1)-(2)) because the project generates or
+  handles Schedule-listed waste and the Rule 6(1A) exemption is not
+  established (consent under the Water/Air Acts is required, or the waste is not
+  handed to an authorised destination); Form 4 annual return by 30 June,
+  renewal 3 months prior to expiry.
+
+false_outcome: >
+  NOT_APPLICABLE on this trigger - either the project does not generate or
+  handle Schedule-listed waste, OR Rule 6(1A) applies: consent to establish and
+  consent to operate are not required from the State Board under the Water and
+  Air Acts AND the waste is given to the actual user, waste collector or
+  disposal-facility operator per CPCB guidelines.
+
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine authorisation applicability until
+  the waste trigger and, where the waste trigger is met, the consent status and
+  the handover of the waste are known.
+
+
+required_project_facts:
+  - project.generates_or_handles_scheduled_hazardous_waste
+  - project.state_board_consent_not_required_under_water_and_air_acts
+  - project.hands_over_hazardous_waste_to_authorised_actual_user_collector_or_disposal_facility
+
+regulatory_fact_ids:
+  - RF-0021
+  - RF-0036
+evidence_ids:
+  - EVID-HW-01
+  - EVID-HW-02
+source_ids:
+  - SRC-010
+  - SRC-024
+authority_id: AUTH-MPCB
+instrument_id: INST-HW-16
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: [PRE_OPERATION, OPERATION]
+
+effective_start_date: "2019-03-05"
+effective_end_date: null
+
+status: ACTIVE
+confidence: VERIFIED
+
+supersedes_rule_version_id: RULE-0013-V1
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0013-V2
+  regulatory_fact_ids: [RF-0021, RF-0036]
+  evidence_ids: [EVID-HW-01, EVID-HW-02]
+  source_ids: [SRC-010, SRC-024]
+  authority_id: AUTH-MPCB
+  instrument_id: INST-HW-16
+
+validation_notes: >
+  Wave 1C (2026-09-26) corrected successor to RULE-0013-V1 (over-inclusive:
+  it ignored Rule 6(1A)). Legal change: the HOWM (M&TM) Amendment Rules, 2019,
+  G.S.R. 178(E) (SRC-024, Gazette dated 5 March 2019, in force on publication)
+  inserted r.6(1A). RULE-0013-V1 is preserved as status SUPERSEDED with
+  effective_end_date 2019-03-04 (the day before this successor). Per SRC-025
+  (Ninth Amendment, 2024) read with the CPCB-listed amendments, only these two
+  amendments were found to change Rule 6; the Ninth Amendment's r.6(1B)-(1C)
+  concern domestic-waste deposition centres and are not modelled.
+
+  No EC-holder exemption is invented: a prior-EC holder has consent to
+  operate still required, so the Rule 6(1A) fact would not be TRUE on that
+  basis alone. Interpretation to confirm: 'the consent ... is not required ...
+  under the Water Act and Air Act' is encoded conservatively as consent not
+  required under EITHER Act, for both consent to establish and consent to
+  operate (state_board_consent_not_required_under_water_and_air_acts). Both
+  exemption facts are human-supplied booleans; the CPCB guidelines on handover
+  are not archived or modelled. DEMO IMPACT: no showcase project carries the
+  two new facts yet, so waste-generating projects that previously evaluated
+  APPLICABLE now evaluate REQUIRES_INFORMATION until the facts are supplied
+  (fail-safe). No human VER exists; cannot be promoted to ACTIVE.
+  Batch 2 (2026-09-26) Rule 6(1A) proviso check: no CPCB guideline expressly issued for the Rule 6(1A)
+  proviso ('in accordance with the Central Pollution Control Board guidelines') was found on the CPCB
+  hazardous-waste 'Technical Guidelines' or 'Important Communication' pages (the guideline list there was
+  read); the operative handover duties are in the Rules themselves (r.4 occupier responsibilities, r.6(8)
+  passbook entry, transport rules - SRC-010). The boolean handover fact is therefore defined as the
+  occupier's attested handover to an authorised actual user / waste collector / disposal-facility operator
+  'in accordance with CPCB guidelines'; IRIS cannot verify guideline compliance and adds no extra condition.
+  This is disclosed for the reviewer, not resolved.
+  Currentness/guideline sweep (2026-09-26): (A) no CPCB guideline specific to the r.6(1A) proviso could be
+  retrieved after a further official-source search - the proviso refers generically to 'the Central Pollution
+  Control Board guidelines' and creates no separate applicability condition beyond the handover itself (B); the
+  handover boolean is safe as an occupier attestation for this Requirement, with guideline compliance outside
+  its scope. (C) Later HOWM amendments - 14.08.2024 and G.S.R. 438(E) of 01.07.2025 - are described by
+  Government sources (PIB, MoEFCC annual report) as inserting EPR for scrap of non-ferrous metals (new
+  Chapter VIII); their Gazette text was NOT retrieved, so 'no change to r.6/6(1A)' rests on those official
+  descriptions plus CPCB's rules page (which lists no 2025 amendment). Residual disclosed for the reviewer.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0004) for the encoded scope; see the APPROVED VER record for this
+  Rule Version. All documented limitations in this file's notes remain in force.

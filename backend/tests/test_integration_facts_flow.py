@@ -246,7 +246,8 @@ def test_evaluation_and_dependency_graph_both_reflect_persisted_facts(client):
     project_id = _create_project(client)
     client.post(
         f"/api/v1/projects/{project_id}/facts",
-        json={"facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True}},
+        json={"facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                        "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}},
     )
 
     eval_resp = client.post(

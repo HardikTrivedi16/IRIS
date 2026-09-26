@@ -42,10 +42,10 @@ instrument_id: INST-DRUGS-RULES-1945
 jurisdiction: MAHARASHTRA
 lifecycle_stage: PRE_OPERATION
 
-effective_start_date: null
+effective_start_date: "2017-10-27"
 effective_end_date: null
 
-status: DRAFT
+status: ACTIVE
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -83,3 +83,8 @@ validation_notes: >
   this repository) — left as-is elsewhere (e.g. REQ-0003's own
   grounding_regulatory_fact_ids), not fabricated into real records by
   this pass.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0005) for the encoded scope; see the APPROVED VER record for this
+  Rule Version. All documented limitations in this file's notes remain in force.
+  effective_start_date basis: G.S.R. 1337(E) came into force on publication, 27.10.2017 (SRC-014), removing renewal and introducing the retention-fee regime; the encoded pathway/duration text applies from that date.

@@ -6,19 +6,21 @@ rules:
     code: WATER_ACT_CTE_APPLICABILITY
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
-    regulatory_fact_ids: [RF-0001]
-    latest_rule_version_id: RULE-0001-V1
+    regulatory_fact_ids: [RF-0001, RF-0034]
+    latest_rule_version_id: RULE-0001-V2
     latest_status: DRAFT
-    latest_confidence: VERIFIED
+    latest_confidence: REQUIRES_REVIEW
+    # Wave 1C: RULE-0001-V1 preserved unedited (pre-2024-exemption logic).
 
   - rule_id: RULE-0002
     code: AIR_ACT_CONSENT_APPLICABILITY
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
-    regulatory_fact_ids: [RF-0002]
-    latest_rule_version_id: RULE-0002-V1
+    regulatory_fact_ids: [RF-0002, RF-0035]
+    latest_rule_version_id: RULE-0002-V2
     latest_status: DRAFT
-    latest_confidence: VERIFIED
+    latest_confidence: REQUIRES_REVIEW
+    # Wave 1C: RULE-0002-V1 preserved unedited (pre-2024-exemption logic).
 
   - rule_id: RULE-0003
     code: DRUGS_MANUFACTURING_LICENCE_COARSE_GATE   # REPURPOSED 2026-09-23 — see RULE-REV-0002
@@ -26,7 +28,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0025]
     latest_rule_version_id: RULE-0003-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
 
   - rule_id: RULE-0004
@@ -82,7 +84,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0016]
     latest_rule_version_id: RULE-0009-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
 
   - rule_id: RULE-0010
@@ -91,7 +93,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0017]
     latest_rule_version_id: RULE-0010-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
 
   - rule_id: RULE-0011
@@ -108,18 +110,20 @@ rules:
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0020]
-    latest_rule_version_id: RULE-0012-V1
-    latest_status: DRAFT
+    latest_rule_version_id: RULE-0012-V2
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
+    # Wave 1C: RULE-0012-V1 (retail-only fact) preserved as SUPERSEDED.
 
   - rule_id: RULE-0013
     code: HAZARDOUS_WASTE_AUTHORISATION_APPLICABILITY
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
-    regulatory_fact_ids: [RF-0021]
-    latest_rule_version_id: RULE-0013-V1
-    latest_status: DRAFT
+    regulatory_fact_ids: [RF-0021, RF-0036]
+    latest_rule_version_id: RULE-0013-V2
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
+    # Wave 1C: RULE-0013-V1 preserved as SUPERSEDED, effective_end_date 2019-03-04.
 
   - rule_id: RULE-0014
     code: FSSAI_CENTRAL_ENTRY_V_APPLICABILITY
@@ -162,7 +166,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0025]
     latest_rule_version_id: RULE-0017-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # PH-01 — Pharma tranche, 2026-09-23. classification_rule_id of REQ-0003.
 
@@ -172,7 +176,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0026]
     latest_rule_version_id: RULE-0018-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # PH-02 — resolves RULE-REV-0002's Schedule C/C(1) leg.
 
@@ -182,7 +186,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0027]
     latest_rule_version_id: RULE-0019-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # PH-03 — KEEP_DRAFT (MVP scope decision, not a legal gap).
 
@@ -222,7 +226,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0028]
     latest_rule_version_id: RULE-0023-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # PH-05 — evaluated_by_rule_id of REQ-0015.
 
@@ -241,8 +245,8 @@ rules:
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0029]
-    latest_rule_version_id: RULE-0025-V1
-    latest_status: DRAFT
+    latest_rule_version_id: RULE-0025-V2
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # AU-02 - evaluated_by_rule_id of REQ-0017.
 
@@ -250,9 +254,9 @@ rules:
     code: EWASTE_PRODUCER_REGISTRATION_EPR_APPLICABILITY
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
-    regulatory_fact_ids: [RF-0030]
-    latest_rule_version_id: RULE-0026-V1
-    latest_status: DRAFT
+    regulatory_fact_ids: [RF-0030, RF-0038]
+    latest_rule_version_id: RULE-0026-V2
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # EL-01 - evaluated_by_rule_id of REQ-0018.
 
@@ -260,9 +264,9 @@ rules:
     code: EWASTE_MANUFACTURER_REGISTRATION_APPLICABILITY
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
-    regulatory_fact_ids: [RF-0031]
-    latest_rule_version_id: RULE-0027-V1
-    latest_status: DRAFT
+    regulatory_fact_ids: [RF-0031, RF-0038]
+    latest_rule_version_id: RULE-0027-V2
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # EL-02 - evaluated_by_rule_id of REQ-0019.
 
@@ -298,10 +302,10 @@ facts_with_no_rule:
 
 counts:
   total_rules: 29
-  total_rule_versions: 31
-  status_DRAFT: 29
-  status_SUPERSEDED: 2
-  status_ACTIVE: 0
+  total_rule_versions: 38
+  status_DRAFT: 19
+  status_SUPERSEDED: 7
+  status_ACTIVE: 12
   confidence_VERIFIED: 23
   confidence_REQUIRES_REVIEW: 8
   regulatory_facts_converted: 33   # +RF-0011..RF-0021 (Shared+Food) + RF-0022..RF-0024 (FSSAI
@@ -330,3 +334,12 @@ counts:
 # NOTE (remaining-sector tranche, 2026-09-23): RULE-0024..RULE-0029 (+ -V1)
 # added for AU-01/AU-02/EL-01/EL-02/CH-02/CH-03 under REQ-0016..REQ-0021.
 # All DRAFT; RF-0029..RF-0033 added (AU-01 has none - grounding blocked).
+
+# NOTE (Wave 1C, 2026-09-26): RULE-0001-V2, RULE-0002-V2, RULE-0012-V2, RULE-0013-V2 (DRAFT successors) added;
+# RULE-0012-V1/RULE-0013-V1 set to SUPERSEDED; RULE-0001-V1/RULE-0002-V1 preserved unedited. See RULE-REV-0010.
+
+# NOTE (Batch 2, 2026-09-26): RULE-0025-V2, RULE-0026-V2, RULE-0027-V2 (DRAFT successors) added; RULE-0025-V1,
+# RULE-0026-V1, RULE-0027-V1 set to SUPERSEDED. See RULE-REV-0011.
+
+# NOTE (Verification Batch 1, 2026-09-26): 12 Rule Versions promoted to ACTIVE after human approval (VER-0001..VER-0012):
+# RULE-0003/0009/0010/0012-V2/0013-V2/0017/0018/0019/0023/0025-V2/0026-V2/0027-V2.

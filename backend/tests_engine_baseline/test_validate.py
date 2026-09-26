@@ -27,7 +27,11 @@ def test_210_files_inspected(dataset):
     # regulatory-data/index/*_index.yaml and
     # regulatory-data/registers/rule_review_register.yaml RULE-REV-0002.
     report = validate_dataset(DATA_ROOT, dataset)
-    assert len(report.files_inspected) == 210
+    # Stale since the remaining-sector tranche; brought current at Wave 1C: 262 + 27 Wave 1C
+    # records (8 EVID, 4 RF, 2 SRC, 9 COND, 4 RULE-VERSION) = 289.
+    # Batch 2 adds 15 records (6 SRC-013..016/029/030 rewrites are in-place; new: 2 SRC, 4 EVID, 1 RF,
+    # 5 COND, 3 RULE-VERSION) = 304, +1 SRC-031 in the currentness sweep = 305, +12 VER records in Verification Batch 1 = 317.
+    assert len(report.files_inspected) == 317
 
 
 def test_broken_reference_is_detected(dataset):

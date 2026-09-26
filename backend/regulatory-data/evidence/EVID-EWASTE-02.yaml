@@ -1,12 +1,17 @@
 evidence_id: EVID-EWASTE-02
 source_id: SRC-016
-section_or_clause: "E-Waste (Management) Rules, 2022 - r.4 (manufacturer of Schedule-I EEE)"
-page: null
+section_or_clause: "E-Waste (Management) Rules 2022 - r.3(1)(p) 'manufacturer' and r.4(1)(a), 4(2)"
+page: 22-23
 excerpt: >
-  Research-pack summary (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §10/§12
-  EL-02) - NOT a verbatim gazette quotation: Rule 4 registers the
-  manufacturer of Schedule-I EEE (including contract manufacture)
-  separately from the producer, on the CPCB portal; one legal person may
-  hold both registrations.
-verification_status: UNVERIFIED
-regulatory_fact_id: RF-0031
+  r.3(1)(p): "`manufacturer' means a person or an entity or a company as defined in
+  the Companies Act, 2013 ... or a factory as defined in the Factories Act, 1948 ...
+  or Small and Medium Enterprises as defined in the Micro, Small and Medium
+  Enterprises Development Act, 2006 ..., which has facilities for manufacture of
+  electrical and electronic equipment as specified in Schedule-I;" r.4(1): "...
+  register on the portal in any of the following category ... (a) manufacturer;
+  (b) producer; (c) refurbisher; or (d) recycler." r.4(2): "In case any entity falls
+  in more than one categories under sub-rule (1), then the entity shall register
+  under those categories separately." The Rules do not use the words 'contract
+  manufacture'; a contract manufacturer is a 'manufacturer' by the definition if it
+  has facilities to manufacture Schedule-I EEE.
+verification_status: VERIFIED

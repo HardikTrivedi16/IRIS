@@ -1,0 +1,13 @@
+regulatory_fact_id: RF-0036
+statement: >
+  Under Rule 6(1A) of the HOWM Rules, 2016 (inserted by G.S.R. 178(E), Gazette
+  dated 5 March 2019), an occupier is not required to obtain an authorisation
+  under Rule 6 where consent to establish or consent to operate is not
+  required from the State Pollution Control Board under the Water Act, 1974
+  and the Air Act, 1981, provided the hazardous and other wastes generated are
+  given to the actual user, waste collector or operator of the disposal
+  facility in accordance with CPCB guidelines.
+evidence_ids: [EVID-HW-02]
+authority_id: AUTH-MPCB
+instrument_id: INST-HW-16
+verification_status: VERIFIED

@@ -33,18 +33,20 @@ regulatory_fact_ids:
   - RF-0028
 evidence_ids:
   - EVID-DRUGS-04
+  - EVID-DRUGS-05
 source_ids:
   - SRC-014
+  - SRC-013
 authority_id: AUTH-FDA-MH
 instrument_id: INST-DRUGS-RULES-1945
 
 jurisdiction: MAHARASHTRA
 lifecycle_stage: OPERATIONAL
 
-effective_start_date: null
+effective_start_date: "2017-10-27"
 effective_end_date: null
 
-status: DRAFT
+status: ACTIVE
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -56,8 +58,8 @@ priority: 1
 provenance:
   rule_version_id: RULE-0023-V1
   regulatory_fact_ids: [RF-0028]
-  evidence_ids: [EVID-DRUGS-04]
-  source_ids: [SRC-014]
+  evidence_ids: [EVID-DRUGS-04, EVID-DRUGS-05]
+  source_ids: [SRC-014, SRC-013]
   authority_id: AUTH-FDA-MH
   instrument_id: INST-DRUGS-RULES-1945
 
@@ -69,3 +71,16 @@ validation_notes: >
   (REQ-0015's own category), not renewal metadata, per H2.2's explicit
   instruction ("not renewal metadata, because non-payment has its own
   suspension/cancellation consequence").
+
+batch2_note: >
+  Batch 2 (2026-09-26): legal basis confirmed - Rule 72 (Forms 25/25B/25F), 73AA (25A) and 77 (28/28B/28D)
+  of the Drugs Rules make validity conditional on a retention fee deposited before the expiry of every
+  succeeding five years; the retention fee equals the grant fee (excluding inspection fee), a late
+  fee of 2% per month up to six months applies, and non-payment means the licence is deemed cancelled
+  (SRC-013 p.67/83; SRC-014). Fee amounts are NOT encoded. The trigger fact holds_drug_manufacturing_licence
+  is human-supplied and is intended for Form 25-series and 28-series manufacturing licences only.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0009) for the encoded scope; see the APPROVED VER record for this
+  Rule Version. All documented limitations in this file's notes remain in force.
+  effective_start_date basis: G.S.R. 1337(E) came into force on publication, 27.10.2017 (SRC-014), removing renewal and introducing the retention-fee regime; the encoded pathway/duration text applies from that date.

@@ -4,8 +4,7 @@ NP = EvaluationMode.NON_PRODUCTION
 
 
 def test_rule_0001_water_act(engine):
-    d = engine.evaluate_requirement("P", "REQ-0001",
-        {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP)
+    d = engine.evaluate_requirement("P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, NP)
     assert d["final_state"] == "APPLICABLE"
 
     d = engine.evaluate_requirement("P", "REQ-0001",
@@ -18,7 +17,8 @@ def test_rule_0001_water_act(engine):
 
 def test_rule_0002_air_act(engine):
     d = engine.evaluate_requirement("P", "REQ-0002",
-        {"project.plant_located_in_air_pollution_control_area": True}, NP)
+        {"project.plant_located_in_air_pollution_control_area": True,
+         "project.is_white_category_industrial_plant": False}, NP)
     assert d["final_state"] == "APPLICABLE"
 
     d = engine.evaluate_requirement("P", "REQ-0002",

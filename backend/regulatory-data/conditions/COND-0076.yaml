@@ -1,0 +1,24 @@
+condition_id: COND-0076
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0030
+  - COND-0075
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids: [RF-0021, RF-0036]
+
+description: >
+  RULE-0013-V2 root (current, post-2019): generates or handles Schedule-listed
+  hazardous waste (COND-0030) AND the Rule 6(1A) exemption is not established
+  (COND-0075).
+
+normalization_notes: >
+  Successor to COND-0030 as RULE-0013's root; COND-0030 is reused unchanged
+  and RULE-0013-V1 (root COND-0030) is preserved. DRAFT.

@@ -1,0 +1,14 @@
+verification_id: VER-0009
+target_type: RULE_VERSION
+target_id: RULE-0023-V1
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-014, SRC-013]
+evidence_checks: [EVID-DRUGS-04, EVID-DRUGS-05]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Verification Batch 1"), for the ENCODED applicability/obligation scope in the final Human
+  Review Pack and currentness sweep only. It does not assert that IRIS models every obligation,
+  exception, form, fee, target, cessation event, technical guideline or downstream requirement
+  in the underlying instruments. Preserved limitation: REQ-0015 - fee amounts are not encoded; trigger fact intended for Form 25/28-series licences.

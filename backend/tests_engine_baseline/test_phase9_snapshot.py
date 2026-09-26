@@ -27,15 +27,10 @@ def test_snapshot_has_all_required_fields(engine):
 
 
 def test_snapshot_captures_input_facts_actually_used_not_the_whole_project(engine):
-    facts = {
-        "project.likely_to_discharge_sewage_or_trade_effluent": True,
-        "project.totally_unrelated": "should not appear",
-    }
+    facts = dict({"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, **{"project.totally_unrelated": "should not appear"})
     d = engine.evaluate_requirement("P1", "REQ-0001", facts, NP)
     snap = build_snapshot(decision=d, project_facts=facts)
-    assert snap["input_fact_snapshot"] == {
-        "project.likely_to_discharge_sewage_or_trade_effluent": True
-    }
+    assert snap["input_fact_snapshot"] == {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}
 
 
 def test_snapshot_captures_rule_version_ids_including_classification_group(engine):

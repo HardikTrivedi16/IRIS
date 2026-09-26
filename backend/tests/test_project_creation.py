@@ -174,9 +174,14 @@ def test_new_project_evaluation_requires_information_not_guessed(prod):
     assert r.status_code == 200
     by_req = {d["requirement_id"]: d for d in r.json()["decisions"]}
     assert by_req["REQ-0001"]["final_state"] == "REQUIRES_INFORMATION"
-    assert by_req["REQ-0001"]["missing_project_fact_keys"] == [
+    assert sorted(by_req["REQ-0001"]["missing_project_fact_keys"]) == [
+        "project.holds_prior_environmental_clearance",
+        "project.is_white_category_industrial_plant",
         "project.likely_to_discharge_sewage_or_trade_effluent"]
     assert by_req["REQ-0004"]["final_state"] == "REQUIRES_INFORMATION"  # dairy capacity unknown
 
     prod_mode = prod.post("/api/v1/evaluate/all", json={"project_id": pid, "persist": False})
-    assert {d["final_state"] for d in prod_mode.json()["decisions"]} == {"BLOCKED_DRAFT_NOT_PRODUCTION"}
+    # Verification Batch 1: the 9 human-approved Requirements are ACTIVE; all others stay blocked.
+    approved = {"REQ-0003", "REQ-0006", "REQ-0007", "REQ-0009", "REQ-0010", "REQ-0015", "REQ-0017", "REQ-0018", "REQ-0019"}
+    for d in prod_mode.json()["decisions"]:
+        assert (d["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION") == (d["requirement_id"] not in approved), d["requirement_id"]

@@ -38,7 +38,7 @@ lifecycle_stage: PRE_OPERATION
 effective_start_date: null
 effective_end_date: null
 
-status: DRAFT
+status: SUPERSEDED
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -59,3 +59,10 @@ validation_notes: >
   Boolean trigger verbatim from r.27(1) — never inferred from sector.
   Cannot be promoted to ACTIVE without archived SRC-009 + a human VER
   record.
+
+superseded_note: >
+  Wave 1C (2026-09-26): superseded by RULE-0012-V2. This version's fact
+  (prepacks_commodities_for_retail_sale) is narrower than r.27(1), which covers
+  pre-packing OR importing for sale, distribution or delivery. Preserved
+  unedited apart from this status/note; no legal transition date applies
+  because the defect was in the encoding, not a change in law.

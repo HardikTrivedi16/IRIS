@@ -24,8 +24,12 @@ dependencies_as_source: []
 
 grounding_regulatory_fact_ids:
   - RF-0002
+  - RF-0035
 evidence_ids:
   - EVID-MPCB-02
+  - EVID-MPCB-05
+  - EVID-MPCB-06
+  - EVID-MPCB-07
 
 requirement_notes: >
   Same bridging-population rationale as REQ-0001. Note this Requirement's scope: RF-0002's evidence
@@ -39,3 +43,12 @@ requirement_notes: >
   Water Act evidence (RF-0001, establish-only) does — see the Dependency Review Register
   (`RULE-DEP-REV-0001`) for why no CTE→CTO dependency edge could be authored between REQ-0001 and
   REQ-0002, or within REQ-0002 alone.
+
+wave_1c_note: >
+  Wave 1C (2026-09-26): RULE-0002-V2 (DRAFT) models the White-category
+  exemption. A prior-EC plant is exempt from consent to ESTABLISH only
+  (G.S.R. 702(E)(b)); consent to OPERATE still applies, so this combined
+  Requirement remains APPLICABLE for it (meaning consent to operate). The
+  Requirement was NOT split: no second Requirement was created. Whether to
+  split REQ-0002 into separate CTE and CTO Requirements is left to the human
+  reviewer; RULE-0002-V1 is preserved.

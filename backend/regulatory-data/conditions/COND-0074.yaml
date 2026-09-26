@@ -1,0 +1,26 @@
+condition_id: COND-0074
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.hands_over_hazardous_waste_to_authorised_actual_user_collector_or_disposal_facility
+operator: "=="
+comparison_value: false
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-HW-02]
+
+grounding_regulatory_fact_ids: [RF-0036]
+
+description: >
+  True (the Rule 6(1A) proviso is NOT satisfied) when
+  project.hands_over_hazardous_waste_to_authorised_actual_user_collector_or_disposal_facility
+  is false, i.e. the hazardous and other wastes are not given to an actual user,
+  waste collector or disposal-facility operator in accordance with CPCB
+  guidelines.
+
+normalization_notes: >
+  Negative-polarity leaf; absent fact resolves UNKNOWN. The CPCB guidelines
+  themselves are not archived or modelled - the fact is a human-supplied
+  boolean.

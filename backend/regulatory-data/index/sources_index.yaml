@@ -18,6 +18,20 @@ sources:
   - SRC-015
   - SRC-016
   - SRC-017
+  - SRC-018
+  - SRC-019
+  - SRC-020
+  - SRC-021
+  - SRC-022
+  - SRC-023
+  - SRC-024
+  - SRC-025
+  - SRC-026
+  - SRC-027
+  - SRC-028
+  - SRC-029
+  - SRC-030
+  - SRC-031
 
 counts:
-  total_sources: 15
+  total_sources: 29

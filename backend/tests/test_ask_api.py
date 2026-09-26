@@ -151,7 +151,9 @@ def test_ask_happy_path_is_grounded_and_cited(client, monkeypatch):
             "question": "Why is REQ-0001 applicable?",
             "requirement_id": "REQ-0001",
             "evaluation_mode": "NON_PRODUCTION",
-            "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True},
+            # RULE-0001-V2 (Wave 1C) also needs the White-category / prior-EC facts.
+            "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True,
+                      "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False},
         },
     )
     assert resp.status_code == 200

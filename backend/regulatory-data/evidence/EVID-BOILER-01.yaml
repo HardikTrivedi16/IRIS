@@ -1,19 +1,21 @@
 evidence_id: EVID-BOILER-01
 source_id: SRC-007
-section_or_clause: "Section 2(c)"
-page: null
+section_or_clause: "Section 2(c), Boilers Act 2025 (Gazette CG-DL-E-04042025-262299)"
+page: 2
 excerpt: >
-  "boiler" means a pressure vessel in which steam is generated for use
-  external to itself by the application of heat wholly or partly under
-  pressure, but excludes (i) any such vessel having a capacity of less
-  than 25 litres, measured from the feed check valve to the main steam
-  stop valve; (ii) any such vessel which has a design and working gauge
-  pressure not exceeding [i.e. below] 1 kilogram per square centimetre;
-  and (iii) any such vessel in which water is heated below 100 degrees
-  Celsius. Boundary discipline: the exclusion is strictly "<" — capacity
-  less than 25 L, pressure less than 1 kg/cm² — so the executable inclusion
-  test is ">= 25" litres and ">= 1" kg/cm², never "> 25"/"> 1". The third
-  exclusion leg (water heated below 100°C) has no corresponding Project
-  Fact in this pass and is not part of SH-04's executable predicate — see
-  SH-04's own validation_notes.
-verification_status: UNVERIFIED
+  "(c) "boiler" means a pressure vessel in which steam is generated for use
+  external to itself by application of heat which is wholly or partly under
+  pressure when steam is shut off but does not include a pressure vessel,--
+  (i) with capacity less than twenty-five litres, such capacity being measured
+  from the feed check valve to the main steam stop valve; or (ii) with less
+  than one kilogram per centimetre square design gauge pressure and working
+  gauge pressure; or (iii) in which water is heated below one hundred degrees
+  centigrade;" Boundary discipline: the exclusion is strictly "less than" —
+  capacity less than 25 L, pressure less than 1 kg/cm² — so the executable
+  inclusion test is ">= 25" litres and ">= 1" kg/cm², never "> 25"/"> 1". The
+  statutory exclusion in (ii) is worded on design AND working gauge pressure;
+  this dataset captures design gauge pressure only. The third exclusion leg
+  (water heated below 100°C) has no corresponding Project Fact in this pass
+  and is not part of SH-04's executable predicate — see SH-04's own
+  validation_notes.
+verification_status: VERIFIED

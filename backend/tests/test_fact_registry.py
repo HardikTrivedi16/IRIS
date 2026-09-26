@@ -319,7 +319,8 @@ def test_J_none_does_not_grant_legitimacy_to_an_unknown_key():
 
 def test_K_required_facts_for_requirement_still_works():
     keys = [f["key"] for f in required_facts_for_requirement("REQ-0001")]
-    assert keys == ["project.likely_to_discharge_sewage_or_trade_effluent"]
+    # Wave 1C: RULE-0001-V2 also consumes the White-category / prior-EC exemption facts.
+    assert keys == ["project.holds_prior_environmental_clearance", "project.is_white_category_industrial_plant", "project.likely_to_discharge_sewage_or_trade_effluent"]
 
 
 def test_L_required_facts_for_scheme_returns_scheme_facts(tmp_path, monkeypatch):

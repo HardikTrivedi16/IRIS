@@ -1,9 +1,14 @@
 evidence_id: EVID-CGWA-01
 source_id: SRC-008
-section_or_clause: "Preamble; Annexure VIII item 11"
-page: null
+section_or_clause: "Preamble (SRC-008 PDF p.1); Annexure VIII item 11 (SRC-008 p.57), substituted by S.O. 1509(E) Annexure VIII item 10 (SRC-026 p.14)"
+page: 57
 excerpt: >
   NOC required for industries/infrastructure/mining projects abstracting
-  groundwater, unless exempt under the guidelines. Maharashtra is listed as
-  a CGWA-regulated State/UT (Annexure VIII item 11).
+  groundwater, unless exempt under the guidelines. Maharashtra is listed as a
+  CGWA-regulated State/UT: Annexure VIII item 11 of the 24.09.2020 guidelines
+  (SRC-008, PDF p.57) — that Annexure was SUBSTITUTED by S.O. 1509(E) of
+  29.03.2023 (SRC-026, PDF p.14), whose list of 19 States/UTs has Maharashtra
+  at item 10 and is stated to be dynamic (changes communicated via the CGWA
+  portal). The 2023 list is the last official one located; later portal
+  changes are not verified.
 verification_status: UNVERIFIED

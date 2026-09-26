@@ -10,11 +10,13 @@ NP = EvaluationMode.NON_PRODUCTION
 
 
 def test_leaf_true(engine):
+    # REQ-0009's root (COND-0072) is a single leaf (REQ-0001's root became a
+    # composite in Wave 1C).
     d = engine.evaluate_requirement(
-        "P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP
+        "P", "REQ-0009", {"project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery": True}, NP
     )
     tree = d["explanation"]["condition_evaluation_tree"]
-    assert tree["condition_id"] == "COND-0001"
+    assert tree["condition_id"] == "COND-0072"
     assert tree["result"] == "TRUE"
     assert tree["actual_project_value"] is True
     assert tree["expected_value"] is True
@@ -25,7 +27,7 @@ def test_leaf_true(engine):
 
 def test_leaf_false(engine):
     d = engine.evaluate_requirement(
-        "P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": False}, NP
+        "P", "REQ-0009", {"project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery": False}, NP
     )
     tree = d["explanation"]["condition_evaluation_tree"]
     assert tree["result"] == "FALSE"
@@ -34,11 +36,11 @@ def test_leaf_false(engine):
 
 
 def test_leaf_unknown_missing_fact(engine):
-    d = engine.evaluate_requirement("P", "REQ-0001", {}, NP)
+    d = engine.evaluate_requirement("P", "REQ-0009", {}, NP)
     tree = d["explanation"]["condition_evaluation_tree"]
     assert tree["result"] == "UNKNOWN"
     assert tree["actual_project_value"] is None
-    assert tree["missing_fact_keys"] == ["project.likely_to_discharge_sewage_or_trade_effluent"]
+    assert tree["missing_fact_keys"] == ["project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery"]
     assert d["final_state"] == "REQUIRES_INFORMATION"
 
 

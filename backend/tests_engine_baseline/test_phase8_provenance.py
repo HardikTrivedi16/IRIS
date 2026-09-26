@@ -14,16 +14,19 @@ NP = EvaluationMode.NON_PRODUCTION
 
 EXPECTED = {
     "REQ-0001": {
-        "rule_id": "RULE-0001", "rule_version_id": "RULE-0001-V1",
-        "regulatory_fact_ids": ["RF-0001"], "evidence_ids": ["EVID-MPCB-01"],
+        "rule_id": "RULE-0001", "rule_version_id": "RULE-0001-V2",
+        "regulatory_fact_ids": ["RF-0001", "RF-0034"],
+        "evidence_ids": ["EVID-MPCB-01", "EVID-MPCB-03", "EVID-MPCB-04", "EVID-MPCB-07"],
         "authority_id": "AUTH-MoEFCC", "instrument_id": "INST-WATER-74",
-        "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True},
+        "facts": {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False},
     },
     "REQ-0002": {
-        "rule_id": "RULE-0002", "rule_version_id": "RULE-0002-V1",
-        "regulatory_fact_ids": ["RF-0002"], "evidence_ids": ["EVID-MPCB-02"],
+        "rule_id": "RULE-0002", "rule_version_id": "RULE-0002-V2",
+        "regulatory_fact_ids": ["RF-0002", "RF-0035"],
+        "evidence_ids": ["EVID-MPCB-02", "EVID-MPCB-05", "EVID-MPCB-06", "EVID-MPCB-07"],
         "authority_id": "AUTH-MoEFCC", "instrument_id": "INST-AIR-81",
-        "facts": {"project.plant_located_in_air_pollution_control_area": True},
+        "facts": {"project.plant_located_in_air_pollution_control_area": True,
+                  "project.is_white_category_industrial_plant": False},
     },
     "REQ-0003": {
         # REPURPOSED 2026-09-23 (Pharma tranche, RULE-REV-0002): RULE-0003

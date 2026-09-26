@@ -17,8 +17,10 @@ dependencies_as_source: []
 
 grounding_regulatory_fact_ids:
   - RF-0016
+  - RF-0037
 evidence_ids:
   - EVID-BOILER-01
+  - EVID-BOILER-03
 
 requirement_notes: >
   SH-04 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). Fact-triggered,
@@ -27,3 +29,7 @@ requirement_notes: >
   Requirement, not a Rule Version of this one — its obligation (event-based
   cessation/renewal) is a distinct continuing duty from initial
   registration, per H2.2's own classification.
+
+wave_1c_note: >
+  Wave 1C (2026-09-26): commencement closed - the Boilers Act, 2025 is in force
+  from 2025-05-01 (S.O. 1943(E), SRC-028). RULE-0009-V1 remains DRAFT.

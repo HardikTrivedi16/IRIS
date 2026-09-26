@@ -1,0 +1,14 @@
+verification_id: VER-0010
+target_type: RULE_VERSION
+target_id: RULE-0025-V2
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-015, SRC-029, SRC-031]
+evidence_checks: [EVID-BWM-01, EVID-BWM-02]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Verification Batch 1"), for the ENCODED applicability/obligation scope in the final Human
+  Review Pack and currentness sweep only. It does not assert that IRIS models every obligation,
+  exception, form, fee, target, cessation event, technical guideline or downstream requirement
+  in the underlying instruments. Preserved limitation: REQ-0017 - EPR targets and Rule 2(2) exclusions are outside the encoded scope; SRC-031 is a secondary amalgamated text.

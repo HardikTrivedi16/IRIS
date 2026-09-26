@@ -17,11 +17,17 @@ dependencies_as_source: []
 
 grounding_regulatory_fact_ids:
   - RF-0030
+  - RF-0038
 evidence_ids:
   - EVID-EWASTE-01
+  - EVID-EWASTE-03
 
 requirement_notes: >
   EL-01: VERIFIED_READY_FOR_PROVENANCE. Own Requirement, not merged with EL-02 (H2.2). The Schedule-I item match is a legal check performed when capturing the fact; Schedule I is not transcribed.
   Standalone Requirement per H2.2. Fact-triggered (project.sells_schedule1_eee_under_own_brand); NOT keyed on
   sector. Rule Version is DRAFT; no source archival, APPROVED VER or ACTIVE
   promotion attempted (multi-sector remaining-tranche pass, 2026-09-23).
+
+batch2_note: >
+  Batch 2 (2026-09-26): RULE-0026-V2 adds the import limbs of 'producer' and the r.2(c) micro-enterprise
+  exclusion (SRC-016). RULE-0026-V1 preserved as SUPERSEDED.

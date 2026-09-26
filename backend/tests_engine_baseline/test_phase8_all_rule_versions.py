@@ -137,18 +137,23 @@ def test_output_mapping_is_read_from_yaml_not_hardcoded(dataset):
         dataset.rule_versions["RULE-0001-V1"] = original
 
 
-def test_all_thirtyone_rule_versions_exist_and_none_is_active(dataset):
+def test_all_thirtyeight_rule_versions_exist_and_only_approved_are_active(dataset):
     # RULE-0001..0006 (Phase 5/6) + RULE-0007..0016 (Shared+Food +
     # FSSAI currentness-correction passes) + RULE-0014-V2/0015-V2 (FSSAI
     # successors) + RULE-0017..0023 (Pharma tranche) + RULE-0024..0029 (remaining-sector
-    # tranche) = 31 rule versions.
+    # tranche) + 4 Wave 1C corrected successors (RULE-0001-V2, RULE-0002-V2,
+    # RULE-0012-V2, RULE-0013-V2) + 3 Batch 2 successors (RULE-0025-V2, RULE-0026-V2,
+    # RULE-0027-V2) = 38 rule versions.
     # Not all are status DRAFT any more: RULE-0014-V1/RULE-0015-V1 are
     # SUPERSEDED (FSSAI currentness correction) — the invariant this test
     # actually protects is "nothing is ACTIVE", not "everything is DRAFT".
-    assert len(dataset.rule_versions) == 31
+    assert len(dataset.rule_versions) == 38
     for rv_id, rv in dataset.rule_versions.items():
-        assert rv["status"] in ("DRAFT", "SUPERSEDED"), rv_id
-        assert rv["status"] != "ACTIVE", rv_id
+        assert rv["status"] in ("DRAFT", "SUPERSEDED", "ACTIVE"), rv_id
+        if rv["status"] == "ACTIVE":  # Verification Batch 1: only human-approved versions
+            assert rv_id in {"RULE-0003-V1", "RULE-0009-V1", "RULE-0010-V1", "RULE-0012-V2", "RULE-0013-V2", "RULE-0017-V1", "RULE-0018-V1", "RULE-0019-V1", "RULE-0023-V1", "RULE-0025-V2", "RULE-0026-V2", "RULE-0027-V2"}, rv_id
+            assert any(v.get("target_id") == rv_id and v.get("result") == "APPROVED"
+                       for v in dataset.verifications.values()), rv_id
 
 
 def test_rule_version_provenance_fields_populated(dataset):

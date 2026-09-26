@@ -10,4 +10,4 @@ description: >
   project holds a drug manufacturing licence.
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0023-V1

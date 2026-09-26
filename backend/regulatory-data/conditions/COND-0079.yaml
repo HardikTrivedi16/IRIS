@@ -1,0 +1,23 @@
+condition_id: COND-0079
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.msme_classification
+operator: NOT_IN
+comparison_value: ["MICRO"]
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-EWASTE-03]
+grounding_regulatory_fact_ids: [RF-0038]
+
+description: >
+  True if the project is NOT classified as a micro enterprise. The E-Waste
+  (Management) Rules, 2022 do not apply to a micro enterprise as defined in the
+  MSMED Act, 2006 (r.2(c)).
+
+normalization_notes: >
+  Reuses the existing project.msme_classification fact (MICRO / SMALL / MEDIUM /
+  NOT_MSME). An unknown classification resolves UNKNOWN, never 'not micro'.
+  Batch 2, DRAFT.

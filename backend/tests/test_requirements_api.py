@@ -15,7 +15,7 @@ def test_requirement_never_leaks_source_file_path(client):
     assert r.status_code == 200
     body = r.json()
     assert "_source_file" not in body
-    assert body["latest_rule_version_id"] == "RULE-0001-V1"
+    assert body["latest_rule_version_id"] == "RULE-0001-V2"
     assert body["latest_rule_version_status"] == "DRAFT"
 
 

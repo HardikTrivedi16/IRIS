@@ -1,0 +1,23 @@
+source_id: SRC-026
+title: "S.O. 1509(E) dated 29.03.2023 - amendment of the MoJS Guidelines to regulate and control groundwater extraction in India (S.O. 3289(E), 24.09.2020)"
+publisher_authority_id: AUTH-CGWA
+document_type: GAZETTE
+official_url: "https://cgwa.mowr.gov.in/WhatsNew/Gazette%20Notification%20dated%2029032023.pdf"
+publication_date: "2023-03-29"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-026_CGWA_SO1509E_Amendment_29Mar2023.pdf"
+checksum_sha256: "c475221a399324e4fefa40cfa220ed829ccb6c83803b33ac53dc551488e44214"
+source_status: ARCHIVED
+notes: >
+  Wave-1B archival (2026-09-26): downloaded from
+  https://cgwa.mowr.gov.in/WhatsNew/Gazette%20Notification%20dated%2029032023.pdf;
+  SHA-256 computed from the saved bytes. Gazette of India Extraordinary, 15
+  pages. Adds Para 1.0(vi)-(vii) exemptions (industries drawing groundwater
+  only for drinking/domestic use up to 5 cum/day; residential apartments/group
+  housing, EWS dwellings) and substitutes Annexure VIII (PDF p.14): 19
+  States/UTs where extraction is regulated by CGWA, Maharashtra at item 10,
+  with the note that the list is dynamic and additions/deletions are
+  communicated through the CGWA portal. Para 1.0(v) (Micro and small
+  Enterprises drawing groundwater less than 10 cum/day) is not amended.
+  ARCHIVED means only that this artifact is archived; it is not a human
+  verification of any Evidence or Rule.

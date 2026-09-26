@@ -108,7 +108,17 @@ def test_owner_can_evaluate_with_stored_facts(prod_client):
     r = _eval(prod_client, "proj-owned-a")
     assert r.status_code == 200
     tree = r.json()["decision"]["explanation"]["condition_evaluation_tree"]
-    assert tree["actual_project_value"] is True  # the owner's own stored fact
+
+    def _leaf(node, cid):  # RULE-0001-V2's root is composite; COND-0001 is a child leaf
+        if node["condition_id"] == cid:
+            return node
+        for child in node.get("children") or []:
+            found = _leaf(child, cid)
+            if found:
+                return found
+        return None
+
+    assert _leaf(tree, "COND-0001")["actual_project_value"] is True  # the owner's own stored fact
 
 
 def test_owner_can_evaluate_all(prod_client):

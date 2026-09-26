@@ -39,9 +39,7 @@ def test_unknown_state_shows_exactly_which_facts_are_missing(engine):
     d = engine.evaluate_requirement("P", "REQ-0001", {}, NP)
     assert d["final_state"] == "REQUIRES_INFORMATION"
     assert "project.likely_to_discharge_sewage_or_trade_effluent" in d["explanation"]["narrative"]
-    assert d["explanation"]["missing_facts"] == [
-        "project.likely_to_discharge_sewage_or_trade_effluent"
-    ]
+    assert d["explanation"]["missing_facts"] == ["project.holds_prior_environmental_clearance", "project.is_white_category_industrial_plant", "project.likely_to_discharge_sewage_or_trade_effluent"]
 
 
 def test_requires_review_shows_reason_and_no_invented_precedence(engine):
@@ -63,7 +61,7 @@ def test_requires_review_shows_reason_and_no_invented_precedence(engine):
 def test_states_are_never_collapsed_into_each_other(engine):
     seen_states = set()
     cases = [
-        ("REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP),
+        ("REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, NP),
         ("REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": False}, NP),
         ("REQ-0001", {}, NP),
         ("REQ-0004", {"project.industry": "FOOD", "project.food_subsector": "DAIRY",
@@ -81,13 +79,11 @@ def test_states_are_never_collapsed_into_each_other(engine):
 
 
 def test_rule_output_mapping_is_exposed_and_matches_authored_data(engine, dataset):
-    d = engine.evaluate_requirement(
-        "P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP
-    )
+    d = engine.evaluate_requirement("P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, NP)
     # YAML parses bare TRUE/FALSE as booleans; rules.py normalizes those to
     # "TRUE"/"FALSE" string keys for lookup. Mirror that same normalization
     # here rather than comparing against the raw YAML dict directly.
-    raw = dataset.rule_versions["RULE-0001-V1"]["output_mapping"]
+    raw = dataset.rule_versions["RULE-0001-V2"]["output_mapping"]
     normalized = {}
     for k, v in raw.items():
         if k is True:
@@ -100,22 +96,15 @@ def test_rule_output_mapping_is_exposed_and_matches_authored_data(engine, datase
 
 
 def test_declared_required_facts_come_from_dataset_not_invented(engine, dataset):
-    d = engine.evaluate_requirement(
-        "P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True}, NP
-    )
-    authored = dataset.rule_versions["RULE-0001-V1"]["required_project_facts"]
+    d = engine.evaluate_requirement("P", "REQ-0001", {"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, NP)
+    authored = dataset.rule_versions["RULE-0001-V2"]["required_project_facts"]
     assert d["explanation"]["declared_required_facts"] == authored
 
 
 def test_input_facts_used_reflects_only_facts_actually_consulted(engine):
-    facts = {
-        "project.likely_to_discharge_sewage_or_trade_effluent": True,
-        "project.some_unrelated_fact_not_consulted": "ignored",
-    }
+    facts = dict({"project.likely_to_discharge_sewage_or_trade_effluent": True, "project.is_white_category_industrial_plant": False, "project.holds_prior_environmental_clearance": False}, **{"project.some_unrelated_fact_not_consulted": "ignored"})
     d = engine.evaluate_requirement("P", "REQ-0001", facts, NP)
-    assert d["explanation"]["input_facts_used"] == [
-        "project.likely_to_discharge_sewage_or_trade_effluent"
-    ]
+    assert d["explanation"]["input_facts_used"] == ["project.holds_prior_environmental_clearance", "project.is_white_category_industrial_plant", "project.likely_to_discharge_sewage_or_trade_effluent"]
 
 
 def test_explanation_json_serializable_for_every_requirement(engine, dataset):

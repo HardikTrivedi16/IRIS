@@ -4,10 +4,10 @@ publisher_authority_id: AUTH-MoEFCC
 document_type: INDIA_CODE
 official_url: "https://www.indiacode.nic.in/handle/123456789/1570"
 publication_date: "1981-03-29"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-002_Air_Act_1981_CPCB_official_copy.pdf"
+checksum_sha256: "836fdde00baea3c8a3760ae0965c3ee3a1ac6ca4a7e1f46de90b117a7c293589"
+source_status: ARCHIVED
 notes: >
   Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
   (SRC-MH-WATER-S25 lineage / SRC-MH-APCA-RTI) — not independently
@@ -20,3 +20,21 @@ notes: >
   and flagged in EVID-MPCB-02. The 1996 gazette notification itself (the
   ideal primary source for claim 2) has not been located. Neither claim has
   been independently archived — verification_status: UNVERIFIED throughout.
+  Wave-1 archival (2026-09-26): the exact artifact was downloaded from
+  https://cpcb.nic.in/displaypdf.php?id=aG9tZS9haXItcG9sbHV0aW9uL05vLTE0LTE5ODEucGRm
+  and its SHA-256 computed from the saved bytes. Central Pollution Control
+  Board (Government of India) website copy of the Act (14 pages, scanned/OCR).
+  s.21(1) (PDF p.7) and s.19(1) (p.7) confirmed. The MPCB RTI s.4 claim
+  (statewide Air Pollution Control Area since 06/11/1996) is NOT in this
+  artifact and remains unverified. CURRENTNESS BLOCKER FOR REQ-0002: the later
+  Central exemption from s.21 consent (G.S.R. 702(E) dated 12.11.2024,
+  reported on official PIB/PARIVESH pages, not archived here) is not reflected
+  — see the Wave-1 human review pack. ARCHIVED means only that this artifact
+  is archived; it does not mean the evidence is human-verified (evidence rows
+  remain UNVERIFIED).
+  Wave-1B update (2026-09-26): the later Central exemption IS now archived —
+  see SRC-019 (G.S.R. 702(E), 12.11.2024), SRC-022 (Jan Vishwas Act 2023,
+  Schedule item 21, substituting s.21(1) and adding the exemption proviso),
+  SRC-020 (SOP) and SRC-023 (MPCB circular). This CPCB copy of the Act
+  pre-dates the 2023 amendment of s.21(1). RULE-0002-V1 does not encode the
+  exemptions.

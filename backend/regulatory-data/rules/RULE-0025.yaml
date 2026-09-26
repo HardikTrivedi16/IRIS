@@ -8,4 +8,4 @@ description: >
   AU-02. Determines whether Battery producer registration + EPR - BWM Rules 2022 r.4(1) attaches, from project.places_batteries_on_market.
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0025-V2

@@ -1,16 +1,28 @@
 source_id: SRC-015
-title: "Battery Waste Management Rules, 2022 - gazette notification 22.08.2022"
+title: "Battery Waste Management Rules, 2022 - Gazette notification S.O. 3984(E) (published August 2022)"
 publisher_authority_id: AUTH-MoEFCC
 document_type: GAZETTE
-official_url: "https://moef.gov.in"
+official_url: "https://cpcb.gov.in/uploads/hwmd/Battery-WasteManagementRules-2022.pdf"
 publication_date: "2022-08-22"
-retrieved_date: "2026-09-22"
-archived_artifact_path: null
-checksum_sha256: null
-source_status: AVAILABLE
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-015_BWM_Rules_2022_SO3984E_CPCB.pdf"
+checksum_sha256: "50966a351d4a86c2b8d5cfb5218543bbdbe714acc6b23bd48a65645d217ef237"
+source_status: ARCHIVED
 notes: >
-  Citation reproduced from MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §13.3
-  (SRC-MH-BWM-2022) - NOT independently retrieved or archived by this
-  pass. `retrieved_date` reproduces the research pack's stated retrieval
-  date. `official_url` is the general MoEFCC portal (the research gives
-  only "moef.gov.in"). Covers AU-02 (REQ-0017), r.4(1).
+  Batch-2 archival (2026-09-26): downloaded from the Central Pollution Control
+  Board website (uploads/hwmd/Battery-WasteManagementRules-2022.pdf); SHA-256
+  computed from the saved bytes. Gazette of India Extraordinary Part II Sec. 3(ii),
+  MoEFCC; the notification is headed 'New Delhi, the 22nd August, 2022' while the
+  later amendment instruments' notes cite S.O. 3984(E) 'dated the 24th August,
+  2022' (gazette publication date) - both are recorded here, the 22.08.2022 date is
+  kept as publication_date. This is the ORIGINAL 2022 text; the 2023 amendment is
+  SRC-029. The 2024 amendments G.S.R. 190(E) (14.03.2024), S.O. 2374(E)
+  (20.06.2024), S.O. 5210(E) (03.12.2024) and the 24.02.2025 amendment were not
+  found to touch the Producer definition or r.4 registration (G.S.R. 190(E) and the
+  2025 amendment were read; S.O. 2374(E)/S.O. 5210(E) were not individually
+  retrieved). ARCHIVED means only that this artifact is archived; it is not a human
+  verification of any Evidence or Rule.
+  Currentness sweep (2026-09-26): CPCB's live Battery-rules page lists instruments only through
+  the 24.02.2025 amendment; the amalgamated text SRC-031 (secondary) shows the Producer definition
+  and r.4(4)-(5) carry only the 25.10.2023 annotation, so S.O. 2374(E), S.O. 5210(E) and the 2025
+  amendment do not change them. No 2026 amendment was found.

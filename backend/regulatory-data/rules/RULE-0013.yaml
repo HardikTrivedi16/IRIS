@@ -10,4 +10,4 @@ description: >
   Schedule-listed hazardous or other waste.
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0013-V2

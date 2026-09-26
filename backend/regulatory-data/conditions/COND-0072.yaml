@@ -1,0 +1,24 @@
+condition_id: COND-0072
+predicate_type: BOOLEAN_EQUALS
+
+target_variable_key: project.prepacks_or_imports_commodities_for_sale_distribution_or_delivery
+operator: "=="
+comparison_value: true
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids: [EVID-LM-01, EVID-LM-02]
+
+grounding_regulatory_fact_ids: [RF-0020]
+
+description: >
+  True if the project pre-packs OR imports any commodity for sale,
+  distribution or delivery - the registration trigger verbatim (Legal Metrology
+  (Packaged Commodities) Rules, 2011, r.27(1)). Successor to COND-0029, whose
+  fact (prepacks_commodities_for_retail_sale) was narrower than the rule.
+
+normalization_notes: >
+  Boolean trigger only, never inferred from sector. COND-0029 is preserved
+  unchanged for RULE-0012-V1. Wave 1C, DRAFT.

@@ -28,6 +28,11 @@ facts:
   - RF-0031
   - RF-0032
   - RF-0033
+  - RF-0034
+  - RF-0035
+  - RF-0036
+  - RF-0037
+  - RF-0038
 
 counts:
-  total_regulatory_facts: 25
+  total_regulatory_facts: 30

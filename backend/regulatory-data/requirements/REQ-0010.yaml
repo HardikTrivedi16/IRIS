@@ -18,8 +18,10 @@ dependencies_as_source: []
 
 grounding_regulatory_fact_ids:
   - RF-0021
+  - RF-0036
 evidence_ids:
   - EVID-HW-01
+  - EVID-HW-02
 
 requirement_notes: >
   SH-10 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12). Previously listed in
@@ -28,3 +30,9 @@ requirement_notes: >
   0003). This Requirement resolves that gap. Fact-triggered only — never
   inferred from sector (Food, Pharma, Chemicals, EV, Electronics all
   possible triggers per the research pack).
+
+wave_1c_note: >
+  Wave 1C (2026-09-26): RULE-0013-V2 (DRAFT) models the Rule 6(1A) exemption
+  (consent not required under the Water/Air Acts AND waste handed to an
+  authorised destination). RULE-0013-V1 is preserved as SUPERSEDED (ended
+  2019-03-04). No EC-holder exemption is asserted.

@@ -1,0 +1,10 @@
+regulatory_fact_id: RF-0038
+statement: >
+  The E-Waste (Management) Rules, 2022 apply to manufacturers, producers,
+  refurbishers, dismantlers and recyclers dealing in Schedule-I EEE but do not
+  apply to (among others) a micro enterprise as defined in the MSMED Act, 2006
+  (r.2(c)).
+evidence_ids: [EVID-EWASTE-03]
+authority_id: AUTH-CPCB
+instrument_id: INST-EWASTE-2022
+verification_status: VERIFIED

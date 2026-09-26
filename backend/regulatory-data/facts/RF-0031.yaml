@@ -1,10 +1,13 @@
 regulatory_fact_id: RF-0031
 statement: >
-  Under the E-Waste (Management) Rules, 2022 r.4, a manufacturer of
-  Schedule-I EEE (including contract manufacture) must register on the
-  CPCB EPR e-waste portal, separately from the producer registration
-  (EL-01); one entity may hold both. (EL-02.)
-evidence_ids: [EVID-EWASTE-02]
+  Under the E-Waste (Management) Rules, 2022 r.3(1)(p) a "manufacturer" is a
+  person/entity/company (Companies Act company, Factories Act factory or
+  MSMED-Act enterprise) that has facilities for manufacture of Schedule-I EEE,
+  and r.4(1)(a) requires manufacturers to register on the CPCB portal; an entity
+  that falls in more than one category (e.g. manufacturer and producer) registers
+  separately under each (r.4(2)). The Rules do not apply to micro enterprises
+  (r.2(c)). (EL-02.)
+evidence_ids: [EVID-EWASTE-02, EVID-EWASTE-03]
 authority_id: AUTH-CPCB
 instrument_id: INST-EWASTE-2022
-verification_status: UNVERIFIED
+verification_status: VERIFIED
