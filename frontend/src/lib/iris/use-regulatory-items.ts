@@ -51,3 +51,16 @@ export function useRegulatoryItems(projectId: string) {
     diagnosticReady: !!diagnostic.data,
   };
 }
+
+
+/** Authored Requirement->Requirement relationships for the project, from the existing dependency
+ * graph API. Read-only; an unavailable API simply yields no relationships (never an invented one). */
+export function useDependencyRelationships(projectId: string) {
+  const q = useQuery({
+    queryKey: ["dependency-relationships", projectId],
+    queryFn: async () => (await irisApi.getDependencyGraph(projectId, "PRODUCTION")).relationships ?? [],
+    staleTime: 30_000,
+    retry: false,
+  });
+  return { relationships: q.data ?? [], isError: q.isError };
+}

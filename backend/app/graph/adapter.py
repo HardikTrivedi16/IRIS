@@ -71,6 +71,11 @@ class AdapterResult:
     # REQUIRES_OUTCOME_OF, or edges lacking an approved DEPENDENCY_EDGE VER).
     # Reported for transparency only; never part of the executable graph.
     diagnostic_relationships: tuple[dict, ...] = ()
+    # Every authored edge whose endpoints were both evaluated for this
+    # project (verified AND diagnostic), independent of whether the endpoints
+    # are APPLICABLE. Presentation/explanation data only: the executable graph
+    # is `dependencies` above. Trust is derived via dependency_trust().
+    relationships: tuple[dict, ...] = ()
 
 
 def _duration_for(requirement_id: str) -> int | None:
@@ -198,6 +203,33 @@ def build_graph_inputs(
             "note": edge.get("note"),
         })
 
+    relationships: list[dict] = []
+    for edge in dataset.dependencies_index.get("dependencies", []) or []:
+        a, b = edge.get("from_requirement_id"), edge.get("to_requirement_id")
+        if a not in by_req_id or b not in by_req_id:
+            continue
+        trust = dependency_trust(edge, dataset)
+        dep_id = edge.get("dependency_id")
+        relationships.append({
+            "dependency_id": dep_id,
+            "from_requirement_id": a,
+            "to_requirement_id": b,
+            "dependency_type": edge.get("dependency_type"),
+            "trust": trust,
+            "executable": trust == TRUST_VERIFIED and edge.get("dependency_type") in EXECUTABLE_DEPENDENCY_TYPES,
+            "description": edge.get("description"),
+            "note": edge.get("note"),
+            "evidence_ids": list(edge.get("evidence_ids") or []),
+            "source_ids": list(edge.get("source_ids") or []),
+            "verification_ids": sorted(
+                vid for vid, v in (getattr(dataset, "verifications", None) or {}).items()
+                if v.get("target_type") == "DEPENDENCY_EDGE" and v.get("target_id") == dep_id
+                and v.get("result") == "APPROVED"
+            ),
+            "from_final_state": by_req_id[a].get("final_state"),
+            "to_final_state": by_req_id[b].get("final_state"),
+        })
+
     return AdapterResult(
         requirements=tuple(applicable_reqs),
         dependencies=tuple(dependency_edges),
@@ -205,6 +237,7 @@ def build_graph_inputs(
         id_map=id_map,
         excluded=tuple(excluded),
         diagnostic_relationships=tuple(diagnostic_relationships),
+        relationships=tuple(relationships),
         dependency_note=dep_note or "No requirements evaluated as applicable; dependency index not consulted.",
     )
 

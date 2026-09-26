@@ -29,6 +29,8 @@ export interface DatasetRequirement {
   lifecycle_stage_ids?: string[];
   latest_rule_version_id?: string | null;
   latest_rule_version_status?: string | null;
+  /** Present on requirements superseded by a more precise successor (e.g. REQ-0004). */
+  deprecation_note?: string | null;
 }
 
 /**
@@ -69,6 +71,8 @@ export interface RegulatoryItem {
   /** Required fact keys of this requirement that have a stored value. */
   presentFactKeys: string[];
   relevance: Relevance;
+  /** Historical/general requirement superseded by more precise ones; hidden from the default map. */
+  deprecated: boolean;
 }
 
 export interface BuildInput {
@@ -152,6 +156,7 @@ export function buildRegulatoryItems(input: BuildInput): RegulatoryItem[] {
           : null,
         presentFactKeys: present,
         relevance,
+        deprecated: !!req.deprecation_note,
       };
     })
     .sort((a, b) => a.requirementId.localeCompare(b.requirementId));

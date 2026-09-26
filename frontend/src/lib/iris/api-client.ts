@@ -192,6 +192,25 @@ export interface DependencyGraphNode {
   unmet_prerequisite_ids: string[];
 }
 
+/** One authored Requirement->Requirement relationship (dependencies_index.yaml) whose endpoints
+ * were both evaluated for the project. `trust` is derived server-side from an APPROVED
+ * DEPENDENCY_EDGE verification; REQUIRES_OUTCOME_OF is informational and never executable. */
+export interface DependencyRelationship {
+  dependency_id: string;
+  from_requirement_id: string;
+  to_requirement_id: string;
+  dependency_type: "PREREQUISITE" | "REQUIRES_OUTCOME_OF" | string;
+  trust: "VERIFIED" | "DIAGNOSTIC";
+  executable: boolean;
+  description: string | null;
+  note: string | null;
+  evidence_ids: string[];
+  source_ids: string[];
+  verification_ids: string[];
+  from_final_state: string | null;
+  to_final_state: string | null;
+}
+
 /** Mirrors GET /projects/{id}/dependency-graph. Only ever built from
  * verified DEP-### edges (today: zero) — never a fabricated dependency. */
 export interface DependencyGraphResponse {
@@ -204,6 +223,8 @@ export interface DependencyGraphResponse {
   critical_path_available: boolean;
   excluded_requirements: { requirement_id: string; final_state: string }[];
   dependency_data_note: string;
+  /** All authored relationships between evaluated requirements (verified + diagnostic). */
+  relationships?: DependencyRelationship[];
 }
 
 /** Mirrors GET /api/v1/engine (backend/app/engine_service.py::engine_info). */

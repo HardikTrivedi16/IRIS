@@ -132,3 +132,16 @@ def test_fssai_tiers_have_no_dependency_edges(dataset):
     fssai = {"REQ-0004", "REQ-0011", "REQ-0012", "REQ-0013"}
     for e in dataset.dependencies_index["dependencies"]:
         assert e["from_requirement_id"] not in fssai and e["to_requirement_id"] not in fssai
+
+
+def test_relationships_expose_all_four_edges_independent_of_applicability(dataset):
+    from app.graph.adapter import build_graph_inputs
+    decisions = [{"requirement_id": r, "final_state": "REQUIRES_INFORMATION"} for r in dataset.requirements]
+    res = build_graph_inputs("P", decisions, dataset)
+    assert res.dependencies == ()  # nothing applicable -> nothing executable
+    rel = {r["dependency_id"]: r for r in res.relationships}
+    assert set(rel) == {"DEP-0001", "DEP-0002", "DEP-0003", "DEP-0004"}
+    assert rel["DEP-0001"]["trust"] == "VERIFIED" and rel["DEP-0001"]["verification_ids"] == ["VER-0018"]
+    assert rel["DEP-0002"]["executable"] is True
+    assert rel["DEP-0003"]["trust"] == "DIAGNOSTIC" and rel["DEP-0003"]["executable"] is False
+    assert rel["DEP-0004"]["verification_ids"] == []

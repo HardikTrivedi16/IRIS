@@ -56,12 +56,20 @@ export const LANDSCAPE_FILTERS: { key: LandscapeFilter; label: string }[] = [
  * NOT_APPLICABLE requirement is never "relevant"; it stays in the catalogue under Not applicable / All.
  */
 export function matchesLandscapeFilter(item: RegulatoryItem, filter: LandscapeFilter): boolean {
+  // Deprecated historical requirements (e.g. the general FSSAI licence logic, superseded by the
+  // Central/State/Registration tiers) never compete in the default view; they stay in the catalogue.
+  if (item.deprecated && filter === "relevant") return false;
   const { state } = effectiveState(item);
   // Information is "the project's own gap" when the engine cannot decide AND the project has already
   // recorded at least one fact this requirement's rules read (or the shared relevance model says so).
   const undecided = !isApplicable(state) && !isNotApplicable(state) && state !== null;
+  // A VERIFIED (authoritative Production) "needs information" result is itself a finding of the
+  // deterministic engine — the project must answer that regulatory question — so it is relevant.
   const needs =
-    undecided && (item.relevance === "NEEDS_INFORMATION" || item.presentFactKeys.length > 0);
+    undecided &&
+    (item.production.authoritative ||
+      item.relevance === "NEEDS_INFORMATION" ||
+      item.presentFactKeys.length > 0);
   switch (filter) {
     case "relevant":
       return isApplicable(state) || needs;
