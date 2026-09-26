@@ -34,7 +34,9 @@ modified, renamed or deleted; Evidence Consistency may legitimately flag the old
 
 RESET facts are cleared with a JSON null (project_facts.fact_value is nullable jsonb; the engine treats null as UNKNOWN).
 Negative (false) trigger facts are set ONLY for the three synthetic projects where they are part of the designed profile;
-SwaadHarvest and Aarav leave unrelated sector triggers UNKNOWN.
+SwaadHarvest and Aarav originally left unrelated sector triggers UNKNOWN; the final demo portfolio cleanup (approved
+2026-09-26) sets the explicitly approved negatives listed under FINAL_PASS_KEYS - White-category status, boiler,
+consent-exemption, hazardous-waste handling, MSME/Udyam and ECMS facts remain UNKNOWN by design.
 
 FUTURE INTEGRATION BLOCKER (not fixed here): the regulatory dataset has no jurisdiction/state guard on several
 Maharashtra-scoped requirements, so the Uttarakhand projects (SwaadHarvest, Aarav) can evaluate Maharashtra-scoped
@@ -128,6 +130,14 @@ FACTS = {
         P+"state": ("MAHARASHTRA", "B"),                        # current facility state (not consumed by any current rule)
         P+"location_state": ("MAHARASHTRA", "B"),               # consumed by the Maharashtra scheme conditions
         P+"plant_located_in_air_pollution_control_area": (True, "B"),   # Maharashtra-wide APCA (research RF-0002); jurisdictional derivation
+        # --- final demo portfolio cleanup (approved 2026-09-26): SYNTHETIC_DEMO_FACT profile facts ---
+        P+"manufactures_drugs_for_sale_or_distribution": (False, "B"),
+        P+"holds_drug_manufacturing_licence": (False, "B"),
+        P+"places_batteries_on_market": (False, "B"),
+        P+"manufactures_schedule1_eee": (False, "B"),
+        P+"sells_schedule1_eee_under_own_brand": (False, "B"),
+        P+"sells_imported_schedule1_eee_or_imports_used_schedule1_eee": (False, "B"),
+        P+"prepacks_or_imports_commodities_for_sale_distribution_or_delivery": (True, "B"),
     },
     "aarav-lifesciences": {   # existing evidence: project row + 22 DOC-* documents
         P+"industry": ("PHARMACEUTICAL", "B"),
@@ -146,6 +156,11 @@ FACTS = {
         P+"state": ("MAHARASHTRA", "B"),                        # current facility state (not consumed by any current rule)
         P+"location_state": ("MAHARASHTRA", "B"),               # consumed by the Maharashtra scheme conditions
         P+"plant_located_in_air_pollution_control_area": (True, "B"),   # Maharashtra-wide APCA (research RF-0002); jurisdictional derivation
+        # --- final demo portfolio cleanup (approved 2026-09-26): SYNTHETIC_DEMO_FACT profile facts ---
+        P+"places_batteries_on_market": (False, "B"),
+        P+"manufactures_schedule1_eee": (False, "B"),
+        P+"sells_schedule1_eee_under_own_brand": (False, "B"),
+        P+"sells_imported_schedule1_eee_or_imports_used_schedule1_eee": (False, "B"),
     },
     "voltedge-mobility": {
         P+"industry": ("AUTOMOBILE_EV", "B"),
@@ -166,6 +181,10 @@ FACTS = {
         P+"manufactures_schedule1_eee": (False, "B"),
         P+"sells_schedule1_eee_under_own_brand": (False, "B"),
         P+"msihc_schedule3_chemical_at_or_above_threshold": (False, "B"),
+        # --- final demo portfolio cleanup (approved 2026-09-26): SYNTHETIC_DEMO_FACT profile facts ---
+        P+"manufactures_drugs_for_sale_or_distribution": (False, "B"),
+        P+"holds_drug_manufacturing_licence": (False, "B"),
+        P+"sells_imported_schedule1_eee_or_imports_used_schedule1_eee": (False, "B"),
     },
     "deccan-microelectronics": {
         P+"industry": ("ELECTRONICS_ESDM", "B"),
@@ -185,6 +204,9 @@ FACTS = {
         P+"state": ("MAHARASHTRA", "B"),
         P+"location_state": ("MAHARASHTRA", "B"),
         P+"msihc_schedule3_chemical_at_or_above_threshold": (False, "B"),
+        # --- final demo portfolio cleanup (approved 2026-09-26): SYNTHETIC_DEMO_FACT profile facts ---
+        P+"manufactures_drugs_for_sale_or_distribution": (False, "B"),
+        P+"holds_drug_manufacturing_licence": (False, "B"),
     },
     "konkan-specialty-chemicals": {
         P+"industry": ("CHEMICALS", "B"),
@@ -205,11 +227,32 @@ FACTS = {
         P+"places_batteries_on_market": (False, "B"),
         P+"manufactures_schedule1_eee": (False, "B"),
         P+"sells_schedule1_eee_under_own_brand": (False, "B"),
+        # --- final demo portfolio cleanup (approved 2026-09-26): SYNTHETIC_DEMO_FACT profile facts ---
+        P+"manufactures_drugs_for_sale_or_distribution": (False, "B"),
+        P+"holds_drug_manufacturing_licence": (False, "B"),
+        P+"sells_imported_schedule1_eee_or_imports_used_schedule1_eee": (False, "B"),
     },
 }
 # Deliberately NOT set anywhere (UNKNOWN): boiler_volumetric_capacity_litres, boiler_design_gauge_pressure_kg_cm2,
 # holds_boiler_certificate, export_share_of_turnover_pct, pharma_activity_type (non-pharma), and — for
 # SwaadHarvest — msme_classification, udyam_registered, groundwater split, hazardous-waste handling.
+
+
+# Keys added by the final demo portfolio cleanup (approved 2026-09-26); each may only fill an unset/null slot.
+FINAL_PASS_KEYS = {
+    "swaadharvest": ("manufactures_drugs_for_sale_or_distribution", "holds_drug_manufacturing_licence", "places_batteries_on_market",
+                     "manufactures_schedule1_eee", "sells_schedule1_eee_under_own_brand",
+                     "sells_imported_schedule1_eee_or_imports_used_schedule1_eee",
+                     "prepacks_or_imports_commodities_for_sale_distribution_or_delivery"),
+    "voltedge-mobility": ("manufactures_drugs_for_sale_or_distribution", "holds_drug_manufacturing_licence",
+                          "sells_imported_schedule1_eee_or_imports_used_schedule1_eee"),
+    "deccan-microelectronics": ("manufactures_drugs_for_sale_or_distribution", "holds_drug_manufacturing_licence"),
+    "konkan-specialty-chemicals": ("manufactures_drugs_for_sale_or_distribution", "holds_drug_manufacturing_licence",
+                                   "sells_imported_schedule1_eee_or_imports_used_schedule1_eee"),
+    "aarav-lifesciences": ("places_batteries_on_market", "manufactures_schedule1_eee", "sells_schedule1_eee_under_own_brand",
+                           "sells_imported_schedule1_eee_or_imports_used_schedule1_eee"),
+}
+FINAL_PASS_KEYS = {k: tuple(P + x for x in v) for k, v in FINAL_PASS_KEYS.items()}
 
 
 def main() -> None:
@@ -240,6 +283,12 @@ def main() -> None:
         before_facts = store.get_project_facts(pid) if existing else {}
         facts = {k: v for k, (v, _cls) in FACTS[key].items()}
         changed = {k: (before_facts.get(k, "<unset>"), v) for k, v in facts.items() if before_facts.get(k, "<unset>") != v}
+        # Approved final-pass facts must only ever fill an UNSET/null slot: an unexpected existing value STOPS the run.
+        for k in FINAL_PASS_KEYS.get(key, ()):
+            cur = before_facts.get(k, "<unset>")
+            if cur not in ("<unset>", None) and cur != facts[k]:
+                print(f"CONFLICT: {pid} {k} already {cur!r}, approved value {facts[k]!r} - stopping, nothing written.", file=sys.stderr)
+                raise SystemExit(2)
 
         if existing is None and spec["mode"] == "update":
             print(f"[{pid}] MISSING but expected to exist — skipping.", file=sys.stderr)
@@ -250,7 +299,8 @@ def main() -> None:
             action += f" + owner_id None -> {owner_id!r} (industry@)"
         elif existing and spec.get("assign_owner_if_unowned") and existing.get("owner_id") not in (None, owner_id):
             print(f"    WARNING: {pid} is owned by another user — ownership left unchanged.", file=sys.stderr)
-        print(f"[{pid}] {action}; facts to upsert: {len(changed)}/{len(facts)}")
+        row_diff = {c: v for c, v in spec["row"].items() if existing is not None and existing.get(c) != v}
+        print(f"[{pid}] {action}; project-row columns that differ: {sorted(row_diff) or 'none'}; facts to upsert: {len(changed)}/{len(facts)}")
         for k, (b, a) in sorted(changed.items()):
             print(f"    {k}: {b!r} -> {a!r}")
         if not apply:
@@ -259,13 +309,16 @@ def main() -> None:
         if existing is None:
             store.create_project({"id": pid, **spec["row"], "owner_id": owner_id})
         else:
-            patch = dict(spec["row"])
+            # only touch columns whose value actually differs (a re-run is a no-op and never bumps the project row)
+            patch = {c: v for c, v in spec["row"].items() if existing.get(c) != v}
             if assign:
                 patch["owner_id"] = owner_id
             if patch:
                 store._patch("/projects", {"id": f"eq.{pid}"}, patch)
         unrelated_before = {k: v for k, v in before_facts.items() if k not in facts}
-        after = store.merge_project_facts(pid, facts)
+        if not changed:
+            continue   # nothing to write for this project (idempotent no-op)
+        after = store.merge_project_facts(pid, {k: v for k, v in facts.items() if k in changed})
         assert {k: v for k, v in after.items() if k not in facts} == unrelated_before, \
             f"unrelated fact changed for {pid} — aborting"
 
