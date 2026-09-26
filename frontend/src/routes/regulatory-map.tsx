@@ -1,25 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useProject } from "@/lib/iris/project-context";
+import { PageHeader, PageShell, Drawer, DrawerSection, DataField } from "@/components/iris/page";
+import { Tag } from "@/components/iris/status";
 import {
-  PageHeader,
-  PageShell,
-  Drawer,
-  DrawerSection,
-  DataField,
-} from "@/components/iris/page";
-import { DependencyGraph } from "@/components/iris/dependency-graph";
-import { StatusDot, Tag } from "@/components/iris/status";
-import { finalStateMeta } from "@/lib/iris/decision-states";
+  DecisionProofDrawer,
+  type ProofTarget,
+} from "@/components/iris/decision-proof-drawer";
+import { LandscapeLegend, RegulatoryLandscape } from "@/components/iris/regulatory-landscape";
 import { useRegulatoryItems } from "@/lib/iris/use-regulatory-items";
+import { stageLabel } from "@/lib/iris/regulatory-items";
 import {
-  stageLabel,
-  summarizeItems,
-  toMapNodes,
-  type RegulatoryItem,
-} from "@/lib/iris/regulatory-items";
-import type { GraphEdge, GraphNode } from "@/lib/iris/types";
-import { cn } from "@/lib/utils";
+  LANDSCAPE_FILTERS,
+  buildLandscape,
+  effectiveState,
+  laneFor,
+  matchesLandscapeFilter,
+  type LandscapeFilter,
+} from "@/lib/iris/regulatory-landscape";
+import { INDUSTRY_LABELS } from "@/lib/iris/types";
 
 export const Route = createFileRoute("/regulatory-map")({
   head: () => ({
@@ -28,97 +27,50 @@ export const Route = createFileRoute("/regulatory-map")({
       {
         name: "description",
         content:
-          "The regulatory requirements evaluated for this project, by authority and lifecycle stage. Dependencies are shown only when verified.",
+          "The project's regulatory landscape: requirements grouped by authority and lifecycle stage, with the rule engine's result for each.",
       },
       { property: "og:title", content: "Regulatory Map — IRIS" },
       {
         property: "og:description",
         content:
-          "Requirements, authorities and rule-version status for the project. No dependency is inferred.",
+          "Project-specific regulatory landscape by authority and lifecycle stage. No dependency is inferred.",
       },
     ],
   }),
   component: RegulatoryMap,
 });
 
-type StateFilter = "relevant" | "applicable" | "not-applicable" | "needs" | "all";
-
-const stateFilters: { key: StateFilter; label: string }[] = [
-  { key: "relevant", label: "Relevant: applicable + needs information/review" },
-  { key: "applicable", label: "Applicable" },
-  { key: "needs", label: "Needs information / review" },
-  { key: "not-applicable", label: "Not applicable" },
-  { key: "all", label: "All requirements" },
-];
-
-const legend = [
-  { status: "attention" as const, label: "Diagnostic: applicable" },
-  { status: "not-applicable" as const, label: "Diagnostic: not applicable" },
-  { status: "not-ready" as const, label: "Needs information / not yet evaluable" },
-];
-
-function matchesState(i: RegulatoryItem, f: StateFilter): boolean {
-  const s = i.diagnostic?.finalState;
-  switch (f) {
-    case "relevant":
-      // Default map: diagnostically applicable, or the project's own information/review gaps.
-      // Diagnostic NOT_APPLICABLE requirements stay in the full catalogue (Not applicable / All).
-      return s === "APPLICABLE" || i.relevance === "NEEDS_INFORMATION";
-    case "applicable":
-      return s === "APPLICABLE";
-    case "not-applicable":
-      return s === "NOT_APPLICABLE";
-    case "needs":
-      return i.relevance === "NEEDS_INFORMATION";
-    default:
-      return true;
-  }
-}
-
 function RegulatoryMap() {
   const { activeProject } = useProject();
-  const { items, isLoading } = useRegulatoryItems(activeProject.id);
-  const summary = useMemo(() => summarizeItems(items), [items]);
+  const { items, isLoading, isError } = useRegulatoryItems(activeProject.id);
 
-  const [stage, setStage] = useState("all");
-  const [authority, setAuthority] = useState("all");
-  const [state, setState] = useState<StateFilter>("relevant");
-  const [selected, setSelected] = useState<GraphNode | null>(null);
+  const [filter, setFilter] = useState<LandscapeFilter>("relevant");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [proof, setProof] = useState<ProofTarget | null>(null);
 
-  const authorities = useMemo(
-    () => [...new Set(items.map((i) => i.authorityName).filter((a) => a !== "—"))].sort(),
-    [items],
-  );
-  const stages = useMemo(
-    () => [...new Set(items.flatMap((i) => i.lifecycleStageIds))].sort(),
-    [items],
-  );
+  const counts = useMemo(() => {
+    const c = { applicable: 0, needs: 0, notApplicable: 0, verified: 0 };
+    for (const i of items) {
+      if (matchesLandscapeFilter(i, "applicable")) c.applicable += 1;
+      if (matchesLandscapeFilter(i, "needs")) c.needs += 1;
+      if (matchesLandscapeFilter(i, "not-applicable")) c.notApplicable += 1;
+      if (i.production.authoritative) c.verified += 1;
+    }
+    return c;
+  }, [items]);
 
-  const visible = useMemo(
-    () =>
-      items.filter(
-        (i) =>
-          matchesState(i, state) &&
-          (authority === "all" || i.authorityName === authority) &&
-          (stage === "all" || i.lifecycleStageIds.includes(stage)),
-      ),
-    [items, state, authority, stage],
-  );
-  // Nodes come from the engine's own requirement catalogue. There are NO
-  // edges: the dataset has zero verified Requirement->Requirement
-  // dependencies and none is inferred.
-  const nodes = useMemo(() => toMapNodes(visible), [visible]);
-  const edges: GraphEdge[] = [];
+  const visible = useMemo(() => items.filter((i) => matchesLandscapeFilter(i, filter)), [items, filter]);
+  const landscape = useMemo(() => buildLandscape(visible), [visible]);
 
-  const item = selected ? items.find((i) => i.requirementId === selected.id) : undefined;
-  const filtersActive = stage !== "all" || authority !== "all" || state !== "relevant";
+  const item = selectedId ? items.find((i) => i.requirementId === selectedId) : undefined;
+  const view = item ? effectiveState(item) : undefined;
 
   return (
     <PageShell wide className="pb-0">
       <PageHeader
         trail={[{ label: "Regulatory intelligence" }, { label: "Regulatory Map" }]}
-        title="Regulatory Map"
-        description="Requirements the rule engine evaluates for this project · select a node for detail"
+        title="Regulatory landscape"
+        description="What the regulatory landscape looks like for this project · select a requirement for detail"
         actions={
           <>
             <Link
@@ -138,17 +90,13 @@ function RegulatoryMap() {
         meta={
           <dl className="flex flex-wrap items-center gap-x-8 gap-y-2">
             {[
-              { label: "Shown", value: `${nodes.length} of ${items.length}` },
-              { label: "Diagnostic applicable", value: `${summary.diagnosticApplicable}` },
-              {
-                label: "Need information",
-                value: `${summary.needsInformation + summary.needsReview}`,
-              },
-              { label: "Verified regulatory dependencies", value: "0" },
+              { label: "Project", value: activeProject.name },
+              { label: "Industry", value: INDUSTRY_LABELS[activeProject.industry] },
+              { label: "Location", value: activeProject.location || "—" },
             ].map((s) => (
               <div key={s.label} className="flex items-baseline gap-2">
                 <dt className="label-meta">{s.label}</dt>
-                <dd className="tabular text-[13px] font-medium">{s.value}</dd>
+                <dd className="text-[13px] font-medium">{s.value}</dd>
               </div>
             ))}
           </dl>
@@ -156,174 +104,108 @@ function RegulatoryMap() {
       />
 
       <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 border border-border bg-surface px-4 py-3">
-        <div className="flex items-center gap-2">
-          <label className="label-meta" htmlFor="stage-filter">
-            Stage
-          </label>
-          <select
-            id="stage-filter"
-            value={stage}
-            onChange={(e) => setStage(e.target.value)}
-            className="focus-ring rounded-sm border border-border bg-surface px-2 py-[5px] text-[12.5px]"
-          >
-            <option value="all">All stages</option>
-            {stages.map((s) => (
-              <option key={s} value={s}>
-                {stageLabel(s)}
-              </option>
-            ))}
-          </select>
+        <div role="tablist" aria-label="Requirement filter" className="flex flex-wrap items-center gap-1.5">
+          {LANDSCAPE_FILTERS.map((f) => (
+            <button
+              key={f.key}
+              type="button"
+              role="tab"
+              aria-selected={filter === f.key}
+              onClick={() => setFilter(f.key)}
+              className={
+                filter === f.key
+                  ? "rounded-sm border border-primary bg-primary px-3 py-[5px] text-[12px] font-medium text-primary-foreground"
+                  : "rounded-sm border border-border px-3 py-[5px] text-[12px] font-medium text-muted-foreground transition-colors hover:bg-secondary"
+              }
+            >
+              {f.label}
+            </button>
+          ))}
         </div>
+        <dl className="ml-auto flex flex-wrap items-center gap-x-6 gap-y-1 text-[12px]">
+          {[
+            { label: "Applicable", value: counts.applicable },
+            { label: "Needs information", value: counts.needs },
+            { label: "Not applicable", value: counts.notApplicable },
+            { label: "Verified results", value: counts.verified },
+          ].map((s) => (
+            <div key={s.label} className="flex items-baseline gap-1.5">
+              <dt className="text-muted-foreground">{s.label}</dt>
+              <dd className="tabular font-semibold">{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
 
-        <div className="flex items-center gap-2">
-          <label className="label-meta" htmlFor="authority-filter">
-            Authority
-          </label>
-          <select
-            id="authority-filter"
-            value={authority}
-            onChange={(e) => setAuthority(e.target.value)}
-            className="focus-ring rounded-sm border border-border bg-surface px-2 py-[5px] text-[12.5px]"
-          >
-            <option value="all">All authorities</option>
-            {authorities.map((a) => (
-              <option key={a} value={a}>
-                {a}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <label className="label-meta" htmlFor="state-filter">
-            Show
-          </label>
-          <select
-            id="state-filter"
-            value={state}
-            onChange={(e) => setState(e.target.value as StateFilter)}
-            className="focus-ring rounded-sm border border-border bg-surface px-2 py-[5px] text-[12.5px]"
-          >
-            {stateFilters.map((s) => (
-              <option key={s.key} value={s.key}>
-                {s.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {filtersActive && (
-          <button
-            type="button"
-            onClick={() => {
-              setStage("all");
-              setAuthority("all");
-              setState("relevant");
-            }}
-            className="text-[12px] font-medium text-info transition-opacity hover:opacity-80"
-          >
-            Reset filters
-          </button>
+      <div className="mt-4 border border-border bg-surface">
+        {visible.length > 0 ? (
+          <RegulatoryLandscape landscape={landscape} selectedId={selectedId} onSelect={setSelectedId} />
+        ) : (
+          <div className="flex h-[240px] items-center justify-center px-6 text-center text-[12.5px] text-muted-foreground">
+            {isLoading
+              ? "Evaluating requirements…"
+              : isError
+                ? "The rule engine could not be reached."
+                : "No requirements match this filter."}
+          </div>
         )}
+      </div>
 
-        <p className="ml-auto text-[11.5px] text-muted-foreground">
-          Drag to pan · states are diagnostic (non-authoritative)
+      <div className="mt-3 space-y-2 pb-8">
+        <LandscapeLegend />
+        <p className="text-[11.5px] text-muted-foreground">
+          Requirements are grouped by regulatory authority/domain and project lifecycle stage.
+          Connections are shown only when verified relationships exist. Showing {visible.length} of{" "}
+          {items.length} requirements; a requirement spanning several stages is drawn once, in its
+          earliest stage.
         </p>
       </div>
 
-      <div className="mt-4 grid gap-0 border border-border lg:grid-cols-[minmax(0,1fr)_260px]">
-        {nodes.length > 0 ? (
-          <DependencyGraph
-            nodes={nodes}
-            edges={edges}
-            selectedId={selected?.id ?? null}
-            onSelect={setSelected}
-            legend={legend}
-            className="h-[560px] border-b border-border lg:border-b-0 lg:border-r"
-          />
-        ) : (
-          <div className="flex h-[560px] items-center justify-center border-b border-border px-6 text-center text-[12.5px] text-muted-foreground lg:border-b-0 lg:border-r">
-            {isLoading
-              ? "Evaluating requirements…"
-              : "No requirements match these filters."}
-          </div>
-        )}
-
-        <aside className="bg-surface">
-          <div className="border-b border-border px-4 py-3">
-            <div className="label-meta">Requirements</div>
-            <p className="mt-1.5 text-[11.5px] leading-relaxed text-muted-foreground">
-              Listed by requirement id. There is no sequence: the dataset contains no verified
-              prerequisite relationships, and unlinked items are not thereby shown to be parallel.
-            </p>
-          </div>
-          <ol className="max-h-[492px] divide-y divide-border overflow-y-auto">
-            {nodes.map((n) => (
-              <li key={n.id}>
-                <button
-                  type="button"
-                  onClick={() => setSelected(n)}
-                  className={cn(
-                    "row-hover flex w-full items-start gap-2 px-4 py-2.5 text-left hover:bg-surface-sunken",
-                    selected?.id === n.id && "bg-info-surface",
-                  )}
-                >
-                  <StatusDot status={n.status} className="mt-[6px]" />
-                  <span className="min-w-0">
-                    <span className="block truncate text-[12.5px] font-medium">{n.label}</span>
-                    <span className="mt-0.5 block truncate text-[11px] text-muted-foreground">
-                      {n.authority ?? "—"}
-                    </span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ol>
-        </aside>
-      </div>
-
-      <p className="mt-3 pb-8 text-[11.5px] text-muted-foreground">
-        Nodes come from the regulatory dataset and the rule engine's evaluation of this project's
-        stored facts. The dataset currently has zero verified dependency edges, so IRIS shows no legal
-        sequencing, critical path or parallel-approval claim. Node colours are diagnostic states, not
-        completion status.
-      </p>
-
       <Drawer
-        open={!!selected}
-        onClose={() => setSelected(null)}
+        open={!!item}
+        onClose={() => setSelectedId(null)}
         eyebrow="Requirement detail"
-        title={selected?.label ?? ""}
+        title={item?.title ?? ""}
         subtitle={
-          item?.diagnostic ? (
-            <Tag tone="info">Diagnostic — non-authoritative</Tag>
+          view ? (
+            <Tag tone={view.trust === "VERIFIED" ? "success" : "info"}>
+              {view.trust === "VERIFIED" ? "Verified" : "Diagnostic"} · {view.label}
+            </Tag>
           ) : null
         }
         footer={
-          selected && (
+          item && (
             <div className="flex items-center justify-between gap-3">
-              <p className="text-[11.5px] text-muted-foreground">
-                {item?.lifecycleStageIds.map(stageLabel).join(", ") || "—"}
+              <p className="font-mono text-[11px] text-muted-foreground">
+                {item.requirementId} · {item.ruleVersionId ?? "no rule version"}
               </p>
-              <Link
-                to="/evaluation"
+              <button
+                type="button"
+                onClick={() =>
+                  setProof({
+                    requirementId: item.requirementId,
+                    evaluationMode: item.production.authoritative ? "PRODUCTION" : "NON_PRODUCTION",
+                  })
+                }
                 className="rounded-sm bg-primary px-3 py-[7px] text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
               >
-                Open in evaluation
-              </Link>
+                Decision proof
+              </button>
             </div>
           )
         }
       >
-        {selected && item && (
+        {item && view && (
           <div>
-            <DrawerSection label="Authority">
+            <DrawerSection label="Authority and stage">
               <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2">
                 <DataField label="Regulator" value={item.authorityName} />
+                <DataField label="Domain" value={laneFor(item).label} />
                 <DataField
-                  label="Stage"
+                  label="Lifecycle stage"
                   value={item.lifecycleStageIds.map(stageLabel).join(", ") || "—"}
                 />
+                <DataField label="Rule version" value={item.ruleVersionId ?? "—"} />
               </div>
             </DrawerSection>
 
@@ -331,26 +213,39 @@ function RegulatoryMap() {
               <div className="space-y-2 text-[12.5px]">
                 <p>
                   <span className="text-muted-foreground">Production: </span>
-                  {finalStateMeta(item.production.finalState).label}
+                  {item.production.authoritative
+                    ? `${effectiveState(item).label} (verified)`
+                    : "No authoritative result — the governing rule is not yet verified"}
                 </p>
-                {item.diagnostic && (
+                {!item.production.authoritative && item.diagnostic && (
                   <p>
                     <span className="text-muted-foreground">Diagnostic: </span>
-                    {finalStateMeta(item.diagnostic.finalState).label}
+                    {view.label}
+                    <span className="text-muted-foreground"> (non-authoritative)</span>
                   </p>
                 )}
-                <p className="font-mono text-[11px] text-muted-foreground">
-                  {item.requirementId} · {item.ruleVersionId ?? "no rule version"}
-                  {item.ruleVersionStatus ? ` (${item.ruleVersionStatus})` : ""}
-                </p>
               </div>
             </DrawerSection>
 
             {(item.diagnostic?.reasonText ?? item.production.reasonText) && (
               <DrawerSection label="Reason">
                 <p className="text-muted-foreground">
-                  {item.diagnostic?.reasonText ?? item.production.reasonText}
+                  {item.production.authoritative
+                    ? item.production.reasonText
+                    : (item.diagnostic?.reasonText ?? item.production.reasonText)}
                 </p>
+              </DrawerSection>
+            )}
+
+            {item.presentFactKeys.length > 0 && (
+              <DrawerSection label="Facts used">
+                <ul>
+                  {item.presentFactKeys.map((k) => (
+                    <li key={k} className="font-mono text-[11px] text-muted-foreground">
+                      {k}
+                    </li>
+                  ))}
+                </ul>
               </DrawerSection>
             )}
 
@@ -374,6 +269,8 @@ function RegulatoryMap() {
           </div>
         )}
       </Drawer>
+
+      <DecisionProofDrawer projectId={activeProject.id} target={proof} onClose={() => setProof(null)} />
     </PageShell>
   );
 }
