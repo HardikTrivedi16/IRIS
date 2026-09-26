@@ -32,6 +32,8 @@ sources:
   - SRC-029
   - SRC-030
   - SRC-031
+  - SRC-032
+  - SRC-033
 
 counts:
-  total_sources: 29
+  total_sources: 32

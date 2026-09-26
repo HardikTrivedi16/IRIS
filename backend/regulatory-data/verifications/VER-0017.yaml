@@ -1,0 +1,13 @@
+verification_id: VER-0017
+target_type: RULE_VERSION
+target_id: RULE-0016-V2
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-011, SRC-012]
+evidence_checks: [EVID-FSS-07, EVID-FSS-08]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Regulatory Verification Batch 2"), for the ENCODED applicability/classification scope in the final
+  Batch-2 Human Review Pack only. It does not assert that IRIS models every statutory obligation,
+  procedural step, exception or special-category requirement. Preserved limitation: REQ-0011/0012/0013 - approval covers the FSSAI tier classification encoded in the final Batch-2 model; SRC-011 + SRC-012 ground the current turnover/tier regime; the 10.03.2026 Gazette artifact is not archived; special and non-manufacturing cases not represented by the model remain outside scope; a tier-level NOT_APPLICABLE is not a statement that no FSSAI obligation applies.

@@ -1,0 +1,23 @@
+condition_id: COND-0085
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: AND
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0004
+  - COND-0044
+  - COND-0082
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0024
+
+description: >
+  FD-03-V2 root: project.industry == FOOD AND turnover <= 15000000 AND subsector uses the standard bands (COND-0082).
+
+normalization_notes: >
+  Batch 2 final pass (2026-09-26). See rule_review_register.yaml RULE-REV-0012.

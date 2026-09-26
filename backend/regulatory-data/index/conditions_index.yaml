@@ -120,9 +120,9 @@ conditions:
     used_by_rule_versions: [RULE-0029-V1]
 
 counts:
-  total_conditions: 81
-  leaf_conditions: 51
-  composite_conditions: 30
+  total_conditions: 97
+  leaf_conditions: 59
+  composite_conditions: 38
 
 # NOTE (FD-01/FD-02 currentness-correction pass, 2026-09-23): COND-0039..
 # COND-0045 (7 new conditions: turnover-based Central/State/Registration
@@ -152,3 +152,6 @@ counts:
 
 # NOTE (Batch 2, 2026-09-26): COND-0077..COND-0081 (2 leaf + 3 composite) added for RULE-0026-V2/RULE-0027-V2
 # (E-Waste producer import limbs and micro-enterprise exclusion).
+
+# NOTE (Batch 2, 2026-09-26): COND-0082..COND-0097 (8 leaf + 8 composite) added for RULE-0014-V3/RULE-0015-V3/RULE-0016-V2
+# (FSSAI turnover rules with the full SRC-012 subsector carve-out guard) - see RULE-REV-0012.

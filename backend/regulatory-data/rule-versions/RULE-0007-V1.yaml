@@ -11,18 +11,27 @@ output_mapping:
   UNKNOWN: REQUIRES_INFORMATION
 
 true_outcome: >
-  APPLICABLE — the establishment is a "factory" under the OSH Code, 2020,
-  s.2(1)(w); registration under OSH Code Ch. II (and, transitionally, the
-  Maharashtra Factories Rules 1963 plan-approval/licence machinery — see
-  RULE-0008) is required.
+  APPLICABLE - the establishment is a "factory" under the OSH Code, 2020,
+  s.2(1)(w) (20 or more workers with power / 40 or more without). Being a
+  factory brings it within the Code's factory provisions, including
+  Chapter II registration (which applies to a factory with ten or more
+  workers) and, transitionally, the Maharashtra Factories Rules 1963
+  plan-approval/licence machinery - see RULE-0008, which is NOT decided
+  here.
 false_outcome: >
-  NOT_APPLICABLE on the 20/40-worker test as currently known — SUBJECT TO
-  the caveat that Maharashtra's state notification powers may extend
-  factory coverage to certain smaller/notified activities (e.g. powerlooms,
-  solvent processes) regardless of headcount (DISH FAQ; RF-0015). This
-  caveat must always accompany a FALSE/NOT_APPLICABLE presentation of this
-  rule — it is never resolved to TRUE automatically, since no Project Fact
-  for "is a notified activity" exists in this dataset.
+  NOT_APPLICABLE on the 20/40-worker factory-status test as currently
+  known. This does NOT mean that no OSH Code registration applies: under
+  s.2(1)(v)(iii) a factory with ten or more workers, and under
+  s.2(1)(v)(i)-(ii) other places where ten or more workers are employed,
+  are "establishments" required to register under Chapter II
+  notwithstanding this test - that registration question is not evaluated
+  by this Rule Version. SUBJECT TO the further caveat that Maharashtra's
+  state notification powers may extend factory coverage to certain
+  smaller/notified activities (e.g. powerlooms, solvent processes)
+  regardless of headcount (DISH FAQ; RF-0015). These caveats must always
+  accompany a FALSE/NOT_APPLICABLE presentation of this rule - it is
+  never resolved to TRUE automatically, since no Project Fact for "is a
+  notified activity" exists in this dataset.
 unknown_outcome: >
   REQUIRES_INFORMATION — cannot determine factory status until worker count
   and whether the manufacturing process uses power are known.
@@ -37,18 +46,22 @@ regulatory_fact_ids:
 evidence_ids:
   - EVID-OSH-01
   - EVID-OSH-02
+  - EVID-OSH-03
+  - EVID-OSH-04
 source_ids:
-  - SRC-006
+  - SRC-032
+  - SRC-033
+  - SRC-034
 authority_id: AUTH-DISH-MH
 instrument_id: INST-OSH-20
 
 jurisdiction: MAHARASHTRA
 lifecycle_stage: PRE_ESTABLISHMENT
 
-effective_start_date: null
+effective_start_date: "2025-11-21"   # S.O. 5321(E) (SRC-033) appoints 21.11.2025 for the Code
 effective_end_date: null
 
-status: DRAFT
+status: ACTIVE
 confidence: VERIFIED
 
 supersedes_rule_version_id: null
@@ -60,8 +73,8 @@ priority: 1
 provenance:
   rule_version_id: RULE-0007-V1
   regulatory_fact_ids: [RF-0014, RF-0015]
-  evidence_ids: [EVID-OSH-01, EVID-OSH-02]
-  source_ids: [SRC-006]
+  evidence_ids: [EVID-OSH-01, EVID-OSH-02, EVID-OSH-03, EVID-OSH-04]
+  source_ids: [SRC-032, SRC-033, SRC-034]
   authority_id: AUTH-DISH-MH
   instrument_id: INST-OSH-20
 
@@ -74,3 +87,22 @@ validation_notes: >
   (FALSE-branch caveat only, no executable condition). Cannot be promoted
   to ACTIVE without archived SRC-006 + a human VER record — neither exists
   as of this pass.
+
+  Batch 2 (2026-09-26): archived the Code text (SRC-032) and commencement
+  S.O. 5321(E) (SRC-033); effective_start_date set from that primary
+  notification. Applicability logic (COND-0021) is UNCHANGED. Outcome text
+  corrected: the Rule Version answers FACTORY STATUS only; Chapter II
+  registration reaches factories with >=10 workers and other
+  establishments with >=10 workers (s.2(1)(v)), so a NOT_APPLICABLE here is
+  never a statement that no registration applies. Encoded-scope limits:
+  (1) worker_count is one number - the Code counts workers working "on any
+  day of the preceding twelve months" across all groups/relays
+  (Explanation I); (2) Maharashtra's 20/40 rests on DISH-Maharashtra's website FAQ
+  (SRC-034: an official ADMINISTRATIVE statement, not a Gazette notification; unarchived) - the State notification is not archived;
+  (3) notified-activity extension, mobile units/railway sheds/hotels
+  exclusions and the RULE-0008 licence/plan-approval machinery are not
+  modelled. Still DRAFT; no human VER exists.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0014) for the encoded scope; see
+  the APPROVED VER record for this Rule Version. All documented limitations in this file's notes remain in force.

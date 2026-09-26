@@ -178,23 +178,28 @@ def test_v2_versions_link_to_v1_and_have_no_invented_dates(dataset):
                    ("RULE-0012-V2", "RULE-0012-V1")):
         rv = dataset.rule_versions[v2]
         assert rv["supersedes_rule_version_id"] == v1
-        # Maharashtra adoption (Water) and Air commencement are unresolved - no transition date is
-        # asserted for RULE-0001-V2/RULE-0002-V2. RULE-0012-V2 got 2011-04-01 in Verification Batch 1.
-        assert rv["effective_start_date"] == ("2011-04-01" if v2 == "RULE-0012-V2" else None)
+        # Maharashtra adoption (Water) is unresolved - no date is asserted for RULE-0001-V2 (Batch 2b: BLOCKED).
+        # RULE-0012-V2 got 2011-04-01 in Verification Batch 1; RULE-0002-V2 got 2024-11-12 (G.S.R. 702(E),
+        # archived SRC-019) in Batch 2b.
+        expected = {"RULE-0012-V2": "2011-04-01", "RULE-0002-V2": "2024-11-12"}.get(v2)
+        assert rv["effective_start_date"] == expected
 
 
 # --- Nothing verified / ACTIVE; production fails closed ----------------------
 
 def test_new_successors_draft_unverified_and_blocked_in_production(engine, dataset):
-    # REQ-0001/REQ-0002 (Water/Air) were NOT approved: still DRAFT and blocked in Production.
-    for rvid in ("RULE-0001-V2", "RULE-0002-V2"):
-        assert dataset.rule_versions[rvid]["status"] == "DRAFT"
-    for req in ("REQ-0001", "REQ-0002"):
-        assert engine.evaluate_requirement("P", req, {}, PROD)["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION"
-    for evid in ("EVID-MPCB-03", "EVID-MPCB-04", "EVID-MPCB-05", "EVID-MPCB-06", "EVID-MPCB-07"):
+    # REQ-0001 (Water) is NOT approved (Maharashtra adoption blocker): still DRAFT and blocked in Production.
+    assert dataset.rule_versions["RULE-0001-V2"]["status"] == "DRAFT"
+    assert engine.evaluate_requirement("P", "REQ-0001", {}, PROD)["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION"
+    # RULE-0002-V2 (Air) was approved in Verification Batch 2, so its evidence/fact are VERIFIED; the Water-only
+    # evidence/fact stay UNVERIFIED.
+    assert dataset.rule_versions["RULE-0002-V2"]["status"] == "ACTIVE"
+    for evid in ("EVID-MPCB-03", "EVID-MPCB-04"):
         assert dataset.evidence[evid]["verification_status"] == "UNVERIFIED"
-    for rfid in ("RF-0034", "RF-0035"):
-        assert dataset.facts[rfid]["verification_status"] == "UNVERIFIED"
+    for evid in ("EVID-MPCB-05", "EVID-MPCB-06", "EVID-MPCB-07"):
+        assert dataset.evidence[evid]["verification_status"] == "VERIFIED"
+    assert dataset.facts["RF-0034"]["verification_status"] == "UNVERIFIED"
+    assert dataset.facts["RF-0035"]["verification_status"] == "VERIFIED"
     # REQ-0009/REQ-0010 and Boilers were approved in Verification Batch 1.
     for rvid in ("RULE-0012-V2", "RULE-0013-V2"):
         assert dataset.rule_versions[rvid]["status"] == "ACTIVE"

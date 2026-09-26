@@ -7,7 +7,13 @@ statement: >
   successor to RF-0012's historical (installed-capacity-based) State
   criterion — RF-0012 is NOT retracted, it grounds the now-superseded
   RULE-0015-V1.
+  Batch 2 final pass (2026-09-26) scope note: the turnover bands apply to general manufacturing and,
+  per SRC-012, to dairy, vegetable oil, slaughtering, meat processing, fish and fish products and
+  substances added to food under their own rows. Six categories are Central regardless of turnover
+  (supplements/nutraceuticals, Ayurveda Aahara, proprietary, non-specified, radiation processing,
+  100% EOU/exporter-manufacturer) and grain/cereal/pulse milling units are State regardless of
+  turnover (COND-0082). Earlier wording above that lists five exclusions is incomplete.
 evidence_ids: [EVID-FSS-07, EVID-FSS-08]
 authority_id: AUTH-FDA-MH-FOOD
 instrument_id: INST-FSS-LR-11
-verification_status: UNVERIFIED
+verification_status: VERIFIED

@@ -38,3 +38,5 @@ hash of that exact file.
 | `SRC-029_BWM_Amendment_Rules_2023_SO4669E_25Oct2023_CPCB.pdf` | SRC-029 | `c39b52d36dbe8a8a97aef23ebd95a7f41c003e289e7befe53f5883434319600e` |
 | `SRC-030_LM_PCR_Third_Amendment_Rules_2026_GSR418E_29May2026_DCA.pdf` | SRC-030 | `643230e3b84eae6a3dfdd0417873ab9ba5687228cc724b08ac7d61a4b77dbefa` |
 | `SRC-031_BWM_Rules_2022_amalgamated_to_2025_Mizoram_SPCB.pdf` | SRC-031 | `aa6217643c3afef664d637b852bafee548720f98571d14832f5624310e44e5e7` |
+| `SRC-032_OSH_Code_2020_Act37_LabourMin.pdf` | SRC-032 | `9ce8f68b88f725fbce4fadfb45d9ddc3ed7a5f59d92a2ebd3d5bd7ebb1c83891` |
+| `SRC-033_OSH_Code_Commencement_SO5321E_21Nov2025_Gazette.pdf` | SRC-033 | `22212bc1f9e601ad242c9c595fd5ae91382b6c8ed8085c921f384343e1a8d642` |

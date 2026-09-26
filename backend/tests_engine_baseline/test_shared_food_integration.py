@@ -113,6 +113,7 @@ _FIFTY_CR = 500_000_000
 
 def test_current_turnover_40cr_state_applicable_central_not(engine):
     facts = {
+        "project.industry": "FOOD",  # Batch 2 final pass: FSSAI classification requires the FOOD industry gate
         "project.annual_turnover_inr": 400_000_000,  # 40 crore
         "project.food_subsector": "OTHER_FOOD_PROCESSING",
     }
@@ -124,6 +125,7 @@ def test_current_turnover_40cr_state_applicable_central_not(engine):
 
 def test_current_turnover_50cr_boundary_state_applicable_central_not(engine):
     facts = {
+        "project.industry": "FOOD",  # Batch 2 final pass: FSSAI classification requires the FOOD industry gate
         "project.annual_turnover_inr": _FIFTY_CR,  # exactly 50 crore
         "project.food_subsector": "OTHER_FOOD_PROCESSING",
     }
@@ -135,6 +137,7 @@ def test_current_turnover_50cr_boundary_state_applicable_central_not(engine):
 
 def test_current_turnover_50cr_plus_1_rupee_central_applicable_state_not(engine):
     facts = {
+        "project.industry": "FOOD",  # Batch 2 final pass: FSSAI classification requires the FOOD industry gate
         "project.annual_turnover_inr": _FIFTY_CR + 1,
         "project.food_subsector": "OTHER_FOOD_PROCESSING",
     }
@@ -146,6 +149,7 @@ def test_current_turnover_50cr_plus_1_rupee_central_applicable_state_not(engine)
 
 def test_current_turnover_1_5cr_boundary_registration_state_not(engine):
     facts = {
+        "project.industry": "FOOD",  # Batch 2 final pass: FSSAI classification requires the FOOD industry gate
         "project.annual_turnover_inr": _ONE_POINT_FIVE_CR,  # exactly 1.5 crore
         "project.food_subsector": "OTHER_FOOD_PROCESSING",
     }
@@ -159,6 +163,7 @@ def test_current_turnover_1_5cr_boundary_registration_state_not(engine):
 
 def test_current_turnover_1_5cr_plus_1_rupee_state_path(engine):
     facts = {
+        "project.industry": "FOOD",  # Batch 2 final pass: FSSAI classification requires the FOOD industry gate
         "project.annual_turnover_inr": _ONE_POINT_FIVE_CR + 1,
         "project.food_subsector": "OTHER_FOOD_PROCESSING",
     }
@@ -180,23 +185,26 @@ def test_current_turnover_unknown_requires_information(engine):
 
 def test_current_turnover_milling_exclusion_never_routes_to_general_manufacturing(engine):
     facts = {
+        "project.industry": "FOOD",  # Batch 2 final pass: FSSAI classification requires the FOOD industry gate
         "project.annual_turnover_inr": 400_000_000,
         "project.food_subsector": "GRAIN_CEREAL_PULSE_MILLING",
     }
     central = engine.evaluate_requirement("P", "REQ-0011", facts, NP)
     state = engine.evaluate_requirement("P", "REQ-0012", facts, NP)
     registration = engine.evaluate_requirement("P", "REQ-0013", facts, NP)
+    # Batch 2 final pass: SRC-012 gives grain/cereal/pulse milling units a State licence with no turnover limit,
+    # so State is now APPLICABLE; the milling unit still never routes to the general-manufacturing Central/Registration tiers.
     assert central["final_state"] == "NOT_APPLICABLE"
-    assert state["final_state"] == "NOT_APPLICABLE"
+    assert state["final_state"] == "APPLICABLE"
     assert registration["final_state"] == "NOT_APPLICABLE"
 
 
 def test_current_regime_is_what_latest_rule_version_id_points_at(dataset):
     # Guards against a future edit silently pointing the index back at the
     # historical (now SUPERSEDED) versions.
-    assert dataset.latest_rule_version_id("RULE-0014") == "RULE-0014-V2"
-    assert dataset.latest_rule_version_id("RULE-0015") == "RULE-0015-V2"
-    assert dataset.latest_rule_version_id("RULE-0016") == "RULE-0016-V1"
+    assert dataset.latest_rule_version_id("RULE-0014") == "RULE-0014-V3"
+    assert dataset.latest_rule_version_id("RULE-0015") == "RULE-0015-V3"
+    assert dataset.latest_rule_version_id("RULE-0016") == "RULE-0016-V2"
 
 
 # --- Dairy guard (FD-04) -----------------------------------------------------
@@ -334,8 +342,8 @@ def test_cgwa_msme_exemption_and_unknown_classification(engine):
 # --- DRAFT-not-authoritative-in-PRODUCTION ----------------------------------
 
 def test_new_requirements_stay_draft_and_non_authoritative_in_production(engine):
-    # REQ-0006/0007/0009/0010 became ACTIVE in Verification Batch 1.
-    for req_id in ("REQ-0005", "REQ-0008", "REQ-0011", "REQ-0012", "REQ-0013"):
+    # REQ-0006/0007/0009/0010 became ACTIVE in Verification Batch 1; REQ-0005/0011/0012/0013 in Batch 2.
+    for req_id in ("REQ-0008",):
         d = engine.evaluate_requirement("P", req_id, {}, PROD)
         assert d["final_state"] == "BLOCKED_DRAFT_NOT_PRODUCTION", req_id
 

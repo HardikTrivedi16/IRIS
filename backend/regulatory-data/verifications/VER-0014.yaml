@@ -1,0 +1,13 @@
+verification_id: VER-0014
+target_type: RULE_VERSION
+target_id: RULE-0007-V1
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-032, SRC-033, SRC-034]
+evidence_checks: [EVID-OSH-01, EVID-OSH-02, EVID-OSH-03, EVID-OSH-04]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Regulatory Verification Batch 2"), for the ENCODED applicability/classification scope in the final
+  Batch-2 Human Review Pack only. It does not assert that IRIS models every statutory obligation,
+  procedural step, exception or special-category requirement. Preserved limitation: REQ-0005 - approval is for factory-status applicability only; Maharashtra 20/40 is supported by the official DISH administrative FAQ (SRC-034), not an archived Gazette notification; worker_count does not encode 'any day in the preceding 12 months'; notified activities are not modelled; Chapter II establishment registration at 10+ workers is outside this Requirement; RULE-0008 remains DRAFT and is NOT approved.

@@ -236,8 +236,36 @@ review_items:
     next_phase: "Resolved 2026-09-26 by human approval (VER-0001..VER-0012, reviewer Hardik Trivedi); Rule Versions promoted to ACTIVE."
     blocks: "Nothing further within the approved scope."
 
+  - review_id: RULE-REV-0012
+    subject: "Batch 2 (2026-09-26) - FSSAI general-manufacturing scope (REQ-0011/0012/0013), REQ-0004 redundancy, REQ-0001 Maharashtra adoption, REQ-0005 factory status"
+    related_regulatory_fact_ids: [RF-0013, RF-0014, RF-0015, RF-0022, RF-0023, RF-0024]
+    related_phase4_review_id: null
+    reason: >
+      (1) SRC-012 partitions food subsectors: same three turnover bands (general manufacturing, dairy, oil,
+      slaughter, meat, fish, substances added to food); always-Central regardless of turnover (supplements,
+      Ayurveda Aahara, proprietary, non-specified, radiation, 100% EOU/exporter); grain milling State regardless.
+      A first draft excluded 13 categories, which would have produced misleading broad NOT_APPLICABLE results;
+      the final pass encodes the partition instead and adds a project.industry == FOOD gate.
+      (2) SRC-011
+      (13.03.2026 Order) makes the pre-2026 dairy capacity criteria of RULE-0005/RULE-0006 (REQ-0004
+      classification members) superseded, and REQ-0004's industry==FOOD proxy says "licence" even for the
+      registration-only band. (3) No primary Maharashtra adoption instrument for the Water (Amendment) Act, 2024.
+      (4) OSH Code s.2(1)(v)(iii): Chapter II registration reaches factories with >=10 workers, so REQ-0005's
+      20/40 test answers factory status, not registration.
+    decision: >
+      Successors RULE-0014-V3/RULE-0015-V3/RULE-0016-V2 (COND-0082..COND-0097) authored; V2/V1 marked SUPERSEDED. REQ-0004
+      is recommended NOT for promotion (redundant/superseded) and is left unchanged apart from a note. RULE-0001-V2
+      stays blocked. REQ-0005 re-scoped to factory status. No VER, no ACTIVE.
+    current_status: REQUIRES_REVIEW
+    what_is_needed: >
+      Human decision on the FSSAI trio (currentness grounding despite the missing 10.03.2026 Gazette; scope of the
+      13-category guard), on REQ-0004 (retire vs keep blocked), on REQ-0005's Maharashtra 20/40 corroboration
+      (DISH FAQ only), and a Maharashtra adoption instrument or reviewer decision for REQ-0001.
+    next_phase: "FSSAI trio, REQ-0002 and REQ-0005 approved 2026-09-26 (VER-0013..VER-0017, reviewer Hardik Trivedi) and promoted to ACTIVE; still OPEN: REQ-0001 (Maharashtra adoption instrument) and REQ-0004 (deprecated, not promoted)."
+    blocks: "Production promotion of REQ-0001 (blocked) and REQ-0004 (deprecated; not to be promoted)."
+
 counts:
-  total_review_items: 11
-  REQUIRES_REVIEW: 5
+  total_review_items: 12
+  REQUIRES_REVIEW: 6
   UNKNOWN: 4
   RESOLVED: 2   # RULE-REV-0002, Pharma tranche 2026-09-23

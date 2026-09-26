@@ -1,0 +1,17 @@
+source_id: SRC-034
+title: "Directorate of Industrial Safety and Health (DISH), Maharashtra - website FAQ defining 'factory' (20 with power / 40 without)"
+publisher_authority_id: AUTH-DISH-MH
+document_type: OFFICIAL_WEBSITE
+official_url: "https://mahadish.in/marathi/faq"
+publication_date: null
+retrieved_date: "2026-09-26"
+archived_artifact_path: null
+checksum_sha256: null
+source_status: AVAILABLE
+notes: >
+  OFFICIAL ADMINISTRATIVE STATEMENT, NOT A GAZETTE NOTIFICATION AND NOT LEGISLATION. An undated FAQ answer on the
+  Maharashtra DISH website, read 2026-09-26, that states the factory worker numbers as 20 (with power) / 40 (without
+  power). It is used only as administrative corroboration that Maharashtra's State-law number equals the OSH Code's
+  20/40 (the Code's State-number proviso). The State notification specifying those numbers under the Factories
+  (Maharashtra Amendment) Act, 2015 is NOT archived. The page is not archived (no checksum); its wording predates
+  or ignores the OSH Code (it mentions "less than 10 workers").

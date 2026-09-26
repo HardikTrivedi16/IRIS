@@ -102,3 +102,6 @@ approval_note: >
   Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0006) for the encoded scope; see the APPROVED VER record for this
   Rule Version. All documented limitations in this file's notes remain in force.
   effective_start_date basis: G.S.R. 1337(E) came into force on publication, 27.10.2017 (SRC-014), removing renewal and introducing the retention-fee regime; the encoded pathway/duration text applies from that date.
+  Batch 2 clarification (2026-09-26): this date marks the start of the CURRENT post-2017 formulation encoded here
+  (no renewal; retention-fee regime), NOT the origin of the manufacturing-licence pathways - Forms 24/25, 24F,
+  27/28 and 27B and the Drugs Rules, 1945 predate 2017. Metadata note only; applicability logic unchanged.

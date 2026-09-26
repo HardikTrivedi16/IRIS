@@ -11,4 +11,4 @@ description: >
   exact logical complement of FD-01/RULE-0014.
 
 rule_type: APPLICABILITY_RULE
-current_active_rule_version_id: null
+current_active_rule_version_id: RULE-0015-V3

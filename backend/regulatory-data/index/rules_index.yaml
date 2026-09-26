@@ -18,8 +18,8 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0002, RF-0035]
     latest_rule_version_id: RULE-0002-V2
-    latest_status: DRAFT
-    latest_confidence: REQUIRES_REVIEW
+    latest_status: ACTIVE
+    latest_confidence: VERIFIED
     # Wave 1C: RULE-0002-V1 preserved unedited (pre-2024-exemption logic).
 
   - rule_id: RULE-0003
@@ -66,7 +66,7 @@ rules:
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0014, RF-0015]
     latest_rule_version_id: RULE-0007-V1
-    latest_status: DRAFT
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
 
   - rule_id: RULE-0008
@@ -130,8 +130,8 @@ rules:
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0011, RF-0013, RF-0022]
-    latest_rule_version_id: RULE-0014-V2
-    latest_status: DRAFT
+    latest_rule_version_id: RULE-0014-V3
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # RULE-0014-V1 (installed-capacity, ">2 MT/day") is now status: SUPERSEDED,
     # effective_end_date 2026-03-31 (day before the successor regime starts,
@@ -142,8 +142,8 @@ rules:
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0012, RF-0013, RF-0023]
-    latest_rule_version_id: RULE-0015-V2
-    latest_status: DRAFT
+    latest_rule_version_id: RULE-0015-V3
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # RULE-0015-V1 (installed-capacity, "<=2 MT/day") is now status: SUPERSEDED,
     # effective_end_date 2026-03-31 (day before the successor regime starts,
@@ -154,8 +154,8 @@ rules:
     rule_type: APPLICABILITY_RULE
     output_type: APPLICABILITY
     regulatory_fact_ids: [RF-0024, RF-0013]
-    latest_rule_version_id: RULE-0016-V1
-    latest_status: DRAFT
+    latest_rule_version_id: RULE-0016-V2
+    latest_status: ACTIVE
     latest_confidence: VERIFIED
     # New (2026-09-23) — FSSAI Registration, residual/general-manufacturing
     # category, turnover <=Rs. 1.5 crore. See RULE-REV-0006.
@@ -302,7 +302,7 @@ facts_with_no_rule:
 
 counts:
   total_rules: 29
-  total_rule_versions: 38
+  total_rule_versions: 41
   status_DRAFT: 19
   status_SUPERSEDED: 7
   status_ACTIVE: 12

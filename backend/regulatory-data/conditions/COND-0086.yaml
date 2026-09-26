@@ -1,0 +1,23 @@
+condition_id: COND-0086
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.food_subsector
+operator: "=="
+comparison_value: "HEALTH_SUPPLEMENT_NUTRACEUTICAL"
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-08
+grounding_regulatory_fact_ids:
+  - RF-0022
+
+description: >
+  True if the project's food subsector is HEALTH_SUPPLEMENT_NUTRACEUTICAL, a category with its own SRC-012 Kind-of-Business
+  row whose licence tier does not follow the standard turnover bands.
+
+normalization_notes: >
+  Batch 2 final pass (2026-09-26). Reuses the existing "==" SET_MEMBERSHIP operator (the engine has
+  no positive IN operator). Human-supplied subsector; see COND-0082.

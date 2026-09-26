@@ -1,0 +1,16 @@
+source_id: SRC-033
+title: "Ministry of Labour and Employment S.O. 5321(E) dated 21.11.2025 - appointed date for the OSH Code, 2020"
+publisher_authority_id: AUTH-DISH-MH   # convention of SRC-006/INST-OSH-20; the issuer is actually the Central Ministry of Labour and Employment
+document_type: GAZETTE
+official_url: "https://egazette.gov.in/WriteReadData/2025/267884.pdf"
+publication_date: "2025-11-21"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-033_OSH_Code_Commencement_SO5321E_21Nov2025_Gazette.pdf"
+checksum_sha256: "22212bc1f9e601ad242c9c595fd5ae91382b6c8ed8085c921f384343e1a8d642"
+source_status: ARCHIVED
+notes: >
+  Batch-2 archival (2026-09-26): downloaded from the Gazette of India (egazette.gov.in), SHA-256
+  computed from the saved bytes. S.O. 5321(E), exercised under s.1(2) of the Code, appoints
+  21 November 2025 as the date on which the provisions of the Code come into force. ARCHIVED
+  means only that this artifact is archived; it is not a human verification of any Evidence or
+  Rule.

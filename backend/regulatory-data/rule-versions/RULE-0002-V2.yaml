@@ -56,11 +56,11 @@ instrument_id: INST-AIR-81
 jurisdiction: INDIA
 lifecycle_stage: [PRE_ESTABLISHMENT, OPERATION]
 
-effective_start_date: null
+effective_start_date: "2024-11-12"   # G.S.R. 702(E) (SRC-019) - see Batch 2 note
 effective_end_date: null
 
-status: DRAFT
-confidence: REQUIRES_REVIEW
+status: ACTIVE
+confidence: VERIFIED
 
 supersedes_rule_version_id: RULE-0002-V1
 prerequisite_requirement_ids: []
@@ -107,3 +107,31 @@ validation_notes: >
   modelled - is_white_category_industrial_plant is human-supplied; (4) the
   location fact is the unchanged V1 fact. No human VER exists.
 
+  Batch 2 (2026-09-26) - RESULT: CLEAR FOR HUMAN APPROVAL (encoded scope).
+  effective_start_date set to 2024-11-12, the date of G.S.R. 702(E)
+  (archived SRC-019). Commencement: the Air Act applies to Maharashtra in
+  its own right (no State adoption step, unlike the Water Act). The Jan
+  Vishwas Act's own commencement notification for the Air Act entry was not
+  located as a primary artifact, but G.S.R. 702(E) is itself made "in
+  exercise of power conferred by the proviso to sub-section (1) of section
+  21" of the Air Act, i.e. a Gazette notification exercising the substituted
+  proviso on 12.11.2024, and the MoEFCC SOP (SRC-020) and MPCB circular
+  (SRC-023) implement it - so the proviso is treated as in force by that
+  date. CTE vs CTO: NOT split. s.21(1) is ONE consent provision for
+  establishing OR operating; (a) White category is exempt from s.21(1)
+  entirely (on written intimation), while (b) prior-EC plants are exempt
+  only "in respect of previous consent to establish". The combined
+  Requirement is therefore accurate: APPLICABLE means some s.21 consent is
+  needed (CTE+CTO, or CTO only for a prior-EC plant); it never wrongly
+  answers NOT_APPLICABLE for a prior-EC plant. Two separate Requirements
+  would only be needed to give CTE and CTO independent outcomes, which the
+  encoded question does not require. MPCB's own page says White-category
+  industries need no Consent to Operate and only notify the Board;
+  MPCB circular SRC-023 speaks of "self-certification" - procedural steps
+  that are NOT modelled. Limits unchanged: Schedule / pollution-index
+  membership and the 222 MPCB-listed activities are supplied as
+  is_white_category_industrial_plant; the location fact is unchanged.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0013) for the encoded scope; see
+  the APPROVED VER record for this Rule Version. All documented limitations in this file's notes remain in force.

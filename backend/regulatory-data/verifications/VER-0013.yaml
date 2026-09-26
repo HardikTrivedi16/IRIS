@@ -1,0 +1,13 @@
+verification_id: VER-0013
+target_type: RULE_VERSION
+target_id: RULE-0002-V2
+reviewer: "Hardik Trivedi"
+reviewed_at: "2026-09-26"
+result: APPROVED
+source_checks: [SRC-002, SRC-019, SRC-022, SRC-023]
+evidence_checks: [EVID-MPCB-02, EVID-MPCB-05, EVID-MPCB-06, EVID-MPCB-07]
+notes: >
+  Human approval by the project owner/reviewer, recorded in chat on 2026-09-26 ("Human Approval -
+  Regulatory Verification Batch 2"), for the ENCODED applicability/classification scope in the final
+  Batch-2 Human Review Pack only. It does not assert that IRIS models every statutory obligation,
+  procedural step, exception or special-category requirement. Preserved limitation: REQ-0002 - prior EC exempts consent to establish only and does not imply exemption from consent to operate; MPCB self-certification/intimation is not modelled; the pollution-index Schedule and MPCB activity list are supplied through project facts; the Air commencement notification for the Jan Vishwas entry is inferred from G.S.R. 702(E).

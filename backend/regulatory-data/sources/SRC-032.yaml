@@ -1,0 +1,20 @@
+source_id: SRC-032
+title: "The Occupational Safety, Health and Working Conditions Code, 2020 (No. 37 of 2020) - Gazette of India Extraordinary text (s.2(1)(v), s.2(1)(w), Ch. II)"
+publisher_authority_id: AUTH-DISH-MH   # convention of SRC-006/INST-OSH-20; the publisher is actually the Central Ministry of Labour and Employment (no AUTH record exists for it)
+document_type: GAZETTE
+official_url: "https://www.labour.gov.in/static/uploads/2025/07/36fcfa5d8e6b9145e282bf7b950d6c47.pdf"
+publication_date: "2020-09-29"
+retrieved_date: "2026-09-26"
+archived_artifact_path: "backend/regulatory-data/archive/SRC-032_OSH_Code_2020_Act37_LabourMin.pdf"
+checksum_sha256: "9ce8f68b88f725fbce4fadfb45d9ddc3ed7a5f59d92a2ebd3d5bd7ebb1c83891"
+source_status: ARCHIVED
+notes: >
+  Batch-2 archival (2026-09-26): downloaded from the Ministry of Labour and Employment's own
+  site (labour.gov.in), SHA-256 computed from the saved bytes. Text reproduces the Gazette of
+  India Extraordinary Act text. s.2(1)(w) "factory" (20 workers with power / 40 without, with the
+  State-number proviso) was read from the saved file and matches EVID-OSH-01/EVID-OSH-04 verbatim.
+  Also read: s.2(1)(v)(iii) - for Chapter II (Registration) a factory with ten or more workers is
+  an "establishment" notwithstanding the s.2(1)(w) threshold; s.3 - registration of
+  establishments. ARCHIVED means only that this artifact is archived; it is not a human
+  verification of any Evidence or Rule. SRC-006 is retained unchanged (its Maharashtra
+  20/40 corroboration is NOT archived).

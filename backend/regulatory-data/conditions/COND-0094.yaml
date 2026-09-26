@@ -1,0 +1,22 @@
+condition_id: COND-0094
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0093
+  - COND-0092
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0022
+
+description: >
+  Central tier: standard-band Central OR an always-Central category.
+
+normalization_notes: >
+  Batch 2 final pass (2026-09-26). See rule_review_register.yaml RULE-REV-0012.

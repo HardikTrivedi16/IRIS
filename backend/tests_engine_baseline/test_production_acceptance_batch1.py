@@ -20,8 +20,8 @@ APPROVED = {
     "REQ-0009": "RULE-0012-V2", "REQ-0010": "RULE-0013-V2", "REQ-0015": "RULE-0023-V1",
     "REQ-0017": "RULE-0025-V2", "REQ-0018": "RULE-0026-V2", "REQ-0019": "RULE-0027-V2",
 }
-STILL_DRAFT = ["REQ-0001", "REQ-0002", "REQ-0004", "REQ-0005", "REQ-0008", "REQ-0011", "REQ-0012",
-               "REQ-0013", "REQ-0014", "REQ-0016", "REQ-0020", "REQ-0021"]
+# REQ-0002/0005/0011/0012/0013 were approved in Verification Batch 2 (see test_production_acceptance_batch2.py).
+STILL_DRAFT = ["REQ-0001", "REQ-0004", "REQ-0008", "REQ-0014", "REQ-0016", "REQ-0020", "REQ-0021"]
 
 GATE = {"project.manufactures_drugs_for_sale_or_distribution": True, "project.pharma_activity_type": "FORMULATIONS"}
 CLS = "project.drug_schedule_classification"
@@ -119,11 +119,11 @@ def test_ewaste_producer_and_manufacturer_authoritative(engine):
 def test_every_approved_requirement_is_active_and_has_an_approved_ver(dataset):
     approved_targets = {v["target_id"] for v in dataset.verifications.values() if v["result"] == "APPROVED"}
     assert set(APPROVED.values()) <= approved_targets
-    assert len(dataset.verifications) == 12
+    assert len(dataset.verifications) == 17  # 12 (Batch 1) + 5 (Batch 2)
     for v in dataset.verifications.values():
         assert v["reviewer"] == "Hardik Trivedi" and v["result"] == "APPROVED" and v["target_type"] == "RULE_VERSION"
     active = {k for k, rv in dataset.rule_versions.items() if rv["status"] == "ACTIVE"}
-    assert active == set(APPROVED.values()) | {"RULE-0003-V1", "RULE-0017-V1", "RULE-0018-V1", "RULE-0019-V1"} - set()
+    assert active == set(APPROVED.values()) | {"RULE-0003-V1", "RULE-0017-V1", "RULE-0018-V1", "RULE-0019-V1"} | {'RULE-0002-V2', 'RULE-0007-V1', 'RULE-0014-V3', 'RULE-0015-V3', 'RULE-0016-V2'}
 
 
 @pytest.mark.parametrize("req", STILL_DRAFT)

@@ -58,3 +58,23 @@ classification_rule_note: >
   Separately, and unrelated to this schema question: RULE-0005 and RULE-0006 are not mutually
   exclusive with each other — see `OVERLAP-0001` in `regulatory-data/registers/
   rule_conflict_register.yaml` for the cross-dimension conflict this pass identified between them.
+
+batch2_audit_note: >
+  Batch 2 (2026-09-26) audit - RECOMMENDED NOT FOR PROMOTION; nothing else changed. What REQ-0004 still
+  represents: (a) RULE-0004 answers only "industry == FOOD" (a proxy), stated as FSSAI Act s.31(1) "licence" -
+  but the current regime (SRC-011/SRC-012) puts turnover up to Rs. 1.5 crore under REGISTRATION, and the
+  licence tier is decided by REQ-0011/0012/0013, so its APPLICABLE answer is redundant at best and misleading
+  for the registration band; (b) its classification members RULE-0005/RULE-0006 encode the pre-2026 dairy
+  capacity bands (>50,000 L/day etc.), which SRC-011 (13.03.2026) supersedes - SRC-012 classifies dairy by
+  the same turnover bands. It is therefore neither a distinct parent obligation nor a coarse gate the newer
+  Requirements need. Dairy under the new regime is NOT evaluated by REQ-0011/0012/0013 (excluded by
+  COND-0082). Left DRAFT and unedited apart from this note; whether to retire it is a human decision.
+
+deprecation_note: >
+  NOT THE AUTHORITATIVE FSSAI CLASSIFICATION RESULT (Batch 2 final pass, 2026-09-26). The current FSSAI
+  Central / State / Registration classification of a FOOD-industry project is REQ-0011 / REQ-0012 / REQ-0013
+  (turnover bands per SRC-011/SRC-012). This Requirement is retained DRAFT and unedited as historical logic
+  (industry==FOOD proxy plus pre-2026 dairy capacity classification RULE-0005/RULE-0006); it is NOT proposed for
+  promotion and must not be presented as a current FSSAI licensing conclusion. The dataset has no
+  validator-supported Requirement lifecycle status, so this note (plus the batch2_audit_note above) is the
+  supersession marker.

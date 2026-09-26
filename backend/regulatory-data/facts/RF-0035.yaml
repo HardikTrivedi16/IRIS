@@ -11,4 +11,4 @@ statement: >
 evidence_ids: [EVID-MPCB-05, EVID-MPCB-06, EVID-MPCB-07]
 authority_id: AUTH-MoEFCC
 instrument_id: INST-AIR-81
-verification_status: UNVERIFIED
+verification_status: VERIFIED

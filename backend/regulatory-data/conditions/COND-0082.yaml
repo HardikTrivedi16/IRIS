@@ -1,0 +1,32 @@
+condition_id: COND-0082
+predicate_type: SET_MEMBERSHIP
+
+target_variable_key: project.food_subsector
+operator: NOT_IN
+comparison_value: ["HEALTH_SUPPLEMENT_NUTRACEUTICAL", "AYURVEDA_AAHARA", "PROPRIETARY_FOOD", "NON_SPECIFIED_FOOD", "RADIATION_PROCESSING", "EXPORT_ORIENTED_OR_EXPORTER_MANUFACTURER", "GRAIN_CEREAL_PULSE_MILLING"]
+unit: null
+
+child_condition_ids: []
+unresolved_behavior: UNKNOWN
+
+evidence_ids:
+  - EVID-FSS-08
+grounding_regulatory_fact_ids:
+  - RF-0022
+
+description: >
+  True if the project's food subsector is NOT one of the seven categories whose
+  FoSCoS licence tier does NOT follow the standard turnover bands (SRC-012,
+  updated 01.04.2026): six always-Central categories - food or health supplements
+  and nutraceuticals, Ayurveda Aahara, proprietary food, non-specified food,
+  radiation processing of food, 100% export-oriented units / exporter-manufacturers
+  ("No restriction on turnover threshold") - and grain/cereal/pulse milling units
+  (State licence "without any limit on turnover threshold").
+
+normalization_notes: >
+  Batch 2 final pass (2026-09-26): supersedes the earlier 13-category exclusion draft of this
+  condition. Categories whose SRC-012 row uses the SAME three turnover bands (dairy, vegetable oil,
+  slaughtering, meat processing, fish and fish products, substances added to food, and
+  general manufacturing) are NOT excluded: they are classified by turnover like any other food
+  business. COND-0032 is unchanged (historical versions still use it). project.food_subsector is a
+  free-string fact; values are human-supplied, IRIS does not classify the business.

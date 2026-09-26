@@ -1,6 +1,6 @@
 requirement_id: REQ-0005
 code: OSH_FACTORY_APPLICABILITY
-title: "Factory applicability and registration — OSH Code, 2020"
+title: "Factory status (and factory-provisions applicability) — OSH Code, 2020, s.2(1)(w)"
 catalog_status: PROVISIONAL_BRIDGING
 authority_id: AUTH-DISH-MH
 category: CORE_APPROVAL
@@ -27,6 +27,8 @@ grounding_regulatory_fact_ids:
 evidence_ids:
   - EVID-OSH-01
   - EVID-OSH-02
+  - EVID-OSH-03
+  - EVID-OSH-04
 
 requirement_notes: >
   SH-03 (MH_MULTI_SECTOR_REGULATORY_RESEARCH.md §12/H2.1): ONE Requirement,
@@ -39,3 +41,11 @@ requirement_notes: >
   DRAFT as of this pass — RULE-0008 must never be promoted merely because
   RULE-0007 promotes; its blocker is a genuine open state-rules question,
   not archival.
+
+batch2_note: >
+  Batch 2 (2026-09-26): archived primary Code text (SRC-032) and commencement S.O. 5321(E)
+  (SRC-033); RULE-0007-V1 effective_start_date set to 2025-11-21. Title re-scoped from
+  "Factory applicability and registration" to factory STATUS: OSH Code s.2(1)(v)(iii) makes
+  Chapter II registration reach a factory with >=10 workers regardless of the 20/40 test, so
+  a NOT_APPLICABLE for this Requirement is not a statement that no registration is needed.
+  RULE-0008 (classification member) stays DRAFT and is not proposed for promotion.

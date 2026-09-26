@@ -1,0 +1,101 @@
+rule_version_id: RULE-0016-V2
+rule_id: RULE-0016
+version_number: 2
+
+condition_expression_root_id: COND-0085
+logic: "COND-0085 = AND(industry==FOOD, annual_turnover_inr<=15000000, food_subsector NOT_IN [HEALTH_SUPPLEMENT_NUTRACEUTICAL,AYURVEDA_AAHARA,PROPRIETARY_FOOD,NON_SPECIFIED_FOOD,RADIATION_PROCESSING,EXPORT_ORIENTED_OR_EXPORTER_MANUFACTURER,GRAIN_CEREAL_PULSE_MILLING])"
+
+output_mapping:
+  TRUE: APPLICABLE
+  FALSE: NOT_APPLICABLE
+  UNKNOWN: REQUIRES_INFORMATION
+
+true_outcome: >
+  APPLICABLE - only FSSAI Registration is required for this food business
+  (annual turnover up to Rs. 1.5 crore, standard bands, effective 01.04.2026
+  per FSSAI Order dated 13.03.2026). No Central or State licence is required
+  at this turnover band.
+false_outcome: >
+  NOT_APPLICABLE - the project is not a FOOD-industry project, or its tier
+  is State or Central: annual turnover is more than Rs. 1.5 crore (see
+  RULE-0015-V3/State or RULE-0014-V3/Central), or it is an always-Central
+  category or a grain/cereal/pulse milling unit (State). This is a
+  Registration-tier conclusion only: it never means that no FSSAI licence or
+  registration applies.
+unknown_outcome: >
+  REQUIRES_INFORMATION - cannot determine Registration applicability until
+  industry, annual turnover and food subsector are known.
+
+required_project_facts:
+  - project.industry
+  - project.annual_turnover_inr
+  - project.food_subsector
+
+regulatory_fact_ids:
+  - RF-0024
+evidence_ids:
+  - EVID-FSS-07
+  - EVID-FSS-08
+source_ids:
+  - SRC-011
+  - SRC-012
+authority_id: AUTH-FSSAI
+instrument_id: INST-FSS-LR-11
+
+jurisdiction: MAHARASHTRA
+lifecycle_stage: PRE_OPERATION
+
+effective_start_date: "2026-04-01"
+effective_end_date: null
+
+status: ACTIVE
+confidence: VERIFIED
+
+supersedes_rule_version_id: RULE-0016-V1
+prerequisite_requirement_ids: []
+exception_ids: []
+
+priority: 1
+
+provenance:
+  rule_version_id: RULE-0016-V2
+  regulatory_fact_ids: [RF-0024]
+  evidence_ids: [EVID-FSS-07, EVID-FSS-08]
+  source_ids: [SRC-011, SRC-012]
+  authority_id: AUTH-FSSAI
+  instrument_id: INST-FSS-LR-11
+
+validation_notes: >
+  New — no predecessor Rule Version (supersedes_rule_version_id: RULE-0016-V1
+  See RULE-0014-V3's validation_notes for the full currentness rationale
+  and STILL DRAFT / STILL BLOCKED FROM ACTIVE reasoning, which applies
+  identically here (same Order, same corroborating table, same effective
+  date, no human verification yet). Bounded strictly to "<=1.5 crore" —
+  the exact complement of RULE-0015-V3's ">1.5 crore" lower bound, never
+  overlapping.
+
+  BATCH 2 FINAL PASS (2026-09-26) - scope semantics corrected on this uncommitted successor of RULE-0016-V1.
+  The turnover bands and the 01.04.2026 date are UNCHANGED. Two changes: (1) INDUSTRY GATE:
+  project.industry == FOOD (existing COND-0004, canonical fact) is now required, so a non-FOOD project
+  gets NOT_APPLICABLE instead of a request for FSSAI facts; industry==FOOD is an IRIS proxy for "food
+  business" (see RULE-0004 confidence note) and is human-supplied. (2) SUBSECTOR PARTITION from SRC-012
+  (updated 01.04.2026): A) SAME three turnover bands, therefore classified by turnover with no exclusion:
+  general manufacturing, dairy, vegetable oil, slaughtering, meat processing, fish and fish products,
+  substances added to food; B) DIFFERENT rule, encoded exactly as SRC-012 states it: always-Central
+  regardless of turnover - food/health supplements and nutraceuticals, Ayurveda Aahara, proprietary
+  food, non-specified food, radiation processing, 100% export-oriented units/exporter-manufacturers;
+  State regardless of turnover - grain/cereal/pulse milling units; C) not sufficiently encoded and
+  documented as limits: the dairy note that petty milkmen/milk vendors take Registration, the
+  100%-EOU condition (EOU certificate AND products not meeting FSSAI standards - the subsector is
+  human-supplied), the Hawker/Petty-retailer/other non-manufacturing rows, and product-approval
+  prerequisites for non-specified food. No threshold is invented. Currentness grounding: SRC-011 is
+  FSSAI's own signed Order of 13.03.2026 (superseding earlier turnover thresholds/criteria, effective
+  01.04.2026), SRC-012 applies the same bands; the 10.03.2026 Gazette text is still NOT archived - see
+  RULE-REV-0012. Still DRAFT; no human VER exists.
+  Provenance correction (approval pass, 2026-09-26): RF-0013 (the historical Schedule-1 dairy/entry-V
+  mutual-exclusivity statement) is no longer cited by this Rule Version because the final model does not
+  use the five-subsector guard COND-0032. It remains on the superseded predecessors.
+
+approval_note: >
+  Promoted to ACTIVE on 2026-09-26 after human approval (Hardik Trivedi, VER-0017) for the encoded scope; see
+  the APPROVED VER record for this Rule Version. All documented limitations in this file's notes remain in force.

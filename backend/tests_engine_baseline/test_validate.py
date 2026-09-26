@@ -31,7 +31,10 @@ def test_210_files_inspected(dataset):
     # records (8 EVID, 4 RF, 2 SRC, 9 COND, 4 RULE-VERSION) = 289.
     # Batch 2 adds 15 records (6 SRC-013..016/029/030 rewrites are in-place; new: 2 SRC, 4 EVID, 1 RF,
     # 5 COND, 3 RULE-VERSION) = 304, +1 SRC-031 in the currentness sweep = 305, +12 VER records in Verification Batch 1 = 317.
-    assert len(report.files_inspected) == 317
+    # Batch 2b (verification candidates) adds 11 records: 2 SRC (032/033), 2 EVID (OSH-03/04), 4 COND (0082..0085),
+    # 3 RULE-VERSION (RULE-0014-V3, RULE-0015-V3, RULE-0016-V2) = 328; final pass +12 COND (0086..0097) +1 SRC-034 = 341.
+    # Verification Batch 2 adds 5 VER records (VER-0013..VER-0017) = 346.
+    assert len(report.files_inspected) == 346
 
 
 def test_broken_reference_is_detected(dataset):

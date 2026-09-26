@@ -15,6 +15,11 @@ verifications:
   - VER-0010
   - VER-0011
   - VER-0012
+  - VER-0013
+  - VER-0014
+  - VER-0015
+  - VER-0016
+  - VER-0017
 
 counts:
-  total_verifications: 12
+  total_verifications: 17

@@ -1,0 +1,22 @@
+condition_id: COND-0097
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0096
+  - COND-0095
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0023
+
+description: >
+  State tier: standard-band State OR a grain/cereal/pulse milling unit (State licence with no turnover limit).
+
+normalization_notes: >
+  Batch 2 final pass (2026-09-26). See rule_review_register.yaml RULE-REV-0012.

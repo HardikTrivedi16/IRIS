@@ -52,3 +52,9 @@ wave_1c_note: >
   Requirement was NOT split: no second Requirement was created. Whether to
   split REQ-0002 into separate CTE and CTO Requirements is left to the human
   reviewer; RULE-0002-V1 is preserved.
+
+batch2_note: >
+  Batch 2 (2026-09-26): NOT split into CTE and CTO Requirements. s.21(1) is a single consent
+  provision (establish or operate) and G.S.R. 702(E) exempts prior-EC plants only from the
+  consent-to-establish component, so the combined APPLICABLE answer is accurate for every case.
+  RULE-0002-V2 effective_start_date set to 2024-11-12; candidate for human approval.

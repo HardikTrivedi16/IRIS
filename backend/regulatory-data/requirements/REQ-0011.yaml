@@ -35,3 +35,11 @@ requirement_notes: >
   repository's existing Requirement/Rule model (one Requirement per
   distinct approval question) accommodates FD-01/FD-02 as siblings of
   REQ-0004 cleanly, exactly as the normalized research pack specifies.
+
+batch2_note: >
+  Batch 2 final pass (2026-09-26): RULE-0014-V3 supersedes RULE-0014-V2. This Requirement is the project's
+  FSSAI CENTRAL-tier classification for FOOD-industry projects: turnover above Rs. 50 crore under the
+  standard bands (general manufacturing, dairy, vegetable oil, slaughter, meat, fish, substances added to
+  food) OR an always-Central category (supplements/nutraceuticals, Ayurveda Aahara, proprietary,
+  non-specified, radiation processing, 100% EOU/exporter-manufacturer). The title's "Schedule 1 entry V"
+  wording is historical; the operative basis is SRC-011/SRC-012. See RULE-REV-0012.

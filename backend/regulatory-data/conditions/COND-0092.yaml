@@ -1,0 +1,26 @@
+condition_id: COND-0092
+predicate_type: COMPOSITE
+
+target_variable_key: null
+operator: OR
+comparison_value: null
+unit: null
+
+child_condition_ids:
+  - COND-0086
+  - COND-0087
+  - COND-0088
+  - COND-0089
+  - COND-0090
+  - COND-0091
+unresolved_behavior: UNKNOWN
+
+evidence_ids: []
+grounding_regulatory_fact_ids:
+  - RF-0022
+
+description: >
+  Always-Central categories (SRC-012 "No restriction on turnover threshold"): supplements/nutraceuticals, Ayurveda Aahara, proprietary, non-specified, radiation processing, 100% EOU/exporter-manufacturer.
+
+normalization_notes: >
+  Batch 2 final pass (2026-09-26). See rule_review_register.yaml RULE-REV-0012.

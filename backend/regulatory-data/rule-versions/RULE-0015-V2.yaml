@@ -45,7 +45,7 @@ lifecycle_stage: PRE_OPERATION
 effective_start_date: "2026-04-01"
 effective_end_date: null
 
-status: DRAFT
+status: SUPERSEDED
 confidence: VERIFIED
 
 supersedes_rule_version_id: RULE-0015-V1
@@ -71,3 +71,8 @@ validation_notes: >
   strictly to ">1.5 crore and <=50 crore" — never treated as "not
   Central" alone, since that would wrongly include the Registration band
   at or below 1.5 crore (see RULE-0016-V1).
+
+superseded_note: >
+  Batch 2 (2026-09-26): superseded by RULE-0015-V3. This Rule Version excluded five subsectors
+  (COND-0032), had no FOOD-industry gate and mis-scoped SRC-012's category partition; it was
+  never ACTIVE/authoritative and is preserved unedited apart from this status and note.

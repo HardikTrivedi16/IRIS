@@ -8,4 +8,4 @@ statement: >
 evidence_ids: [EVID-MPCB-02]
 authority_id: AUTH-MoEFCC
 instrument_id: INST-AIR-81
-verification_status: UNVERIFIED
+verification_status: VERIFIED

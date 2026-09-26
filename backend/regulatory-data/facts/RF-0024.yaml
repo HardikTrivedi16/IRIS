@@ -6,7 +6,13 @@ statement: >
   the same FSSAI Order dated 13.03.2026. No prior Regulatory Fact in this
   dataset covered this band for the entry-V-equivalent category — see
   RULE-REV-0003 for the analogous historical gap that existed for dairy.
+  Batch 2 final pass (2026-09-26) scope note: the turnover bands apply to general manufacturing and,
+  per SRC-012, to dairy, vegetable oil, slaughtering, meat processing, fish and fish products and
+  substances added to food under their own rows. Six categories are Central regardless of turnover
+  (supplements/nutraceuticals, Ayurveda Aahara, proprietary, non-specified, radiation processing,
+  100% EOU/exporter-manufacturer) and grain/cereal/pulse milling units are State regardless of
+  turnover (COND-0082). Earlier wording above that lists five exclusions is incomplete.
 evidence_ids: [EVID-FSS-07, EVID-FSS-08]
 authority_id: AUTH-FSSAI
 instrument_id: INST-FSS-LR-11
-verification_status: UNVERIFIED
+verification_status: VERIFIED

@@ -206,8 +206,8 @@ def test_unrelated_fssai_superseded_versions_still_cannot_surface(engine, datase
     # the current answer for REQ-0011/REQ-0012.
     assert dataset.rule_versions["RULE-0014-V1"]["status"] == "SUPERSEDED"
     assert dataset.rule_versions["RULE-0015-V1"]["status"] == "SUPERSEDED"
-    assert dataset.latest_rule_version_id("RULE-0014") == "RULE-0014-V2"
-    assert dataset.latest_rule_version_id("RULE-0015") == "RULE-0015-V2"
+    assert dataset.latest_rule_version_id("RULE-0014") == "RULE-0014-V3"
+    assert dataset.latest_rule_version_id("RULE-0015") == "RULE-0015-V3"
 
 
 # --- authority correction ----------------------------------------------------

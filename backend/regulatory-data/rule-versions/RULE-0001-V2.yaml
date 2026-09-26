@@ -105,3 +105,27 @@ validation_notes: >
   supplied the result is REQUIRES_INFORMATION for projects that may discharge.
   No human VER exists; cannot be promoted to ACTIVE until reviewed.
 
+  Batch 2 (2026-09-26) - RESULT: BLOCKED, no logic change. Narrow search
+  for a PRIMARY Maharashtra adoption instrument (Assembly/Council resolution
+  under Art. 252, or Maharashtra/MPCB gazette) for the Water (Amendment)
+  Act, 2024 found none. What exists: (a) Other States' adoption gazettes
+  (Odisha, Madhya Pradesh, Mizoram) - showing the adoption mechanism only;
+  (b) a secondary academic note stating Maharashtra adopted in March 2025 -
+  NOT primary and NOT relied on; (c) OFFICIAL MPCB operational statements
+  that treat the 12.11.2024 exemption as operating in Maharashtra: the
+  archived circular SRC-023 (16.06.2025) and MPCB's own web page
+  "Revised Categorisation of Industries (R/O/G/W/B)"
+  (https://www.mpcb.gov.in/en/consentmgt/revised-industry-categorization,
+  read 2026-09-26, not archived), which states that White-category industries
+  do not need Consent to Operate and that a notification to the SPCB is
+  sufficient. These corroborate MPCB's administration of the White-category
+  regime but do not establish the legal adoption or its date, and they say
+  nothing specific about the prior-EC limb in Maharashtra. Concept
+  separation preserved: "s.25(1) consent not required" (statutory, encoded)
+  is distinct from "MPCB portal self-certification / written intimation"
+  (procedural, NOT encoded); NOT_APPLICABLE never means "no MPCB step".
+  effective_start_date remains null because no primary date can be asserted
+  for Maharashtra (the ACTIVE gate requires one). To unblock: archive the
+  Maharashtra adoption instrument (with date), or the reviewer explicitly
+  accepts a conservative start of 2025-06-16 (first archived Maharashtra
+  instrument evidencing operation) - IRIS has not set that date itself.

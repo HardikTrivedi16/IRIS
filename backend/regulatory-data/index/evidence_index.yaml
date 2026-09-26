@@ -10,6 +10,8 @@ evidence:
   - EVID-FSS-06
   - EVID-OSH-01
   - EVID-OSH-02
+  - EVID-OSH-03
+  - EVID-OSH-04
   - EVID-BOILER-01
   - EVID-BOILER-02
   - EVID-CGWA-01
@@ -41,4 +43,4 @@ evidence:
   - EVID-LM-03
 
 counts:
-  total_evidence: 36
+  total_evidence: 38
