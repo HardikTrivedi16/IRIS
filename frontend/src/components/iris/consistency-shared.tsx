@@ -21,7 +21,14 @@ export function ObservationBlock({
   const src = obs.source;
   return (
     <div className="min-w-0">
-      <p className="label-meta">{heading}</p>
+      <div className="flex flex-wrap items-center gap-1.5">
+        <p className="label-meta">{heading}</p>
+        {src.kind === "PROJECT_RECORD" && src.legacy_evidence && (
+          <span className="rounded-sm border border-dashed border-border-strong px-1 py-px text-[9.5px] font-semibold uppercase tracking-wide text-muted-foreground">
+            Prior facility · synthetic legacy evidence
+          </span>
+        )}
+      </div>
       <p className="mt-0.5 break-words text-[13px] font-medium">{fmt(obs.raw_value, obs.unit)}</p>
       <p className="mt-0.5 text-[11px] text-muted-foreground">
         {src.kind === "PROJECT_RECORD"

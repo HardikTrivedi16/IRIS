@@ -262,11 +262,26 @@ export function DrawerSection({
   label,
   children,
   className,
+  /** Collapsed behind a summary toggle by default — for technical/legal
+   * depth that should stay reachable without dominating the default view. */
+  collapsible,
 }: {
   label: string;
   children: React.ReactNode;
   className?: string;
+  collapsible?: boolean;
 }) {
+  if (collapsible) {
+    return (
+      <details className={cn("group border-b border-border px-5 py-3 last:border-b-0", className)}>
+        <summary className="label-meta cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+          {label}
+          <span className="ml-2 text-muted-foreground group-open:hidden">— view details</span>
+        </summary>
+        <div className="mt-2 text-[13px] leading-relaxed">{children}</div>
+      </details>
+    );
+  }
   return (
     <section
       className={cn(

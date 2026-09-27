@@ -440,6 +440,15 @@ function ChangeImpact() {
     () => (registryQuery.data?.facts ?? []).filter((f) => f.typed_input_supported),
     [registryQuery.data],
   );
+  const currentFactsForSplit = factsQuery.data?.facts ?? {};
+  const recordedFacts = useMemo(
+    () => supported.filter((f) => currentFactsForSplit[f.key] !== undefined && currentFactsForSplit[f.key] !== null),
+    [supported, currentFactsForSplit],
+  );
+  const otherFacts = useMemo(
+    () => supported.filter((f) => currentFactsForSplit[f.key] === undefined || currentFactsForSplit[f.key] === null),
+    [supported, currentFactsForSplit],
+  );
 
   const editedCount = useMemo(
     () => Object.values(draft).filter((v) => v !== undefined && v !== "").length,
@@ -565,7 +574,7 @@ function ChangeImpact() {
           </p>
         ) : (
           <>
-            {supported.map((entry) => (
+            {recordedFacts.map((entry) => (
               <div key={`${entry.key}-${resetCount}`}>
                 <FactInput
                   entry={entry}
@@ -582,6 +591,30 @@ function ChangeImpact() {
                 )}
               </div>
             ))}
+            {otherFacts.length > 0 && (
+              <details className="border-t border-border">
+                <summary className="cursor-pointer bg-surface-sunken/70 px-5 py-2 text-[12px] font-medium text-muted-foreground">
+                  Other available facts ({otherFacts.length})
+                </summary>
+                {otherFacts.map((entry) => (
+                  <div key={`${entry.key}-${resetCount}`}>
+                    <FactInput
+                      entry={entry}
+                      currentValue={currentFacts[entry.key]}
+                      value={draft[entry.key] ?? ""}
+                      onChange={(next) =>
+                        setDraft((prev) => ({ ...prev, [entry.key]: next }))
+                      }
+                    />
+                    {fieldErrors[entry.key] && (
+                      <p className="px-5 pb-2 text-[11.5px] text-destructive">
+                        {fieldErrors[entry.key]}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </details>
+            )}
 
             <div className="flex flex-wrap items-center gap-3 border-t border-border px-5 py-3">
               <button
@@ -617,20 +650,7 @@ function ChangeImpact() {
 
       {result && (
         <>
-          {!result.authoritative && (
-            <section className="mt-6 border border-warning/40 bg-warning-surface px-5 py-3.5">
-              <p className="text-[12.5px] font-semibold uppercase tracking-[0.05em] text-warning">
-                Diagnostic — non-authoritative
-              </p>
-              <p className="mt-1 text-[12.5px] leading-relaxed">
-                Uses unverified/DRAFT regulatory rules and is not an
-                authoritative regulatory determination. The hypothetical
-                facts above are never saved to this project.
-              </p>
-            </section>
-          )}
-
-          <section className="mt-4 border border-border bg-surface px-5 py-4">
+          <section className="mt-6 border border-border bg-surface px-5 py-4">
             <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
               <div>
                 <div className="flex flex-wrap items-center gap-2">

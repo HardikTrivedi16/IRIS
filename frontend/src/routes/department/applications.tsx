@@ -389,7 +389,6 @@ function ApplicationsPage() {
             <thead>
               <tr className="border-b border-border bg-surface-sunken">
                 {[
-                  "Application ID",
                   "Applicant / Project",
                   "Requirement",
                   "Stage",
@@ -410,21 +409,17 @@ function ApplicationsPage() {
             <tbody className="divide-y divide-border">
               {data.items.map((app) => (
                 <tr key={app.id} className="row-hover hover:bg-surface-sunken">
-                  <td className="px-4 py-3">
+                  <td className="max-w-[180px] px-4 py-3">
                     <Link
                       to="/department/application/$appId"
                       params={{ appId: app.id }}
-                      className="text-[13px] font-medium text-info hover:underline"
+                      className="block truncate text-[13px] font-medium text-foreground hover:text-info hover:underline"
                     >
-                      {app.application_id}
-                    </Link>
-                  </td>
-                  <td className="max-w-[180px] px-4 py-3">
-                    <div className="truncate text-[13px] font-medium">
-                      {app.title}
-                    </div>
-                    <div className="truncate text-[11px] text-muted-foreground">
                       {app.project_name ?? app.project_id}
+                    </Link>
+                    <div className="truncate text-[11px] text-muted-foreground">{app.title}</div>
+                    <div className="font-mono text-[10.5px] text-muted-foreground">
+                      {app.application_id}
                     </div>
                     {app.legacy_operational && (
                       <span className="mt-0.5 inline-flex items-center whitespace-nowrap rounded-sm border border-border px-1.5 py-[2px] text-[10px] font-medium text-muted-foreground">

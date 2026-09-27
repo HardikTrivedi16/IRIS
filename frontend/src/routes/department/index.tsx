@@ -364,12 +364,12 @@ function DepartmentDashboard() {
                           <Link
                             to="/department/application/$appId"
                             params={{ appId: app.id }}
-                            className="text-[13px] font-medium text-info hover:underline"
+                            className="text-[13px] font-medium text-foreground hover:text-info hover:underline"
                           >
-                            {app.application_id}
-                          </Link>
-                          <p className="text-[11px] text-muted-foreground">
                             {app.project_name ?? app.project_id}
+                          </Link>
+                          <p className="font-mono text-[10.5px] text-muted-foreground">
+                            {app.application_id}
                           </p>
                           {app.legacy_operational && (
                             <span className="mt-0.5 inline-flex items-center whitespace-nowrap rounded-sm border border-border px-1.5 py-[2px] text-[10px] font-medium text-muted-foreground">
@@ -457,7 +457,7 @@ function DepartmentDashboard() {
                           params={{ appId: item.id }}
                           className="text-[13px] font-medium hover:underline"
                         >
-                          {item.application_id}
+                          {item.project_name ?? item.application_id}
                         </Link>
                         <span
                           className={cn(
@@ -469,8 +469,8 @@ function DepartmentDashboard() {
                         </span>
                       </div>
                       <p className="mt-1 truncate text-[11.5px] text-muted-foreground">
-                        {item.project_name ? `${item.project_name} · ` : ""}
                         {item.title}
+                        {item.project_name ? ` · ${item.application_id}` : ""}
                       </p>
                       <div className="mt-1.5 flex flex-wrap gap-1.5">
                         {item.reasons.map((r) => (

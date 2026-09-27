@@ -101,7 +101,70 @@ function IdList({ label, ids }: { label: string; ids: (string | null)[] }) {
   );
 }
 
-function ProofBody({ proof }: { proof: DecisionProof }) {
+/** Compact WHY chain: project facts → rule version → regulatory fact →
+ * evidence → source → human verification. Each step's state comes straight
+ * from the same proof data the detail sections below render in full — this
+ * is a summary view, never a second source of truth. */
+function ProofChain({ proof }: { proof: DecisionProof }) {
+  const p = proof.provenance;
+  const rec = p.resolved_records;
+  const steps: { label: string; ok: boolean; note: string }[] = [
+    {
+      label: "Project facts",
+      ok: proof.facts_used.some((f) => f.provided),
+      note: proof.facts_used.filter((f) => f.provided).length + " recorded",
+    },
+    {
+      label: "Rule version",
+      ok: !!proof.identity.rule_version_id,
+      note: proof.identity.rule_version_id ?? "none",
+    },
+    {
+      label: "Regulatory fact",
+      ok: (rec?.regulatory_facts?.length ?? 0) > 0,
+      note: `${rec?.regulatory_facts?.length ?? 0} resolved`,
+    },
+    {
+      label: "Evidence",
+      ok: (rec?.evidence?.length ?? 0) > 0,
+      note: `${rec?.evidence?.length ?? 0} resolved`,
+    },
+    {
+      label: "Source",
+      ok: p.source_archival.state === "ALL_ARCHIVED",
+      note: p.source_archival.state === "ALL_ARCHIVED" ? "archived" : "not archived",
+    },
+    {
+      label: "Human verification",
+      ok: p.human_verification.state === "HUMAN_VERIFIED",
+      note: p.human_verification.state === "HUMAN_VERIFIED" ? "verified" : "not verified",
+    },
+  ];
+  return (
+    <div className="flex flex-wrap items-stretch gap-1.5">
+      {steps.map((s, i) => (
+        <div key={s.label} className="flex items-center gap-1.5">
+          <div
+            className={cn(
+              "rounded-sm border px-2 py-1.5 text-center",
+              s.ok ? "border-success/30 bg-success-surface" : "border-border bg-surface-sunken",
+            )}
+          >
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+              {s.label}
+            </p>
+            <p className={cn("tabular text-[11.5px] font-medium", s.ok ? "text-success" : "text-muted-foreground")}>
+              {s.note}
+            </p>
+          </div>
+          {i < steps.length - 1 && <span className="text-muted-foreground">→</span>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function ProofBody({ proof }: { proof: DecisionProof }) {
   const meta = finalStateMeta(proof.outcome.final_state);
   const id = proof.identity;
   return (
@@ -120,6 +183,10 @@ function ProofBody({ proof }: { proof: DecisionProof }) {
         <p className="mt-1.5 text-[11px] text-muted-foreground">
           Outcome text is the Rule Version's own authored wording.
         </p>
+      </DrawerSection>
+
+      <DrawerSection label="Why IRIS determined this">
+        <ProofChain proof={proof} />
       </DrawerSection>
 
       {proof.refuses_to_guess && (
@@ -147,7 +214,7 @@ function ProofBody({ proof }: { proof: DecisionProof }) {
         </DrawerSection>
       )}
 
-      <DrawerSection label="Project facts the rules read">
+      <DrawerSection label="Project facts the rules read" collapsible>
         {proof.facts_used.length === 0 ? (
           <p className="text-[12px] text-muted-foreground">
             None — the evaluation did not reach condition logic.
@@ -177,7 +244,7 @@ function ProofBody({ proof }: { proof: DecisionProof }) {
         )}
       </DrawerSection>
 
-      <DrawerSection label="Condition evaluation">
+      <DrawerSection label="Condition evaluation" collapsible>
         {proof.condition_tree ? (
           <>
             <ConditionTree node={proof.condition_tree} />
@@ -194,7 +261,7 @@ function ProofBody({ proof }: { proof: DecisionProof }) {
       </DrawerSection>
 
       {proof.classification && (
-        <DrawerSection label="Classification sub-rules">
+        <DrawerSection label="Classification sub-rules" collapsible>
           <p className="text-[12px]">
             Combined: <span className="font-medium">{proof.classification.block.combined_state ?? "—"}</span>
             {proof.classification.block.conflict_id && (
@@ -217,7 +284,7 @@ function ProofBody({ proof }: { proof: DecisionProof }) {
         </DrawerSection>
       )}
 
-      <DrawerSection label="Evaluation identity">
+      <DrawerSection label="Evaluation identity" collapsible>
         <div className="space-y-1">
           <IdList label="Rule" ids={[id.rule_id]} />
           <IdList label="Rule version" ids={[id.rule_version_id ? `${id.rule_version_id} (${id.rule_version_status ?? "?"})` : null]} />
@@ -299,6 +366,11 @@ function ProvenanceBlock({ provenance: p }: { provenance: DecisionProof["provena
         </div>
       )}
 
+      <details className="mt-3 group">
+        <summary className="cursor-pointer list-none text-[12px] font-medium text-info [&::-webkit-details-marker]:hidden">
+          View full provenance records
+        </summary>
+        <div className="mt-1">
       <RecordList
         label="Rule versions"
         rows={p.rule_versions as unknown as Record<string, unknown>[]}
@@ -363,6 +435,8 @@ function ProvenanceBlock({ provenance: p }: { provenance: DecisionProof["provena
           </span>
         )}
       />
+        </div>
+      </details>
     </div>
   );
 }

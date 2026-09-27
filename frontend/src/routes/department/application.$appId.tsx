@@ -251,13 +251,49 @@ function ApplicationDetailPage() {
       </div>
 
       <PageHeader
-        title={app.title ?? app.application_id}
-        description={`${app.application_id} · Project: ${app.project_name ?? app.project_id} · Submitted ${applicationAge(app.created_at)} ago`}
+        title={app.project_name ?? app.project_id}
+        description={`${app.title ?? app.requirement_id} · ${app.application_id} · Submitted ${applicationAge(app.created_at)} ago`}
         trail={[
           { label: "Department", to: "/department" },
           { label: "Applications", to: "/department/applications" },
           { label: app.application_id },
         ]}
+        meta={
+          <dl className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <div className="flex items-baseline gap-2">
+              <dt className="label-meta">Stage</dt>
+              <dd>
+                <span
+                  className={cn(
+                    "inline-flex items-center rounded-sm border px-2 py-[3px] text-[11px] font-medium",
+                    STAGE_TONE_CLASSES[app.current_stage],
+                  )}
+                >
+                  {STAGE_LABELS[app.current_stage]}
+                </span>
+              </dd>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <dt className="label-meta">Officer</dt>
+              <dd className="text-[13px] font-medium">
+                {app.assigned_officer_name ?? <span className="text-warning">Unassigned</span>}
+              </dd>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <dt className="label-meta">SLA</dt>
+              <dd>
+                <span
+                  className={cn(
+                    "inline-flex items-center rounded-sm border px-2 py-[3px] text-[11px] font-medium",
+                    SLA_TONE_CLASSES[app.sla.state],
+                  )}
+                >
+                  {SLA_LABEL[app.sla.state]}
+                </span>
+              </dd>
+            </div>
+          </dl>
+        }
         actions={
           canAct ? (
             <button

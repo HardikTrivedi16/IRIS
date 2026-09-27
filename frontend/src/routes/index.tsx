@@ -93,6 +93,17 @@ function Overview() {
     applicationsQuery.data,
     dependencyGraphQuery.data,
   ]);
+  const mapPreview = useMemo(() => {
+    const relevant = regulatory.items.filter(
+      (i) => i.production.finalState === "APPLICABLE" || i.relevance === "NEEDS_INFORMATION",
+    ).length;
+    return {
+      relevant,
+      verifiedDependencies: dependencyGraphQuery.data?.edges.length ?? 0,
+      needsInfo: summary.needsInformation + summary.needsReview,
+    };
+  }, [regulatory.items, dependencyGraphQuery.data, summary]);
+
   const attentionLoading =
     evaluationQuery.isLoading ||
     regulatory.isLoading ||
@@ -125,19 +136,17 @@ function Overview() {
           <StatLine
             items={[
               {
-                value: summary.diagnosticApplicable,
-                label: "diagnostically applicable",
-                tone: "warning",
+                value: summary.authoritative,
+                label: `verified of ${summary.total} requirements`,
               },
               {
                 value: summary.needsInformation + summary.needsReview,
                 label: "need information or review",
                 tone: "warning",
               },
-              {
-                value: summary.authoritative,
-                label: `authoritative of ${summary.total}`,
-              },
+              attentionItems.length > 0
+                ? { value: attentionItems.length, label: "regulatory attention items", tone: "warning" as const }
+                : { value: attentionItems.length, label: "regulatory attention items" },
               {
                 value: <span className="tabular">{lastEvaluated}</span>,
                 label: "last evaluated",
@@ -203,28 +212,28 @@ function Overview() {
         <div className="grid divide-y divide-border md:grid-cols-4 md:divide-x md:divide-y-0">
           {[
             {
-              label: "Production determinations",
+              label: "Verified determinations",
               value: `${summary.authoritative}/${summary.total}`,
               tone: "neutral" as const,
-              note: `${summary.awaitingVerifiedKnowledge} awaiting verified regulatory knowledge (DRAFT rules)`,
-            },
-            {
-              label: "Diagnostic: applicable",
-              value: `${summary.diagnosticApplicable}`,
-              tone: "warning" as const,
-              note: "Non-authoritative — the DRAFT rules match this project's facts",
+              note: "Requirements with an authoritative Production result.",
             },
             {
               label: "Needs information or review",
               value: `${summary.needsInformation + summary.needsReview}`,
               tone: "warning" as const,
-              note: `${summary.unresolvedTriggers} more not yet evaluable (diagnostic result: requires information)`,
+              note: "Verified requirements still missing facts this project hasn't recorded.",
             },
             {
-              label: "Diagnostic: not applicable",
-              value: `${summary.diagnosticNotApplicable}`,
+              label: "Awaiting verified knowledge",
+              value: `${summary.awaitingVerifiedKnowledge}`,
               tone: "neutral" as const,
-              note: "Non-authoritative — excluded by the recorded facts",
+              note: "Governing Rule Version is DRAFT — production result withheld.",
+            },
+            {
+              label: "Diagnostic analysis",
+              value: `${summary.diagnosticApplicable + summary.diagnosticNotApplicable}`,
+              tone: "neutral" as const,
+              note: "Non-authoritative evaluation of DRAFT rules — see Regulatory Evaluation.",
             },
           ].map((m) => (
             <div key={m.label} className="px-5 py-4 md:px-6">
@@ -245,6 +254,34 @@ function Overview() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Regulatory Map preview -- counts only, the graph itself is a separate,
+          frozen page. Never invented: relevant/verified counts already exist. */}
+      <section className="mt-6 flex flex-wrap items-center justify-between gap-4 border border-border bg-surface px-5 py-4 md:px-6">
+        <div>
+          <div className="label-meta">Regulatory map</div>
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-6 gap-y-1">
+            <span className="text-[13px]">
+              <span className="tabular text-[18px] font-semibold">{mapPreview.relevant}</span>{" "}
+              <span className="text-muted-foreground">relevant requirements</span>
+            </span>
+            <span className="text-[13px]">
+              <span className="tabular text-[18px] font-semibold text-success">{mapPreview.verifiedDependencies}</span>{" "}
+              <span className="text-muted-foreground">verified dependencies</span>
+            </span>
+            <span className="text-[13px]">
+              <span className="tabular text-[18px] font-semibold text-warning">{mapPreview.needsInfo}</span>{" "}
+              <span className="text-muted-foreground">needs information</span>
+            </span>
+          </div>
+        </div>
+        <Link
+          to="/regulatory-map"
+          className="focus-ring shrink-0 rounded-sm bg-primary px-3.5 py-2 text-[12.5px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          Open Regulatory Map →
+        </Link>
       </section>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
