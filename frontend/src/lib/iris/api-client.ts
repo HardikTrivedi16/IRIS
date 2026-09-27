@@ -11,8 +11,7 @@
 
 import type { Requirement } from "./types";
 
-const API_BASE =
-  (import.meta.env["VITE_API_URL"] as string) || "http://localhost:8000";
+import { API_BASE } from "@/lib/api-base";
 
 export class ApiError extends Error {
   constructor(

@@ -9,8 +9,7 @@
  * separate sections. They must NEVER be called from Industry portal pages.
  */
 
-const API_BASE =
-  (import.meta.env["VITE_API_URL"] as string) || "http://localhost:8000";
+import { API_BASE } from "@/lib/api-base";
 
 // Shared token store (set by AuthProvider via setAuthToken in api-client.ts)
 import { setAuthToken, type Grievance } from "@/lib/iris/api-client";

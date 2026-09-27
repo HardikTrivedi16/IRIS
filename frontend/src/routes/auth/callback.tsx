@@ -22,6 +22,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
+import { API_BASE } from "@/lib/api-base";
 
 export const Route = createFileRoute("/auth/callback")({
   head: () => ({ meta: [{ title: "Signing in… — IRIS" }] }),
@@ -49,10 +50,8 @@ function AuthCallbackPage() {
 
       // Create/update IRIS profile on every login
       setStatus("linking");
-      const apiUrl =
-        (import.meta.env["VITE_API_URL"] as string) || "http://localhost:8000";
       try {
-        await fetch(`${apiUrl}/api/v1/auth/profile`, {
+        await fetch(`${API_BASE}/api/v1/auth/profile`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

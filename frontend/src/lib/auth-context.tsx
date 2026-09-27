@@ -46,6 +46,7 @@ import {
 } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { API_BASE } from "@/lib/api-base";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -115,10 +116,8 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 // ---------------------------------------------------------------------------
 
 async function fetchIrisUser(accessToken: string): Promise<IrisUser | null> {
-  const apiUrl =
-    (import.meta.env["VITE_API_URL"] as string) || "http://localhost:8000";
   try {
-    const res = await fetch(`${apiUrl}/api/v1/auth/me`, {
+    const res = await fetch(`${API_BASE}/api/v1/auth/me`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
     if (!res.ok) return null;
@@ -142,10 +141,8 @@ async function fetchIrisUser(accessToken: string): Promise<IrisUser | null> {
  * not industry login. Non-fatal on failure, exactly like callback.tsx.
  */
 async function ensureIrisProfile(session: Session): Promise<void> {
-  const apiUrl =
-    (import.meta.env["VITE_API_URL"] as string) || "http://localhost:8000";
   try {
-    await fetch(`${apiUrl}/api/v1/auth/profile`, {
+    await fetch(`${API_BASE}/api/v1/auth/profile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
